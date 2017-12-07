@@ -1,0 +1,6 @@
+/vendor/
+.idea/
+.vscode/
+.atom/
+.DS_Store
+composer.lock
