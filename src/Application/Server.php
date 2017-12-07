@@ -15,7 +15,6 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Routing\RouteCollection;
 use TeamELF\Event\RoutesHasBeenLoadedEvent;
 use TeamELF\Event\RoutesWillBeLoadedEvent;
-use TeamELF\Foundation\AbstractApplication;
 
 class Server extends AbstractApplication
 {

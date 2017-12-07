@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-use TeamELF\Foundation\AbstractApplication;
+use TeamELF\Application\AbstractApplication;
 
 if (! function_exists('app')) {
     /**
