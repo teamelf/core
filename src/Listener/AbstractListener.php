@@ -9,14 +9,9 @@
  * file that was distributed with this source code.
  */
 
-use TeamELF\Application\AbstractApplication;
+namespace TeamELF\Listener;
 
-if (! function_exists('app')) {
-    /**
-     * @return mixed|AbstractApplication
-     */
-    function app()
-    {
-        return AbstractApplication::getInstance();
-    }
+abstract class AbstractListener
+{
+    abstract public function handler();
 }
