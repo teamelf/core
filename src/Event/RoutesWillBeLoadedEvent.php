@@ -28,6 +28,7 @@ class RoutesWillBeLoadedEvent extends AbstractEvent
      */
     function __construct(RouteCollection $router)
     {
+        parent::__construct();
         $this->router = $router;
     }
 }

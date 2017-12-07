@@ -11,7 +11,9 @@
 
 namespace TeamELF\Event;
 
-abstract class AbstractEvent
+use Symfony\Component\EventDispatcher\Event;
+
+abstract class AbstractEvent extends Event
 {
     /**
      * event name
@@ -20,15 +22,32 @@ abstract class AbstractEvent
      */
     private $eventName;
 
-    function __construct($eventName = '')
+    function __construct($eventName = null)
     {
         if ($eventName) {
             $this->eventName = $eventName;
         } else {
-            $this->eventName = get_class(self::class);
+            $this->eventName = static::class;
         }
     }
 
+    /**
+     * set event name
+     *
+     * @param $eventName
+     * @return $this
+     */
+    public function name($eventName)
+    {
+        $this->eventName = $eventName;
+        return $this;
+    }
+
+    /**
+     * get event name
+     *
+     * @return string
+     */
     public function getEventName()
     {
         return $this->eventName;
