@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace TeamELF\Application;
+namespace TeamELF\Foundation;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Routing\RouteCollection;
