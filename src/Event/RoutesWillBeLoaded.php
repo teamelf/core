@@ -13,7 +13,7 @@ namespace TeamELF\Event;
 
 use Symfony\Component\Routing\RouteCollection;
 
-class RoutesHasBeenLoadedEvent extends AbstractEvent
+class RoutesWillBeLoaded extends AbstractEvent
 {
     /**
      * @var RouteCollection
@@ -21,8 +21,8 @@ class RoutesHasBeenLoadedEvent extends AbstractEvent
     private $router;
 
     /**
-     * RoutesWillBeLoadedEvent constructor.
-     * routes has been loaded before this event
+     * RoutesWillBeLoaded constructor.
+     * routes will be loaded after this event
      *
      * @param RouteCollection $router
      */

@@ -13,8 +13,8 @@ namespace TeamELF\Application;
 
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Routing\RouteCollection;
-use TeamELF\Event\RoutesHasBeenLoadedEvent;
-use TeamELF\Event\RoutesWillBeLoadedEvent;
+use TeamELF\Event\RoutesHasBeenLoaded;
+use TeamELF\Event\RoutesWillBeLoaded;
 
 class Server extends AbstractApplication
 {
@@ -42,7 +42,7 @@ class Server extends AbstractApplication
      */
     protected function registerRoutes()
     {
-        $this->dispatch(new RoutesWillBeLoadedEvent($this->router));
-        $this->dispatch(new RoutesHasBeenLoadedEvent($this->router));
+        $this->dispatch(new RoutesWillBeLoaded($this->router));
+        $this->dispatch(new RoutesHasBeenLoaded($this->router));
     }
 }
