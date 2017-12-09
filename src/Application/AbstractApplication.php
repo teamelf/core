@@ -11,6 +11,7 @@
 
 namespace TeamELF\Application;
 
+use Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Routing\RouteCollection;
 use TeamELF\Event\AbstractEvent;
@@ -21,6 +22,16 @@ abstract class AbstractApplication
     protected static $instance;
 
     /**
+     * @var string
+     */
+    protected $basePath;
+
+    /**
+     * @var string
+     */
+    protected $storagePath;
+
+    /**
      * @var EventDispatcher
      */
     protected $dispatcher;
@@ -29,6 +40,11 @@ abstract class AbstractApplication
      * @var RouteCollection
      */
     protected $router;
+
+    /**
+     * @var Logger
+     */
+    protected $logger;
 
     /**
      * run all the services
@@ -54,7 +70,7 @@ abstract class AbstractApplication
      */
     public static function getInstance()
     {
-        return static::$instance;
+        return static::$instance ?? new static;
     }
 
     /**
