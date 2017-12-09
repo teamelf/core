@@ -13,6 +13,9 @@ namespace TeamELF\Application;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Monolog\Processor\IntrospectionProcessor;
+use Monolog\Processor\PsrLogMessageProcessor;
+use Monolog\Processor\WebProcessor;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Routing\RouteCollection;
 use TeamELF\Event\RoutesHasBeenLoaded;
@@ -30,20 +33,28 @@ class Server extends AbstractApplication
     function __construct($basePath, $storagePath = null)
     {
         $this->basePath = $basePath;
+
         if ($storagePath) {
             $this->storagePath = $storagePath;
         } else {
             $this->storagePath = $this->basePath . '/storage';
         }
+
         static::instance($this);
+
         $this->dispatcher = new EventDispatcher();
+
         $this->router = new RouteCollection();
+
         $this->logger = new Logger('system');
         foreach (Logger::getLevels() as $logLevel) {
             $filename = $this->storagePath . '/log/' . $logLevel . '-' . strtolower(Logger::getLevelName($logLevel)) . '.log';
             $this->logger->pushHandler(new StreamHandler($filename, $logLevel));
         }
-        $this->logger->info('App started');
+        $this->logger->pushProcessor(new PsrLogMessageProcessor());
+        $this->logger->pushProcessor(new IntrospectionProcessor());
+        $this->logger->pushProcessor(new WebProcessor());
+        $this->logger->debug('App started');
     }
 
     /**
