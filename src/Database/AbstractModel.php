@@ -12,9 +12,9 @@
 namespace TeamELF\Database;
 
 use DateTime;
+use Doctrine\ORM\EntityRepository;
 use PascalDeVink\ShortUuid\ShortUuid;
 
-/** @Entity */
 abstract class AbstractModel
 {
     /**
@@ -49,6 +49,105 @@ abstract class AbstractModel
     function __construct()
     {
         $this->id = ShortUuid::uuid4();
-        $this->createdAt = new DateTime();
+    }
+
+    /**
+     * get id of this model
+     *
+     * @return string
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * get created time of this model
+     *
+     * @return DateTime
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * get updated time of this model
+     *
+     * @return DateTime
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    /**
+     * get deleted time of this model
+     *
+     * @return DateTime
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * save model to database
+     *
+     * @return $this
+     */
+    final public function save()
+    {
+        if (!$this->createdAt) {
+            $this->createdAt = new DateTime();
+        } else {
+            $this->updatedAt = new DateTime();
+        }
+        app('em')->persist($this);
+        app('em')->flush();
+        return $this;
+    }
+
+    /**
+     * delete model from database
+     *
+     * @param bool $force soft delete if $force === false
+     * @return $this
+     */
+    final public function delete($force = false)
+    {
+        if ($force) {
+            $this->deletedAt = new DateTime();
+            app('em')->persist($this);
+        } else {
+            app('em')->remove($this);
+        }
+        app('em')->flush();
+        return $this;
+    }
+
+    /**
+     * get specific model
+     *
+     * @param $id
+     * @return null|object
+     */
+    final public static function find($id)
+    {
+        return static::getRepository()
+            ->find($id);
+    }
+
+    /**
+     * get model's database repository
+     *
+     * @return EntityRepository
+     */
+    final private static function getRepository()
+    {
+        return new EntityRepository(
+            app('em'),
+            app('em')->getClassMetadata(static::class)
+        );
     }
 }
