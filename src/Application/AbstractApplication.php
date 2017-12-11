@@ -59,6 +59,22 @@ abstract class AbstractApplication
     protected $logger;
 
     /**
+     * application's interface maker
+     *
+     * @param $key
+     * @return EntityManager|Logger|AbstractApplication|Config
+     */
+    public function make($key)
+    {
+        switch ($key) {
+            case 'config': return $this->config;
+            case 'em': return $this->entityManager;
+            case 'log': return $this->logger;
+            default: return $this;
+        }
+    }
+
+    /**
      * run all the services
      */
     abstract public function run();

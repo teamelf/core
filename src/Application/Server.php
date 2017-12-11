@@ -52,7 +52,6 @@ class Server extends AbstractApplication
 
         $this->router = new RouteCollection();
 
-        var_dump($this->config->db);
         $this->entityManager = EntityManager::create(
             $this->config->db,
             Setup::createAnnotationMetadataConfiguration([$this->basePath . '/src'])

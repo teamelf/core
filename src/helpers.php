@@ -9,17 +9,26 @@
  * file that was distributed with this source code.
  */
 
+use Doctrine\ORM\EntityManager;
+use Monolog\Logger;
 use TeamELF\Application\AbstractApplication;
+use TeamELF\Config\Config;
 
 if (! function_exists('app')) {
     /**
      * get the application instance
      *
-     * @return mixed|AbstractApplication
+     * @param $make
+     * @return mixed|EntityManager|Logger|AbstractApplication|Config|AbstractApplication
      */
-    function app()
+    function app($make)
     {
-        return AbstractApplication::getInstance();
+        $app = AbstractApplication::getInstance();
+        if ($make) {
+            return $app->make($make);
+        } else {
+            return $app;
+        }
     }
 }
 
