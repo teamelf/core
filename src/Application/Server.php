@@ -11,6 +11,8 @@
 
 namespace TeamELF\Application;
 
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Monolog\Processor\IntrospectionProcessor;
@@ -18,6 +20,7 @@ use Monolog\Processor\PsrLogMessageProcessor;
 use Monolog\Processor\WebProcessor;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Routing\RouteCollection;
+use TeamELF\Config\Config;
 use TeamELF\Event\RoutesHasBeenLoaded;
 use TeamELF\Event\RoutesWillBeLoaded;
 
@@ -42,14 +45,25 @@ class Server extends AbstractApplication
 
         static::instance($this);
 
+        $this->config = new Config($this->basePath);
+        date_default_timezone_set($this->config->timezone);
+
         $this->dispatcher = new EventDispatcher();
 
         $this->router = new RouteCollection();
 
+        var_dump($this->config->db);
+        $this->entityManager = EntityManager::create(
+            $this->config->db,
+            Setup::createAnnotationMetadataConfiguration([$this->basePath . '/src'])
+        );
+
         $this->logger = new Logger('system');
         foreach (Logger::getLevels() as $logLevel) {
-            $filename = $this->storagePath . '/log/' . $logLevel . '-' . strtolower(Logger::getLevelName($logLevel)) . '.log';
-            $this->logger->pushHandler(new StreamHandler($filename, $logLevel));
+            if ($logLevel >= $this->config->debugLevel) {
+                $filename = $this->storagePath . '/log/' . $logLevel . '-' . strtolower(Logger::getLevelName($logLevel)) . '.log';
+                $this->logger->pushHandler(new StreamHandler($filename, $logLevel));
+            }
         }
         $this->logger->pushProcessor(new PsrLogMessageProcessor());
         $this->logger->pushProcessor(new IntrospectionProcessor());

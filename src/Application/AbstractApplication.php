@@ -11,9 +11,11 @@
 
 namespace TeamELF\Application;
 
+use Doctrine\ORM\EntityManager;
 use Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Routing\RouteCollection;
+use TeamELF\Config\Config;
 use TeamELF\Event\AbstractEvent;
 use TeamELF\Listener\AbstractListener;
 
@@ -32,6 +34,11 @@ abstract class AbstractApplication
     protected $storagePath;
 
     /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
      * @var EventDispatcher
      */
     protected $dispatcher;
@@ -40,6 +47,11 @@ abstract class AbstractApplication
      * @var RouteCollection
      */
     protected $router;
+
+    /**
+     * @var EntityManager
+     */
+    protected $entityManager;
 
     /**
      * @var Logger

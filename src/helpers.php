@@ -13,10 +13,30 @@ use TeamELF\Application\AbstractApplication;
 
 if (! function_exists('app')) {
     /**
+     * get the application instance
+     *
      * @return mixed|AbstractApplication
      */
     function app()
     {
         return AbstractApplication::getInstance();
+    }
+}
+
+if (!function_exists('env')) {
+    /**
+     * get environment variable
+     *
+     * @param string $key
+     * @param string $defaultValue
+     * @return string
+     */
+    function env($key, $defaultValue = '')
+    {
+        if (isset($_ENV[$key])) {
+            return $_ENV[$key];
+        } else {
+            return $defaultValue;
+        }
     }
 }
