@@ -35,6 +35,9 @@ class Server extends AbstractApplication
      */
     function __construct($basePath, $storagePath = null)
     {
+        // always save UTC in database
+        date_default_timezone_set('UTC');
+
         $this->basePath = $basePath;
 
         if ($storagePath) {
@@ -46,7 +49,6 @@ class Server extends AbstractApplication
         static::instance($this);
 
         $this->config = new Config($this->basePath);
-        date_default_timezone_set($this->config->timezone);
 
         $this->dispatcher = new EventDispatcher();
 

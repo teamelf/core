@@ -12,6 +12,7 @@
 namespace TeamELF\Database;
 
 use DateTime;
+use DateTimeZone;
 use Doctrine\ORM\EntityRepository;
 use PascalDeVink\ShortUuid\ShortUuid;
 
@@ -68,7 +69,8 @@ abstract class AbstractModel
      */
     public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->createdAt
+            ->setTimezone(new DateTimeZone(app('config')->timezone));
     }
 
     /**
@@ -78,7 +80,8 @@ abstract class AbstractModel
      */
     public function getUpdatedAt()
     {
-        return $this->updatedAt;
+        return $this->updatedAt
+            ->setTimezone(new DateTimeZone(app('config')->timezone));
     }
 
     /**
@@ -88,7 +91,8 @@ abstract class AbstractModel
      */
     public function getDeletedAt()
     {
-        return $this->deletedAt;
+        return $this->deletedAt
+            ->setTimezone(new DateTimeZone(app('config')->timezone));
     }
 
     /**
