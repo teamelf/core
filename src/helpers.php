@@ -21,7 +21,7 @@ if (! function_exists('app')) {
      * @param $make
      * @return mixed|EntityManager|Logger|AbstractApplication|Config|AbstractApplication
      */
-    function app($make)
+    function app($make = null)
     {
         $app = AbstractApplication::getInstance();
         if ($make) {

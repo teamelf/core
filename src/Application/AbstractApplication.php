@@ -12,6 +12,7 @@
 namespace TeamELF\Application;
 
 use Doctrine\ORM\EntityManager;
+use Exception;
 use Monolog\Logger;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Routing\RouteCollection;
@@ -95,10 +96,14 @@ abstract class AbstractApplication
      * get the Application instance
      *
      * @return static
+     * @throws Exception
      */
     public static function getInstance()
     {
-        return static::$instance ?? new static;
+        if (!static::$instance) {
+            throw new Exception('app has not been instanced yet!');
+        }
+        return static::$instance;
     }
 
     /**
