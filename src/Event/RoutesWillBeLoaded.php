@@ -18,7 +18,7 @@ class RoutesWillBeLoaded extends AbstractEvent
     /**
      * @var Router
      */
-    private $router;
+    protected $router;
 
     /**
      * RoutesWillBeLoaded constructor.
@@ -30,5 +30,13 @@ class RoutesWillBeLoaded extends AbstractEvent
     {
         parent::__construct();
         $this->router = $router;
+    }
+
+    /**
+     * @return Router
+     */
+    public function getRouter()
+    {
+        return $this->router;
     }
 }

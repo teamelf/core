@@ -11,7 +11,6 @@
 
 namespace TeamELF\Application;
 
-use TeamELF\Event\RoutesHasBeenLoaded;
 use TeamELF\Event\RoutesWillBeLoaded;
 use TeamELF\Router\Router;
 
@@ -22,12 +21,17 @@ class Server extends AbstractApplication
      */
     protected $router;
 
+    function __construct($basePath, $storagePath = null)
+    {
+        parent::__construct($basePath, $storagePath);
+        $this->router = new Router();
+    }
+
     /**
      * register all services
      */
     protected function register(): void
     {
-        $this->registerRoutes();
     }
 
     /**
@@ -35,17 +39,8 @@ class Server extends AbstractApplication
      */
     protected function boot(): void
     {
+        $this->dispatch(new RoutesWillBeLoaded($this->router));
         $response = $this->router->getResponse();
         $response->send();
-    }
-
-    /**
-     * register routes
-     */
-    protected function registerRoutes()
-    {
-        $this->router = new Router();
-        $this->dispatch(new RoutesWillBeLoaded($this->router));
-        $this->dispatch(new RoutesHasBeenLoaded($this->router));
     }
 }

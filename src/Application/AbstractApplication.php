@@ -111,7 +111,7 @@ abstract class AbstractApplication
     /**
      * application's interface maker
      *
-     * @param $key
+     * @param string $key
      * @return EntityManager|Logger|AbstractApplication|Config
      */
     public function make($key)
