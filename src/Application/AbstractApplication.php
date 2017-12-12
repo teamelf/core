@@ -28,7 +28,7 @@ use TeamELF\Exception\HttpMethodNotAllowedException;
 use TeamELF\Exception\HttpNotFoundException;
 use TeamELF\Exception\HttpUnauthorizedException;
 use TeamELF\Exception\HttpValidationException;
-use TeamELF\Listener\AbstractListener;
+use TeamELF\Listener\ListenerInterface;
 
 abstract class AbstractApplication
 {
@@ -204,10 +204,10 @@ abstract class AbstractApplication
      * listen an event
      *
      * @param string|AbstractEvent $event
-     * @param AbstractListener     $listener
+     * @param ListenerInterface    $listener
      * @return $this
      */
-    public function listen($event, AbstractListener $listener)
+    public function listen($event, ListenerInterface $listener)
     {
         if ($event instanceof AbstractEvent) {
             $this->dispatcher->addListener($event->getEventName(), [$listener, 'handler']);

@@ -90,7 +90,7 @@ class Router
      * @return $this
      * @throws HttpMethodNotAllowedException
      */
-    public function add($method, $name, $path, $controller, array $requirements = [],
+    public function add($method, $name, $path, $controller = null, array $requirements = [],
                         array $options = [], $host = '', array $schemas = [], $condition = '')
     {
         if (!in_array(strtoupper($method), $this->allowedMethod)) {
@@ -120,7 +120,7 @@ class Router
      * @param string $controller
      * @return $this
      */
-    public function get($name, $path, $controller)
+    public function get($name, $path, $controller = null)
     {
         $this->add('GET', $name, $path, $controller);
         return $this;
@@ -134,7 +134,7 @@ class Router
      * @param string $controller
      * @return $this
      */
-    public function post($name, $path, $controller)
+    public function post($name, $path, $controller = null)
     {
         $this->add('POST', $name, $path, $controller);
         return $this;
@@ -148,7 +148,7 @@ class Router
      * @param string $controller
      * @return $this
      */
-    public function put($name, $path, $controller)
+    public function put($name, $path, $controller = null)
     {
         $this->add('PUT', $name, $path, $controller);
         return $this;
@@ -162,7 +162,7 @@ class Router
      * @param string $controller
      * @return $this
      */
-    public function delete($name, $path, $controller)
+    public function delete($name, $path, $controller = null)
     {
         $this->add('DELETE', $name, $path, $controller);
         return $this;
@@ -176,7 +176,7 @@ class Router
      * @param string $controller
      * @return $this
      */
-    public function patch($name, $path, $controller)
+    public function patch($name, $path, $controller = null)
     {
         $this->add('PATCH', $name, $path, $controller);
         return $this;
@@ -194,8 +194,12 @@ class Router
         $this->parameters = $this->matcher->match($this->request->getRequestUri());
 
         $controller = $this->parameters['_controller'];
-        $this->controller = new $controller($this->request, $this->parameters);
-        $response = $this->controller->handler();
+        if ($controller === null) {
+            $response = new Response();
+        } else {
+            $this->controller = new $controller($this->request, $this->parameters);
+            $response = $this->controller->handler();
+        }
 
         return $response;
     }

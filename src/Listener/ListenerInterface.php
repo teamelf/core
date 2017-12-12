@@ -11,7 +11,7 @@
 
 namespace TeamELF\Listener;
 
-abstract class AbstractListener
+interface ListenerInterface
 {
-    abstract public function handler($event);
+    public function handler($event);
 }
