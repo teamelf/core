@@ -191,7 +191,7 @@ class Router
     {
         $this->matcher = new UrlMatcher($this->routes, $this->context);
 
-        $this->parameters = $this->matcher->match($this->request->getRequestUri());
+        $this->parameters = $this->matcher->matchRequest($this->request);
 
         $controller = $this->parameters['_controller'];
         if ($controller === null) {
