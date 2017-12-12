@@ -43,7 +43,7 @@ abstract class AbstractController
      * @param string $defaultValue
      * @return mixed|string
      */
-    protected function getParameter(string $key, $defaultValue = '')
+    protected function getParameter($key, $defaultValue = '')
     {
         return $this->parameters[$key] ?? $defaultValue;
     }

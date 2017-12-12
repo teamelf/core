@@ -90,8 +90,8 @@ class Router
      * @return $this
      * @throws HttpMethodNotAllowedException
      */
-    public function add(string $method, string $name, string $path, string $controller, array $requirements = [],
-                        array $options = [], string $host = '', array $schemas = [], string $condition = '')
+    public function add($method, $name, $path, $controller, array $requirements = [],
+                        array $options = [], $host = '', array $schemas = [], $condition = '')
     {
         if (!in_array(strtoupper($method), $this->allowedMethod)) {
             throw new HttpMethodNotAllowedException();
@@ -120,7 +120,7 @@ class Router
      * @param string $controller
      * @return $this
      */
-    public function get(string $name, string $path, string $controller)
+    public function get($name, $path, $controller)
     {
         $this->add('GET', $name, $path, $controller);
         return $this;
@@ -134,7 +134,7 @@ class Router
      * @param string $controller
      * @return $this
      */
-    public function post(string $name, string $path, string $controller)
+    public function post($name, $path, $controller)
     {
         $this->add('POST', $name, $path, $controller);
         return $this;
@@ -148,7 +148,7 @@ class Router
      * @param string $controller
      * @return $this
      */
-    public function put(string $name, string $path, string $controller)
+    public function put($name, $path, $controller)
     {
         $this->add('PUT', $name, $path, $controller);
         return $this;
@@ -162,7 +162,7 @@ class Router
      * @param string $controller
      * @return $this
      */
-    public function delete(string $name, string $path, string $controller)
+    public function delete($name, $path, $controller)
     {
         $this->add('DELETE', $name, $path, $controller);
         return $this;
@@ -176,7 +176,7 @@ class Router
      * @param string $controller
      * @return $this
      */
-    public function patch(string $name, string $path, string $controller)
+    public function patch($name, $path, $controller)
     {
         $this->add('PATCH', $name, $path, $controller);
         return $this;

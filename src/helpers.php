@@ -50,7 +50,7 @@ if (!function_exists('response')) {
      * @param array  $headers
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    function response(string $content = '', int $status = 200, array $headers = [])
+    function response($content = '', $status = 200, array $headers = [])
     {
         return new \Symfony\Component\HttpFoundation\Response($content, $status, $headers);
     }
