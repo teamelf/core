@@ -13,7 +13,6 @@ namespace TeamELF\Application;
 
 use TeamELF\Event\RoutesHasBeenLoaded;
 use TeamELF\Event\RoutesWillBeLoaded;
-use TeamELF\Http\TestController;
 use TeamELF\Router\Router;
 
 class Server extends AbstractApplication
