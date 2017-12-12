@@ -1,5 +1,5 @@
 {
-  "name": "teamelf/teamelf-core",
+  "name": "teamelf/core",
   "description": "Extensible team management",
   "keywords": ["team", "management"],
   "type": "library",
