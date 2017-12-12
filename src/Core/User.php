@@ -114,4 +114,19 @@ class User extends AbstractModel
         $this->gender = $gender;
         return $this;
     }
+
+    /**
+     * @ManyToOne(targetEntity="User")
+     * @JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    protected $user;
+    public function getUser()
+    {
+        return $this->user;
+    }
+    public function user(User $user)
+    {
+        $this->user = $user;
+        return $this;
+    }
 }
