@@ -45,22 +45,30 @@ if (!function_exists('response')) {
     /**
      * make a new http response
      *
-     * @param string $content
+     * @param mixed $content
      * @param int    $status
      * @param array  $headers
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    function response($content = '', $status = 200, array $headers = [])
+    function response($content = null, $status = 200, array $headers = [])
     {
-        return new \Symfony\Component\HttpFoundation\Response($content, $status, $headers);
+        switch (gettype($content)) {
+            case 'NULL':
+            case 'string':
+                $r = $content;
+                break;
+            default:
+                $r = json_encode($content);
+                $headers['Content-Type'] = 'application/json';
+        }
+        return new \Symfony\Component\HttpFoundation\Response($r, $status, $headers);
     }
 }
 
 if (!function_exists('abort')) {
     function abort($statusCode, $message = '')
     {
-        $response = new \Symfony\Component\HttpFoundation\Response($message, $statusCode);
-        $response->send();
+        response(['message' => $message, 'code' => $statusCode], $statusCode)->send();
         die();
     }
 }
