@@ -12,8 +12,8 @@
 namespace TeamELF\Config;
 
 use Dotenv\Dotenv;
-use Exception;
 use Monolog\Logger;
+use TeamELF\Exception\Exception;
 
 class Config
 {
