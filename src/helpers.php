@@ -35,7 +35,7 @@ if (!function_exists('env')) {
      * @param string $defaultValue
      * @return string
      */
-    function env($key, $defaultValue = '')
+    function env($key, $defaultValue = null)
     {
         return $_ENV[strtoupper($key)] ?? $defaultValue;
     }
