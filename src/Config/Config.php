@@ -81,7 +81,7 @@ class Config
      */
     protected function selectSQLDriver($connection)
     {
-        switch ($connection) {
+        switch (strtolower($connection)) {
             case 'mysql':
                 $this->db = [
                     'driver'   => 'pdo_mysql',

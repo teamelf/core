@@ -42,10 +42,6 @@ if (!function_exists('env')) {
      */
     function env($key, $defaultValue = '')
     {
-        if (isset($_ENV[$key])) {
-            return $_ENV[$key];
-        } else {
-            return $defaultValue;
-        }
+        return $_ENV[strtoupper($key)] ?? $defaultValue;
     }
 }
