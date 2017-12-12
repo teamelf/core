@@ -11,14 +11,15 @@
 
 namespace TeamELF\Application;
 
-use Symfony\Component\Routing\RouteCollection;
 use TeamELF\Event\RoutesHasBeenLoaded;
 use TeamELF\Event\RoutesWillBeLoaded;
+use TeamELF\Http\TestController;
+use TeamELF\Router\Router;
 
 class Server extends AbstractApplication
 {
     /**
-     * @var RouteCollection
+     * @var Router
      */
     protected $router;
 
@@ -35,7 +36,8 @@ class Server extends AbstractApplication
      */
     protected function boot(): void
     {
-        // TODO: Implement boot() method.
+        $response = $this->router->getResponse();
+        $response->send();
     }
 
     /**
@@ -43,7 +45,7 @@ class Server extends AbstractApplication
      */
     protected function registerRoutes()
     {
-        $this->router = new RouteCollection();
+        $this->router = new Router();
         $this->dispatch(new RoutesWillBeLoaded($this->router));
         $this->dispatch(new RoutesHasBeenLoaded($this->router));
     }

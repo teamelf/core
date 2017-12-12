@@ -22,6 +22,12 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 use TeamELF\Config\Config;
 use TeamELF\Event\AbstractEvent;
 use TeamELF\Exception\Exception;
+use TeamELF\Exception\HttpException;
+use TeamELF\Exception\HttpForbiddenException;
+use TeamELF\Exception\HttpMethodNotAllowedException;
+use TeamELF\Exception\HttpNotFoundException;
+use TeamELF\Exception\HttpUnauthorizedException;
+use TeamELF\Exception\HttpValidationException;
 use TeamELF\Listener\AbstractListener;
 
 abstract class AbstractApplication
@@ -141,7 +147,14 @@ abstract class AbstractApplication
         try {
             $this->register();
             $this->boot();
-        } catch (Exception $exception) {}
+        } catch (HttpUnauthorizedException $exception) {
+        } catch (HttpForbiddenException $exception) {
+        } catch (HttpNotFoundException $exception) {
+        } catch (HttpMethodNotAllowedException $exception) {
+        } catch (HttpValidationException $exception) {
+        } catch (HttpException $exception) {
+        } catch (Exception $exception) {
+        }
         return $this;
     }
 
@@ -177,7 +190,7 @@ abstract class AbstractApplication
      * @param string|AbstractEvent $event
      * @return $this
      */
-    protected function dispatch($event)
+    public function dispatch($event)
     {
         if ($event instanceof AbstractEvent) {
             $this->dispatcher->dispatch($event->getEventName(), $event);
@@ -194,7 +207,7 @@ abstract class AbstractApplication
      * @param AbstractListener     $listener
      * @return $this
      */
-    protected function listen($event, AbstractListener $listener)
+    public function listen($event, AbstractListener $listener)
     {
         if ($event instanceof AbstractEvent) {
             $this->dispatcher->addListener($event->getEventName(), [$listener, 'handler']);
