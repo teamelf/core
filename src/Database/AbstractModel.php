@@ -54,7 +54,7 @@ abstract class AbstractModel
             if (in_array($key, ['id', 'createdAt', 'updatedAt', 'deletedAt'])) {
                 continue;
             }
-            if (property_exists($this, $key)) {
+            if (property_exists($this, $key) && method_exists($this, $key)) {
                 $this->$key($value);
             }
         }
