@@ -19,6 +19,11 @@ use PascalDeVink\ShortUuid\ShortUuid;
 abstract class AbstractModel
 {
     /**
+     * @var EntityRepository
+     */
+    private static $repository;
+
+    /**
      * @var string
      *
      * @Id
@@ -151,15 +156,56 @@ abstract class AbstractModel
     }
 
     /**
+     * get specific model by $criteria
+     *
+     * @param array $criteria
+     * @return null|object
+     */
+    final public static function findBy(array $criteria)
+    {
+        return static::getRepository()
+            ->findOneBy($criteria);
+    }
+
+    /**
+     * get models by some conditions
+     *
+     * @param array      $criteria
+     * @param array|null $orderBy
+     * @param int|null   $limit
+     * @param int|null   $offset
+     * @return array
+     */
+    final public static function where(array $criteria, array $orderBy = null, int $limit = null, int $offset = null)
+    {
+        return static::getRepository()
+            ->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * get all models
+     *
+     * @return array
+     */
+    final public static function all()
+    {
+        return static::getRepository()
+            ->findAll();
+    }
+
+    /**
      * get model's database repository
      *
      * @return EntityRepository
      */
     final private static function getRepository()
     {
-        return new EntityRepository(
-            app('em'),
-            app('em')->getClassMetadata(static::class)
-        );
+        if (!self::$repository) {
+            self::$repository = new EntityRepository(
+                app('em'),
+                app('em')->getClassMetadata(static::class)
+            );
+        }
+        return self::$repository;
     }
 }
