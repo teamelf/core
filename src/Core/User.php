@@ -116,17 +116,17 @@ class User extends AbstractModel
     }
 
     /**
-     * @ManyToOne(targetEntity="User")
-     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="Role")
+     * @JoinColumn(name="role_id", referencedColumnName="id")
      */
-    protected $user;
-    public function getUser()
+    protected $role;
+    public function getRole()
     {
-        return $this->user;
+        return $this->role;
     }
-    public function user(User $user)
+    public function role(Role $role)
     {
-        $this->user = $user;
+        $this->role = $role;
         return $this;
     }
 }
