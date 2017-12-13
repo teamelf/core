@@ -111,7 +111,7 @@ abstract class AbstractModel
     /**
      * save model to database
      *
-     * @return $this
+     * @return static
      */
     final public function save()
     {
@@ -129,7 +129,7 @@ abstract class AbstractModel
      * delete model from database
      *
      * @param bool $force soft delete if $force === false
-     * @return $this
+     * @return static
      */
     final public function delete($force = false)
     {
@@ -147,24 +147,36 @@ abstract class AbstractModel
      * get specific model
      *
      * @param $id
-     * @return null|object
+     * @return null|object|static
      */
     final public static function find($id)
     {
-        return static::getRepository()
+        $instance = static::getRepository()
             ->find($id);
+        // use this to avoid lint error in idea
+        if ($instance instanceof static) {
+            return $instance;
+        } else {
+            return null;
+        }
     }
 
     /**
      * get specific model by $criteria
      *
      * @param array $criteria
-     * @return null|object
+     * @return null|object|static
      */
     final public static function findBy(array $criteria)
     {
-        return static::getRepository()
+        $instance = static::getRepository()
             ->findOneBy($criteria);
+        // use this to avoid lint error in idea
+        if ($instance instanceof static) {
+            return $instance;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -174,7 +186,7 @@ abstract class AbstractModel
      * @param array|null $orderBy
      * @param int|null   $limit
      * @param int|null   $offset
-     * @return array
+     * @return static[]
      */
     final public static function where(array $criteria, array $orderBy = null, int $limit = null, int $offset = null)
     {
@@ -185,7 +197,7 @@ abstract class AbstractModel
     /**
      * get all models
      *
-     * @return array
+     * @return static[]
      */
     final public static function all()
     {
