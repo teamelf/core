@@ -64,6 +64,13 @@ class Router
     protected $allowedMethod = ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'];
 
     /**
+     * prefix of router
+     *
+     * @var string
+     */
+    protected $prefix;
+
+    /**
      * Router constructor.
      * create a router management
      */
@@ -99,7 +106,7 @@ class Router
         $this->routes->add(
             $name,
             new Route(
-                $path,
+                $this->prefix . $path,
                 ['_controller' => $controller],
                 $requirements,
                 $options,
@@ -202,5 +209,18 @@ class Router
         }
 
         return $response;
+    }
+
+    /**
+     * set prefix of router
+     * only works after this setter, before next setter
+     *
+     * @param string $prefix
+     * @return $this
+     */
+    public function prefix($prefix = '')
+    {
+        $this->prefix = $prefix;
+        return $this;
     }
 }

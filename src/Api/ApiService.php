@@ -37,8 +37,26 @@ class ApiService extends AbstractService implements ListenerInterface
     public function handler($event)
     {
         $event->getRouter()
-            ->get('auth-check', '/api/auth', AuthCheckController::class)
-            ->post('auth-login', '/api/auth/login', LoginController::class)
-            ->post('auth-logout', '/api/auth/logout', LogoutController::class);
+            ->prefix('/api')
+
+            // --------------------
+            // | Auth
+            // --------------------
+            ->get('auth-check', '/auth', AuthCheckController::class)
+            ->post('auth-login', '/auth/login', LoginController::class)
+            ->post('auth-logout', '/auth/logout', LogoutController::class)
+            ->post('auth-forgot', '/auth/forgot') // TODO
+            ->post('auth-reset', '/auth/reset') // TODO
+
+            // --------------------
+            // | User
+            // --------------------
+            ->get('user-list', '/user') // TODO
+            ->get('user-item', '/user/{id}') // TODO
+            ->put('user-edit', '/user/{id}') // TODO
+            ->put('user-security', '/user/{id}/security') // TODO
+
+            // set prefix back to empty
+            ->prefix('');
     }
 }
