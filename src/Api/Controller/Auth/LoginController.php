@@ -12,6 +12,8 @@
 namespace TeamELF\Api\Controller\Auth;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use TeamELF\Http\AbstractController;
 
 class LoginController extends AbstractController
@@ -23,6 +25,15 @@ class LoginController extends AbstractController
      */
     public function handler(): Response
     {
-        return response();
+        $data = $this->validate([
+            'username' => [
+                new NotBlank()
+            ],
+            'password' => [
+                new NotBlank(),
+                new Length(40) // length of sha1 from front-end
+            ]
+        ]);
+        return response($data);
     }
 }

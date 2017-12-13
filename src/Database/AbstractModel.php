@@ -47,9 +47,17 @@ abstract class AbstractModel
      */
     protected $deletedAt;
 
-    function __construct()
+    function __construct(array $attributes)
     {
         $this->id = ShortUuid::uuid4();
+        foreach ($attributes as $key => $value) {
+            if (in_array($key, ['id', 'createdAt', 'updatedAt', 'deletedAt'])) {
+                continue;
+            }
+            if (property_exists($this, $key)) {
+                $this->$key($value);
+            }
+        }
     }
 
     /**

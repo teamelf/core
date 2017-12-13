@@ -15,8 +15,9 @@ use Throwable;
 
 class HttpValidationException extends HttpException
 {
-    public function __construct($message = 'Validation Error', Throwable $previous = null)
+    public function __construct(array $validation, $message = 'Validation Error', Throwable $previous = null)
     {
+        response($validation, 422)->send();
         parent::__construct($message, 422, $previous);
     }
 }
