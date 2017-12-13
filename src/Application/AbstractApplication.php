@@ -23,10 +23,6 @@ use TeamELF\Config\Config;
 use TeamELF\Event\AbstractEvent;
 use TeamELF\Exception\Exception;
 use TeamELF\Exception\HttpException;
-use TeamELF\Exception\HttpForbiddenException;
-use TeamELF\Exception\HttpMethodNotAllowedException;
-use TeamELF\Exception\HttpNotFoundException;
-use TeamELF\Exception\HttpUnauthorizedException;
 use TeamELF\Exception\HttpValidationException;
 use TeamELF\Listener\ListenerInterface;
 
@@ -147,13 +143,16 @@ abstract class AbstractApplication
         try {
             $this->register();
             $this->boot();
-        } catch (HttpUnauthorizedException $exception) {
-        } catch (HttpForbiddenException $exception) {
-        } catch (HttpNotFoundException $exception) {
-        } catch (HttpMethodNotAllowedException $exception) {
         } catch (HttpValidationException $exception) {
+            $validations = json_decode($exception->getMessage(), true);
+            response($validations, $exception->getCode())->send();
         } catch (HttpException $exception) {
+            response([
+                'code' => $exception->getCode(),
+                'message' => $exception->getMessage()
+            ], $exception->getCode())->send();
         } catch (Exception $exception) {
+            response(null, 500)->send();
         }
         return $this;
     }
