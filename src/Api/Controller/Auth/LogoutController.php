@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
 use TeamELF\Exception\HttpUnauthorizedException;
 use TeamELF\Http\AbstractController;
 
-class AuthCheckController extends AbstractController
+class LogoutController extends AbstractController
 {
     /**
      * handle the request
@@ -25,10 +25,7 @@ class AuthCheckController extends AbstractController
      */
     public function handler(): Response
     {
-        $user = $this->getAuth();
-        if (!$user) {
-            throw new HttpUnauthorizedException();
-        }
+        $this->auth(null);
         return response();
     }
 }

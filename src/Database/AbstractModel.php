@@ -146,11 +146,14 @@ abstract class AbstractModel
     /**
      * get specific model
      *
-     * @param $id
+     * @param string $id
      * @return null|object|static
      */
     final public static function find($id)
     {
+        if ($id === null) {
+            return null;
+        }
         $instance = static::getRepository()
             ->find($id);
         // use this to avoid lint error in idea

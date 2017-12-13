@@ -103,12 +103,16 @@ abstract class AbstractController
     /**
      * set auth user to session
      *
-     * @param User $user
+     * @param null|User $user
      * @return static
      */
-    final protected function auth(User $user)
+    final protected function auth($user)
     {
-        $this->session->set('auth_user_id', $user->getId());
+        if ($user) {
+            $this->session->set('auth_user_id', $user->getId());
+        } else {
+            $this->session->remove('auth_user_id');
+        }
         return $this;
     }
 

@@ -13,6 +13,7 @@ namespace TeamELF\Api;
 
 use TeamELF\Api\Controller\Auth\AuthCheckController;
 use TeamELF\Api\Controller\Auth\LoginController;
+use TeamELF\Api\Controller\Auth\LogoutController;
 use TeamELF\Application\AbstractService;
 use TeamELF\Event\RoutesWillBeLoaded;
 use TeamELF\Listener\ListenerInterface;
@@ -37,6 +38,7 @@ class ApiService extends AbstractService implements ListenerInterface
     {
         $event->getRouter()
             ->get('auth-check', '/api/auth', AuthCheckController::class)
-            ->post('auth-login', '/api/auth/login', LoginController::class);
+            ->post('auth-login', '/api/auth/login', LoginController::class)
+            ->post('auth-logout', '/api/auth/logout', LogoutController::class);
     }
 }
