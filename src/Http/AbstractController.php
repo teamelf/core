@@ -13,7 +13,9 @@ namespace TeamELF\Http;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Validator\Validation;
+use TeamELF\Core\User;
 use TeamELF\Exception\HttpValidationException;
 
 abstract class AbstractController
@@ -24,6 +26,13 @@ abstract class AbstractController
      * @var Request
      */
     protected $request;
+
+    /**
+     * the session data
+     *
+     * @var Session
+     */
+    protected $session;
 
     /**
      * route parameters
@@ -40,7 +49,12 @@ abstract class AbstractController
     function __construct(Request $request, array $parameters)
     {
         $this->request = $request;
+
         $this->parameters = $parameters;
+
+        $this->session = new Session();
+        $this->session->start();
+
         $this->validator = Validation::createValidator();
     }
 
@@ -84,6 +98,28 @@ abstract class AbstractController
             throw new HttpValidationException($validations);
         }
         return $data;
+    }
+
+    /**
+     * set auth user to session
+     *
+     * @param User $user
+     * @return static
+     */
+    final protected function auth(User $user)
+    {
+        $this->session->set('auth_user_id', $user->getId());
+        return $this;
+    }
+
+    /**
+     * get auth user from session
+     *
+     * @return null|object|User
+     */
+    final protected function getAuth()
+    {
+        return User::find($this->session->get('auth_user_id'));
     }
 
     /**
