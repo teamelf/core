@@ -152,6 +152,7 @@ abstract class AbstractApplication
                 'message' => $exception->getMessage()
             ], $exception->getCode())->send();
         } catch (Exception $exception) {
+            app('log')->alert('DOWN', $exception->getTrace());
             response(null, 500)->send();
         }
         return $this;

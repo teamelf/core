@@ -40,9 +40,11 @@ class LoginController extends AbstractController
             throw new HttpForbiddenException();
         }
         if (password_verify($data['password'], $user->getPassword())) {
+            app('log')->info($user->getUsername() . ' Login successfully');
             $this->auth($user);
             return response();
         } else {
+            app('log')->info($user->getUsername() . ' Login failed');
             $this->auth(null);
             throw new HttpForbiddenException();
         }
