@@ -14,6 +14,7 @@ namespace TeamELF\Application;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use TeamELF\Api\ApiService;
 use TeamELF\Event\RoutesWillBeLoaded;
+use TeamELF\Exception\HttpNotFoundException;
 use TeamELF\Router\Router;
 
 class Server extends AbstractApplication
@@ -34,6 +35,13 @@ class Server extends AbstractApplication
      */
     protected function register(): void
     {
+        $this->router->prefix('')->add(
+            'GET',
+            'front-end',
+            '/{uri}',
+            null,
+            ['uri' => '(?!api).*']
+        );
         (new ApiService())->register();
     }
 
@@ -49,7 +57,7 @@ class Server extends AbstractApplication
             $response = $this->router->getResponse();
             $response->send();
         } catch (ResourceNotFoundException $exception) {
-            response('here\'s front end page')->send();
+            throw new HttpNotFoundException();
         }
     }
 }
