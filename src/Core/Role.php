@@ -11,7 +11,6 @@
 
 namespace TeamELF\Core;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use TeamELF\Database\AbstractModel;
 
 /**
@@ -50,11 +49,5 @@ class Role extends AbstractModel
     {
         $this->slug = $slug;
         return $this;
-    }
-
-    protected $users;
-    public function getUsers()
-    {
-        return $this->users;
     }
 }
