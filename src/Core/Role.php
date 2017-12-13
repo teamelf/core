@@ -50,4 +50,15 @@ class Role extends AbstractModel
         $this->slug = $slug;
         return $this;
     }
+
+    /**
+     * @var User[]
+     *
+     * @OneToMany(targetEntity="User", mappedBy="role_id")
+     */
+    protected $users;
+    public function getUsers()
+    {
+        return $this->users;
+    }
 }
