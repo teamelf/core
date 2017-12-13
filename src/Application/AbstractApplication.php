@@ -136,7 +136,7 @@ abstract class AbstractApplication
     /**
      * run all the services
      *
-     * @return static
+     * @return $this
      */
     final public function start()
     {
@@ -187,7 +187,7 @@ abstract class AbstractApplication
      * dispatch an event
      *
      * @param string|AbstractEvent $event
-     * @return static
+     * @return $this
      */
     public function dispatch($event)
     {
@@ -204,7 +204,7 @@ abstract class AbstractApplication
      *
      * @param string|AbstractEvent $event
      * @param ListenerInterface    $listener
-     * @return static
+     * @return $this
      */
     public function listen($event, ListenerInterface $listener)
     {

@@ -94,7 +94,7 @@ class Router
      * @param string $host
      * @param array  $schemas
      * @param string $condition
-     * @return static
+     * @return $this
      * @throws HttpMethodNotAllowedException
      */
     public function add($method, $name, $path, $controller = null, array $requirements = [],
@@ -125,7 +125,7 @@ class Router
      * @param string $name
      * @param string $path
      * @param string $controller
-     * @return static
+     * @return $this
      */
     public function get($name, $path, $controller = null)
     {
@@ -139,7 +139,7 @@ class Router
      * @param string $name
      * @param string $path
      * @param string $controller
-     * @return static
+     * @return $this
      */
     public function post($name, $path, $controller = null)
     {
@@ -153,7 +153,7 @@ class Router
      * @param string $name
      * @param string $path
      * @param string $controller
-     * @return static
+     * @return $this
      */
     public function put($name, $path, $controller = null)
     {
@@ -167,7 +167,7 @@ class Router
      * @param string $name
      * @param string $path
      * @param string $controller
-     * @return static
+     * @return $this
      */
     public function delete($name, $path, $controller = null)
     {
@@ -181,7 +181,7 @@ class Router
      * @param string $name
      * @param string $path
      * @param string $controller
-     * @return static
+     * @return $this
      */
     public function patch($name, $path, $controller = null)
     {

@@ -104,7 +104,7 @@ abstract class AbstractController
      * set auth user to session
      *
      * @param null|User $user
-     * @return static
+     * @return $this
      */
     final protected function auth($user)
     {

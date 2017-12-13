@@ -35,7 +35,7 @@ abstract class AbstractEvent extends Event
      * set event name
      *
      * @param $eventName
-     * @return static
+     * @return $this
      */
     public function name($eventName)
     {

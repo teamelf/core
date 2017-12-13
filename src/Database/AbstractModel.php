@@ -111,7 +111,7 @@ abstract class AbstractModel
     /**
      * save model to database
      *
-     * @return static
+     * @return $this
      */
     final public function save()
     {
@@ -129,7 +129,7 @@ abstract class AbstractModel
      * delete model from database
      *
      * @param bool $force soft delete if $force === false
-     * @return static
+     * @return $this
      */
     final public function delete($force = false)
     {
