@@ -13,7 +13,7 @@ namespace TeamELF\Event;
 
 use TeamELF\Router\Router;
 
-class RoutesHasBeenLoaded extends AbstractEvent
+class RoutesHaveBeenLoaded extends AbstractEvent
 {
     /**
      * @var Router
