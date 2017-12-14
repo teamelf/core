@@ -24,7 +24,6 @@ use TeamELF\Event\AbstractEvent;
 use TeamELF\Exception\Exception;
 use TeamELF\Exception\HttpException;
 use TeamELF\Exception\HttpValidationException;
-use TeamELF\Listener\ListenerInterface;
 
 abstract class AbstractApplication
 {
@@ -204,16 +203,15 @@ abstract class AbstractApplication
      * listen an event
      *
      * @param string|AbstractEvent $event
-     * @param ListenerInterface    $listener
+     * @param mixed                $handler
      * @return $this
      */
-    public function listen($event, ListenerInterface $listener)
+    public function listen($event, $handler)
     {
         if ($event instanceof AbstractEvent) {
-            $this->dispatcher->addListener($event->getEventName(), [$listener, 'handler']);
-        } else {
-            $this->dispatcher->addListener($event, [$listener, 'handler']);
+            $event = $event->getEventName();
         }
+        $this->dispatcher->addListener($event, $handler);
         return $this;
     }
 }

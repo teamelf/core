@@ -66,9 +66,33 @@ if (!function_exists('response')) {
 }
 
 if (!function_exists('abort')) {
+    /**
+     * throw http errors
+     *
+     * @param int    $statusCode
+     * @param string $message
+     */
     function abort($statusCode, $message = '')
     {
         response(['message' => $message, 'code' => $statusCode], $statusCode)->send();
         die();
+    }
+}
+
+if (!function_exists('view')) {
+    /**
+     * return a view rendered by template engine
+     *
+     * @param string $template
+     * @param array  $data
+     * @return string
+     */
+    function view($template, $data = [])
+    {
+        $template = str_replace('.', '/', $template);
+        $template .= '.twig.php';
+        $html = \TeamELF\View\ViewService::getEngine()
+            ->render($template, $data);
+        return response($html);
     }
 }

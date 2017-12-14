@@ -26,7 +26,7 @@ class ApiService extends AbstractService implements ListenerInterface
      */
     public function register()
     {
-        app()->listen(RoutesWillBeLoaded::class, $this);
+        app()->listen(RoutesWillBeLoaded::class, [$this, 'handleRoutes']);
     }
 
     /**
@@ -35,7 +35,7 @@ class ApiService extends AbstractService implements ListenerInterface
      *
      * @param RoutesWillBeLoaded $event
      */
-    public function handler($event)
+    public function handleRoutes($event)
     {
         $event->getRouter()
             ->prefix('/api')

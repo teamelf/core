@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace TeamELF\Listener;
+namespace TeamELF\View\Controller;
 
-interface ListenerInterface
+class FrontEndController extends AbstractViewController
 {
+    protected $template = 'layout';
 }
