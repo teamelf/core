@@ -1,0 +1,10 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "gulp",
+    "dev": "gulp watch"
+  },
+  "devDependencies": {
+    "teamelf-gulp": "^0.1.4"
+  }
+}

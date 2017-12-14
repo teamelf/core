@@ -1,6 +1,10 @@
-/vendor/
+vendor/
+node_modules/
+bower_components/
 .idea/
 .vscode/
 .atom/
 .DS_Store
 composer.lock
+package-lock.json
+npm-debug.log

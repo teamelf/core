@@ -1,0 +1,8 @@
+{
+  "name": "teamelf",
+  "private": true,
+  "dependencies": {
+    "es6-micro-loader": "caridy/es6-micro-loader#v0.2.1",
+    "react": "^16.1.0"
+  }
+}
