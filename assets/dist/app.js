@@ -243,10 +243,10 @@ var o=Object.getOwnPropertySymbols,i=Object.prototype.hasOwnProperty,a=Object.pr
 //# sourceMappingURL=antd.min.js.map
 'use strict';
 
-System.register('teamelf/App', ['teamelf/lib/AbstractComponent'], function (_export, _context) {
+System.register('teamelf/App', ['teamelf/lib/AbstractComponent', 'teamelf/component/layout/Logo', 'teamelf/component/layout/TopNav', 'teamelf/component/layout/Routes', 'teamelf/component/layout/SideNav', 'teamelf/component/layout/Footer'], function (_export, _context) {
   "use strict";
 
-  var Component, _createClass, _antd, Layout, Menu, Breadcrumb, Icon, SubMenu, Header, Content, Sider, Footer, App;
+  var Component, Logo, TopNav, Routes, SideNav, Footer, _createClass, _antd, Layout, Header, Content, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -281,6 +281,16 @@ System.register('teamelf/App', ['teamelf/lib/AbstractComponent'], function (_exp
   return {
     setters: [function (_teamelfLibAbstractComponent) {
       Component = _teamelfLibAbstractComponent.default;
+    }, function (_teamelfComponentLayoutLogo) {
+      Logo = _teamelfComponentLayoutLogo.default;
+    }, function (_teamelfComponentLayoutTopNav) {
+      TopNav = _teamelfComponentLayoutTopNav.default;
+    }, function (_teamelfComponentLayoutRoutes) {
+      Routes = _teamelfComponentLayoutRoutes.default;
+    }, function (_teamelfComponentLayoutSideNav) {
+      SideNav = _teamelfComponentLayoutSideNav.default;
+    }, function (_teamelfComponentLayoutFooter) {
+      Footer = _teamelfComponentLayoutFooter.default;
     }],
     execute: function () {
       _createClass = function () {
@@ -303,31 +313,25 @@ System.register('teamelf/App', ['teamelf/lib/AbstractComponent'], function (_exp
 
       _antd = antd;
       Layout = _antd.Layout;
-      Menu = _antd.Menu;
-      Breadcrumb = _antd.Breadcrumb;
-      Icon = _antd.Icon;
-      SubMenu = Menu.SubMenu;
       Header = Layout.Header;
       Content = Layout.Content;
-      Sider = Layout.Sider;
-      Footer = Layout.Footer;
 
-      App = function (_Component) {
-        _inherits(App, _Component);
+      _class = function (_Component) {
+        _inherits(_class, _Component);
 
-        function App() {
+        function _class() {
           var _ref;
 
-          _classCallCheck(this, App);
+          _classCallCheck(this, _class);
 
           for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
           }
 
-          return _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args)));
+          return _possibleConstructorReturn(this, (_ref = _class.__proto__ || Object.getPrototypeOf(_class)).call.apply(_ref, [this].concat(args)));
         }
 
-        _createClass(App, [{
+        _createClass(_class, [{
           key: 'render',
           value: function render() {
             return React.createElement(
@@ -335,159 +339,18 @@ System.register('teamelf/App', ['teamelf/lib/AbstractComponent'], function (_exp
               null,
               React.createElement(
                 Header,
-                { className: 'header' },
-                React.createElement('div', { style: { width: 120, height: 31, background: 'rgba(255,255,255,.2)', margin: '16px 28px 16px 0', float: 'left' } }),
-                React.createElement(
-                  Menu,
-                  {
-                    theme: 'dark',
-                    mode: 'horizontal',
-                    defaultSelectedKeys: ['2'],
-                    style: { lineHeight: '64px' }
-                  },
-                  React.createElement(Menu.Item, { key: '1' }),
-                  React.createElement(
-                    Menu.Item,
-                    { key: '2' },
-                    'nav 2'
-                  ),
-                  React.createElement(
-                    Menu.Item,
-                    { key: '3' },
-                    'nav 3'
-                  ),
-                  React.createElement(
-                    Menu.Item,
-                    { style: { float: 'right' } },
-                    '\u767B\u51FA'
-                  )
-                )
+                null,
+                React.createElement(Logo, null),
+                React.createElement(TopNav, null)
               ),
               React.createElement(
                 Content,
                 { style: { padding: '0 50px' } },
-                React.createElement(
-                  Breadcrumb,
-                  { style: { margin: '16px 0' } },
-                  React.createElement(
-                    Breadcrumb.Item,
-                    null,
-                    'Home'
-                  ),
-                  React.createElement(
-                    Breadcrumb.Item,
-                    null,
-                    'List'
-                  ),
-                  React.createElement(
-                    Breadcrumb.Item,
-                    null,
-                    'App'
-                  )
-                ),
+                React.createElement(Routes, null),
                 React.createElement(
                   Layout,
                   { style: { padding: '24px 0', background: '#fff' } },
-                  React.createElement(
-                    Sider,
-                    { width: 200, style: { background: '#fff' } },
-                    React.createElement(
-                      Menu,
-                      {
-                        mode: 'inline',
-                        defaultSelectedKeys: ['1'],
-                        defaultOpenKeys: ['sub1'],
-                        style: { height: '100%' }
-                      },
-                      React.createElement(
-                        SubMenu,
-                        { key: 'sub1', title: React.createElement(
-                            'span',
-                            null,
-                            React.createElement(Icon, { type: 'user' }),
-                            'subnav 1'
-                          ) },
-                        React.createElement(
-                          Menu.Item,
-                          { key: '1' },
-                          'option1'
-                        ),
-                        React.createElement(
-                          Menu.Item,
-                          { key: '2' },
-                          'option2'
-                        ),
-                        React.createElement(
-                          Menu.Item,
-                          { key: '3' },
-                          'option3'
-                        ),
-                        React.createElement(
-                          Menu.Item,
-                          { key: '4' },
-                          'option4'
-                        )
-                      ),
-                      React.createElement(
-                        SubMenu,
-                        { key: 'sub2', title: React.createElement(
-                            'span',
-                            null,
-                            React.createElement(Icon, { type: 'laptop' }),
-                            'subnav 2'
-                          ) },
-                        React.createElement(
-                          Menu.Item,
-                          { key: '5' },
-                          'option5'
-                        ),
-                        React.createElement(
-                          Menu.Item,
-                          { key: '6' },
-                          'option6'
-                        ),
-                        React.createElement(
-                          Menu.Item,
-                          { key: '7' },
-                          'option7'
-                        ),
-                        React.createElement(
-                          Menu.Item,
-                          { key: '8' },
-                          'option8'
-                        )
-                      ),
-                      React.createElement(
-                        SubMenu,
-                        { key: 'sub3', title: React.createElement(
-                            'span',
-                            null,
-                            React.createElement(Icon, { type: 'notification' }),
-                            'subnav 3'
-                          ) },
-                        React.createElement(
-                          Menu.Item,
-                          { key: '9' },
-                          'option9'
-                        ),
-                        React.createElement(
-                          Menu.Item,
-                          { key: '10' },
-                          'option10'
-                        ),
-                        React.createElement(
-                          Menu.Item,
-                          { key: '11' },
-                          'option11'
-                        ),
-                        React.createElement(
-                          Menu.Item,
-                          { key: '12' },
-                          'option12'
-                        )
-                      )
-                    )
-                  ),
+                  React.createElement(SideNav, null),
                   React.createElement(
                     Content,
                     { style: { padding: '0 24px', minHeight: 280 } },
@@ -495,19 +358,15 @@ System.register('teamelf/App', ['teamelf/lib/AbstractComponent'], function (_exp
                   )
                 )
               ),
-              React.createElement(
-                Footer,
-                { style: { textAlign: 'center' } },
-                'Ant Design \xA92016 Created by Ant UED'
-              )
+              React.createElement(Footer, null)
             );
           }
         }]);
 
-        return App;
+        return _class;
       }(Component);
 
-      _export('default', App);
+      _export('default', _class);
     }
   };
 });
@@ -702,6 +561,594 @@ System.register('teamelf/lib/AbstractModel', [], function (_export, _context) {
       }();
 
       _export('default', AbstractModel);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/component/layout/Footer', ['teamelf/lib/AbstractComponent'], function (_export, _context) {
+  "use strict";
+
+  var Component, _createClass, _antd, Layout, Footer, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLibAbstractComponent) {
+      Component = _teamelfLibAbstractComponent.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Layout = _antd.Layout;
+      Footer = Layout.Footer;
+
+      _class = function (_Component) {
+        _inherits(_class, _Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Footer,
+              { style: { textAlign: 'center' } },
+              'Ant Design \xA92016 Created by Ant UED'
+            );
+          }
+        }]);
+
+        return _class;
+      }(Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/component/layout/Logo', ['teamelf/lib/AbstractComponent'], function (_export, _context) {
+  "use strict";
+
+  var Component, _createClass, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLibAbstractComponent) {
+      Component = _teamelfLibAbstractComponent.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _class = function (_Component) {
+        _inherits(_class, _Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'render',
+          value: function render() {
+            return React.createElement('div', { style: {
+                width: 120, height: 31,
+                background: 'rgba(255,255,255,.2)',
+                margin: '16px 28px 16px 0',
+                float: 'left'
+              } });
+          }
+        }]);
+
+        return _class;
+      }(Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/component/layout/Routes', ['teamelf/lib/AbstractComponent'], function (_export, _context) {
+  "use strict";
+
+  var Component, _createClass, _antd, Breadcrumb, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLibAbstractComponent) {
+      Component = _teamelfLibAbstractComponent.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Breadcrumb = _antd.Breadcrumb;
+
+      _class = function (_Component) {
+        _inherits(_class, _Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Breadcrumb,
+              { style: { margin: '16px 0' } },
+              React.createElement(
+                Breadcrumb.Item,
+                null,
+                'Home'
+              ),
+              React.createElement(
+                Breadcrumb.Item,
+                null,
+                'List'
+              ),
+              React.createElement(
+                Breadcrumb.Item,
+                null,
+                'App'
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/component/layout/SideNav', ['teamelf/lib/AbstractComponent'], function (_export, _context) {
+  "use strict";
+
+  var Component, _createClass, _antd, Menu, Layout, Icon, Sider, SubMenu, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLibAbstractComponent) {
+      Component = _teamelfLibAbstractComponent.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Menu = _antd.Menu;
+      Layout = _antd.Layout;
+      Icon = _antd.Icon;
+      Sider = Layout.Sider;
+      SubMenu = Menu.SubMenu;
+
+      _class = function (_Component) {
+        _inherits(_class, _Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Sider,
+              { width: 200, style: { background: '#fff' } },
+              React.createElement(
+                Menu,
+                {
+                  mode: 'inline',
+                  defaultSelectedKeys: ['1'],
+                  defaultOpenKeys: ['sub1'],
+                  style: { height: '100%' }
+                },
+                React.createElement(
+                  SubMenu,
+                  { key: 'sub1', title: React.createElement(
+                      'span',
+                      null,
+                      React.createElement(Icon, { type: 'user' }),
+                      'subnav 1'
+                    ) },
+                  React.createElement(
+                    Menu.Item,
+                    { key: '1' },
+                    'option1'
+                  ),
+                  React.createElement(
+                    Menu.Item,
+                    { key: '2' },
+                    'option2'
+                  ),
+                  React.createElement(
+                    Menu.Item,
+                    { key: '3' },
+                    'option3'
+                  ),
+                  React.createElement(
+                    Menu.Item,
+                    { key: '4' },
+                    'option4'
+                  )
+                ),
+                React.createElement(
+                  SubMenu,
+                  { key: 'sub2', title: React.createElement(
+                      'span',
+                      null,
+                      React.createElement(Icon, { type: 'laptop' }),
+                      'subnav 2'
+                    ) },
+                  React.createElement(
+                    Menu.Item,
+                    { key: '5' },
+                    'option5'
+                  ),
+                  React.createElement(
+                    Menu.Item,
+                    { key: '6' },
+                    'option6'
+                  ),
+                  React.createElement(
+                    Menu.Item,
+                    { key: '7' },
+                    'option7'
+                  ),
+                  React.createElement(
+                    Menu.Item,
+                    { key: '8' },
+                    'option8'
+                  )
+                ),
+                React.createElement(
+                  SubMenu,
+                  { key: 'sub3', title: React.createElement(
+                      'span',
+                      null,
+                      React.createElement(Icon, { type: 'notification' }),
+                      'subnav 3'
+                    ) },
+                  React.createElement(
+                    Menu.Item,
+                    { key: '9' },
+                    'option9'
+                  ),
+                  React.createElement(
+                    Menu.Item,
+                    { key: '10' },
+                    'option10'
+                  ),
+                  React.createElement(
+                    Menu.Item,
+                    { key: '11' },
+                    'option11'
+                  ),
+                  React.createElement(
+                    Menu.Item,
+                    { key: '12' },
+                    'option12'
+                  )
+                )
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(Component);
+
+      _export('default', _class);
+    }
+  };
+});
+"use strict";
+
+System.register("teamelf/component/layout/TopNav", ["teamelf/lib/AbstractComponent"], function (_export, _context) {
+  "use strict";
+
+  var Component, _createClass, _antd, Menu, Icon, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLibAbstractComponent) {
+      Component = _teamelfLibAbstractComponent.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Menu = _antd.Menu;
+      Icon = _antd.Icon;
+
+      _class = function (_Component) {
+        _inherits(_class, _Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: "render",
+          value: function render() {
+            return React.createElement(
+              Menu,
+              {
+                theme: "dark",
+                mode: "horizontal",
+                defaultSelectedKeys: ['2'],
+                style: { lineHeight: '64px' }
+              },
+              React.createElement(
+                Menu.Item,
+                { key: "1" },
+                "nav 1"
+              ),
+              React.createElement(
+                Menu.Item,
+                { key: "2" },
+                "nav 2"
+              ),
+              React.createElement(
+                Menu.Item,
+                { key: "3" },
+                "nav 3"
+              ),
+              React.createElement(
+                Menu.Item,
+                { style: { float: 'right' } },
+                React.createElement(Icon, { type: "logout" }),
+                "\u767B\u51FA"
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(Component);
+
+      _export("default", _class);
     }
   };
 });
