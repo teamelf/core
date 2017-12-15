@@ -1,11 +1,7 @@
 {
   "private": true,
-  "scripts": {
-    "build": "gulp",
-    "dev": "gulp watch"
-  },
   "devDependencies": {
-    "teamelf-gulp": "^0.1.6"
+    "teamelf-gulp": "^0.2.1"
   },
   "dependencies": {
     "antd": "^3.0.1"

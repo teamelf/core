@@ -16,14 +16,14 @@ export default class AbstractModel {
     /**
      * model's attributes
      *
-     * @type {object}
+     * @type {Object}
      * @private
      */
     this._attributes = {};
 
     /**
      * the fetching api url
-     * @type {string}
+     * @type {String}
      * @private
      */
     this._url = ''

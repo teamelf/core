@@ -7,10 +7,12 @@
  * file that was distributed with this source code.
  */
 
-export default class AbstractComponent {
-  constructor () {
+export default class AbstractComponent extends React.Component {
+  constructor (...args) {
     if (new.target === AbstractComponent) {
       throw new Error('AbstractComponent cannot be instanced directly!');
     }
+    super(...args);
+    this.state = {}
   }
 }

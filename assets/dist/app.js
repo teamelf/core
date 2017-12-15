@@ -243,26 +243,288 @@ var o=Object.getOwnPropertySymbols,i=Object.prototype.hasOwnProperty,a=Object.pr
 //# sourceMappingURL=antd.min.js.map
 'use strict';
 
-System.register('teamelf/main', [], function (_export, _context) {
+System.register('teamelf/App', ['teamelf/lib/AbstractComponent'], function (_export, _context) {
   "use strict";
 
-  var Button;
+  var Component, _createClass, _antd, Layout, Menu, Breadcrumb, Icon, SubMenu, Header, Content, Sider, Footer, App;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
   return {
-    setters: [],
+    setters: [function (_teamelfLibAbstractComponent) {
+      Component = _teamelfLibAbstractComponent.default;
+    }],
     execute: function () {
-      Button = antd.Button;
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
 
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
 
-      ReactDOM.render(React.createElement(
-        'h1',
-        null,
-        'Hello, world233!',
-        React.createElement(
-          Button,
-          null,
-          'AS'
-        )
-      ), document.getElementById('app'));
+      _antd = antd;
+      Layout = _antd.Layout;
+      Menu = _antd.Menu;
+      Breadcrumb = _antd.Breadcrumb;
+      Icon = _antd.Icon;
+      SubMenu = Menu.SubMenu;
+      Header = Layout.Header;
+      Content = Layout.Content;
+      Sider = Layout.Sider;
+      Footer = Layout.Footer;
+
+      App = function (_Component) {
+        _inherits(App, _Component);
+
+        function App() {
+          var _ref;
+
+          _classCallCheck(this, App);
+
+          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+          }
+
+          return _possibleConstructorReturn(this, (_ref = App.__proto__ || Object.getPrototypeOf(App)).call.apply(_ref, [this].concat(args)));
+        }
+
+        _createClass(App, [{
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Layout,
+              null,
+              React.createElement(
+                Header,
+                { className: 'header' },
+                React.createElement('div', { style: { width: 120, height: 31, background: 'rgba(255,255,255,.2)', margin: '16px 28px 16px 0', float: 'left' } }),
+                React.createElement(
+                  Menu,
+                  {
+                    theme: 'dark',
+                    mode: 'horizontal',
+                    defaultSelectedKeys: ['2'],
+                    style: { lineHeight: '64px' }
+                  },
+                  React.createElement(Menu.Item, { key: '1' }),
+                  React.createElement(
+                    Menu.Item,
+                    { key: '2' },
+                    'nav 2'
+                  ),
+                  React.createElement(
+                    Menu.Item,
+                    { key: '3' },
+                    'nav 3'
+                  ),
+                  React.createElement(
+                    Menu.Item,
+                    { style: { float: 'right' } },
+                    '\u767B\u51FA'
+                  )
+                )
+              ),
+              React.createElement(
+                Content,
+                { style: { padding: '0 50px' } },
+                React.createElement(
+                  Breadcrumb,
+                  { style: { margin: '16px 0' } },
+                  React.createElement(
+                    Breadcrumb.Item,
+                    null,
+                    'Home'
+                  ),
+                  React.createElement(
+                    Breadcrumb.Item,
+                    null,
+                    'List'
+                  ),
+                  React.createElement(
+                    Breadcrumb.Item,
+                    null,
+                    'App'
+                  )
+                ),
+                React.createElement(
+                  Layout,
+                  { style: { padding: '24px 0', background: '#fff' } },
+                  React.createElement(
+                    Sider,
+                    { width: 200, style: { background: '#fff' } },
+                    React.createElement(
+                      Menu,
+                      {
+                        mode: 'inline',
+                        defaultSelectedKeys: ['1'],
+                        defaultOpenKeys: ['sub1'],
+                        style: { height: '100%' }
+                      },
+                      React.createElement(
+                        SubMenu,
+                        { key: 'sub1', title: React.createElement(
+                            'span',
+                            null,
+                            React.createElement(Icon, { type: 'user' }),
+                            'subnav 1'
+                          ) },
+                        React.createElement(
+                          Menu.Item,
+                          { key: '1' },
+                          'option1'
+                        ),
+                        React.createElement(
+                          Menu.Item,
+                          { key: '2' },
+                          'option2'
+                        ),
+                        React.createElement(
+                          Menu.Item,
+                          { key: '3' },
+                          'option3'
+                        ),
+                        React.createElement(
+                          Menu.Item,
+                          { key: '4' },
+                          'option4'
+                        )
+                      ),
+                      React.createElement(
+                        SubMenu,
+                        { key: 'sub2', title: React.createElement(
+                            'span',
+                            null,
+                            React.createElement(Icon, { type: 'laptop' }),
+                            'subnav 2'
+                          ) },
+                        React.createElement(
+                          Menu.Item,
+                          { key: '5' },
+                          'option5'
+                        ),
+                        React.createElement(
+                          Menu.Item,
+                          { key: '6' },
+                          'option6'
+                        ),
+                        React.createElement(
+                          Menu.Item,
+                          { key: '7' },
+                          'option7'
+                        ),
+                        React.createElement(
+                          Menu.Item,
+                          { key: '8' },
+                          'option8'
+                        )
+                      ),
+                      React.createElement(
+                        SubMenu,
+                        { key: 'sub3', title: React.createElement(
+                            'span',
+                            null,
+                            React.createElement(Icon, { type: 'notification' }),
+                            'subnav 3'
+                          ) },
+                        React.createElement(
+                          Menu.Item,
+                          { key: '9' },
+                          'option9'
+                        ),
+                        React.createElement(
+                          Menu.Item,
+                          { key: '10' },
+                          'option10'
+                        ),
+                        React.createElement(
+                          Menu.Item,
+                          { key: '11' },
+                          'option11'
+                        ),
+                        React.createElement(
+                          Menu.Item,
+                          { key: '12' },
+                          'option12'
+                        )
+                      )
+                    )
+                  ),
+                  React.createElement(
+                    Content,
+                    { style: { padding: '0 24px', minHeight: 280 } },
+                    'Content'
+                  )
+                )
+              ),
+              React.createElement(
+                Footer,
+                { style: { textAlign: 'center' } },
+                'Ant Design \xA92016 Created by Ant UED'
+              )
+            );
+          }
+        }]);
+
+        return App;
+      }(Component);
+
+      _export('default', App);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/main', ['teamelf/App'], function (_export, _context) {
+  "use strict";
+
+  var App, app;
+  return {
+    setters: [function (_teamelfApp) {
+      App = _teamelfApp.default;
+    }],
+    execute: function () {
+      app = React.createElement(App, null);
+
+      ReactDOM.render(app, document.getElementById('app'));
     }
   };
 });
@@ -279,16 +541,57 @@ System.register('teamelf/lib/AbstractComponent', [], function (_export, _context
     }
   }
 
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
   return {
     setters: [],
     execute: function () {
-      AbstractComponent = function AbstractComponent() {
-        _classCallCheck(this, AbstractComponent);
+      AbstractComponent = function (_React$Component) {
+        _inherits(AbstractComponent, _React$Component);
 
-        if (new.target === AbstractComponent) {
-          throw new Error('AbstractComponent cannot be instanced directly!');
+        function AbstractComponent() {
+          var _ref;
+
+          _classCallCheck(this, AbstractComponent);
+
+          if (new.target === AbstractComponent) {
+            throw new Error('AbstractComponent cannot be instanced directly!');
+          }
+
+          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+          }
+
+          var _this = _possibleConstructorReturn(this, (_ref = AbstractComponent.__proto__ || Object.getPrototypeOf(AbstractComponent)).call.apply(_ref, [this].concat(args)));
+
+          _this.state = {};
+          return _this;
         }
-      };
+
+        return AbstractComponent;
+      }(React.Component);
 
       _export('default', AbstractComponent);
     }
@@ -339,14 +642,14 @@ System.register('teamelf/lib/AbstractModel', [], function (_export, _context) {
           /**
            * model's attributes
            *
-           * @type {object}
+           * @type {Object}
            * @private
            */
           this._attributes = {};
 
           /**
            * the fetching api url
-           * @type {string}
+           * @type {String}
            * @private
            */
           this._url = '';
