@@ -48,7 +48,7 @@ class AssetManager
                 $info['extension']
             );
             $assetPath = app()->getPublicPath() . $assetFilename;
-            if (file_exists($assetPath)) {
+            if (!file_exists($assetPath)) {
                 app('file')->copy($filename, $assetPath);
             }
             return $assetFilename;
