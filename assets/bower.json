@@ -3,6 +3,8 @@
   "private": true,
   "dependencies": {
     "es6-micro-loader": "caridy/es6-micro-loader#v0.2.1",
-    "react": "^16.1.0"
+    "react": "^16.1.0",
+    "jQuery": "^3.2.1",
+    "moment": "^2.19.4"
   }
 }

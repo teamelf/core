@@ -13,13 +13,19 @@ gulp({
   files: [
     './bower_components/es6-micro-loader/dist/system-polyfill.min.js',
     './bower_components/react/react.production.min.js',
-    './bower_components/react/react-dom.production.min.js'
+    './bower_components/react/react-dom.production.min.js',
+    './bower_components/jQuery/dist/jquery.min.js',
+    './bower_components/moment/min/moment-with-locales.min.js',
+    './node_modules/antd/dist/antd.min.js'
   ],
   modules: {
     'teamelf': 'js/**/*.js'
   },
   output: './dist/app.js'
 }, {
+  files: [
+    './node_modules/antd/dist/antd.min.css'
+  ],
   modules: ['less/main.less'],
   output: './dist/app.css'
 });
