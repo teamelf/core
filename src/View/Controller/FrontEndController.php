@@ -11,7 +11,9 @@
 
 namespace TeamELF\View\Controller;
 
+use TeamELF\Http\AbstractViewController;
+
 class FrontEndController extends AbstractViewController
 {
-    protected $template = 'layout';
+    protected $template = 'layout.basic';
 }

@@ -215,4 +215,4 @@ null,a)};var Pe={createPortal:xe,findDOMNode:function(a){if(null==a)return null;
 void 0:l("40");return a._reactRootContainer?(F.unbatchedUpdates(function(){Bb(null,null,a,!1,function(){a._reactRootContainer=null})}),!0):!1},unstable_createPortal:xe,unstable_batchedUpdates:Sb,unstable_deferredUpdates:F.deferredUpdates,flushSync:F.flushSync,__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED:{EventPluginHub:Ef,EventPluginRegistry:Df,EventPropagators:Ff,ReactControlledComponent:Jf,ReactDOMComponentTree:Ee,ReactDOMEventListener:Mf}};F.injectIntoDevTools({findFiberByHostInstance:Y,
 bundleType:0,version:"16.1.0",rendererPackageName:"react-dom"});var Qe=Object.freeze({default:Pe}),Pc=Qe&&Pe||Qe;return Pc["default"]?Pc["default"]:Pc});
 
-"use strict";System.register("teamelf/main",[],function(e,t){return{setters:[],execute:function(){}}});
+"use strict";System.register("teamelf/main",[],function(e,t){return{setters:[],execute:function(){ReactDOM.render(React.createElement("h1",null,"Hello, world!"),document.getElementById("app"))}}});

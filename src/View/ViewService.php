@@ -78,6 +78,7 @@ class ViewService extends AbstractService implements ListenerInterface
             ->entry('teamelf/main')
             ->addCss(__DIR__ . '/../../assets/dist/app.css');
 
+        static::getEngine()->addGlobal('assets', $event->getAssetManager());
         app()->dispatch(new AssetsHaveBeenAdded($this->assets));
     }
 }

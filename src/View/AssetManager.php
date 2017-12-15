@@ -36,6 +36,27 @@ class AssetManager
      */
     protected $css = [];
 
+    protected function saveToPublicAsset($filename)
+    {
+        if (file_exists($filename)) {
+            $hashcode = md5_file($filename);
+            $info = pathinfo($filename);
+            $assetFilename = sprintf(
+                '/assets/%s.%s.%s',
+                $info['filename'],
+                $hashcode,
+                $info['extension']
+            );
+            $assetPath = app()->getPublicPath() . $assetFilename;
+            if (file_exists($assetPath)) {
+                app('file')->copy($filename, $assetPath);
+            }
+            return $assetFilename;
+        } else {
+            throw new Exception('Asset file [' . $filename . '] not found!');
+        }
+    }
+
     /**
      * add a new js file
      *
@@ -45,11 +66,7 @@ class AssetManager
      */
     public function addJs($filename)
     {
-        if (file_exists($filename)) {
-            array_push($this->js, $filename);
-        } else {
-            throw new Exception('View file [' . $filename . '] not found!');
-        }
+        array_push($this->js, $this->saveToPublicAsset($filename));
         return $this;
     }
 
@@ -74,11 +91,7 @@ class AssetManager
      */
     public function addCss($filename)
     {
-        if (file_exists($filename)) {
-            array_push($this->css, $filename);
-        } else {
-            throw new Exception('View file [' . $filename . '] not found!');
-        }
+        array_push($this->css, $this->saveToPublicAsset($filename));
         return $this;
     }
 
@@ -91,8 +104,7 @@ class AssetManager
     {
         $html = '';
         foreach ($this->css as $css) {
-            $code = static::getHashCode($css);
-            $html .= sprintf('<link rel="stylesheet" href="%s?%s"/>', $css, $code);
+            $html .= sprintf('<link rel="stylesheet" href="%s"/>', $css);
         }
         return $html;
     }
@@ -106,19 +118,9 @@ class AssetManager
     {
         $html = '';
         foreach ($this->js as $js) {
-            $code = static::getHashCode($js);
-            $html .= sprintf('<script src="%s?%s"></script>', $js, $code);
+            $html .= sprintf('<script src="%s"></script>', $js);
         }
-        $html .= sprintf('<script>System.import(\'$s\')</script>', $this->entry);
+        $html .= sprintf('<script>System.import(\'%s\')</script>', $this->entry);
         return $html;
-    }
-
-    public static function getHashCode($filename)
-    {
-        if (file_exists($filename)) {
-            return md5_file($filename);
-        } else {
-            throw new Exception('View file [' . $filename . '] not found!');
-        }
     }
 }

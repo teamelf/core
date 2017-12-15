@@ -7,10 +7,7 @@
  * file that was distributed with this source code.
  */
 
-.A {
-  .B {
-    .C {
-      background: red;
-    }
-  }
-}
+ReactDOM.render(
+  <h1>Hello, world!</h1>,
+  document.getElementById('app')
+);

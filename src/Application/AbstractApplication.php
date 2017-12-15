@@ -19,6 +19,7 @@ use Monolog\Processor\IntrospectionProcessor;
 use Monolog\Processor\PsrLogMessageProcessor;
 use Monolog\Processor\WebProcessor;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\Filesystem\Filesystem;
 use TeamELF\Config\Config;
 use TeamELF\Event\AbstractEvent;
 use TeamELF\Exception\Exception;
@@ -38,6 +39,16 @@ abstract class AbstractApplication
      * @var string
      */
     protected $storagePath;
+
+    /**
+     * @var string
+     */
+    protected $publicPath;
+
+    /**
+     * @var Filesystem
+     */
+    protected $files;
 
     /**
      * @var Config
@@ -65,8 +76,9 @@ abstract class AbstractApplication
      *
      * @param string $basePath
      * @param string $storagePath
+     * @param null $publicPath
      */
-    function __construct($basePath, $storagePath = null)
+    function __construct($basePath, $storagePath = null, $publicPath = null)
     {
         // always save UTC in database
         date_default_timezone_set('UTC');
@@ -78,6 +90,14 @@ abstract class AbstractApplication
         } else {
             $this->storagePath = $this->basePath . '/storage';
         }
+
+        if ($publicPath) {
+            $this->publicPath = $publicPath;
+        } else {
+            $this->publicPath = $this->basePath . '/public';
+        }
+
+        $this->files = new Filesystem();
 
         static::instance($this);
 
@@ -107,7 +127,7 @@ abstract class AbstractApplication
      * application's interface maker
      *
      * @param string $key
-     * @return EntityManager|Logger|AbstractApplication|Config
+     * @return EntityManager|Logger|Filesystem|AbstractApplication|Config
      */
     public function make($key)
     {
@@ -115,8 +135,39 @@ abstract class AbstractApplication
             case 'config': return $this->config;
             case 'em': return $this->entityManager;
             case 'log': return $this->logger;
+            case 'file': return $this->files;
             default: return $this;
         }
+    }
+
+    /**
+     * get app's base path
+     *
+     * @return string
+     */
+    public function getBasePath()
+    {
+        return $this->basePath;
+    }
+
+    /**
+     * get app's storage path
+     *
+     * @return string
+     */
+    public function getStoragePath()
+    {
+        return $this->storagePath;
+    }
+
+    /**
+     * get app's public path
+     *
+     * @return string
+     */
+    public function getPublicPath()
+    {
+        return $this->publicPath;
     }
 
     /**
