@@ -7,10 +7,11 @@
  * file that was distributed with this source code.
  */
 
+const { Link, withRouter } = ReactRouterDOM;
 import Component from 'teamelf/lib/Component';
 const { Menu, Icon, Avatar } = antd;
 
-export default class extends Component {
+class AuthBar extends Component {
   handleMenuClick ({key}) {
     switch (key) {
       case 'logout':
@@ -18,6 +19,13 @@ export default class extends Component {
         break;
       default:
     }
+  }
+  getSelectedNav () {
+    let path = this.props.location.pathname;
+    if (path.match('/profile')) {
+      return 'profile';
+    }
+    return null;
   }
   logout () {
     console.log('logout');
@@ -28,10 +36,13 @@ export default class extends Component {
         theme="dark" mode="horizontal"
         onClick={this.handleMenuClick.bind(this)}
         style={{lineHeight: '64px', float: 'right'}}
+        selectedKeys={this.getSelectedNav()}
       >
-        <Menu.Item key="user">
-          <Avatar style={{marginTop: 16, float: 'left'}}/>
-          <span style={{marginLeft: 10}}>鹳狸猿</span>
+        <Menu.Item key="profile">
+          <Link to="/profile">
+            <Avatar style={{marginTop: 16, float: 'left'}}/>
+            <span style={{marginLeft: 10}}>鹳狸猿</span>
+          </Link>
         </Menu.Item>
         <Menu.Item key="logout">
           <Icon type="logout"/>
@@ -41,3 +52,5 @@ export default class extends Component {
     )
   }
 }
+
+export default withRouter(AuthBar);

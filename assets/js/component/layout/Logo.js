@@ -14,7 +14,7 @@ export default class extends Component {
   render () {
     return (
       <Link
-        to="/"
+        to="/home"
         style={{
           width: 120, height: 31,
           background: 'rgba(255,255,255,.2)',

@@ -11,6 +11,6 @@ import Component from 'teamelf/lib/PageComponent';
 
 export default class extends Component {
   view () {
-    return <div>HOME</div>
+    return <div>Profile</div>
   }
 }

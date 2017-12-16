@@ -7,45 +7,47 @@
  * file that was distributed with this source code.
  */
 
+const { Link } = ReactRouterDOM;
 import Component from 'teamelf/lib/Component';
 const { Layout, Menu } = antd;
 const { Sider, Content } = Layout;
 
-export default class ContentComponent extends Component {
+export default class PageComponent extends Component {
   constructor (props) {
-    if (new.target === ContentComponent) {
+    if (new.target === PageComponent) {
       throw new Error('ContentComponent cannot be instanced directly!');
     }
     super(props);
-    this.navigations = [];
-    this.state = {
-      selectedNav: null
-    };
+    this.navigations = []; // [{path, icon, title}]
   }
-  componentDidMount () {
-    this.handleSelectedNav();
-  }
-  handleSelectedNav () {
-    let path = window.location.pathname;
+  getSelectedNav () {
+    let path = this.props.location.pathname;
     for (let nav of this.navigations) {
       if (path.match(nav.path)) {
-        this.setState({selectedNav: nav.path});
         return nav.path;
       }
     }
-    this.setState({selectedNav: null});
     return null;
   }
   view () {
-    return <div>Content</div>;
+    return <div>page works</div>;
   }
   render () {
     return (
       <Layout style={{ padding: '24px 0', background: '#fff' }}>
         {this.navigations.length > 0 &&
           <Sider width={200} style={{background: '#fff'}}>
-            <Menu mode="inline" style={{height: '100%'}} selectedKeys={this.state.selectedNav}>
-              {this.navigations.map(o => <Menu.Item key={o.path}>{o.title}</Menu.Item>)}
+            <Menu
+              mode="inline"
+              style={{height: '100%'}}
+              selectedKeys={this.getSelectedNav()}>
+              {this.navigations.map(o => (
+                <Menu.Item key={o.path}>
+                  <Link to={o.path}>
+                    <Icon type={o.icon}/>{o.title}
+                  </Link>
+                </Menu.Item>
+              ))}
             </Menu>
           </Sider>
         }

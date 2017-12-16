@@ -8,7 +8,7 @@
  */
 
 import Component from 'teamelf/lib/Component';
-const { Switch, Route } = ReactRouterDOM;
+const { Switch, Route, Redirect } = ReactRouterDOM;
 const { Layout } = antd;
 const { Header, Content } = Layout;
 import { RedirectAs404 } from 'teamelf/component/Error'
@@ -19,12 +19,15 @@ import Routes from 'teamelf/component/layout/Routes'
 import Footer from 'teamelf/component/layout/Footer'
 import Home from 'teamelf/component/Home';
 import Member from 'teamelf/component/Member';
+import Profile from 'teamelf/component/Profile';
 
 export default class extends Component {
   constructor (props) {
     super(props);
-    this.navigations = [
-      {path: '/member', component: Member, icon: 'user', title: '成员管理'}
+    this.routes = [
+      {path: '/home', component: Home},
+      {path: '/member', component: Member},
+      {path: '/profile', exact: true, component: Profile}
     ];
   }
   render() {
@@ -32,14 +35,14 @@ export default class extends Component {
       <Layout>
         <Header style={{position: 'fixed', left: 0, right: 0, zIndex: 999}}>
           <Logo/>
-          <TopNav navigations={this.navigations}/>
+          <TopNav/>
           <AuthBar/>
         </Header>
         <Content style={{marginTop: '60px', padding: '0 50px'}}>
           <Routes/>
           <Switch>
-            <Route exact path="/" component={Home}/>
-            {this.navigations.map(o => <Route path={o.path} component={o.component}/>)}
+            <Route exact path="/" render={() => <Redirect to="/home"/>}/>
+            {this.routes.map(o => <Route path={o.path} exact={o.exact} component={o.component}/>)}
             <Route component={RedirectAs404}/>
           </Switch>
         </Content>

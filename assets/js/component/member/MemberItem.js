@@ -11,6 +11,6 @@ import Component from 'teamelf/lib/Component';
 
 export default class extends Component {
   render () {
-    return <div>Item</div>
+    return <div>member {this.props.match.params.id}</div>
   }
 }
