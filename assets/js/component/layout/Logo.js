@@ -7,17 +7,21 @@
  * file that was distributed with this source code.
  */
 
-import Component from 'teamelf/lib/AbstractComponent';
+const { Link } = ReactRouterDOM;
+import Component from 'teamelf/lib/Component';
 
 export default class extends Component {
   render () {
     return (
-      <div style={{
-        width: 120, height: 31,
-        background: 'rgba(255,255,255,.2)',
-        margin: '16px 28px 16px 0',
-        float: 'left'
-      }}/>
+      <Link
+        to="/"
+        style={{
+          width: 120, height: 31,
+          background: 'rgba(255,255,255,.2)',
+          margin: '16px 28px 16px 0',
+          float: 'left'
+        }}
+      />
     )
   }
 }

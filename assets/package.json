@@ -1,9 +1,10 @@
 {
   "private": true,
   "devDependencies": {
-    "teamelf-gulp": "^0.2.1"
+    "teamelf-gulp": "^0.2.2"
   },
   "dependencies": {
-    "antd": "^3.0.1"
+    "antd": "^3.0.1",
+    "react-router-dom": "^4.2.2"
   }
 }

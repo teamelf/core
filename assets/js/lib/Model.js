@@ -8,7 +8,7 @@
  */
 
 export default class AbstractModel {
-  constructor () {
+  constructor (props) {
     if (new.target === AbstractModel) {
       throw new Error('AbstractModel cannot be instanced directly!');
     }

@@ -8,11 +8,11 @@
  */
 
 export default class AbstractComponent extends React.Component {
-  constructor (...args) {
+  constructor (props) {
     if (new.target === AbstractComponent) {
       throw new Error('AbstractComponent cannot be instanced directly!');
     }
-    super(...args);
-    this.state = {}
+    super(props);
+    this.state = {};
   }
 }

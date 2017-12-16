@@ -7,16 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import Component from 'teamelf/lib/Component';
-const { Layout } = antd;
-const { Footer } = Layout
+import Component from 'teamelf/lib/PageComponent';
 
 export default class extends Component {
-  render () {
-    return (
-      <Footer style={{ textAlign: 'center' }}>
-        TeamELF &copy;2017 Created by TeamELF
-      </Footer>
-    )
-  }
 }

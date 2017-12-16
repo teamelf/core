@@ -15,7 +15,9 @@ gulp({
     './bower_components/react/react.production.min.js',
     './bower_components/react/react-dom.production.min.js',
     './bower_components/jQuery/dist/jquery.min.js',
+    './node_modules/react-router-dom/umd/react-router-dom.min.js',
     './bower_components/moment/min/moment-with-locales.min.js',
+    './bower_components/axios/dist/axios.min.js',
     './node_modules/antd/dist/antd.min.js'
   ],
   modules: {

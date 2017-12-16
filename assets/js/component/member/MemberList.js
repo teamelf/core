@@ -7,17 +7,17 @@
  * file that was distributed with this source code.
  */
 
+const { Link } = ReactRouterDOM;
 import Component from 'teamelf/lib/Component';
-const { Breadcrumb } = antd;
 
 export default class extends Component {
   render () {
     return (
-      <Breadcrumb style={{ margin: '16px 0' }}>
-        <Breadcrumb.Item>Home</Breadcrumb.Item>
-        <Breadcrumb.Item>List</Breadcrumb.Item>
-        <Breadcrumb.Item>App</Breadcrumb.Item>
-      </Breadcrumb>
-    )
+      <div>
+        <Link to="/member/1">to 1</Link> <br/>
+        <Link to="/member/2">to 2</Link> <br/>
+        <Link to="/member/3">to 3</Link> <br/>
+      </div>
+    );
   }
 }
