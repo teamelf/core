@@ -13,7 +13,7 @@ namespace TeamELF\View\Controller;
 
 use TeamELF\Http\AbstractViewController;
 
-class FrontEndController extends AbstractViewController
+class LoginController extends AbstractViewController
 {
-    protected $template = 'layout.basic';
+    protected $template = 'login.twig';
 }

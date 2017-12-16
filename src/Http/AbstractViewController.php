@@ -15,9 +15,23 @@ use Symfony\Component\HttpFoundation\Response;
 
 abstract class AbstractViewController extends AbstractController
 {
-    protected $template = 'hello';
+    /**
+     * template's relative path to views/
+     * @var string
+     */
+    protected $template = 'hello.twig';
 
+    /**
+     * data
+     * @var array
+     */
     protected $data = [];
+
+    /**
+     * a 301 redirect will be sent if not null
+     * @var null|string
+     */
+    protected $redirect = null;
 
     /**
      * handle the request
@@ -26,6 +40,10 @@ abstract class AbstractViewController extends AbstractController
      */
     public function handler(): Response
     {
-        return view($this->template, $this->data);
+        if ($this->redirect) {
+            return response(null, 302, ['Location' => $this->redirect]);
+        } else {
+            return view($this->template, $this->data);
+        }
     }
 }

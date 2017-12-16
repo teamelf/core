@@ -89,8 +89,6 @@ if (!function_exists('view')) {
      */
     function view($template, $data = [])
     {
-        $template = str_replace('.', '/', $template);
-        $template .= '.twig.php';
         $html = \TeamELF\View\ViewService::getEngine()
             ->render($template, $data);
         return response($html);

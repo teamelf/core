@@ -14,7 +14,10 @@ namespace TeamELF\View;
 use TeamELF\Application\AbstractService;
 use TeamELF\Event\AssetsHaveBeenAdded;
 use TeamELF\Event\AssetsWillBeAdded;
+use TeamELF\Event\RoutesWillBeLoaded;
 use TeamELF\Listener\ListenerInterface;
+use TeamELF\View\Controller\AppController;
+use TeamELF\View\Controller\LoginController;
 
 class ViewService extends AbstractService implements ListenerInterface
 {
@@ -62,7 +65,21 @@ class ViewService extends AbstractService implements ListenerInterface
      */
     public function register()
     {
+        app()->listen(RoutesWillBeLoaded::class, [$this, 'handleRoutes']);
         app()->listen(AssetsWillBeAdded::class, [$this, 'handleAssets']);
+    }
+
+    public function handleRoutes(RoutesWillBeLoaded $event)
+    {
+        $event->getRouter()->prefix('')
+            ->get('fe-login', '/login', LoginController::class)
+            ->add(
+            'GET',
+            'fe-default',
+            '/{uri}',
+            AppController::class,
+            ['uri' => '(?!api).*']
+        );
     }
 
     /**
@@ -71,7 +88,7 @@ class ViewService extends AbstractService implements ListenerInterface
      *
      * @param AssetsWillBeAdded $event
      */
-    public function handleAssets($event)
+    public function handleAssets(AssetsWillBeAdded $event)
     {
         $event->getAssetManager()
             ->addJs(__DIR__ . '/../../assets/dist/app.js')

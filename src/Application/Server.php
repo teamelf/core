@@ -13,11 +13,12 @@ namespace TeamELF\Application;
 
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use TeamELF\Api\ApiService;
+use TeamELF\Event\AssetsHaveBeenAdded;
 use TeamELF\Event\AssetsWillBeAdded;
+use TeamELF\Event\RoutesHaveBeenLoaded;
 use TeamELF\Event\RoutesWillBeLoaded;
 use TeamELF\Exception\HttpNotFoundException;
 use TeamELF\Router\Router;
-use TeamELF\View\Controller\FrontEndController;
 use TeamELF\View\ViewService;
 
 class Server extends AbstractApplication
@@ -50,15 +51,8 @@ class Server extends AbstractApplication
      */
     protected function register(): void
     {
-        $this->router->prefix('')->add(
-            'GET',
-            'front-end',
-            '/{uri}',
-            FrontEndController::class,
-            ['uri' => '(?!api).*']
-        );
-        $this->apiService->register();
         $this->viewService->register();
+        $this->apiService->register();
     }
 
     /**
@@ -67,7 +61,10 @@ class Server extends AbstractApplication
     protected function boot(): void
     {
         $this->dispatch(new RoutesWillBeLoaded($this->router));
+        $this->dispatch(new RoutesHaveBeenLoaded($this->router));
+
         $this->dispatch(new AssetsWillBeAdded($this->viewService->getAssetManager()));
+        $this->dispatch(new AssetsHaveBeenAdded($this->viewService->getAssetManager()));
 
         // try to match back-end routes, if not, render front-end pages
         try {
