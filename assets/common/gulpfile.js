@@ -20,14 +20,10 @@ gulp({
     './bower_components/axios/dist/axios.min.js',
     './node_modules/antd/dist/antd.min.js'
   ],
-  modules: {
-    'teamelf': 'js/**/*.js'
-  },
-  output: './dist/app.js'
+  output: './dist/common.js'
 }, {
   files: [
     './node_modules/antd/dist/antd.min.css'
   ],
-  modules: ['less/main.less'],
-  output: './dist/app.css'
+  output: './dist/common.css'
 });

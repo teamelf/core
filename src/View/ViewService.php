@@ -91,9 +91,8 @@ class ViewService extends AbstractService implements ListenerInterface
     public function handleAssets(AssetsWillBeAdded $event)
     {
         $event->getAssetManager()
-            ->addJs(__DIR__ . '/../../assets/dist/app.js')
-            ->entry('teamelf/main')
-            ->addCss(__DIR__ . '/../../assets/dist/app.css');
+            ->addJs(__DIR__ . '/../../assets/common/dist/common.js')
+            ->addCss(__DIR__ . '/../../assets/common/dist/common.css');
 
         static::getEngine()->addGlobal('assets', $event->getAssetManager());
         app()->dispatch(new AssetsHaveBeenAdded($this->assets));

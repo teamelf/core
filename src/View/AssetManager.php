@@ -120,7 +120,9 @@ class AssetManager
         foreach ($this->js as $js) {
             $html .= sprintf('<script src="%s"></script>', $js);
         }
-        $html .= sprintf('<script>System.import(\'%s\')</script>', $this->entry);
+        if ($this->entry) {
+            $html .= sprintf('<script>System.import(\'%s\')</script>', $this->entry);
+        }
         return $html;
     }
 }
