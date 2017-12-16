@@ -15,11 +15,10 @@ use TeamELF\Application\AbstractService;
 use TeamELF\Event\AssetsHaveBeenAdded;
 use TeamELF\Event\AssetsWillBeAdded;
 use TeamELF\Event\RoutesWillBeLoaded;
-use TeamELF\Listener\ListenerInterface;
 use TeamELF\View\Controller\AppController;
 use TeamELF\View\Controller\LoginController;
 
-class ViewService extends AbstractService implements ListenerInterface
+class ViewService extends AbstractService
 {
     /**
      * @var null|\Twig_Environment
@@ -27,23 +26,21 @@ class ViewService extends AbstractService implements ListenerInterface
     private static $engine;
 
     /**
-     * @var AssetManager
+     * @var null|AssetManager
      */
-    protected $assets;
-
-    function __construct()
-    {
-        $this->assets = new AssetManager();
-    }
+    private static $assets;
 
     /**
      * get AssetManager
      *
      * @return AssetManager
      */
-    public function getAssetManager()
+    public static function getAssetManager()
     {
-        return $this->assets;
+        if (!static::$assets) {
+            static::$assets = new AssetManager();
+        }
+        return static::$assets;
     }
 
     /**
@@ -56,6 +53,7 @@ class ViewService extends AbstractService implements ListenerInterface
         if (!static::$engine) {
             $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../views');
             static::$engine = new \Twig_Environment($loader);
+            static::$engine->addGlobal('assets', static::getAssetManager());
         }
         return static::$engine;
     }
@@ -66,7 +64,6 @@ class ViewService extends AbstractService implements ListenerInterface
     public function register()
     {
         app()->listen(RoutesWillBeLoaded::class, [$this, 'handleRoutes']);
-        app()->listen(AssetsWillBeAdded::class, [$this, 'handleAssets']);
     }
 
     public function handleRoutes(RoutesWillBeLoaded $event)
@@ -80,21 +77,5 @@ class ViewService extends AbstractService implements ListenerInterface
             AppController::class,
             ['uri' => '(?!api).*']
         );
-    }
-
-    /**
-     * handle event AssetsWillBeAdded
-     * all core assets will be added here
-     *
-     * @param AssetsWillBeAdded $event
-     */
-    public function handleAssets(AssetsWillBeAdded $event)
-    {
-        $event->getAssetManager()
-            ->addJs(__DIR__ . '/../../assets/common/dist/common.js')
-            ->addCss(__DIR__ . '/../../assets/common/dist/common.css');
-
-        static::getEngine()->addGlobal('assets', $event->getAssetManager());
-        app()->dispatch(new AssetsHaveBeenAdded($this->assets));
     }
 }

@@ -39,7 +39,7 @@ class AssetManager
     protected function saveToPublicAsset($filename)
     {
         if (file_exists($filename)) {
-            $hashcode = md5_file($filename);
+            $hashcode = substr(md5_file($filename), 0, 6);
             $info = pathinfo($filename);
             $assetFilename = sprintf(
                 '/assets/%s.%s.%s',

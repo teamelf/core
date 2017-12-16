@@ -7,14 +7,11 @@
  * file that was distributed with this source code.
  */
 
-moment.locale('zh-cn');
-axios.defaults.baseURL = '/api/';
-
 const { BrowserRouter, Route } = ReactRouterDOM;
 import App from 'teamelf/App';
 import Error from 'teamelf/component/Error';
 
-ReactDOM.render((
+const app = (
   <BrowserRouter>
     <Route render={({ location }) => (
       location.isError
@@ -22,4 +19,9 @@ ReactDOM.render((
         : <App/>
     )}/>
   </BrowserRouter>
-), document.getElementById('app'));
+);
+
+const target = document.getElementById('react-render-target-app');
+if (target) {
+  ReactDOM.render(app, target);
+}

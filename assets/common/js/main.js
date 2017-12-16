@@ -1,5 +1,3 @@
-<?php
-
 /**
  * This file is part of TeamELF
  *
@@ -9,8 +7,5 @@
  * file that was distributed with this source code.
  */
 
-namespace TeamELF\Listener;
-
-interface ListenerInterface
-{
-}
+moment.locale('zh-cn');
+axios.defaults.baseURL = '/api/';

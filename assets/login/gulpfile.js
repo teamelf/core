@@ -11,7 +11,7 @@ const gulp = require('teamelf-gulp');
 
 gulp({
   modules: {
-    'teamelf': 'js/**/*.js'
+    'teamelf/login': 'js/**/*.js'
   },
-  output: './dist/app.js'
+  output: './dist/login.js'
 });

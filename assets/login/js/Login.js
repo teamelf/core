@@ -7,11 +7,8 @@
  * file that was distributed with this source code.
  */
 
-const gulp = require('teamelf-gulp');
-
-gulp({
-  modules: {
-    'teamelf': 'js/**/*.js'
-  },
-  output: './dist/app.js'
-});
+export default class extends React.Component {
+  render () {
+    return <div>Login Page</div>
+  }
+}

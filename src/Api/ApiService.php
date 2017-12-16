@@ -16,9 +16,8 @@ use TeamELF\Api\Controller\Auth\LoginController;
 use TeamELF\Api\Controller\Auth\LogoutController;
 use TeamELF\Application\AbstractService;
 use TeamELF\Event\RoutesWillBeLoaded;
-use TeamELF\Listener\ListenerInterface;
 
-class ApiService extends AbstractService implements ListenerInterface
+class ApiService extends AbstractService
 {
     /**
      * register all api services

@@ -16,4 +16,12 @@ use TeamELF\Http\AbstractViewController;
 class LoginController extends AbstractViewController
 {
     protected $template = 'login.twig';
+
+    protected function addAssets()
+    {
+        parent::addAssets();
+        $this->assets
+            ->addJs(__DIR__ . '/../../../assets/login/dist/login.js')
+            ->entry('teamelf/login/main');
+    }
 }

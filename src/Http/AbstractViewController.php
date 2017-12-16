@@ -11,7 +11,10 @@
 
 namespace TeamELF\Http;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use TeamELF\View\AssetManager;
+use TeamELF\View\ViewService;
 
 abstract class AbstractViewController extends AbstractController
 {
@@ -34,6 +37,22 @@ abstract class AbstractViewController extends AbstractController
     protected $redirect = null;
 
     /**
+     * @var AssetManager
+     */
+    protected $assets;
+
+    /**
+     * add common assets
+     */
+    protected function addAssets()
+    {
+        $this->assets = ViewService::getAssetManager();
+        $this->assets
+            ->addCss(__DIR__ . '/../../assets/common/dist/common.css')
+            ->addJs(__DIR__ . '/../../assets/common/dist/common.js');
+    }
+
+    /**
      * handle the request
      *
      * @return Response
@@ -43,6 +62,7 @@ abstract class AbstractViewController extends AbstractController
         if ($this->redirect) {
             return response(null, 302, ['Location' => $this->redirect]);
         } else {
+            $this->addAssets();
             return view($this->template, $this->data);
         }
     }

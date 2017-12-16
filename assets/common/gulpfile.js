@@ -18,12 +18,14 @@ gulp({
     './node_modules/react-router-dom/umd/react-router-dom.min.js',
     './bower_components/moment/min/moment-with-locales.min.js',
     './bower_components/axios/dist/axios.min.js',
-    './node_modules/antd/dist/antd.min.js'
+    './node_modules/antd/dist/antd.min.js',
+    'js/**/*.js'
   ],
   output: './dist/common.js'
 }, {
   files: [
     './node_modules/antd/dist/antd.min.css'
   ],
+  modules: ['./less/main.less'],
   output: './dist/common.css'
 });

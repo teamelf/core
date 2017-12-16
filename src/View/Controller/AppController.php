@@ -26,4 +26,12 @@ class AppController extends AbstractViewController
             $this->redirect = '/login';
         }
     }
+
+    protected function addAssets()
+    {
+        parent::addAssets();
+        $this->assets
+            ->addJs(__DIR__ . '/../../../assets/app/dist/app.js')
+            ->entry('teamelf/main');
+    }
 }
