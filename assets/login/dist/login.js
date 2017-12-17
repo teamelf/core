@@ -186,16 +186,14 @@ System.register('teamelf/login/LoginForm', [], function (_export, _context) {
               if (e) return;
               var user = {
                 username: _this2.state.username || '',
-                password: CryptoJS.SHA1(_this2.state.password || '').toString(),
+                password: _this2.state.password ? CryptoJS.SHA1(_this2.state.password).toString() : '',
                 remember: _this2.state.remember || false
               };
               _this2.setState({ loading: true });
               axios.post('auth/login', user).then(function (r) {
                 window.location.href = '/';
               }).catch(function (e) {
-                setTimeout(function () {
-                  return _this2.setState({ loading: false });
-                }, 1000);
+                _this2.setState({ loading: false });
               });
             });
           }
@@ -279,7 +277,7 @@ System.register('teamelf/login/LoginForm', [], function (_export, _context) {
                     className: 'full',
                     type: 'primary', size: 'large',
                     loading: this.state.loading,
-                    icon: 'poweroff'
+                    icon: 'login'
                   },
                   '\u767B\u9646'
                 )

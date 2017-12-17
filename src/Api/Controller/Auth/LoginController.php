@@ -14,7 +14,7 @@ namespace TeamELF\Api\Controller\Auth;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use TeamELF\Core\User;
-use TeamELF\Exception\HttpForbiddenException;
+use TeamELF\Exception\HttpUnauthorizedException;
 use TeamELF\Http\AbstractController;
 
 class LoginController extends AbstractController
@@ -23,7 +23,7 @@ class LoginController extends AbstractController
      * handle the request
      *
      * @return Response
-     * @throws HttpForbiddenException
+     * @throws HttpUnauthorizedException
      */
     public function handler(): Response
     {
@@ -38,7 +38,7 @@ class LoginController extends AbstractController
         ]);
         $user = User::findBy(['username' => $data['username']]);
         if (!$user) {
-            throw new HttpForbiddenException();
+            throw new HttpUnauthorizedException();
         }
         if (password_verify($data['password'], $user->getPassword())) {
             app('log')->info($user->getUsername() . ' Login successfully');
@@ -46,7 +46,7 @@ class LoginController extends AbstractController
             return response();
         } else {
             app('log')->info($user->getUsername() . ' Login failed');
-            throw new HttpForbiddenException();
+            throw new HttpUnauthorizedException();
         }
     }
 }

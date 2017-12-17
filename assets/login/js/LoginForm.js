@@ -25,14 +25,14 @@ class LoginForm extends React.Component {
       if (e) return;
       let user = {
         username: this.state.username || '',
-        password: CryptoJS.SHA1(this.state.password || '').toString(),
+        password: this.state.password ? CryptoJS.SHA1(this.state.password).toString() : '',
         remember: this.state.remember || false
       };
       this.setState({loading: true});
       axios.post('auth/login', user).then(r => {
         window.location.href = '/';
       }).catch(e => {
-        setTimeout(() => this.setState({loading: false}), 1000);
+        this.setState({loading: false});
       });
     });
   }
@@ -43,8 +43,8 @@ class LoginForm extends React.Component {
         <Form.Item>
           {getFieldDecorator('username', {
             rules: [{
-              required: true, message: '请输入用户名 / 邮箱',
-            }],
+             required: true, message: '请输入用户名 / 邮箱',
+             }],
           })(
             <Input
               size="large" placeholder="登录名 / 邮箱"
@@ -57,8 +57,8 @@ class LoginForm extends React.Component {
         <Form.Item>
           {getFieldDecorator('password', {
             rules: [{
-              required: true, message: '请输入密码',
-            }],
+             required: true, message: '请输入密码',
+             }],
           })(
             <Input
               type="password" size="large" placeholder="密码"
@@ -86,7 +86,7 @@ class LoginForm extends React.Component {
             className="full"
             type="primary" size="large"
             loading={this.state.loading}
-            icon="poweroff"
+            icon="login"
           >登陆</Button>
         </Form.Item>
       </Form>
