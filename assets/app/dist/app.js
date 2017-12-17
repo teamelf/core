@@ -1032,7 +1032,9 @@ System.register('teamelf/component/layout/AuthBar', ['teamelf/lib/Component'], f
         }, {
           key: 'logout',
           value: function logout() {
-            console.log('logout');
+            axios.post('auth/logout').then(function (r) {
+              window.location.reload();
+            });
           }
         }, {
           key: 'render',

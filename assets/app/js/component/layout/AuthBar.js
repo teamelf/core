@@ -28,7 +28,9 @@ class AuthBar extends Component {
     return null;
   }
   logout () {
-    console.log('logout');
+    axios.post('auth/logout').then(r => {
+      window.location.reload();
+    });
   }
   render () {
     return (
