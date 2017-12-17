@@ -24,19 +24,22 @@ class LoginPage extends React.Component {
   }
   render () {
     const layoutStyle = {
-      paddingTop: '110px', textAlign: 'center'
+      position: 'relative',
+      minHeight: '100vh', padding: '70px 0', textAlign: 'center',
+      background: 'url(/static/bg.png) no-repeat center center',
+      backgroundSize: '100%'
     };
     const contentStyle = {
-      width: 350, margin: '0 auto'
+      width: 350, maxWidth: '90%', margin: '0 auto'
     };
     const footerStyle = {
-      position: 'fixed', bottom: 0, left: 0, right: 0
+      background: 'transparent',
+      position: 'absolute', bottom: 0, left: 0, right: 0
     };
     return (
       <Layout style={layoutStyle}>
         <Content style={contentStyle}>
           <Header/>
-          <div style={{height: 50}}/>
           <LoginForm/>
           <div className="clearfix">
             <div className="float-left" style={{lineHeight: '50px'}}>

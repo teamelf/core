@@ -8,13 +8,11 @@
  */
 
 export default class extends React.Component {
-  handleSubmit () {
-  }
   render () {
     return (
       <div>
-        <div>LOGO</div>
-        <div>SubTitle</div>
+        <a href="/"><img height="100px" src=""/>
+        <h2 style={{padding: '20px 0'}}>TeamELF</h2></a>
       </div>
     );
   }

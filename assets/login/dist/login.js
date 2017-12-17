@@ -66,23 +66,20 @@ System.register("teamelf/login/Header", [], function (_export, _context) {
         }
 
         _createClass(_class, [{
-          key: "handleSubmit",
-          value: function handleSubmit() {}
-        }, {
           key: "render",
           value: function render() {
             return React.createElement(
               "div",
               null,
               React.createElement(
-                "div",
-                null,
-                "LOGO"
-              ),
-              React.createElement(
-                "div",
-                null,
-                "SubTitle"
+                "a",
+                { href: "/" },
+                React.createElement("img", { height: "100px", src: "" }),
+                React.createElement(
+                  "h2",
+                  { style: { padding: '20px 0' } },
+                  "TeamELF"
+                )
               )
             );
           }
@@ -378,13 +375,17 @@ System.register('teamelf/login/main', ['teamelf/login/Header', 'teamelf/login/Lo
           key: 'render',
           value: function render() {
             var layoutStyle = {
-              paddingTop: '110px', textAlign: 'center'
+              position: 'relative',
+              minHeight: '100vh', padding: '70px 0', textAlign: 'center',
+              background: 'url(/static/bg.png) no-repeat center center',
+              backgroundSize: '100%'
             };
             var contentStyle = {
-              width: 350, margin: '0 auto'
+              width: 350, maxWidth: '90%', margin: '0 auto'
             };
             var footerStyle = {
-              position: 'fixed', bottom: 0, left: 0, right: 0
+              background: 'transparent',
+              position: 'absolute', bottom: 0, left: 0, right: 0
             };
             return React.createElement(
               Layout,
@@ -393,7 +394,6 @@ System.register('teamelf/login/main', ['teamelf/login/Header', 'teamelf/login/Lo
                 Content,
                 { style: contentStyle },
                 React.createElement(Header, null),
-                React.createElement('div', { style: { height: 50 } }),
                 React.createElement(LoginForm, null),
                 React.createElement(
                   'div',
