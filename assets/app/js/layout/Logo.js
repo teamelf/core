@@ -8,16 +8,19 @@
  */
 
 const { Link } = ReactRouterDOM;
-import Component from 'teamelf/lib/Component';
 
-export default class extends Component {
+export default class extends React.Component {
   render () {
     return (
-      <div>
-        <Link to="/member/1">to 1</Link> <br/>
-        <Link to="/member/2">to 2</Link> <br/>
-        <Link to="/member/3">to 3</Link> <br/>
-      </div>
-    );
+      <Link
+        to="/home"
+        style={{
+          width: 120, height: 31,
+          background: 'rgba(255,255,255,.2)',
+          margin: '16px 28px 16px 0',
+          float: 'left'
+        }}
+      />
+    )
   }
 }

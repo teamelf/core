@@ -8,13 +8,12 @@
  */
 
 const { Link } = ReactRouterDOM;
-import Component from 'teamelf/lib/Component';
 const { Layout, Menu } = antd;
 const { Sider, Content } = Layout;
 
-export default class PageComponent extends Component {
+export default class Page extends React.Component {
   constructor (props) {
-    if (new.target === PageComponent) {
+    if (new.target === Page) {
       throw new Error('ContentComponent cannot be instanced directly!');
     }
     super(props);

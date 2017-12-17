@@ -7,9 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import Component from 'teamelf/lib/PageComponent';
+import Page from 'teamelf/layout/Page';
 
-export default class extends Component {
+export default class extends Page {
   view () {
     return <div>Profile</div>
   }

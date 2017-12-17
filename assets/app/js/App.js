@@ -7,21 +7,20 @@
  * file that was distributed with this source code.
  */
 
-import Component from 'teamelf/lib/Component';
 const { Switch, Route, Redirect } = ReactRouterDOM;
 const { Layout } = antd;
 const { Header, Content } = Layout;
-import { RedirectAs404 } from 'teamelf/component/Error'
-import Logo from 'teamelf/component/layout/Logo'
-import TopNav from 'teamelf/component/layout/TopNav'
-import AuthBar from 'teamelf/component/layout/AuthBar'
-import Routes from 'teamelf/component/layout/Routes'
-import Footer from 'teamelf/component/layout/Footer'
-import Home from 'teamelf/component/Home';
-import Member from 'teamelf/component/Member';
-import Profile from 'teamelf/component/Profile';
+import { RedirectAs404 } from 'teamelf/Error'
+import Logo from 'teamelf/layout/Logo'
+import TopNav from 'teamelf/layout/TopNav'
+import AuthBar from 'teamelf/layout/AuthBar'
+import Routes from 'teamelf/layout/Routes'
+import Footer from 'teamelf/layout/Footer'
+import Home from 'teamelf/Home';
+import Member from 'teamelf/Member';
+import Profile from 'teamelf/Profile';
 
-export default class extends Component {
+export default class extends React.Component {
   constructor (props) {
     super(props);
     this.routes = [

@@ -8,10 +8,9 @@
  */
 
 const { Link, withRouter } = ReactRouterDOM;
-import Component from 'teamelf/lib/Component';
 const { Menu, Icon } = antd;
 
-class TopNav extends Component {
+class TopNav extends React.Component {
   constructor (props) {
     super(props);
     this.navigations = [

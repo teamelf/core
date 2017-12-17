@@ -7,10 +7,9 @@
  * file that was distributed with this source code.
  */
 
-import Component from 'teamelf/lib/Component';
 const { Breadcrumb } = antd;
 
-export default class extends Component {
+export default class extends React.Component {
   render () {
     return (
       <Breadcrumb style={{ margin: '16px 0' }}>

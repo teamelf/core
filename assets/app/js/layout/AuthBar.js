@@ -8,10 +8,9 @@
  */
 
 const { Link, withRouter } = ReactRouterDOM;
-import Component from 'teamelf/lib/Component';
 const { Menu, Icon, Avatar } = antd;
 
-class AuthBar extends Component {
+class AuthBar extends React.Component {
   handleMenuClick ({key}) {
     switch (key) {
       case 'logout':

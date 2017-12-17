@@ -7,11 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import Component from 'teamelf/lib/Component';
 const { Layout } = antd;
-const { Footer } = Layout
+const { Footer } = Layout;
 
-export default class extends Component {
+export default class extends React.Component {
   render () {
     return (
       <Footer style={{ textAlign: 'center' }}>

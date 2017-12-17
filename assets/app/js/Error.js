@@ -8,9 +8,8 @@
  */
 
 const { Redirect } = ReactRouterDOM;
-import Component from 'teamelf/lib/Component';
 
-export default class extends Component {
+export default class extends React.Component {
   render () {
     return (
       <div>
@@ -22,7 +21,7 @@ export default class extends Component {
   }
 }
 
-export class RedirectAs404 extends Component {
+export class RedirectAs404 extends React.Component {
   render () {
     return (
       <Redirect to={Object.assign({}, this.props.location, {

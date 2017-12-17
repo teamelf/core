@@ -7,9 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import Component from 'teamelf/lib/Component';
-
-export default class extends Component {
+export default class extends React.Component {
   render () {
     return <div>member {this.props.match.params.id}</div>
   }

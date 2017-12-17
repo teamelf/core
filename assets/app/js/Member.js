@@ -8,12 +8,12 @@
  */
 
 const { Switch, Route } = ReactRouterDOM;
-import Component from 'teamelf/lib/PageComponent';
-import { RedirectAs404 } from 'teamelf/component/Error'
-import MemberList from 'teamelf/component/member/MemberList';
-import MemberItem from 'teamelf/component/member/MemberItem';
+import Page from 'teamelf/layout/Page';
+import { RedirectAs404 } from 'teamelf/Error'
+import MemberList from 'teamelf/member/MemberList';
+import MemberItem from 'teamelf/member/MemberItem';
 
-export default class extends Component {
+export default class extends Page {
   constructor (props) {
     super(props);
     this.routes = [

@@ -9,7 +9,7 @@
 
 const { BrowserRouter, Route } = ReactRouterDOM;
 import App from 'teamelf/App';
-import Error from 'teamelf/component/Error';
+import Error from 'teamelf/Error';
 
 const app = (
   <BrowserRouter>
