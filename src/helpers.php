@@ -55,13 +55,11 @@ if (!function_exists('response')) {
         switch (gettype($content)) {
             case 'NULL':
             case 'string':
-                $r = $content;
+                return new \Symfony\Component\HttpFoundation\Response($content, $status, $headers);
                 break;
             default:
-                $r = json_encode($content);
-                $headers['Content-Type'] = 'application/json';
+                return new \Symfony\Component\HttpFoundation\JsonResponse($content, $status, $headers);
         }
-        return new \Symfony\Component\HttpFoundation\Response($r, $status, $headers);
     }
 }
 

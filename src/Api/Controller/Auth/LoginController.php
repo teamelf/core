@@ -27,6 +27,7 @@ class LoginController extends AbstractController
      */
     public function handler(): Response
     {
+        $this->auth(null);
         $data = $this->validate([
             'username' => [
                 new NotBlank()
@@ -45,7 +46,6 @@ class LoginController extends AbstractController
             return response();
         } else {
             app('log')->info($user->getUsername() . ' Login failed');
-            $this->auth(null);
             throw new HttpForbiddenException();
         }
     }

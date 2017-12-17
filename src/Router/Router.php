@@ -80,6 +80,10 @@ class Router
         $this->request = Request::createFromGlobals();
         $this->context = new RequestContext();
         $this->context->fromRequest($this->request);
+        if (preg_match('/^application\/json/', $this->request->headers->get('Content-Type'))) {
+            $data = json_decode($this->request->getContent(), true);
+            $this->request->request->replace(is_array($data) ? $data : []);
+        }
     }
 
     /**

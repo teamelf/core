@@ -8,7 +8,14 @@
  */
 
 export default class extends React.Component {
+  handleSubmit () {
+  }
   render () {
-    return <div>Login Page</div>
+    return (
+      <div>
+        <div>LOGO</div>
+        <div>SubTitle</div>
+      </div>
+    );
   }
 }
