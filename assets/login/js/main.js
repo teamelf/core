@@ -57,7 +57,10 @@ class LoginPage extends React.Component {
             </div>
           </div>
         </Content>
-        <Footer style={footerStyle}>&copy;2017 TeamELF</Footer>
+        <Footer style={footerStyle}>
+          <span> &copy;2017 Created by </span>
+          <a href="https://github.com/teamelf/teamelf" target="_blank">TeamELF</a>
+        </Footer>
       </Layout>
     );
   }

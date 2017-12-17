@@ -12,7 +12,7 @@ export default class extends React.Component {
     return (
       <div>
         <a href="/"><img height="100px" src=""/>
-        <h2 style={{padding: '20px 0'}}>TeamELF</h2></a>
+        <h2 style={{padding: '20px 0'}}>{window.config.name}</h2></a>
       </div>
     );
   }

@@ -12,6 +12,7 @@
 namespace TeamELF\View;
 
 use TeamELF\Application\AbstractService;
+use TeamELF\Core\Config;
 use TeamELF\Event\AssetsHaveBeenAdded;
 use TeamELF\Event\AssetsWillBeAdded;
 use TeamELF\Event\RoutesWillBeLoaded;
@@ -54,6 +55,7 @@ class ViewService extends AbstractService
             $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../views');
             static::$engine = new \Twig_Environment($loader);
             static::$engine->addGlobal('assets', static::getAssetManager());
+            static::$engine->addGlobal('config', Config::get());
         }
         return static::$engine;
     }

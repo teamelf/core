@@ -78,7 +78,7 @@ System.register("teamelf/login/Header", [], function (_export, _context) {
                 React.createElement(
                   "h2",
                   { style: { padding: '20px 0' } },
-                  "TeamELF"
+                  window.config.name
                 )
               )
             );
@@ -432,7 +432,16 @@ System.register('teamelf/login/main', ['teamelf/login/Header', 'teamelf/login/Lo
               React.createElement(
                 Footer,
                 { style: footerStyle },
-                '\xA92017 TeamELF'
+                React.createElement(
+                  'span',
+                  null,
+                  ' \xA92017 Created by '
+                ),
+                React.createElement(
+                  'a',
+                  { href: 'https://github.com/teamelf/teamelf', target: '_blank' },
+                  'TeamELF'
+                )
               )
             );
           }

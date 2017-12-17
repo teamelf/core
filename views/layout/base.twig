@@ -10,6 +10,7 @@
 <body>
 {% block body %}
 {% endblock %}
+<script>window.config = {{ config | json_encode | raw }};</script>
 {{ assets.getJsCode | raw }}
 </body>
 </html>

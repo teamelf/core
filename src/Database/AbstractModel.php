@@ -19,11 +19,6 @@ use PascalDeVink\ShortUuid\ShortUuid;
 abstract class AbstractModel
 {
     /**
-     * @var EntityRepository
-     */
-    private static $repository;
-
-    /**
      * @var string
      *
      * @Id
@@ -52,7 +47,7 @@ abstract class AbstractModel
      */
     protected $deletedAt;
 
-    function __construct(array $attributes)
+    function __construct(array $attributes = [])
     {
         $this->id = ShortUuid::uuid4();
         foreach ($attributes as $key => $value) {
@@ -215,12 +210,9 @@ abstract class AbstractModel
      */
     final private static function getRepository()
     {
-        if (!self::$repository) {
-            self::$repository = new EntityRepository(
-                app('em'),
-                app('em')->getClassMetadata(static::class)
-            );
-        }
-        return self::$repository;
+        return new EntityRepository(
+            app('em'),
+            app('em')->getClassMetadata(static::class)
+        );
     }
 }

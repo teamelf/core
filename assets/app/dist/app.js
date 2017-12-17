@@ -730,9 +730,9 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
     }
   };
 });
-'use strict';
+"use strict";
 
-System.register('teamelf/layout/Footer', [], function (_export, _context) {
+System.register("teamelf/layout/Footer", [], function (_export, _context) {
   "use strict";
 
   var _createClass, _antd, Layout, Footer, _class;
@@ -802,12 +802,26 @@ System.register('teamelf/layout/Footer', [], function (_export, _context) {
         }
 
         _createClass(_class, [{
-          key: 'render',
+          key: "render",
           value: function render() {
             return React.createElement(
               Footer,
               { style: { textAlign: 'center' } },
-              'TeamELF \xA92017 Created by TeamELF'
+              React.createElement(
+                "span",
+                null,
+                window.config.name
+              ),
+              React.createElement(
+                "span",
+                null,
+                " \xA92017 Created by "
+              ),
+              React.createElement(
+                "a",
+                { href: "https://github.com/teamelf/teamelf", target: "_blank" },
+                "TeamELF"
+              )
             );
           }
         }]);
@@ -815,7 +829,7 @@ System.register('teamelf/layout/Footer', [], function (_export, _context) {
         return _class;
       }(React.Component);
 
-      _export('default', _class);
+      _export("default", _class);
     }
   };
 });
