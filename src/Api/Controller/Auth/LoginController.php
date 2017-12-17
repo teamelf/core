@@ -36,7 +36,8 @@ class LoginController extends AbstractController
                 new NotBlank()
             ]
         ]);
-        $user = User::findBy(['username' => $data['username']]);
+        $user = User::findBy(['username' => $data['username']])
+            ?? User::findBy(['email' => $data['username']]);
         if (!$user) {
             throw new HttpUnauthorizedException();
         }
