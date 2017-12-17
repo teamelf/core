@@ -105,9 +105,15 @@ abstract class AbstractApplication
 
         $this->dispatcher = new EventDispatcher();
 
+        $entityManagerConfig = Setup::createAnnotationMetadataConfiguration([__DIR__ . '/../../src']);
+        if ($this->config->isDev()) {
+            $entityManagerConfig->setAutoGenerateProxyClasses(true);
+        } else {
+            $entityManagerConfig->setProxyDir($this->storagePath . '/cached/proxies');
+        }
         $this->entityManager = EntityManager::create(
             $this->config->db,
-            Setup::createAnnotationMetadataConfiguration([$this->basePath . '/src'])
+            $entityManagerConfig
         );
 
         $this->logger = new Logger('system');
@@ -168,6 +174,16 @@ abstract class AbstractApplication
     public function getPublicPath()
     {
         return $this->publicPath;
+    }
+
+    /**
+     * get app's entity manager
+     *
+     * @return EntityManager
+     */
+    public function getEntityManager()
+    {
+        return $this->entityManager;
     }
 
     /**

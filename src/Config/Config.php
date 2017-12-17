@@ -96,4 +96,24 @@ class Config
                 throw new Exception($connection . 'has not been supported yet! use [mysql] instead!');
         }
     }
+
+    /**
+     * see if it's production mode
+     *
+     * @return bool
+     */
+    public function isProd()
+    {
+        return $this->env === 'production';
+    }
+
+    /**
+     * see if it's development mode
+     *
+     * @return bool
+     */
+    public function isDev()
+    {
+        return !$this->isProd();
+    }
 }
