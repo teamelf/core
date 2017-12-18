@@ -127,6 +127,18 @@ abstract class AbstractController
     }
 
     /**
+     * check permission
+     *
+     * @param string $permission
+     * @return bool
+     */
+    final protected function can($permission)
+    {
+        $member = $this->getAuth();
+        return $member && $member->can($permission);
+    }
+
+    /**
      * handle the request
      *
      * @return Response

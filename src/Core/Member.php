@@ -133,7 +133,7 @@ class Member extends AbstractModel
     /**
      * search member by id, username or email
      *
-     * @param $idOrUsernameOrEmail
+     * @param string $idOrUsernameOrEmail
      * @return null|object|static
      */
     public static function search($idOrUsernameOrEmail)
@@ -141,5 +141,18 @@ class Member extends AbstractModel
         return static::find($idOrUsernameOrEmail)
             ?? static::findBy(['username' => $idOrUsernameOrEmail])
             ?? static::findBy(['email' => $idOrUsernameOrEmail]);
+    }
+
+    /**
+     * check the member has permission
+     *
+     * @param string $permission
+     * @return bool
+     */
+    public function can($permission)
+    {
+        $permission = Permission::findBy(['permission' => $permission, 'member' => $this])
+            ?? Permission::findBy(['permission' => $permission, 'role' => $this->getRole()]);
+        return !!$permission;
     }
 }

@@ -22,7 +22,7 @@ class Permission extends AbstractModel
     /**
      * @var string
      *
-     * @Column(type="string", length=20, unique=TRUE)
+     * @Column(type="string", length=50, unique=TRUE)
      */
     protected $permission;
 
@@ -31,28 +31,10 @@ class Permission extends AbstractModel
      * @JoinColumn(name="role_id", referencedColumnName="id")
      */
     protected $role;
-    public function getRole()
-    {
-        return $this->role;
-    }
-    public function role(Role $role)
-    {
-        $this->role = $role;
-        return $this;
-    }
 
     /**
      * @ManyToOne(targetEntity="Member")
      * @JoinColumn(name="member_id", referencedColumnName="id")
      */
     protected $member;
-    public function getMember()
-    {
-        return $this->member;
-    }
-    public function member(Member $member)
-    {
-        $this->member = $member;
-        return $this;
-    }
 }

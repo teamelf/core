@@ -1,0 +1,11 @@
+CREATE TABLE password_reset_token (
+  id VARCHAR(50) NOT NULL,
+  member_id VARCHAR(50) DEFAULT NULL,
+  created_at DATETIME DEFAULT NULL,
+  updated_at DATETIME DEFAULT NULL,
+  deleted_at DATETIME DEFAULT NULL,
+  INDEX IDX_6B7BA4B67597D3FE (member_id),
+  PRIMARY KEY(id)
+) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB;
+
+ALTER TABLE password_reset_token ADD CONSTRAINT FK_6B7BA4B67597D3FE FOREIGN KEY (member_id) REFERENCES member (id);
