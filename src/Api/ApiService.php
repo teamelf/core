@@ -16,6 +16,10 @@ use TeamELF\Api\Controller\Auth\LoginController;
 use TeamELF\Api\Controller\Auth\LogoutController;
 use TeamELF\Api\Controller\Config\ConfigListController;
 use TeamELF\Api\Controller\Config\ConfigUpdateController;
+use TeamELF\Api\Controller\Member\MemberItemController;
+use TeamELF\Api\Controller\Member\MemberListController;
+use TeamELF\Api\Controller\Member\MemberSecurityController;
+use TeamELF\Api\Controller\Member\MemberUpdateController;
 use TeamELF\Application\AbstractService;
 use TeamELF\Event\RoutesWillBeLoaded;
 
@@ -58,10 +62,10 @@ class ApiService extends AbstractService
             // --------------------
             // | Member
             // --------------------
-            ->get('member-list', '/member') // TODO
-            ->get('member-item', '/member/{username}') // TODO
-            ->put('member-edit', '/member/{username}') // TODO
-            ->put('member-security', '/member/{username}/security') // TODO
+            ->get('member-list', '/member', MemberListController::class)
+            ->get('member-item', '/member/{username}', MemberItemController::class)
+            ->put('member-update', '/member/{username}', MemberUpdateController::class)
+            ->put('member-security', '/member/{username}/security', MemberSecurityController::class)
 
             // set prefix back to empty
             ->prefix('');

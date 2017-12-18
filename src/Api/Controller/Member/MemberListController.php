@@ -9,13 +9,13 @@
  * file that was distributed with this source code.
  */
 
-namespace TeamELF\Api\Controller\Config;
+namespace TeamELF\Api\Controller\Member;
 
 use Symfony\Component\HttpFoundation\Response;
-use TeamELF\Core\Config;
+use TeamELF\Core\Member;
 use TeamELF\Http\AbstractController;
 
-class ConfigListController extends AbstractController
+class MemberListController extends AbstractController
 {
     /**
      * handle the request
@@ -24,7 +24,8 @@ class ConfigListController extends AbstractController
      */
     public function handler(): Response
     {
-        $config = Config::get();
-        return response($config);
+        $members = Member::all();
+        // TODO: Model serialize
+        return response();
     }
 }

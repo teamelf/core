@@ -129,4 +129,17 @@ class Member extends AbstractModel
         $this->role = $role;
         return $this;
     }
+
+    /**
+     * search member by id, username or email
+     *
+     * @param $idOrUsernameOrEmail
+     * @return null|object|static
+     */
+    public static function search($idOrUsernameOrEmail)
+    {
+        return static::find($idOrUsernameOrEmail)
+            ?? static::findBy(['username' => $idOrUsernameOrEmail])
+            ?? static::findBy(['email' => $idOrUsernameOrEmail]);
+    }
 }
