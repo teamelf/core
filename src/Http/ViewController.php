@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 use TeamELF\View\AssetManager;
 use TeamELF\View\ViewService;
 
-abstract class AbstractViewController extends AbstractController
+class ViewController extends AbstractController
 {
     /**
      * template's relative path to views/

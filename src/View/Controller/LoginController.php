@@ -11,9 +11,9 @@
 
 namespace TeamELF\View\Controller;
 
-use TeamELF\Http\AbstractViewController;
+use TeamELF\Http\ViewController;
 
-class LoginController extends AbstractViewController
+class LoginController extends ViewController
 {
     protected $template = 'login.twig';
 

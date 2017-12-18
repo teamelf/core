@@ -77,8 +77,12 @@ abstract class AbstractModel
      */
     public function getCreatedAt()
     {
-        return $this->createdAt
-            ->setTimezone(new DateTimeZone(app('config')->timezone));
+        if (!$this->createdAt) {
+            return null;
+        } else {
+            return $this->createdAt
+                ->setTimezone(new DateTimeZone(app('config')->timezone));
+        }
     }
 
     /**
@@ -88,8 +92,12 @@ abstract class AbstractModel
      */
     public function getUpdatedAt()
     {
-        return $this->updatedAt
-            ->setTimezone(new DateTimeZone(app('config')->timezone));
+        if (!$this->updatedAt) {
+            return null;
+        } else {
+            return $this->updatedAt
+                ->setTimezone(new DateTimeZone(app('config')->timezone));
+        }
     }
 
     /**
@@ -99,8 +107,12 @@ abstract class AbstractModel
      */
     public function getDeletedAt()
     {
-        return $this->deletedAt
-            ->setTimezone(new DateTimeZone(app('config')->timezone));
+        if (!$this->deletedAt) {
+            return null;
+        } else {
+            return $this->deletedAt
+                ->setTimezone(new DateTimeZone(app('config')->timezone));
+        }
     }
 
     /**
@@ -129,10 +141,10 @@ abstract class AbstractModel
     final public function delete($force = false)
     {
         if ($force) {
+            app('em')->remove($this);
+        } else {
             $this->deletedAt = new DateTime();
             app('em')->persist($this);
-        } else {
-            app('em')->remove($this);
         }
         app('em')->flush();
         return $this;

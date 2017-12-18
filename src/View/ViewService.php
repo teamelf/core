@@ -17,7 +17,9 @@ use TeamELF\Event\AssetsHaveBeenAdded;
 use TeamELF\Event\AssetsWillBeAdded;
 use TeamELF\Event\RoutesWillBeLoaded;
 use TeamELF\View\Controller\AppController;
+use TeamELF\View\Controller\ForgetPasswordController;
 use TeamELF\View\Controller\LoginController;
+use TeamELF\View\Controller\ResetPasswordController;
 
 class ViewService extends AbstractService
 {
@@ -72,12 +74,14 @@ class ViewService extends AbstractService
     {
         $event->getRouter()->prefix('')
             ->get('fe-login', '/login', LoginController::class)
+            ->get('fe-forget-password', '/password/forget', ForgetPasswordController::class)
+            ->get('fe-reset-password', '/password/reset/{token}', ResetPasswordController::class)
             ->add(
-            'GET',
-            'fe-default',
-            '/{uri}',
-            AppController::class,
-            ['uri' => '(?!api).*']
-        );
+                'GET',
+                'fe-default',
+                '/{uri}',
+                AppController::class,
+                ['uri' => '(?!api).*']
+            );
     }
 }

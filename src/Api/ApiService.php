@@ -12,8 +12,10 @@
 namespace TeamELF\Api;
 
 use TeamELF\Api\Controller\Auth\AuthCheckController;
+use TeamELF\Api\Controller\Auth\ForgetPasswordController;
 use TeamELF\Api\Controller\Auth\LoginController;
 use TeamELF\Api\Controller\Auth\LogoutController;
+use TeamELF\Api\Controller\Auth\ResetPasswordController;
 use TeamELF\Api\Controller\Config\ConfigListController;
 use TeamELF\Api\Controller\Config\ConfigUpdateController;
 use TeamELF\Api\Controller\Member\MemberItemController;
@@ -56,8 +58,8 @@ class ApiService extends AbstractService
             ->get('auth-check', '/auth', AuthCheckController::class)
             ->post('auth-login', '/auth/login', LoginController::class)
             ->post('auth-logout', '/auth/logout', LogoutController::class)
-            ->post('auth-forgot', '/auth/forgot') // TODO
-            ->post('auth-reset', '/auth/reset') // TODO
+            ->post('auth-forget', '/auth/forget', ForgetPasswordController::class)
+            ->post('auth-reset', '/auth/reset/{token}', ResetPasswordController::class)
 
             // --------------------
             // | Member

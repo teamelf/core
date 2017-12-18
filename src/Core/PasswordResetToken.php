@@ -25,16 +25,32 @@ class PasswordResetToken extends AbstractModel
      * @JoinColumn(name="member_id", referencedColumnName="id")
      */
     protected $member;
+
+    /**
+     * @return Member
+     */
     public function getMember()
     {
         return $this->member;
     }
+
+    /**
+     * set member
+     *
+     * @param Member $member
+     * @return $this
+     */
     public function member(Member $member)
     {
         $this->member = $member;
         return $this;
     }
 
+    /**
+     * see if token expired
+     *
+     * @return bool
+     */
     public function isExpired()
     {
         // 12 minutes before expired

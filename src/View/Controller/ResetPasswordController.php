@@ -14,24 +14,16 @@ namespace TeamELF\View\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use TeamELF\Http\ViewController;
 
-class AppController extends ViewController
+class ResetPasswordController extends ViewController
 {
-    protected $template = 'app.twig';
+    protected $template = 'reset-password.twig';
 
     function __construct(Request $request, array $parameters)
     {
         parent::__construct($request, $parameters);
 
-        if (!$this->getAuth()) {
-            $this->redirect = '/login';
-        }
-    }
-
-    protected function addAssets()
-    {
-        parent::addAssets();
-        $this->assets
-            ->addJs(__DIR__ . '/../../../assets/app/dist/app.js')
-            ->entry('teamelf/main');
+        $this->data = [
+            'token' => $this->getParameter('token')
+        ];
     }
 }
