@@ -76,7 +76,7 @@ class Config
     /**
      * select sql driver with DB_CONNECTION
      *
-     * @param $connection
+     * @param string $connection
      * @throws Exception
      */
     protected function selectSQLDriver($connection)
