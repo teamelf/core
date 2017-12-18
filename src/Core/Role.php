@@ -52,13 +52,13 @@ class Role extends AbstractModel
     }
 
     /**
-     * @var User[]
+     * @var Member[]
      *
-     * @OneToMany(targetEntity="User", mappedBy="role_id")
+     * @OneToMany(targetEntity="Member", mappedBy="role_id")
      */
-    protected $users;
-    public function getUsers()
+    protected $members;
+    public function getMembers()
     {
-        return $this->users;
+        return $this->members;
     }
 }

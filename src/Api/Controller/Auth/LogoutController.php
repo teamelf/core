@@ -25,9 +25,9 @@ class LogoutController extends AbstractController
      */
     public function handler(): Response
     {
-        $user = $this->getAuth();
-        if ($user) {
-            app('log')->info($user->getUsername() . ' Logout');
+        $member = $this->getAuth();
+        if ($member) {
+            app('log')->info($member->getUsername() . ' Logout');
         }
         $this->auth(null);
         return response();

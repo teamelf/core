@@ -42,17 +42,17 @@ class Permission extends AbstractModel
     }
 
     /**
-     * @ManyToOne(targetEntity="User")
-     * @JoinColumn(name="user_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="Member")
+     * @JoinColumn(name="member_id", referencedColumnName="id")
      */
-    protected $user;
-    public function getUser()
+    protected $member;
+    public function getMember()
     {
-        return $this->user;
+        return $this->member;
     }
-    public function user(User $user)
+    public function member(Member $member)
     {
-        $this->user = $user;
+        $this->member = $member;
         return $this;
     }
 }

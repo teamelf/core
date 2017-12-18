@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Validator\Validation;
-use TeamELF\Core\User;
+use TeamELF\Core\Member;
 use TeamELF\Exception\HttpValidationException;
 
 abstract class AbstractController
@@ -103,27 +103,27 @@ abstract class AbstractController
     /**
      * set auth user to session
      *
-     * @param null|User $user
+     * @param null|Member $member
      * @return $this
      */
-    final protected function auth($user)
+    final protected function auth($member)
     {
-        if ($user) {
-            $this->session->set('auth_user_id', $user->getId());
+        if ($member) {
+            $this->session->set('auth_member_id', $member->getId());
         } else {
-            $this->session->remove('auth_user_id');
+            $this->session->remove('auth_member_id');
         }
         return $this;
     }
 
     /**
-     * get auth user from session
+     * get auth member from session
      *
-     * @return null|object|User
+     * @return null|object|Member
      */
     final protected function getAuth()
     {
-        return User::find($this->session->get('auth_user_id'));
+        return Member::find($this->session->get('auth_member_id'));
     }
 
     /**

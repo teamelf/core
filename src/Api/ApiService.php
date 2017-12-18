@@ -56,12 +56,12 @@ class ApiService extends AbstractService
             ->post('auth-reset', '/auth/reset') // TODO
 
             // --------------------
-            // | User
+            // | Member
             // --------------------
-            ->get('user-list', '/user') // TODO
-            ->get('user-item', '/user/{id}') // TODO
-            ->put('user-edit', '/user/{id}') // TODO
-            ->put('user-security', '/user/{id}/security') // TODO
+            ->get('member-list', '/member') // TODO
+            ->get('member-item', '/member/{username}') // TODO
+            ->put('member-edit', '/member/{username}') // TODO
+            ->put('member-security', '/member/{username}/security') // TODO
 
             // set prefix back to empty
             ->prefix('');

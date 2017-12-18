@@ -13,7 +13,7 @@ namespace TeamELF\Api\Controller\Auth;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use TeamELF\Core\User;
+use TeamELF\Core\Member;
 use TeamELF\Exception\HttpUnauthorizedException;
 use TeamELF\Http\AbstractController;
 
@@ -36,17 +36,17 @@ class LoginController extends AbstractController
                 new NotBlank()
             ]
         ]);
-        $user = User::findBy(['username' => $data['username']])
-            ?? User::findBy(['email' => $data['username']]);
-        if (!$user) {
+        $member = Member::findBy(['username' => $data['username']])
+            ?? Member::findBy(['email' => $data['username']]);
+        if (!$member) {
             throw new HttpUnauthorizedException();
         }
-        if (password_verify($data['password'], $user->getPassword())) {
-            app('log')->info($user->getUsername() . ' Login successfully');
-            $this->auth($user);
+        if (password_verify($data['password'], $member->getPassword())) {
+            app('log')->info($member->getUsername() . ' Login successfully');
+            $this->auth($member);
             return response();
         } else {
-            app('log')->info($user->getUsername() . ' Login failed');
+            app('log')->info($member->getUsername() . ' Login failed');
             throw new HttpUnauthorizedException();
         }
     }

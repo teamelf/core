@@ -15,9 +15,9 @@ use TeamELF\Database\AbstractModel;
 
 /**
  * @Entity
- * @Table(name="user")
+ * @Table(name="member")
  */
-class User extends AbstractModel
+class Member extends AbstractModel
 {
     /**
      * @var string
