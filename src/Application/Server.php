@@ -11,10 +11,13 @@
 
 namespace TeamELF\Application;
 
+use Symfony\Component\Routing\Exception\MethodNotAllowedException;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Symfony\Component\Routing\Exception\RouteNotFoundException;
 use TeamELF\Api\ApiService;
 use TeamELF\Event\RoutesHaveBeenLoaded;
 use TeamELF\Event\RoutesWillBeLoaded;
+use TeamELF\Exception\HttpMethodNotAllowedException;
 use TeamELF\Exception\HttpNotFoundException;
 use TeamELF\Router\Router;
 use TeamELF\View\ViewService;
@@ -55,18 +58,25 @@ class Server extends AbstractApplication
 
     /**
      * boot all services
+     *
+     * @throws HttpMethodNotAllowedException
+     * @throws HttpNotFoundException
      */
     protected function boot(): void
     {
         $this->dispatch(new RoutesWillBeLoaded($this->router));
         $this->dispatch(new RoutesHaveBeenLoaded($this->router));
 
-        // try to match back-end routes, if not, render front-end pages
+        // send back responses
         try {
             $response = $this->router->getResponse();
             $response->send();
+        } catch (RouteNotFoundException $exception) {
+            throw new HttpNotFoundException();
         } catch (ResourceNotFoundException $exception) {
             throw new HttpNotFoundException();
+        } catch (MethodNotAllowedException $exception) {
+            throw new HttpMethodNotAllowedException();
         }
     }
 }

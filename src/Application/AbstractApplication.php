@@ -24,6 +24,8 @@ use TeamELF\Config\Config;
 use TeamELF\Event\AbstractEvent;
 use TeamELF\Exception\Exception;
 use TeamELF\Exception\HttpException;
+use TeamELF\Exception\HttpMethodNotAllowedException;
+use TeamELF\Exception\HttpNotFoundException;
 use TeamELF\Exception\HttpValidationException;
 
 abstract class AbstractApplication
@@ -203,6 +205,8 @@ abstract class AbstractApplication
      * run all the services
      *
      * @return $this
+     * @throws HttpMethodNotAllowedException
+     * @throws HttpNotFoundException
      */
     final public function start()
     {
@@ -217,9 +221,9 @@ abstract class AbstractApplication
                 'code' => $exception->getCode(),
                 'message' => $exception->getMessage()
             ], $exception->getCode())->send();
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             app('log')->alert('DOWN', $exception->getTrace());
-            response(null, 500)->send();
+            response($exception->getMessage(), $exception->getCode())->send();
         }
         return $this;
     }
