@@ -7,11 +7,11 @@
  * file that was distributed with this source code.
  */
 
-import AuthLayout from 'teamelf/auth/Layout';
+import SimpleLayout from 'teamelf/common/SimpleLayout';
 const { Button, Icon } = antd;
 import LoginForm from 'teamelf/auth/login/LoginForm';
 
-export default class LoginPage extends AuthLayout {
+export default class LoginPage extends SimpleLayout {
   constructor (props) {
     super(props);
     this.loginInterfaces = [

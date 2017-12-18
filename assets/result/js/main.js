@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import Result from 'teamelf/auth/result/Result';
+import Result from 'teamelf/result/Result';
 
 const target = document.getElementById('react-render-target-result');
 if (target) {

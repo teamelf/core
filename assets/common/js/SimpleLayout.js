@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-import Header from 'teamelf/auth/Header';
+import Header from 'teamelf/common/Header';
 const { Layout } = antd;
 const { Content, Footer } = Layout;
 

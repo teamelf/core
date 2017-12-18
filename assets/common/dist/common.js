@@ -6241,6 +6241,233 @@ var o=Object.getOwnPropertySymbols,i=Object.prototype.hasOwnProperty,a=Object.pr
 
 }));
 
+"use strict";
+
+System.register("teamelf/common/Header", [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: "render",
+          value: function render() {
+            return React.createElement(
+              "div",
+              null,
+              React.createElement(
+                "a",
+                { href: "/" },
+                React.createElement("img", { height: "100px", src: "" }),
+                React.createElement(
+                  "h2",
+                  { style: { padding: '20px 0' } },
+                  window.config.name
+                )
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export("default", _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/common/SimpleLayout', ['teamelf/common/Header'], function (_export, _context) {
+  "use strict";
+
+  var Header, _createClass, _antd, Layout, Content, Footer, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfCommonHeader) {
+      Header = _teamelfCommonHeader.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Layout = _antd.Layout;
+      Content = Layout.Content;
+      Footer = Layout.Footer;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'view',
+          value: function view() {
+            return React.createElement(
+              'div',
+              null,
+              'auth basic layout'
+            );
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            var layoutStyle = {
+              position: 'relative',
+              minHeight: '100vh', padding: '70px 0', textAlign: 'center',
+              background: 'url(/static/bg.png) no-repeat center center',
+              backgroundSize: '100%'
+            };
+            var contentStyle = {
+              width: 350, maxWidth: '90%', margin: '0 auto'
+            };
+            var footerStyle = {
+              background: 'transparent',
+              position: 'absolute', bottom: 0, left: 0, right: 0
+            };
+            return React.createElement(
+              Layout,
+              { style: layoutStyle },
+              React.createElement(
+                Content,
+                { style: contentStyle },
+                React.createElement(Header, null),
+                this.view()
+              ),
+              React.createElement(
+                Footer,
+                { style: footerStyle },
+                React.createElement(
+                  'span',
+                  null,
+                  ' \xA92017 Created by '
+                ),
+                React.createElement(
+                  'a',
+                  { href: 'https://github.com/teamelf/teamelf', target: '_blank' },
+                  'TeamELF'
+                )
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
 'use strict';
 
 System.register('teamelf/common/main', [], function (_export, _context) {

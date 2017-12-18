@@ -7,10 +7,10 @@
  * file that was distributed with this source code.
  */
 
-import AuthLayout from 'teamelf/auth/Layout';
+import SimpleLayout from 'teamelf/common/SimpleLayout';
 const { Form, Button, Input } = antd;
 
-export default class extends AuthLayout {
+export default class extends SimpleLayout {
   constructor (props) {
     super(props);
     this.state = {

@@ -22,7 +22,7 @@ class ResultController extends ViewController
     {
         parent::addAssets();
         $this->assets
-            ->addJs(__DIR__ . '/../../../assets/auth/dist/auth.js')
-            ->entry('teamelf/auth/result/main');
+            ->addJs(__DIR__ . '/../../../assets/result/dist/result.js')
+            ->entry('teamelf/result/main');
     }
 }
