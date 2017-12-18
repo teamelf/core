@@ -61,4 +61,21 @@ class Role extends AbstractModel
     {
         return $this->members;
     }
+
+    /**
+     * @var string
+     *
+     * @Column(type="string", length=20)
+     */
+    protected $color;
+    public function getColor()
+    {
+        return $this->color;
+    }
+    public function color($color)
+    {
+        $this->color = $color;
+        return $this;
+    }
+
 }

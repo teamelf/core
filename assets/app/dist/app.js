@@ -437,7 +437,7 @@ System.register('teamelf/Member', ['teamelf/layout/Page', 'teamelf/Error', 'team
             exact: true,
             component: MemberList
           }, {
-            path: '/member/:id',
+            path: '/member/:name',
             exact: true,
             component: MemberItem
           }];
@@ -1108,7 +1108,7 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
               ),
               React.createElement(
                 Content,
-                { style: { padding: '0 24px', minHeight: 280 } },
+                { style: { padding: '0 24px', minHeight: 'calc(100vh - 300px)' } },
                 this.view()
               )
             );
@@ -1368,12 +1368,12 @@ System.register('teamelf/layout/TopNav', [], function (_export, _context) {
     }
   };
 });
-"use strict";
+'use strict';
 
-System.register("teamelf/member/MemberItem", [], function (_export, _context) {
+System.register('teamelf/member/MemberItem', [], function (_export, _context) {
   "use strict";
 
-  var _createClass, _class;
+  var _createClass, _antd, Tag, Divider, Avatar, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1426,23 +1426,48 @@ System.register("teamelf/member/MemberItem", [], function (_export, _context) {
         };
       }();
 
+      _antd = antd;
+      Tag = _antd.Tag;
+      Divider = _antd.Divider;
+      Avatar = _antd.Avatar;
+
       _class = function (_React$Component) {
         _inherits(_class, _React$Component);
 
-        function _class() {
+        function _class(props) {
           _classCallCheck(this, _class);
 
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.member = {
+            id: 11,
+            name: _this.props.match.params.name,
+            role: { name: '负责人', color: '#ff5500' },
+            email: 'A@teamelf.com', phone: '13012345678'
+          };
+          return _this;
         }
 
         _createClass(_class, [{
-          key: "render",
+          key: 'render',
           value: function render() {
             return React.createElement(
-              "div",
+              'div',
               null,
-              "member ",
-              this.props.match.params.id
+              React.createElement(
+                Tag,
+                {
+                  style: { float: 'right' },
+                  color: this.member.role.color
+                },
+                this.member.role.name
+              ),
+              React.createElement(
+                'h2',
+                null,
+                this.member.name
+              ),
+              React.createElement(Divider, null)
             );
           }
         }]);
@@ -1450,16 +1475,16 @@ System.register("teamelf/member/MemberItem", [], function (_export, _context) {
         return _class;
       }(React.Component);
 
-      _export("default", _class);
+      _export('default', _class);
     }
   };
 });
-"use strict";
+'use strict';
 
-System.register("teamelf/member/MemberList", [], function (_export, _context) {
+System.register('teamelf/member/MemberList', ['teamelf/member/MemberCardItem'], function (_export, _context) {
   "use strict";
 
-  var _createClass, _ReactRouterDOM, Link, _class;
+  var MemberCardItem, _extends, _createClass, _antd, Row, Col, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1492,8 +1517,24 @@ System.register("teamelf/member/MemberList", [], function (_export, _context) {
   }
 
   return {
-    setters: [],
+    setters: [function (_teamelfMemberMemberCardItem) {
+      MemberCardItem = _teamelfMemberMemberCardItem.default;
+    }],
     execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
       _createClass = function () {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -1512,45 +1553,35 @@ System.register("teamelf/member/MemberList", [], function (_export, _context) {
         };
       }();
 
-      _ReactRouterDOM = ReactRouterDOM;
-      Link = _ReactRouterDOM.Link;
+      _antd = antd;
+      Row = _antd.Row;
+      Col = _antd.Col;
 
       _class = function (_React$Component) {
         _inherits(_class, _React$Component);
 
-        function _class() {
+        function _class(props) {
           _classCallCheck(this, _class);
 
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.members = [{ id: 1, name: 'A', role: { name: '负责人', color: '#ff5500' }, email: 'A@teamelf.com', phone: '13012345678' }, { id: 2, name: 'B', role: { name: '核心成员', color: '#108ee9' }, email: 'B@teamelf.com', phone: '13012345678' }, { id: 3, name: 'C', role: { name: '成员', color: '#2db7f5' }, email: 'C@teamelf.com', phone: '13012345678' }, { id: 4, name: 'D', role: { name: '新人', color: '#87d068' }, email: 'D@teamelf.com', phone: '13012345678' }];
+          return _this;
         }
 
         _createClass(_class, [{
-          key: "render",
+          key: 'render',
           value: function render() {
             return React.createElement(
-              "div",
-              null,
-              React.createElement(
-                Link,
-                { to: "/member/1" },
-                "to 1"
-              ),
-              " ",
-              React.createElement("br", null),
-              React.createElement(
-                Link,
-                { to: "/member/2" },
-                "to 2"
-              ),
-              " ",
-              React.createElement("br", null),
-              React.createElement(
-                Link,
-                { to: "/member/3" },
-                "to 3"
-              ),
-              " ",
-              React.createElement("br", null)
+              Row,
+              { gutter: 16 },
+              this.members.map(function (o) {
+                return React.createElement(
+                  Col,
+                  { sm: 24, md: 12, lg: 6, style: { height: 160 } },
+                  React.createElement(MemberCardItem, _extends({ key: o.id }, o))
+                );
+              })
             );
           }
         }]);
@@ -1558,7 +1589,7 @@ System.register("teamelf/member/MemberList", [], function (_export, _context) {
         return _class;
       }(React.Component);
 
-      _export("default", _class);
+      _export('default', _class);
     }
   };
 });
@@ -1667,6 +1698,134 @@ System.register('teamelf/model/AbstractModel', [], function (_export, _context) 
       }();
 
       _export('default', AbstractModel);
+    }
+  };
+});
+"use strict";
+
+System.register("teamelf/member/MemberCardItem", [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _ReactRouterDOM, Link, _antd, Card, Tag, Avatar, Meta, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _ReactRouterDOM = ReactRouterDOM;
+      Link = _ReactRouterDOM.Link;
+      _antd = antd;
+      Card = _antd.Card;
+      Tag = _antd.Tag;
+      Avatar = _antd.Avatar;
+      Meta = Card.Meta;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: "render",
+          value: function render() {
+            return React.createElement(
+              Link,
+              { to: "/member/" + this.props.name },
+              React.createElement(
+                Card,
+                {
+                  hoverable: true,
+                  title: this.props.name,
+                  extra: React.createElement(
+                    Tag,
+                    { color: this.props.role.color },
+                    this.props.role.name
+                  )
+                },
+                React.createElement(
+                  Avatar,
+                  {
+                    style: { float: 'right' },
+                    size: "large"
+                  },
+                  this.props.name.substr(0, 1)
+                ),
+                React.createElement(Meta, {
+                  description: React.createElement(
+                    "div",
+                    null,
+                    React.createElement(
+                      "div",
+                      null,
+                      this.props.email
+                    ),
+                    React.createElement(
+                      "div",
+                      null,
+                      this.props.phone
+                    )
+                  )
+                })
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export("default", _class);
     }
   };
 });

@@ -17,7 +17,7 @@ class AuthBar extends React.Component {
       name: '',
       role: ''
     };
-    this.fetchAuth()
+    this.fetchAuth();
   }
   fetchAuth () {
     axios.get('auth').then(r => {
@@ -25,7 +25,7 @@ class AuthBar extends React.Component {
         name: r.data.name,
         role: r.data.role.name
       });
-    })
+    });
   }
   handleMenuClick ({key}) {
     switch (key) {
