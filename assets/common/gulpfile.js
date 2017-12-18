@@ -27,7 +27,8 @@ gulp({
   output: './dist/common.js'
 }, {
   files: [
-    './node_modules/antd/dist/antd.min.css'
+    './node_modules/antd/dist/antd.min.css',
+    './bower_components/loaders.css/loaders.min.css'
   ],
   modules: ['./less/main.less'],
   output: './dist/common.css'

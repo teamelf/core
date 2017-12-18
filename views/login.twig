@@ -2,5 +2,7 @@
 
 {% block body %}
   {{ parent() }}
-  <div id="react-render-target-login"></div>
+  <div id="react-render-target-login">
+    {% include "layout/loading.twig" %}
+  </div>
 {% endblock %}
