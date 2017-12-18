@@ -54,7 +54,7 @@ class Member extends AbstractModel
     /**
      * @var string
      *
-     * @Column(type="string", length=100)
+     * @Column(type="string", length=100, nullable=TRUE)
      */
     protected $email;
     public function getEmail()
@@ -70,7 +70,23 @@ class Member extends AbstractModel
     /**
      * @var string
      *
-     * @Column(type="string", length=50, unique=TRUE)
+     * @Column(type="string", length=20, nullable=TRUE)
+     */
+    protected $phone;
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+    public function phone($phone)
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * @var string
+     *
+     * @Column(type="string", length=50, nullable=TRUE)
      */
     protected $number;
     public function getNumber()
@@ -102,7 +118,7 @@ class Member extends AbstractModel
     /**
      * @var boolean
      *
-     * @Column(type="boolean")
+     * @Column(type="boolean", nullable=TRUE)
      */
     protected $gender;
     public function getGender()
@@ -120,10 +136,19 @@ class Member extends AbstractModel
      * @JoinColumn(name="role_id", referencedColumnName="id")
      */
     protected $role;
+
+    /**
+     * @return Role
+     */
     public function getRole()
     {
         return $this->role;
     }
+
+    /**
+     * @param Role $role
+     * @return $this
+     */
     public function role(Role $role)
     {
         $this->role = $role;

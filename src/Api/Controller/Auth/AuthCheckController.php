@@ -29,6 +29,14 @@ class AuthCheckController extends AbstractController
         if (!$member) {
             throw new HttpUnauthorizedException();
         }
-        return response();
+        return response([
+            'id' => $member->getId(),
+            'username' => $member->getUsername(),
+            'role' => [
+                'id' => $member->getRole()->getId(),
+                'name' => $member->getRole()->getName()
+            ],
+            'name' => $member->getName()
+        ]);
     }
 }

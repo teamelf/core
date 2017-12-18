@@ -654,13 +654,32 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
       AuthBar = function (_React$Component) {
         _inherits(AuthBar, _React$Component);
 
-        function AuthBar() {
+        function AuthBar(props) {
           _classCallCheck(this, AuthBar);
 
-          return _possibleConstructorReturn(this, (AuthBar.__proto__ || Object.getPrototypeOf(AuthBar)).apply(this, arguments));
+          var _this = _possibleConstructorReturn(this, (AuthBar.__proto__ || Object.getPrototypeOf(AuthBar)).call(this, props));
+
+          _this.state = {
+            name: '',
+            role: ''
+          };
+          _this.fetchAuth();
+          return _this;
         }
 
         _createClass(AuthBar, [{
+          key: 'fetchAuth',
+          value: function fetchAuth() {
+            var _this2 = this;
+
+            axios.get('auth').then(function (r) {
+              _this2.setState({
+                name: r.data.name,
+                role: r.data.role.name
+              });
+            });
+          }
+        }, {
           key: 'handleMenuClick',
           value: function handleMenuClick(_ref) {
             var key = _ref.key;
@@ -707,9 +726,18 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
                   { to: '/profile' },
                   React.createElement(Avatar, { style: { marginTop: 16, float: 'left' } }),
                   React.createElement(
-                    'span',
-                    { style: { marginLeft: 10 } },
-                    '\u9E73\u72F8\u733F'
+                    'div',
+                    { style: { display: 'inline-block', marginLeft: 20, paddingTop: 17, height: 64 } },
+                    React.createElement(
+                      'div',
+                      { style: { lineHeight: '20px' } },
+                      this.state.name
+                    ),
+                    React.createElement(
+                      'div',
+                      { style: { lineHeight: '10px', fontSize: '.8em' } },
+                      this.state.role
+                    )
                   )
                 )
               ),

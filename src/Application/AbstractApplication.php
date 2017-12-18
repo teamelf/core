@@ -11,6 +11,8 @@
 
 namespace TeamELF\Application;
 
+use Doctrine\Common\Cache\ApcuCache;
+use Doctrine\Common\Cache\ArrayCache;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 use Monolog\Handler\StreamHandler;
@@ -107,12 +109,12 @@ abstract class AbstractApplication
 
         $this->dispatcher = new EventDispatcher();
 
-        $entityManagerConfig = Setup::createAnnotationMetadataConfiguration([__DIR__ . '/../../src']);
-        if ($this->config->isDev()) {
-            $entityManagerConfig->setAutoGenerateProxyClasses(true);
-        } else {
-            $entityManagerConfig->setProxyDir($this->storagePath . '/cached/proxies');
-        }
+        $entityManagerConfig = Setup::createAnnotationMetadataConfiguration(
+            [__DIR__ . '/../../src'],
+            $this->config->isDev(),
+            $this->storagePath . '/proxies',
+            $this->config->isDev() ? new ArrayCache() : new ApcuCache()
+        );
         $this->entityManager = EntityManager::create(
             $this->config->db,
             $entityManagerConfig

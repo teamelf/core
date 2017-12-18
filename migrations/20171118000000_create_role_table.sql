@@ -12,7 +12,7 @@ CREATE TABLE role (
 
 INSERT role (id, name, slug)
 VALUES
-  (1, 'administrator', 'admin'),
-  (2, 'core', 'core'),
-  (3, 'member', 'member'),
-  (4, 'freshmen', 'freshmen');
+  (1, '负责人', 'director'),
+  (2, '核心成员', 'core'),
+  (3, '成员', 'member'),
+  (4, '新人', 'trainee');

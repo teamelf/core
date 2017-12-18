@@ -11,6 +11,22 @@ const { Link, withRouter } = ReactRouterDOM;
 const { Menu, Icon, Avatar } = antd;
 
 class AuthBar extends React.Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      name: '',
+      role: ''
+    };
+    this.fetchAuth()
+  }
+  fetchAuth () {
+    axios.get('auth').then(r => {
+      this.setState({
+        name: r.data.name,
+        role: r.data.role.name
+      });
+    })
+  }
   handleMenuClick ({key}) {
     switch (key) {
       case 'logout':
@@ -42,7 +58,10 @@ class AuthBar extends React.Component {
         <Menu.Item key="profile">
           <Link to="/profile">
             <Avatar style={{marginTop: 16, float: 'left'}}/>
-            <span style={{marginLeft: 10}}>鹳狸猿</span>
+            <div style={{display: 'inline-block', marginLeft: 20, paddingTop: 17, height: 64}}>
+              <div style={{lineHeight: '20px'}}>{this.state.name}</div>
+              <div style={{lineHeight: '10px', fontSize: '.8em'}}>{this.state.role}</div>
+            </div>
           </Link>
         </Menu.Item>
         <Menu.Item key="logout">
