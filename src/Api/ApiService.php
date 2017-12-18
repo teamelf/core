@@ -14,6 +14,8 @@ namespace TeamELF\Api;
 use TeamELF\Api\Controller\Auth\AuthCheckController;
 use TeamELF\Api\Controller\Auth\LoginController;
 use TeamELF\Api\Controller\Auth\LogoutController;
+use TeamELF\Api\Controller\Config\ConfigListController;
+use TeamELF\Api\Controller\Config\ConfigUpdateController;
 use TeamELF\Application\AbstractService;
 use TeamELF\Event\RoutesWillBeLoaded;
 
@@ -37,6 +39,12 @@ class ApiService extends AbstractService
     {
         $event->getRouter()
             ->prefix('/api')
+
+            // --------------------
+            // | Config
+            // --------------------
+            ->get('config-list', '/config', ConfigListController::class)
+            ->put('config-update', '/config/{key}', ConfigUpdateController::class)
 
             // --------------------
             // | Auth

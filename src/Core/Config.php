@@ -25,6 +25,10 @@ class Config extends AbstractModel
      * @Column(type="string", length=20)
      */
     protected $key;
+    public function getKey()
+    {
+        return $this->key;
+    }
 
     /**
      * @var string
@@ -32,6 +36,15 @@ class Config extends AbstractModel
      * @Column(type="string", length=200)
      */
     protected $value;
+    public function getValue()
+    {
+        return $this->value;
+    }
+    public function value($value)
+    {
+        $this->value = $value;
+        return $this;
+    }
 
     /**
      * get site configuration by $key
@@ -43,11 +56,11 @@ class Config extends AbstractModel
     {
         if ($key) {
             $config = static::findBy(['key' => $key]);
-            return $config ? $config->value : '';
+            return $config ? $config->getValue() : '';
         } else {
             $config = [];
             foreach (static::all() as $c) {
-                $config[$c->key] = $c->value;
+                $config[$c->key] = $c->getValue();
             }
             return $config;
         }
