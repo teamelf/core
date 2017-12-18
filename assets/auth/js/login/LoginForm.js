@@ -47,7 +47,7 @@ class LoginForm extends React.Component {
              }],
           })(
             <Input
-              size="large" placeholder="登录名 / 邮箱"
+              size="large" placeholder="用户名 / 邮箱"
               value={this.state.username}
               onChange={e => this.setState({username: e.target.value})}
               disabled={this.state.loading}

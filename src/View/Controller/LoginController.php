@@ -21,7 +21,7 @@ class LoginController extends ViewController
     {
         parent::addAssets();
         $this->assets
-            ->addJs(__DIR__ . '/../../../assets/login/dist/login.js')
-            ->entry('teamelf/login/main');
+            ->addJs(__DIR__ . '/../../../assets/auth/dist/auth.js')
+            ->entry('teamelf/auth/login/main');
     }
 }

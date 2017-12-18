@@ -16,7 +16,7 @@ use TeamELF\Http\ViewController;
 
 class ResetPasswordController extends ViewController
 {
-    protected $template = 'reset-password.twig';
+    protected $template = 'password-reset.twig';
 
     function __construct(Request $request, array $parameters)
     {
@@ -25,5 +25,13 @@ class ResetPasswordController extends ViewController
         $this->data = [
             'token' => $this->getParameter('token')
         ];
+    }
+
+    protected function addAssets()
+    {
+        parent::addAssets();
+        $this->assets
+            ->addJs(__DIR__ . '/../../../assets/auth/dist/auth.js')
+            ->entry('teamelf/auth/reset/main');
     }
 }

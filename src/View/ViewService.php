@@ -20,6 +20,7 @@ use TeamELF\View\Controller\AppController;
 use TeamELF\View\Controller\ForgetPasswordController;
 use TeamELF\View\Controller\LoginController;
 use TeamELF\View\Controller\ResetPasswordController;
+use TeamELF\View\Controller\ResultController;
 
 class ViewService extends AbstractService
 {
@@ -76,6 +77,7 @@ class ViewService extends AbstractService
             ->get('fe-login', '/login', LoginController::class)
             ->get('fe-forget-password', '/password/forget', ForgetPasswordController::class)
             ->get('fe-reset-password', '/password/reset/{token}', ResetPasswordController::class)
+            ->get('fe-result', '/r', ResultController::class)
             ->add(
                 'GET',
                 'fe-default',

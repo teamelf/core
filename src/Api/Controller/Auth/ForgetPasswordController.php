@@ -36,6 +36,8 @@ class ForgetPasswordController extends AbstractController
         $token->member($member)
             ->save();
         // TODO: send token [$token->getId()] to email [$member->getEmail()]
-        return response();
+        return response([
+            'email' => $member->getEmail()
+        ]);
     }
 }

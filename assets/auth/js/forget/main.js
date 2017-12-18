@@ -7,11 +7,9 @@
  * file that was distributed with this source code.
  */
 
-const gulp = require('teamelf-gulp');
+import ForgetPassword from 'teamelf/auth/forget/ForgetPassword';
 
-gulp({
-  modules: {
-    'teamelf/login': 'js/**/*.js'
-  },
-  output: './dist/login.js'
-});
+const target = document.getElementById('react-render-target-password-forget');
+if (target) {
+  ReactDOM.render(<ForgetPassword/>, target);
+}

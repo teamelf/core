@@ -35,11 +35,11 @@ class ResetPasswordController extends AbstractController
             'password' => [
                 new NotBlank()
             ],
-            'password_confirmation' => [
+            'passwordConfirmation' => [
                 new NotBlank()
             ]
         ]);
-        if ($data['password'] !== $data['password_confirmation']) {
+        if ($data['password'] !== $data['passwordConfirmation']) {
             throw new HttpForbiddenException();
         }
         $token = PasswordResetToken::find($this->getParameter('token'));

@@ -49,7 +49,8 @@ class ViewController extends AbstractController
         $this->assets = ViewService::getAssetManager();
         $this->assets
             ->addCss(__DIR__ . '/../../assets/common/dist/common.css')
-            ->addJs(__DIR__ . '/../../assets/common/dist/common.js');
+            ->addJs(__DIR__ . '/../../assets/common/dist/common.js')
+            ->entry('teamelf/common/main');
     }
 
     /**

@@ -11,17 +11,18 @@
 
 namespace TeamELF\View\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use TeamELF\Http\ViewController;
 
-class ForgetPasswordController extends ViewController
+class ResultController extends ViewController
 {
-    protected $template = 'password-forget.twig';
+    protected $template = 'result.twig';
 
     protected function addAssets()
     {
         parent::addAssets();
         $this->assets
             ->addJs(__DIR__ . '/../../../assets/auth/dist/auth.js')
-            ->entry('teamelf/auth/forget/main');
+            ->entry('teamelf/auth/result/main');
     }
 }

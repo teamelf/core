@@ -25,9 +25,9 @@ class AssetManager
     /**
      * js entry module
      *
-     * @var string
+     * @var array
      */
-    protected $entry;
+    protected $entry = [];
 
     /**
      * css asset files
@@ -78,7 +78,7 @@ class AssetManager
      */
     public function entry($module)
     {
-        $this->entry = $module;
+        $this->entry[] = $module;
         return $this;
     }
 
@@ -120,8 +120,8 @@ class AssetManager
         foreach ($this->js as $js) {
             $html .= sprintf('<script src="%s"></script>', $js);
         }
-        if ($this->entry) {
-            $html .= sprintf('<script>System.import(\'%s\')</script>', $this->entry);
+        foreach ($this->entry as $entry) {
+            $html .= sprintf('<script>System.import(\'%s\')</script>', $entry);
         }
         return $html;
     }

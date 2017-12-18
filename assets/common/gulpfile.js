@@ -19,9 +19,11 @@ gulp({
     './bower_components/moment/min/moment-with-locales.min.js',
     './bower_components/axios/dist/axios.min.js',
     './node_modules/antd/dist/antd.min.js',
-    './bower_components/crypto-js/crypto-js.js',
-    'js/**/*.js'
+    './bower_components/crypto-js/crypto-js.js'
   ],
+  modules: {
+    'teamelf/common': 'js/**/*.js'
+  },
   output: './dist/common.js'
 }, {
   files: [
