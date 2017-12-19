@@ -12,7 +12,7 @@
 namespace TeamELF\Api\Controller\Member;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Email;
 use TeamELF\Core\Member;
 use TeamELF\Exception\HttpNotFoundException;
 use TeamELF\Http\AbstractController;
@@ -29,19 +29,15 @@ class MemberUpdateController extends AbstractController
     {
         $data = $this->validate([
             'email' => [
-                new NotBlank()
+                new Email()
             ],
-            'phone' => [
-                new NotBlank()
-            ]
+            'phone' => []
         ]);
         $member = Member::search($this->getParameter('username'));
         if (!$member) {
             throw new HttpNotFoundException();
         }
-        $member->email($data['email'])
-            ->phone($data['phone'])
-            ->save();
+        $member->update($data);
         return response();
     }
 }

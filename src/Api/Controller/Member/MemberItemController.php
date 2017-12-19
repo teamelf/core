@@ -30,6 +30,7 @@ class MemberItemController extends AbstractController
         if (!$member) {
             throw new HttpNotFoundException();
         }
+        $r = $member->getRole();
         return response([
             'id' => $member->getId(),
             'username' => $member->getUsername(),
@@ -37,7 +38,11 @@ class MemberItemController extends AbstractController
             'phone' => $member->getPhone(),
             'number' => $member->getNumber(),
             'name' => $member->getName(),
-            'gender' => $member->getGender()
+            'gender' => $member->getGender(),
+            'role' => [
+                'name' => $r->getName(),
+                'color' => $r->getColor()
+            ]
         ]);
     }
 }

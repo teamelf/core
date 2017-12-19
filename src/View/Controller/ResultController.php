@@ -11,7 +11,6 @@
 
 namespace TeamELF\View\Controller;
 
-use Symfony\Component\HttpFoundation\Request;
 use TeamELF\Http\ViewController;
 
 class ResultController extends ViewController

@@ -13,12 +13,14 @@ const { Row, Col } = antd;
 export default class extends React.Component {
   constructor (props) {
     super(props);
-    this.members = [
-      {id: 1, name: 'A', role: {name: '负责人', color: '#ff5500'}, email: 'A@teamelf.com', phone: '13012345678'},
-      {id: 2, name: 'B', role: {name: '核心成员', color: '#108ee9'}, email: 'B@teamelf.com', phone: '13012345678'},
-      {id: 3, name: 'C', role: {name: '成员', color: '#2db7f5'}, email: 'C@teamelf.com', phone: '13012345678'},
-      {id: 4, name: 'D', role: {name: '新人', color: '#87d068'}, email: 'D@teamelf.com', phone: '13012345678'},
-    ];
+    this.members = [];
+    this.fetchMemberList();
+  }
+  fetchMemberList () {
+    axios.get('member').then(r => {
+      this.members = r.data;
+      this.forceUpdate();
+    })
   }
   render () {
     return (

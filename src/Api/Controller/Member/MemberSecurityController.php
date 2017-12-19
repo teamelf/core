@@ -42,8 +42,7 @@ class MemberSecurityController extends AbstractController
             throw new HttpNotFoundException();
         }
         if (password_verify($data['password_old'], $member->getPassword())) {
-            $member->password($data['password_new']);
-            $member->save();
+            $member->password($data['password_new'])->save();
         } else {
             throw new HttpForbiddenException();
         }

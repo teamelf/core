@@ -437,7 +437,7 @@ System.register('teamelf/Member', ['teamelf/layout/Page', 'teamelf/Error', 'team
             exact: true,
             component: MemberList
           }, {
-            path: '/member/:name',
+            path: '/member/:username',
             exact: true,
             component: MemberItem
           }];
@@ -582,6 +582,94 @@ System.register('teamelf/main', ['teamelf/App', 'teamelf/Error'], function (_exp
       if (target) {
         ReactDOM.render(app, target);
       }
+    }
+  };
+});
+"use strict";
+
+System.register("teamelf/components/Gender", [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Icon, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Icon = _antd.Icon;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: "render",
+          value: function render() {
+            if (this.props.gender) {
+              return React.createElement(Icon, { type: "man" });
+            } else {
+              return React.createElement(Icon, { type: "woman" });
+            }
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export("default", _class);
     }
   };
 });
@@ -1370,10 +1458,10 @@ System.register('teamelf/layout/TopNav', [], function (_export, _context) {
 });
 'use strict';
 
-System.register('teamelf/member/MemberItem', [], function (_export, _context) {
+System.register('teamelf/member/MemberCardItem', ['teamelf/components/Gender'], function (_export, _context) {
   "use strict";
 
-  var _createClass, _antd, Tag, Divider, Avatar, _class;
+  var Gender, _createClass, _ReactRouterDOM, Link, _antd, Card, Tag, Avatar, Meta, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1406,7 +1494,9 @@ System.register('teamelf/member/MemberItem', [], function (_export, _context) {
   }
 
   return {
-    setters: [],
+    setters: [function (_teamelfComponentsGender) {
+      Gender = _teamelfComponentsGender.default;
+    }],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {
@@ -1426,31 +1516,203 @@ System.register('teamelf/member/MemberItem', [], function (_export, _context) {
         };
       }();
 
+      _ReactRouterDOM = ReactRouterDOM;
+      Link = _ReactRouterDOM.Link;
       _antd = antd;
+      Card = _antd.Card;
       Tag = _antd.Tag;
-      Divider = _antd.Divider;
       Avatar = _antd.Avatar;
+      Meta = Card.Meta;
 
       _class = function (_React$Component) {
         _inherits(_class, _React$Component);
 
-        function _class(props) {
+        function _class() {
           _classCallCheck(this, _class);
 
-          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-          _this.member = {
-            id: 11,
-            name: _this.props.match.params.name,
-            role: { name: '负责人', color: '#ff5500' },
-            email: 'A@teamelf.com', phone: '13012345678'
-          };
-          return _this;
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
         }
 
         _createClass(_class, [{
           key: 'render',
           value: function render() {
+            return React.createElement(
+              Link,
+              { to: '/member/' + this.props.username },
+              React.createElement(
+                Card,
+                {
+                  hoverable: true,
+                  title: React.createElement(
+                    'div',
+                    null,
+                    React.createElement(Gender, { gender: this.props.gender }),
+                    ' ',
+                    this.props.name
+                  ),
+                  extra: React.createElement(
+                    Tag,
+                    { color: this.props.role.color },
+                    this.props.role.name
+                  )
+                },
+                React.createElement(
+                  Avatar,
+                  {
+                    style: { float: 'right' },
+                    size: 'large'
+                  },
+                  this.props.name.substr(0, 1)
+                ),
+                React.createElement(Meta, {
+                  description: React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                      'div',
+                      null,
+                      this.props.email
+                    ),
+                    React.createElement(
+                      'div',
+                      null,
+                      this.props.phone
+                    )
+                  )
+                })
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/member/MemberItem', ['teamelf/components/Gender', 'teamelf/member/MemberInfoEditor'], function (_export, _context) {
+  "use strict";
+
+  var Gender, MemberInfoEditor, _createClass, _ReactRouterDOM, withRouter, _antd, Tag, Divider, MemberItem;
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfComponentsGender) {
+      Gender = _teamelfComponentsGender.default;
+    }, function (_teamelfMemberMemberInfoEditor) {
+      MemberInfoEditor = _teamelfMemberMemberInfoEditor.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _ReactRouterDOM = ReactRouterDOM;
+      withRouter = _ReactRouterDOM.withRouter;
+      _antd = antd;
+      Tag = _antd.Tag;
+      Divider = _antd.Divider;
+
+      MemberItem = function (_React$Component) {
+        _inherits(MemberItem, _React$Component);
+
+        function MemberItem(props) {
+          _classCallCheck(this, MemberItem);
+
+          var _this = _possibleConstructorReturn(this, (MemberItem.__proto__ || Object.getPrototypeOf(MemberItem)).call(this, props));
+
+          _this.member = null;
+          _this.fetchMember();
+          return _this;
+        }
+
+        _createClass(MemberItem, [{
+          key: 'fetchMember',
+          value: function fetchMember() {
+            var _this2 = this;
+
+            axios.get('member/' + this.props.match.params.username).then(function (r) {
+              _this2.member = r.data;
+              _this2.forceUpdate();
+            });
+          }
+        }, {
+          key: 'edit',
+          value: function edit(key, value) {
+            var _this3 = this;
+
+            return axios.put('member/' + this.member.username, _defineProperty({}, key, value)).then(function (r) {
+              _this3.member[key] = value;
+              _this3.forceUpdate();
+              return r;
+            });
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            if (!this.member) return React.createElement('div', null);
             return React.createElement(
               'div',
               null,
@@ -1465,17 +1727,33 @@ System.register('teamelf/member/MemberItem', [], function (_export, _context) {
               React.createElement(
                 'h2',
                 null,
+                React.createElement(Gender, { gender: this.member.gender }),
                 this.member.name
               ),
-              React.createElement(Divider, null)
+              React.createElement(Divider, null),
+              React.createElement(MemberInfoEditor, {
+                label: '\u5B66\u53F7',
+                value: this.member.number,
+                disabled: true
+              }),
+              React.createElement(MemberInfoEditor, {
+                label: '\u90AE\u7BB1',
+                value: this.member.email,
+                onEdit: this.edit.bind(this, 'email')
+              }),
+              React.createElement(MemberInfoEditor, {
+                label: '\u624B\u673A',
+                value: this.member.phone,
+                onEdit: this.edit.bind(this, 'phone')
+              })
             );
           }
         }]);
 
-        return _class;
+        return MemberItem;
       }(React.Component);
 
-      _export('default', _class);
+      _export('default', withRouter(MemberItem));
     }
   };
 });
@@ -1565,11 +1843,22 @@ System.register('teamelf/member/MemberList', ['teamelf/member/MemberCardItem'], 
 
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-          _this.members = [{ id: 1, name: 'A', role: { name: '负责人', color: '#ff5500' }, email: 'A@teamelf.com', phone: '13012345678' }, { id: 2, name: 'B', role: { name: '核心成员', color: '#108ee9' }, email: 'B@teamelf.com', phone: '13012345678' }, { id: 3, name: 'C', role: { name: '成员', color: '#2db7f5' }, email: 'C@teamelf.com', phone: '13012345678' }, { id: 4, name: 'D', role: { name: '新人', color: '#87d068' }, email: 'D@teamelf.com', phone: '13012345678' }];
+          _this.members = [];
+          _this.fetchMemberList();
           return _this;
         }
 
         _createClass(_class, [{
+          key: 'fetchMemberList',
+          value: function fetchMemberList() {
+            var _this2 = this;
+
+            axios.get('member').then(function (r) {
+              _this2.members = r.data;
+              _this2.forceUpdate();
+            });
+          }
+        }, {
           key: 'render',
           value: function render() {
             return React.createElement(
@@ -1701,12 +1990,12 @@ System.register('teamelf/model/AbstractModel', [], function (_export, _context) 
     }
   };
 });
-"use strict";
+'use strict';
 
-System.register("teamelf/member/MemberCardItem", [], function (_export, _context) {
+System.register('teamelf/member/MemberInfoEditor', [], function (_export, _context) {
   "use strict";
 
-  var _createClass, _ReactRouterDOM, Link, _antd, Card, Tag, Avatar, Meta, _class;
+  var _createClass, _antd, Input, Icon, Tooltip, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1759,65 +2048,78 @@ System.register("teamelf/member/MemberCardItem", [], function (_export, _context
         };
       }();
 
-      _ReactRouterDOM = ReactRouterDOM;
-      Link = _ReactRouterDOM.Link;
       _antd = antd;
-      Card = _antd.Card;
-      Tag = _antd.Tag;
-      Avatar = _antd.Avatar;
-      Meta = Card.Meta;
+      Input = _antd.Input;
+      Icon = _antd.Icon;
+      Tooltip = _antd.Tooltip;
 
       _class = function (_React$Component) {
         _inherits(_class, _React$Component);
 
-        function _class() {
+        function _class(props) {
           _classCallCheck(this, _class);
 
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.state = {
+            editor: false,
+            value: _this.props.value
+          };
+          return _this;
         }
 
         _createClass(_class, [{
-          key: "render",
+          key: 'toggleEditor',
+          value: function toggleEditor() {
+            var editor = !this.state.editor;
+            this.setState({
+              editor: editor,
+              value: this.props.value
+            });
+          }
+        }, {
+          key: 'submitChange',
+          value: function submitChange() {
+            var _this2 = this;
+
+            this.props.onEdit(this.state.value).then(function (r) {
+              _this2.toggleEditor();
+            });
+          }
+        }, {
+          key: 'render',
           value: function render() {
+            var _this3 = this;
+
             return React.createElement(
-              Link,
-              { to: "/member/" + this.props.name },
+              'div',
+              { className: 'clearfix', style: { lineHeight: '40px' } },
               React.createElement(
-                Card,
-                {
-                  hoverable: true,
-                  title: this.props.name,
-                  extra: React.createElement(
-                    Tag,
-                    { color: this.props.role.color },
-                    this.props.role.name
-                  )
+                'h3',
+                { style: { float: 'left', marginRight: 20 } },
+                this.props.label
+              ),
+              this.state.editor || React.createElement(
+                'span',
+                null,
+                this.props.value
+              ),
+              !this.props.disabled && !this.state.editor && React.createElement(
+                Tooltip,
+                { title: '\u70B9\u6B64\u7F16\u8F91', placement: 'right' },
+                React.createElement(Icon, {
+                  style: { marginLeft: 20, cursor: 'pointer' },
+                  type: 'edit',
+                  onClick: this.toggleEditor.bind(this) })
+              ),
+              this.state.editor && React.createElement(Input, {
+                style: { width: 'auto', float: 'left' },
+                value: this.state.value,
+                onChange: function onChange(e) {
+                  return _this3.setState({ value: e.target.value });
                 },
-                React.createElement(
-                  Avatar,
-                  {
-                    style: { float: 'right' },
-                    size: "large"
-                  },
-                  this.props.name.substr(0, 1)
-                ),
-                React.createElement(Meta, {
-                  description: React.createElement(
-                    "div",
-                    null,
-                    React.createElement(
-                      "div",
-                      null,
-                      this.props.email
-                    ),
-                    React.createElement(
-                      "div",
-                      null,
-                      this.props.phone
-                    )
-                  )
-                })
-              )
+                onPressEnter: this.submitChange.bind(this)
+              })
             );
           }
         }]);
@@ -1825,7 +2127,7 @@ System.register("teamelf/member/MemberCardItem", [], function (_export, _context
         return _class;
       }(React.Component);
 
-      _export("default", _class);
+      _export('default', _class);
     }
   };
 });

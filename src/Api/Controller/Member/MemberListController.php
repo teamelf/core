@@ -26,6 +26,7 @@ class MemberListController extends AbstractController
     {
         $response = [];
         foreach (Member::all() as $member) {
+            $r = $member->getRole();
             $response[] = [
                 'id' => $member->getId(),
                 'username' => $member->getUsername(),
@@ -33,7 +34,11 @@ class MemberListController extends AbstractController
                 'phone' => $member->getPhone(),
                 'number' => $member->getNumber(),
                 'name' => $member->getName(),
-                'gender' => $member->getGender()
+                'gender' => $member->getGender(),
+                'role' => [
+                    'name' => $r->getName(),
+                    'color' => $r->getColor()
+                ]
             ];
         }
         return response($response);

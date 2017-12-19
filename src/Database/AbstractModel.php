@@ -133,6 +133,28 @@ abstract class AbstractModel
     }
 
     /**
+     * update model with $key => $value in $data
+     *
+     * @param array $data
+     * @param bool  $autoSave
+     * @return $this
+     */
+    final public function update($data = [], $autoSave = true)
+    {
+        foreach ($data as $key => $value) {
+            if ($value === null) {
+                continue;
+            } else if (property_exists($this, $key) && method_exists($this, $key)) {
+                $this->$key($value);
+            }
+        }
+        if ($autoSave) {
+            $this->save();
+        }
+        return $this;
+    }
+
+    /**
      * delete model from database
      *
      * @param bool $force soft delete if $force === false

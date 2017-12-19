@@ -23,7 +23,7 @@ export default class extends Page {
         component: MemberList
       },
       {
-        path: '/member/:name',
+        path: '/member/:username',
         exact: true,
         component: MemberItem
       }

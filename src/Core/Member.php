@@ -233,6 +233,7 @@ class Member extends AbstractModel
         $this->gender = !!$gender;
         return $this;
     }
+
     /**
      * getter of $role
      *

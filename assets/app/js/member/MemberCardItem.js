@@ -10,14 +10,15 @@
 const { Link } = ReactRouterDOM;
 const { Card, Tag, Avatar } = antd;
 const { Meta } = Card;
+import Gender from 'teamelf/components/Gender';
 
 export default class extends React.Component {
   render () {
     return (
-      <Link to={`/member/${this.props.name}`}>
+      <Link to={`/member/${this.props.username}`}>
         <Card
           hoverable
-          title={this.props.name}
+          title={<div><Gender gender={this.props.gender}/> {this.props.name}</div>}
           extra={<Tag color={this.props.role.color}>{this.props.role.name}</Tag>}
         >
           <Avatar

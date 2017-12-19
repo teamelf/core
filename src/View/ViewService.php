@@ -13,8 +13,6 @@ namespace TeamELF\View;
 
 use TeamELF\Application\AbstractService;
 use TeamELF\Core\Config;
-use TeamELF\Event\AssetsHaveBeenAdded;
-use TeamELF\Event\AssetsWillBeAdded;
 use TeamELF\Event\RoutesWillBeLoaded;
 use TeamELF\View\Controller\AppController;
 use TeamELF\View\Controller\ForgetPasswordController;

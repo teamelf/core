@@ -11,7 +11,6 @@
 
 namespace TeamELF\Http;
 
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use TeamELF\View\AssetManager;
 use TeamELF\View\ViewService;
