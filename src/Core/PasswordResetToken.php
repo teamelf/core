@@ -20,11 +20,17 @@ use TeamELF\Database\AbstractModel;
  */
 class PasswordResetToken extends AbstractModel
 {
+    // ----------------------------------------
+    // | ORM DEFINITIONS
+
     /**
      * @ManyToOne(targetEntity="Member")
      * @JoinColumn(name="member_id", referencedColumnName="id")
      */
     protected $member;
+
+    // ----------------------------------------
+    // | GETTERS & SETTERS
 
     /**
      * @return Member
@@ -45,6 +51,9 @@ class PasswordResetToken extends AbstractModel
         $this->member = $member;
         return $this;
     }
+
+    // ----------------------------------------
+    // | HELPER FUNCTIONS
 
     /**
      * see if token expired

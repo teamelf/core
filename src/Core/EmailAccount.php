@@ -19,21 +19,15 @@ use TeamELF\Database\AbstractModel;
  */
 class EmailAccount extends AbstractModel
 {
+    // ----------------------------------------
+    // | ORM DEFINITIONS
+
     /**
      * @var string
      *
      * @Column(type="string", length=10)
      */
     protected $driver;
-    public function getDriver()
-    {
-        return $this->driver;
-    }
-    public function driver($driver)
-    {
-        $this->driver = $driver;
-        return $this;
-    }
 
     /**
      * @var string
@@ -41,15 +35,6 @@ class EmailAccount extends AbstractModel
      * @Column(type="string", length=30)
      */
     protected $host;
-    public function getHost()
-    {
-        return $this->host;
-    }
-    public function host($host)
-    {
-        $this->host = $host;
-        return $this;
-    }
 
     /**
      * @var integer
@@ -57,15 +42,6 @@ class EmailAccount extends AbstractModel
      * @Column(type="integer")
      */
     protected $port;
-    public function getPort()
-    {
-        return $this->port;
-    }
-    public function port($port)
-    {
-        $this->port = $port;
-        return $this;
-    }
 
     /**
      * @var string
@@ -73,15 +49,6 @@ class EmailAccount extends AbstractModel
      * @Column(type="string", length=10)
      */
     protected $encryption;
-    public function getEncryption()
-    {
-        return $this->encryption;
-    }
-    public function encryption($encryption)
-    {
-        $this->encryption = $encryption;
-        return $this;
-    }
 
     /**
      * @var string
@@ -89,15 +56,6 @@ class EmailAccount extends AbstractModel
      * @Column(type="string", length=100)
      */
     protected $username;
-    public function getUsername()
-    {
-        return $this->username;
-    }
-    public function username($username)
-    {
-        $this->username = $username;
-        return $this;
-    }
 
     /**
      * @var string
@@ -105,15 +63,6 @@ class EmailAccount extends AbstractModel
      * @Column(type="string", length=100)
      */
     protected $password;
-    public function getPassword()
-    {
-        return $this->password;
-    }
-    public function password($password)
-    {
-        $this->password = $password;
-        return $this;
-    }
 
     /**
      * @var string
@@ -121,13 +70,164 @@ class EmailAccount extends AbstractModel
      * @Column(type="string", length=100)
      */
     protected $sender;
+
+    // ----------------------------------------
+    // | GETTERS & SETTERS
+
+    /**
+     * getter of $driver
+     *
+     * @return string
+     */
+    public function getDriver()
+    {
+        return $this->driver;
+    }
+
+    /**
+     * setter of $driver
+     *
+     * @param string $driver
+     * @return $this
+     */
+    public function driver($driver)
+    {
+        $this->driver = $driver;
+        return $this;
+    }
+
+    /**
+     * getter of $host
+     *
+     * @return string
+     */
+    public function getHost()
+    {
+        return $this->host;
+    }
+
+    /**
+     * setter of $host
+     *
+     * @param string $host
+     * @return $this
+     */
+    public function host($host)
+    {
+        $this->host = $host;
+        return $this;
+    }
+
+    /**
+     * getter of $port
+     *
+     * @return int
+     */
+    public function getPort()
+    {
+        return $this->port;
+    }
+
+    /**
+     * setter of $port
+     *
+     * @param int $port
+     * @return $this
+     */
+    public function port(int $port)
+    {
+        $this->port = $port;
+        return $this;
+    }
+
+    /**
+     * getter of $encryption
+     *
+     * @return string
+     */
+    public function getEncryption()
+    {
+        return $this->encryption;
+    }
+
+    /**
+     * setter of $encryption
+     *
+     * @param string $encryption
+     * @return $this
+     */
+    public function encryption($encryption)
+    {
+        $this->encryption = $encryption;
+        return $this;
+    }
+
+    /**
+     * getter of $username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * setter of $username
+     *
+     * @param string $username
+     * @return $this
+     */
+    public function username($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * getter of $password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * setter of $password
+     *
+     * @param string $password
+     * @return $this
+     */
+    public function password($password)
+    {
+        $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * getter of $sender
+     *
+     * @return string
+     */
     public function getSender()
     {
         return $this->sender;
     }
+
+    /**
+     * setter of $sender
+     *
+     * @param string $sender
+     * @return $this
+     */
     public function sender($sender)
     {
         $this->sender = $sender;
         return $this;
     }
+
+    // ----------------------------------------
+    // | HELPER FUNCTIONS
 }

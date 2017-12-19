@@ -19,6 +19,9 @@ use TeamELF\Database\AbstractModel;
  */
 class Permission extends AbstractModel
 {
+    // ----------------------------------------
+    // | ORM DEFINITIONS
+
     /**
      * @var string
      *
@@ -37,4 +40,10 @@ class Permission extends AbstractModel
      * @JoinColumn(name="member_id", referencedColumnName="id")
      */
     protected $member;
+
+    // ----------------------------------------
+    // | GETTERS & SETTERS
+
+    // ----------------------------------------
+    // | HELPER FUNCTIONS
 }

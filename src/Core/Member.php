@@ -19,21 +19,15 @@ use TeamELF\Database\AbstractModel;
  */
 class Member extends AbstractModel
 {
+    // ----------------------------------------
+    // | ORM DEFINITIONS
+
     /**
      * @var string
      *
      * @Column(type="string", length=30, unique=TRUE)
      */
     protected $username;
-    public function getUsername()
-    {
-        return $this->username;
-    }
-    public function username($username)
-    {
-        $this->username = $username;
-        return $this;
-    }
 
     /**
      * @var string
@@ -41,15 +35,6 @@ class Member extends AbstractModel
      * @Column(type="string", length=100, nullable=TRUE)
      */
     protected $password;
-    public function getPassword()
-    {
-        return $this->password;
-    }
-    public function password($password)
-    {
-        $this->password = password_hash($password, PASSWORD_DEFAULT);
-        return $this;
-    }
 
     /**
      * @var string
@@ -57,15 +42,6 @@ class Member extends AbstractModel
      * @Column(type="string", length=100, nullable=TRUE)
      */
     protected $email;
-    public function getEmail()
-    {
-        return $this->email;
-    }
-    public function email($email)
-    {
-        $this->email = $email;
-        return $this;
-    }
 
     /**
      * @var string
@@ -73,15 +49,6 @@ class Member extends AbstractModel
      * @Column(type="string", length=20, nullable=TRUE)
      */
     protected $phone;
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-    public function phone($phone)
-    {
-        $this->phone = $phone;
-        return $this;
-    }
 
     /**
      * @var string
@@ -89,15 +56,6 @@ class Member extends AbstractModel
      * @Column(type="string", length=50, nullable=TRUE)
      */
     protected $number;
-    public function getNumber()
-    {
-        return $this->number;
-    }
-    public function number($number)
-    {
-        $this->number = $number;
-        return $this;
-    }
 
     /**
      * @var string
@@ -105,15 +63,6 @@ class Member extends AbstractModel
      * @Column(type="string", length=50)
      */
     protected $name;
-    public function getName()
-    {
-        return $this->name;
-    }
-    public function name($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
 
     /**
      * @var boolean
@@ -121,23 +70,172 @@ class Member extends AbstractModel
      * @Column(type="boolean", nullable=TRUE)
      */
     protected $gender;
-    public function getGender()
-    {
-        return !!$this->gender;
-    }
-    public function gender($gender)
-    {
-        $this->gender = $gender;
-        return $this;
-    }
 
     /**
+     * @var Role
+     *
      * @ManyToOne(targetEntity="Role")
      * @JoinColumn(name="role_id", referencedColumnName="id")
      */
     protected $role;
 
+    // ----------------------------------------
+    // | GETTERS & SETTERS
+
     /**
+     * getter of $username
+     *
+     * @return string
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * setter of $username
+     * @param string $username
+     * @return $this
+     */
+    public function username($username)
+    {
+        $this->username = $username;
+        return $this;
+    }
+
+    /**
+     * getter of $password
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * setter of $password
+     *
+     * @param string $password
+     * @return $this
+     */
+    public function password($password)
+    {
+        $this->password = password_hash($password, PASSWORD_DEFAULT);
+        return $this;
+    }
+
+    /**
+     * getter of $email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    /**
+     * setter of $email
+     *
+     * @param string $email
+     * @return $this
+     */
+    public function email($email)
+    {
+        $this->email = $email;
+        return $this;
+    }
+
+    /**
+     * getter of $phone
+     *
+     * @return string
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * setter of $phone
+     *
+     * @param string $phone
+     * @return $this
+     */
+    public function phone($phone)
+    {
+        $this->phone = $phone;
+        return $this;
+    }
+
+    /**
+     * getter of $number
+     *
+     * @return string
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * setter of $number
+     *
+     * @param string $number
+     * @return $this
+     */
+    public function number($number)
+    {
+        $this->number = $number;
+        return $this;
+    }
+
+    /**
+     * getter of $name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * setter of $name
+     *
+     * @param string $name
+     * @return $this
+     */
+    public function name($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * getter of $gender
+     *
+     * @return bool
+     */
+    public function getGender()
+    {
+        return !!$this->gender;
+    }
+
+    /**
+     * setter of $gender
+     *
+     * @param $gender
+     * @return $this
+     */
+    public function gender($gender)
+    {
+        $this->gender = !!$gender;
+        return $this;
+    }
+    /**
+     * getter of $role
+     *
      * @return Role
      */
     public function getRole()
@@ -146,6 +244,8 @@ class Member extends AbstractModel
     }
 
     /**
+     * setter of $role
+     *
      * @param Role $role
      * @return $this
      */
@@ -154,6 +254,9 @@ class Member extends AbstractModel
         $this->role = $role;
         return $this;
     }
+
+    // ----------------------------------------
+    // | HELPER FUNCTIONS
 
     /**
      * search member by id, username or email

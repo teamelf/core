@@ -19,21 +19,15 @@ use TeamELF\Database\AbstractModel;
  */
 class Role extends AbstractModel
 {
+    // ----------------------------------------
+    // | ORM DEFINITIONS
+
     /**
      * @var string
      *
      * @Column(type="string", length=20, unique=TRUE)
      */
     protected $name;
-    public function getName()
-    {
-        return $this->name;
-    }
-    public function name($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
 
     /**
      * @var string
@@ -41,15 +35,6 @@ class Role extends AbstractModel
      * @Column(type="string", length=20, unique=TRUE)
      */
     protected $slug;
-    public function getSlug()
-    {
-        return $this->slug;
-    }
-    public function slug($slug)
-    {
-        $this->slug = $slug;
-        return $this;
-    }
 
     /**
      * @var Member[]
@@ -57,10 +42,6 @@ class Role extends AbstractModel
      * @OneToMany(targetEntity="Member", mappedBy="role_id")
      */
     protected $members;
-    public function getMembers()
-    {
-        return $this->members;
-    }
 
     /**
      * @var string
@@ -68,14 +49,92 @@ class Role extends AbstractModel
      * @Column(type="string", length=20)
      */
     protected $color;
+
+    // ----------------------------------------
+    // | GETTERS & SETTERS
+
+    /**
+     * getter of $name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * setter of $name
+     * @param string $name
+     * @return $this
+     */
+    public function name($name)
+    {
+        $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * getter of $slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
+    }
+
+    /**
+     * setter of $slug
+     *
+     * @param string $slug
+     * @return $this
+     */
+    public function slug($slug)
+    {
+        $this->slug = $slug;
+        return $this;
+    }
+
+    /**
+     * getter of $members
+     *
+     * @return Member[]
+     */
+    public function getMembers()
+    {
+        return $this->members;
+    }
+
+    /**
+     * getter of $color
+     *
+     * @return string
+     */
     public function getColor()
     {
         return $this->color;
     }
+
+    /**
+     * setter of $color
+     *
+     * @param string|array $color
+     * @return $this
+     */
     public function color($color)
     {
+        if (is_array($color)) { // rgb
+            [$r, $g, $b] = $color;
+            $r = substr('0' . dechex($r), -2);
+            $g = substr('0' . dechex($g), -2);
+            $b = substr('0' . dechex($b), -2);
+            $color = '#' . $r . $g . $b;
+        }
         $this->color = $color;
         return $this;
     }
 
+    // ----------------------------------------
+    // | HELPER FUNCTIONS
 }
