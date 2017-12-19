@@ -53,13 +53,6 @@ class Member extends AbstractModel
     /**
      * @var string
      *
-     * @Column(type="string", length=50, nullable=TRUE)
-     */
-    protected $number;
-
-    /**
-     * @var string
-     *
      * @Column(type="string", length=50)
      */
     protected $name;
@@ -165,28 +158,6 @@ class Member extends AbstractModel
     public function phone($phone)
     {
         $this->phone = $phone;
-        return $this;
-    }
-
-    /**
-     * getter of $number
-     *
-     * @return string
-     */
-    public function getNumber()
-    {
-        return $this->number;
-    }
-
-    /**
-     * setter of $number
-     *
-     * @param string $number
-     * @return $this
-     */
-    public function number($number)
-    {
-        $this->number = $number;
         return $this;
     }
 

@@ -47,12 +47,6 @@ export default class extends SimpleLayout {
       <Form onSubmit={this.handleSubmit.bind(this)}>
         <Form.Item>
           <Input
-            size="large" value={this.token()}
-            disabled
-          />
-        </Form.Item>
-        <Form.Item>
-          <Input
             size="large" placeholder="用户名 / 邮箱"
             value={this.state.username}
             onChange={e => this.setState({username: e.target.value})}
@@ -69,7 +63,7 @@ export default class extends SimpleLayout {
         </Form.Item>
         <Form.Item>
           <Input
-            type="passwordConfirmation" size="large" placeholder="确认密码"
+            type="password" size="large" placeholder="确认密码"
             value={this.state.passwordConfirmation}
             onChange={e => this.setState({passwordConfirmation: e.target.value})}
             disabled={this.state.loading}
@@ -82,7 +76,7 @@ export default class extends SimpleLayout {
             type="primary" size="large"
             loading={this.state.loading}
             icon="reload"
-          >重置</Button>
+          >重置密码</Button>
         </Form.Item>
       </Form>
     );

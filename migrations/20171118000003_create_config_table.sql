@@ -11,4 +11,5 @@ CREATE TABLE config (
 INSERT INTO config (id, `key`, value)
 VALUES
   (1, 'name', 'TeamELF'),
-  (2, 'description', 'Extensible team management');
+  (2, 'description', 'Extensible team management'),
+  (3, 'logo', '/static/logo.png');

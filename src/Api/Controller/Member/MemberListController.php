@@ -43,7 +43,6 @@ class MemberListController extends AbstractController
                 'username' => $member->getUsername(),
                 'email' => $member->getEmail(),
                 'phone' => $member->getPhone(),
-                'number' => $member->getNumber(),
                 'name' => $member->getName(),
                 'gender' => $member->getGender(),
                 'role' => [

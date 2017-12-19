@@ -18,6 +18,7 @@ use TeamELF\Api\Controller\Auth\LogoutController;
 use TeamELF\Api\Controller\Auth\ResetPasswordController;
 use TeamELF\Api\Controller\Config\ConfigListController;
 use TeamELF\Api\Controller\Config\ConfigUpdateController;
+use TeamELF\Api\Controller\Helper\PinyinController;
 use TeamELF\Api\Controller\Member\MemberCreateController;
 use TeamELF\Api\Controller\Member\MemberItemController;
 use TeamELF\Api\Controller\Member\MemberListController;
@@ -46,36 +47,45 @@ class ApiService extends AbstractService
     public function handleRoutes($event)
     {
         $event->getRouter()
-            ->prefix('/api')
+
+            // --------------------
+            // | Helpers
+            // --------------------
+            ->prefix('/api/helper')
+            ->get('helper-pinyin', '/pinyin', PinyinController::class)
 
             // --------------------
             // | Config
             // --------------------
-            ->get('config-list', '/config', ConfigListController::class)
-            ->put('config-update', '/config/{key}', ConfigUpdateController::class)
+            ->prefix('/api/config')
+            ->get('config-list', '', ConfigListController::class)
+            ->put('config-update', '/{key}', ConfigUpdateController::class)
 
             // --------------------
             // | Auth
             // --------------------
-            ->get('auth-check', '/auth', AuthCheckController::class)
-            ->post('auth-login', '/auth/login', LoginController::class)
-            ->post('auth-logout', '/auth/logout', LogoutController::class)
-            ->post('auth-forget', '/auth/forget', ForgetPasswordController::class)
-            ->post('auth-reset', '/auth/reset/{token}', ResetPasswordController::class)
+            ->prefix('/api/auth')
+            ->get('auth-check', '', AuthCheckController::class)
+            ->post('auth-login', '/login', LoginController::class)
+            ->post('auth-logout', '/logout', LogoutController::class)
+            ->post('auth-forget', '/forget', ForgetPasswordController::class)
+            ->post('auth-reset', '/reset/{token}', ResetPasswordController::class)
 
             // --------------------
             // | Member
             // --------------------
-            ->get('member-list', '/member', MemberListController::class)
-            ->post('member-create', '/member', MemberCreateController::class)
-            ->get('member-item', '/member/{username}', MemberItemController::class)
-            ->put('member-update', '/member/{username}', MemberUpdateController::class)
-            ->put('member-security', '/member/{username}/security', MemberSecurityController::class)
+            ->prefix('/api/member')
+            ->get('member-list', '', MemberListController::class)
+            ->post('member-create', '', MemberCreateController::class)
+            ->get('member-item', '/{username}', MemberItemController::class)
+            ->put('member-update', '/{username}', MemberUpdateController::class)
+            ->put('member-security', '/{username}/security', MemberSecurityController::class)
 
             // --------------------
             // | Role
             // --------------------
-            ->get('role-list', '/role', RoleListController::class)
+            ->prefix('/api/role')
+            ->get('role-list', '', RoleListController::class)
 
             // set prefix back to empty
             ->prefix('');

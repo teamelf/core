@@ -14,8 +14,8 @@ class TopNav extends React.Component {
   constructor (props) {
     super(props);
     this.navigations = [
-      {path: '/home', icon: 'home', title: '概览'},
-      {path: '/member', icon: 'user', title: '成员管理'}
+      {path: '/home', icon: <Icon type="home"/>, title: '概览'},
+      {path: '/member', icon: <Icon type="user"/>, title: '成员管理'}
     ];
   }
   getSelectedNav () {
@@ -37,9 +37,7 @@ class TopNav extends React.Component {
       >
         {this.navigations.map(o => (
           <Menu.Item key={o.path}>
-            <Link to={o.path}>
-              <Icon type={o.icon}/>{o.title}
-            </Link>
+            <Link to={o.path}>{o.icon} {o.title}</Link>
           </Menu.Item>
         ))}
       </Menu>

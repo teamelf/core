@@ -20,7 +20,7 @@ export default class extends React.Component {
       position: 'relative',
       minHeight: '100vh', padding: '70px 0', textAlign: 'center',
       background: 'url(/static/bg.png) no-repeat center center',
-      backgroundSize: '100%'
+      backgroundSize: 'cover'
     };
     const contentStyle = {
       width: 350, maxWidth: '90%', margin: '0 auto'

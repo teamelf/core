@@ -34,7 +34,10 @@ export default class extends SimpleLayout {
   }
   view () {
     return (
-      <Form onSubmit={this.handleSubmit.bind(this)}>
+      <Form
+        style={{marginTop: 50}}
+        onSubmit={this.handleSubmit.bind(this)}
+      >
         <Form.Item>
           <Input
             size="large" placeholder="用户名 / 邮箱"

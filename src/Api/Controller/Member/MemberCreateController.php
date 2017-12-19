@@ -37,9 +37,6 @@ class MemberCreateController extends AbstractController
                 new NotBlank(),
                 new Email()
             ],
-            'number' => [
-                new NotBlank()
-            ],
             'name' => [
                 new NotBlank()
             ],

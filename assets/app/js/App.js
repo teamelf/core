@@ -9,11 +9,9 @@
 
 const { Switch, Route, Redirect } = ReactRouterDOM;
 const { Layout } = antd;
-const { Header, Content } = Layout;
+const { Content } = Layout;
 import { RedirectAs404 } from 'teamelf/Error'
-import Logo from 'teamelf/layout/Logo'
-import TopNav from 'teamelf/layout/TopNav'
-import AuthBar from 'teamelf/layout/AuthBar'
+import Header from 'teamelf/layout/Header'
 import Routes from 'teamelf/layout/Routes'
 import Footer from 'teamelf/layout/Footer'
 import Home from 'teamelf/Home';
@@ -32,11 +30,7 @@ export default class extends React.Component {
   render() {
     return (
       <Layout>
-        <Header style={{position: 'fixed', left: 0, right: 0, zIndex: 999}}>
-          <Logo/>
-          <TopNav/>
-          <AuthBar/>
-        </Header>
+        <Header/>
         <Content style={{marginTop: '60px', padding: '0 50px'}}>
           <Routes/>
           <Switch>

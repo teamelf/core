@@ -101,7 +101,10 @@ System.register('teamelf/auth/forget/ForgetPassword', ['teamelf/common/SimpleLay
 
             return React.createElement(
               Form,
-              { onSubmit: this.handleSubmit.bind(this) },
+              {
+                style: { marginTop: 50 },
+                onSubmit: this.handleSubmit.bind(this)
+              },
               React.createElement(
                 Form.Item,
                 null,
@@ -155,6 +158,202 @@ System.register('teamelf/auth/forget/main', ['teamelf/auth/forget/ForgetPassword
 
       if (target) {
         ReactDOM.render(React.createElement(ForgetPassword, null), target);
+      }
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayout'], function (_export, _context) {
+  "use strict";
+
+  var SimpleLayout, _createClass, _antd, Form, Button, Input, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfCommonSimpleLayout) {
+      SimpleLayout = _teamelfCommonSimpleLayout.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Form = _antd.Form;
+      Button = _antd.Button;
+      Input = _antd.Input;
+
+      _class = function (_SimpleLayout) {
+        _inherits(_class, _SimpleLayout);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.state = {
+            username: '',
+            password: '',
+            passwordConfirmation: '',
+            loading: false
+          };
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'token',
+          value: function token() {
+            var token = window.location.href.split('/');
+            token = token[token.length - 1];
+            return token;
+          }
+        }, {
+          key: 'handleSubmit',
+          value: function handleSubmit(e) {
+            var _this2 = this;
+
+            e.preventDefault();
+            var user = {
+              username: this.state.username || '',
+              password: this.state.password ? CryptoJS.SHA1(this.state.password).toString() : '',
+              passwordConfirmation: this.state.passwordConfirmation ? CryptoJS.SHA1(this.state.passwordConfirmation).toString() : ''
+            };
+            this.setState({ loading: true });
+            axios.post('/auth/reset/' + this.token(), user).then(function (r) {
+              window.location.href = '/r' + '?type=success' + '&message=密码重置成功' + '&redirect=5';
+            }).catch(function (e) {
+              _this2.setState({ loading: false });
+            });
+          }
+        }, {
+          key: 'view',
+          value: function view() {
+            var _this3 = this;
+
+            return React.createElement(
+              Form,
+              { onSubmit: this.handleSubmit.bind(this) },
+              React.createElement(
+                Form.Item,
+                null,
+                React.createElement(Input, {
+                  size: 'large', placeholder: '\u7528\u6237\u540D / \u90AE\u7BB1',
+                  value: this.state.username,
+                  onChange: function onChange(e) {
+                    return _this3.setState({ username: e.target.value });
+                  },
+                  disabled: this.state.loading
+                })
+              ),
+              React.createElement(
+                Form.Item,
+                null,
+                React.createElement(Input, {
+                  type: 'password', size: 'large', placeholder: '\u65B0\u5BC6\u7801',
+                  value: this.state.password,
+                  onChange: function onChange(e) {
+                    return _this3.setState({ password: e.target.value });
+                  },
+                  disabled: this.state.loading
+                })
+              ),
+              React.createElement(
+                Form.Item,
+                null,
+                React.createElement(Input, {
+                  type: 'password', size: 'large', placeholder: '\u786E\u8BA4\u5BC6\u7801',
+                  value: this.state.passwordConfirmation,
+                  onChange: function onChange(e) {
+                    return _this3.setState({ passwordConfirmation: e.target.value });
+                  },
+                  disabled: this.state.loading
+                })
+              ),
+              React.createElement(
+                Form.Item,
+                null,
+                React.createElement(
+                  Button,
+                  {
+                    htmlType: 'submit',
+                    className: 'full',
+                    type: 'primary', size: 'large',
+                    loading: this.state.loading,
+                    icon: 'reload'
+                  },
+                  '\u91CD\u7F6E\u5BC6\u7801'
+                )
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(SimpleLayout);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/auth/reset/main', ['teamelf/auth/reset/ResetPassword'], function (_export, _context) {
+  "use strict";
+
+  var ResetPassword, target;
+  return {
+    setters: [function (_teamelfAuthResetResetPassword) {
+      ResetPassword = _teamelfAuthResetResetPassword.default;
+    }],
+    execute: function () {
+      target = document.getElementById('react-render-target-password-reset');
+
+      if (target) {
+        ReactDOM.render(React.createElement(ResetPassword, null), target);
       }
     }
   };
@@ -455,7 +654,7 @@ System.register('teamelf/auth/login/LoginForm', [], function (_export, _context)
                   { className: 'float-right' },
                   React.createElement(
                     'a',
-                    { href: '/login' },
+                    { href: '/password/forget' },
                     '\u5FD8\u8BB0\u5BC6\u7801'
                   )
                 )
@@ -501,210 +700,6 @@ System.register('teamelf/auth/login/main', ['teamelf/auth/login/Login'], functio
 
       if (target) {
         ReactDOM.render(React.createElement(Login, null), target);
-      }
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayout'], function (_export, _context) {
-  "use strict";
-
-  var SimpleLayout, _createClass, _antd, Form, Button, Input, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfCommonSimpleLayout) {
-      SimpleLayout = _teamelfCommonSimpleLayout.default;
-    }],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Form = _antd.Form;
-      Button = _antd.Button;
-      Input = _antd.Input;
-
-      _class = function (_SimpleLayout) {
-        _inherits(_class, _SimpleLayout);
-
-        function _class(props) {
-          _classCallCheck(this, _class);
-
-          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-          _this.state = {
-            username: '',
-            password: '',
-            passwordConfirmation: '',
-            loading: false
-          };
-          return _this;
-        }
-
-        _createClass(_class, [{
-          key: 'token',
-          value: function token() {
-            var token = window.location.href.split('/');
-            token = token[token.length - 1];
-            return token;
-          }
-        }, {
-          key: 'handleSubmit',
-          value: function handleSubmit(e) {
-            var _this2 = this;
-
-            e.preventDefault();
-            var user = {
-              username: this.state.username || '',
-              password: this.state.password ? CryptoJS.SHA1(this.state.password).toString() : '',
-              passwordConfirmation: this.state.passwordConfirmation ? CryptoJS.SHA1(this.state.passwordConfirmation).toString() : ''
-            };
-            this.setState({ loading: true });
-            axios.post('/auth/reset/' + this.token(), user).then(function (r) {
-              window.location.href = '/r' + '?type=success' + '&message=密码重置成功' + '&redirect=5';
-            }).catch(function (e) {
-              _this2.setState({ loading: false });
-            });
-          }
-        }, {
-          key: 'view',
-          value: function view() {
-            var _this3 = this;
-
-            return React.createElement(
-              Form,
-              { onSubmit: this.handleSubmit.bind(this) },
-              React.createElement(
-                Form.Item,
-                null,
-                React.createElement(Input, {
-                  size: 'large', value: this.token(),
-                  disabled: true
-                })
-              ),
-              React.createElement(
-                Form.Item,
-                null,
-                React.createElement(Input, {
-                  size: 'large', placeholder: '\u7528\u6237\u540D / \u90AE\u7BB1',
-                  value: this.state.username,
-                  onChange: function onChange(e) {
-                    return _this3.setState({ username: e.target.value });
-                  },
-                  disabled: this.state.loading
-                })
-              ),
-              React.createElement(
-                Form.Item,
-                null,
-                React.createElement(Input, {
-                  type: 'password', size: 'large', placeholder: '\u65B0\u5BC6\u7801',
-                  value: this.state.password,
-                  onChange: function onChange(e) {
-                    return _this3.setState({ password: e.target.value });
-                  },
-                  disabled: this.state.loading
-                })
-              ),
-              React.createElement(
-                Form.Item,
-                null,
-                React.createElement(Input, {
-                  type: 'passwordConfirmation', size: 'large', placeholder: '\u786E\u8BA4\u5BC6\u7801',
-                  value: this.state.passwordConfirmation,
-                  onChange: function onChange(e) {
-                    return _this3.setState({ passwordConfirmation: e.target.value });
-                  },
-                  disabled: this.state.loading
-                })
-              ),
-              React.createElement(
-                Form.Item,
-                null,
-                React.createElement(
-                  Button,
-                  {
-                    htmlType: 'submit',
-                    className: 'full',
-                    type: 'primary', size: 'large',
-                    loading: this.state.loading,
-                    icon: 'reload'
-                  },
-                  '\u91CD\u7F6E'
-                )
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(SimpleLayout);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/auth/reset/main', ['teamelf/auth/reset/ResetPassword'], function (_export, _context) {
-  "use strict";
-
-  var ResetPassword, target;
-  return {
-    setters: [function (_teamelfAuthResetResetPassword) {
-      ResetPassword = _teamelfAuthResetResetPassword.default;
-    }],
-    execute: function () {
-      target = document.getElementById('react-render-target-password-reset');
-
-      if (target) {
-        ReactDOM.render(React.createElement(ResetPassword, null), target);
       }
     }
   };

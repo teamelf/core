@@ -23402,7 +23402,7 @@ System.register("teamelf/common/Header", [], function (_export, _context) {
               React.createElement(
                 "a",
                 { href: "/" },
-                React.createElement("img", { height: "100px", src: "" }),
+                React.createElement("img", { height: "100px", width: "100px", src: "/static/logo.png" }),
                 React.createElement(
                   "h2",
                   { style: { padding: '20px 0' } },
@@ -23510,7 +23510,7 @@ System.register('teamelf/common/SimpleLayout', ['teamelf/common/Header'], functi
               position: 'relative',
               minHeight: '100vh', padding: '70px 0', textAlign: 'center',
               background: 'url(/static/bg.png) no-repeat center center',
-              backgroundSize: '100%'
+              backgroundSize: 'cover'
             };
             var contentStyle = {
               width: 350, maxWidth: '90%', margin: '0 auto'

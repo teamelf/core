@@ -11,7 +11,7 @@ export default class extends React.Component {
   render () {
     return (
       <div>
-        <a href="/"><img height="100px" src=""/>
+        <a href="/"><img height="100px" width="100px" src="/static/logo.png"/>
         <h2 style={{padding: '20px 0'}}>{window.config.name}</h2></a>
       </div>
     );

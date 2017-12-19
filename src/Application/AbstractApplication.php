@@ -226,6 +226,9 @@ abstract class AbstractApplication
         } catch (\Exception $exception) {
             app('log')->alert('DOWN', $exception->getTrace());
             response($exception->getMessage(), $exception->getCode())->send();
+        } catch (\Error $error) {
+            app('log')->emergency('DOWN', $error->getTrace());
+            response($error->getMessage(), 500)->send();
         }
         return $this;
     }

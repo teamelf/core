@@ -15,7 +15,6 @@ class MemberCreateForm extends React.Component {
     this.state = {
       username: '',
       email: '',
-      number: '',
       name: '',
       gender: 0
     };
@@ -24,7 +23,6 @@ class MemberCreateForm extends React.Component {
     const member = {
       username: this.state.username,
       email: this.state.email,
-      number: this.state.number,
       name: this.state.name,
       gender: this.state.gender,
     };
@@ -32,6 +30,15 @@ class MemberCreateForm extends React.Component {
       this.props.afterCreate();
       this.props.form.resetFields();
     });
+  }
+  getUsernameByName () {
+    let params = {chinese: this.state.name};
+    axios.get('helper/pinyin', { params }).then(r => {
+      let [lastname, ...firstname] = r.data.pinyin;
+      let username = firstname.join('') + '.' + lastname;
+      this.setState({username});
+      this.props.form.setFieldsValue({username});
+    })
   }
   render () {
     const { getFieldDecorator } = this.props.form;
@@ -57,6 +64,7 @@ class MemberCreateForm extends React.Component {
               size="large" placeholder="姓名"
               value={this.state.name}
               onChange={e => this.setState({name: e.target.value})}
+              onBlur={this.getUsernameByName.bind(this)}
               disabled={this.props.loading}
             />
           )}
@@ -87,20 +95,6 @@ class MemberCreateForm extends React.Component {
               size="large" placeholder="邮箱"
               value={this.state.email}
               onChange={e => this.setState({email: e.target.value})}
-              disabled={this.props.loading}
-            />
-          )}
-        </Form.Item>
-        <Form.Item>
-          {getFieldDecorator('number', {
-            rules: [{
-              required: true, message: '请输入学号',
-            }],
-          })(
-            <Input
-              size="large" placeholder="学号"
-              value={this.state.number}
-              onChange={e => this.setState({number: e.target.value})}
               disabled={this.props.loading}
             />
           )}

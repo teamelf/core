@@ -68,7 +68,7 @@ export default class extends React.Component {
         <Divider/>
         <Row gutter={16}>
           {this.state.members.map(o => (
-            <Col sm={24} md={12} lg={6} style={{height: 160}}>
+            <Col sm={24} md={12} lg={6} xxl={4} style={{height: 160}}>
               <MemberCardItem key={o.id} {...o}/>
             </Col>
           ))}

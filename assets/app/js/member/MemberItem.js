@@ -45,17 +45,17 @@ class MemberItem extends React.Component {
         </h2>
         <Divider/>
         <MemberInfoEditor
-          label="学号"
-          value={this.member.number}
+          label="登录名"
+          value={this.member.username}
           disabled
         />
         <MemberInfoEditor
-          label="邮箱"
+          label="邮　箱"
           value={this.member.email}
           onEdit={this.edit.bind(this, 'email')}
         />
         <MemberInfoEditor
-          label="手机"
+          label="手　机"
           value={this.member.phone}
           onEdit={this.edit.bind(this, 'phone')}
         />

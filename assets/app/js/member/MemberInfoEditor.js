@@ -34,7 +34,7 @@ export default class extends React.Component {
       <div className="clearfix" style={{lineHeight: '40px'}}>
         <h3 style={{float: 'left', marginRight: 20}}>{this.props.label}</h3>
 
-        {this.state.editor || <span>{this.props.value}</span>}
+        {this.state.editor || <span>{this.props.value || '-'}</span>}
 
         {(!this.props.disabled && !this.state.editor) && (
           <Tooltip title="点此编辑" placement="right">
