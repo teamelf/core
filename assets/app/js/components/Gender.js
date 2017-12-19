@@ -11,7 +11,7 @@ const { Icon } = antd;
 
 export default class extends React.Component {
   render () {
-    if (this.props.gender) {
+    if (!this.props.gender) {
       return <Icon type="man"/>;
     } else {
       return <Icon type="woman"/>

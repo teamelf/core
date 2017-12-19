@@ -41,7 +41,8 @@ class MemberItemController extends AbstractController
             'gender' => $member->getGender(),
             'role' => [
                 'name' => $r->getName(),
-                'color' => $r->getColor()
+                'color' => $r->getColor(),
+                'icon' => $r->getIcon()
             ]
         ]);
     }

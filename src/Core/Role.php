@@ -46,9 +46,16 @@ class Role extends AbstractModel
     /**
      * @var string
      *
-     * @Column(type="string", length=20)
+     * @Column(type="string", length=20, nullable=TRUE)
      */
     protected $color;
+
+    /**
+     * @var string
+     *
+     * @Column(type="string", length=20, nullable=TRUE)
+     */
+    protected $icon;
 
     // ----------------------------------------
     // | GETTERS & SETTERS
@@ -113,7 +120,7 @@ class Role extends AbstractModel
      */
     public function getColor()
     {
-        return $this->color;
+        return $this->color ?? '#aaa';
     }
 
     /**
@@ -132,6 +139,28 @@ class Role extends AbstractModel
             $color = '#' . $r . $g . $b;
         }
         $this->color = $color;
+        return $this;
+    }
+
+    /**
+     * getter of $icon
+     *
+     * @return string
+     */
+    public function getIcon()
+    {
+        return $this->icon ?? 'user';
+    }
+
+    /**
+     * setter of $icon
+     *
+     * @param string $icon
+     * @return $this
+     */
+    public function icon($icon)
+    {
+        $this->icon = $icon;
         return $this;
     }
 

@@ -39,7 +39,7 @@ class Member extends AbstractModel
     /**
      * @var string
      *
-     * @Column(type="string", length=100, nullable=TRUE)
+     * @Column(type="string", length=100, unique=TRUE)
      */
     protected $email;
 

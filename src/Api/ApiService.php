@@ -18,10 +18,12 @@ use TeamELF\Api\Controller\Auth\LogoutController;
 use TeamELF\Api\Controller\Auth\ResetPasswordController;
 use TeamELF\Api\Controller\Config\ConfigListController;
 use TeamELF\Api\Controller\Config\ConfigUpdateController;
+use TeamELF\Api\Controller\Member\MemberCreateController;
 use TeamELF\Api\Controller\Member\MemberItemController;
 use TeamELF\Api\Controller\Member\MemberListController;
 use TeamELF\Api\Controller\Member\MemberSecurityController;
 use TeamELF\Api\Controller\Member\MemberUpdateController;
+use TeamELF\Api\Controller\Role\RoleListController;
 use TeamELF\Application\AbstractService;
 use TeamELF\Event\RoutesWillBeLoaded;
 
@@ -65,9 +67,15 @@ class ApiService extends AbstractService
             // | Member
             // --------------------
             ->get('member-list', '/member', MemberListController::class)
+            ->post('member-create', '/member', MemberCreateController::class)
             ->get('member-item', '/member/{username}', MemberItemController::class)
             ->put('member-update', '/member/{username}', MemberUpdateController::class)
             ->put('member-security', '/member/{username}/security', MemberSecurityController::class)
+
+            // --------------------
+            // | Role
+            // --------------------
+            ->get('role-list', '/role', RoleListController::class)
 
             // set prefix back to empty
             ->prefix('');
