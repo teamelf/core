@@ -123,7 +123,7 @@ class Member extends AbstractModel
     protected $gender;
     public function getGender()
     {
-        return $this->gender;
+        return !!$this->gender;
     }
     public function gender($gender)
     {

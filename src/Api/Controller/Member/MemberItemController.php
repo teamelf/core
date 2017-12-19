@@ -30,7 +30,14 @@ class MemberItemController extends AbstractController
         if (!$member) {
             throw new HttpNotFoundException();
         }
-        // TODO: Model serialize
-        return response();
+        return response([
+            'id' => $member->getId(),
+            'username' => $member->getUsername(),
+            'email' => $member->getEmail(),
+            'phone' => $member->getPhone(),
+            'number' => $member->getNumber(),
+            'name' => $member->getName(),
+            'gender' => $member->getGender()
+        ]);
     }
 }

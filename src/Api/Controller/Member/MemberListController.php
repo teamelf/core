@@ -24,8 +24,18 @@ class MemberListController extends AbstractController
      */
     public function handler(): Response
     {
-        $members = Member::all();
-        // TODO: Model serialize
-        return response();
+        $response = [];
+        foreach (Member::all() as $member) {
+            $response[] = [
+                'id' => $member->getId(),
+                'username' => $member->getUsername(),
+                'email' => $member->getEmail(),
+                'phone' => $member->getPhone(),
+                'number' => $member->getNumber(),
+                'name' => $member->getName(),
+                'gender' => $member->getGender()
+            ];
+        }
+        return response($response);
     }
 }

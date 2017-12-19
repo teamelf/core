@@ -30,14 +30,18 @@ class MemberUpdateController extends AbstractController
         $data = $this->validate([
             'email' => [
                 new NotBlank()
+            ],
+            'phone' => [
+                new NotBlank()
             ]
         ]);
         $member = Member::search($this->getParameter('username'));
         if (!$member) {
             throw new HttpNotFoundException();
         }
-        $member->email($data['email']);
-        $member->save();
+        $member->email($data['email'])
+            ->phone($data['phone'])
+            ->save();
         return response();
     }
 }
