@@ -13,6 +13,7 @@ namespace TeamELF\Api\Controller\Member;
 
 use Symfony\Component\HttpFoundation\Response;
 use TeamELF\Core\Member;
+use TeamELF\Core\Role;
 use TeamELF\Http\AbstractController;
 
 class MemberListController extends AbstractController
@@ -25,7 +26,17 @@ class MemberListController extends AbstractController
     public function handler(): Response
     {
         $response = [];
-        foreach (Member::all() as $member) {
+        $roles = [];
+        $role_slugs = $this->request->get('roles', '');
+        if (!$role_slugs) {
+            $members = Member::all();
+        } else {
+            foreach (explode(',', $role_slugs) as $role_slug) {
+                $roles[] = Role::findBy(['slug' => $role_slug]);
+            }
+            $members = Member::where(['role' => $roles]);
+        }
+        foreach ($members as $member) {
             $r = $member->getRole();
             $response[] = [
                 'id' => $member->getId(),

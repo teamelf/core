@@ -16,13 +16,17 @@ export default class extends React.Component {
     super(props);
     this.state = {
       members: [],
-      roles: []
+      roles: [],
+      chosenRoles: []
     };
     this.fetchMemberList();
     this.fetchRoleList();
   }
   fetchMemberList () {
-    return axios.get('member').then(r => {
+    let params = {
+      roles: this.state.chosenRoles.join(',')
+    };
+    return axios.get('member', { params }).then(r => {
       this.setState({members: r.data});
       return r;
     });
@@ -30,8 +34,18 @@ export default class extends React.Component {
   fetchRoleList () {
     return axios.get('role').then(r => {
       this.setState({roles: r.data});
-      return r;
     });
+  }
+  handleRolesCheck (role, e) {
+    let chosenRoles = this.state.chosenRoles;
+    let idx = chosenRoles.indexOf(role);
+    if (idx === -1) {
+      chosenRoles.push(role);
+    } else {
+      chosenRoles.splice(idx, 1);
+    }
+    this.setState({chosenRoles});
+    this.fetchMemberList();
   }
   render () {
     return (
@@ -43,7 +57,9 @@ export default class extends React.Component {
         </div>
         <div>
           {this.state.roles.map(o => (
-            <Checkbox>
+            <Checkbox
+              onClick={this.handleRolesCheck.bind(this, o.slug)}
+            >
               <Icon type={o.icon} style={{color: o.color}}/>
               <span>{o.name}</span>
             </Checkbox>
