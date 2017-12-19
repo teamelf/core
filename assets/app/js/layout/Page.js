@@ -8,8 +8,8 @@
  */
 
 const { Link } = ReactRouterDOM;
-const { Layout, Menu } = antd;
-const { Sider, Content } = Layout;
+const { Layout, Breadcrumb, Icon, Menu } = antd;
+const { Content } = Layout;
 
 export default class Page extends React.Component {
   constructor (props) {
@@ -17,43 +17,48 @@ export default class Page extends React.Component {
       throw new Error('ContentComponent cannot be instanced directly!');
     }
     super(props);
+
     this.navigations = []; // [{path, icon, title}]
+    this.title = null;
+    this.description = null;
   }
-  getSelectedNav () {
-    let path = this.props.location.pathname;
-    for (let nav of this.navigations) {
-      if (path.match(nav.path)) {
-        return nav.path;
-      }
+  header () {
+    if (!this.navigations.length && !this.title && !this.description) {
+      return null;
     }
-    return null;
+    return (
+      <div>
+        {this.navigations.length > 0 && <Breadcrumb style={{marginBottom: 16}}>
+          {this.navigations.map(o => (
+            <Breadcrumb.Item>
+              <Link to={o.path}>
+                <Icon type={o.icon}/>
+                {o.title}
+              </Link>
+            </Breadcrumb.Item>
+          ))}
+        </Breadcrumb>}
+        {!!this.title && <h2>{this.title}</h2>}
+        {!!this.description && <div>{this.description}</div>}
+      </div>
+    );
   }
   view () {
     return <div>page works</div>;
   }
   render () {
+    const Header = this.header();
     return (
-      <Layout style={{ padding: '24px 0', background: '#fff' }}>
-        {this.navigations.length > 0 &&
-          <Sider width={200} style={{background: '#fff'}}>
-            <Menu
-              mode="inline"
-              style={{height: '100%'}}
-              selectedKeys={this.getSelectedNav()}>
-              {this.navigations.map(o => (
-                <Menu.Item key={o.path}>
-                  <Link to={o.path}>
-                    <Icon type={o.icon}/>{o.title}
-                  </Link>
-                </Menu.Item>
-              ))}
-            </Menu>
-          </Sider>
-        }
-        <Content style={{padding: '0 24px', minHeight: 'calc(100vh - 300px)'}}>
+      <Layout style={{margin: -24}}>
+        {!!Header && (
+          <div style={{padding: '16px 32px', background: '#fff'}}>
+          {Header}
+          </div>
+        )}
+        <Content style={{margin: 24}}>
           {this.view()}
         </Content>
       </Layout>
-    )
+    );
   }
 }

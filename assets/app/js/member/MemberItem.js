@@ -7,12 +7,13 @@
  * file that was distributed with this source code.
  */
 
+import Page from 'teamelf/layout/Page';
 const { withRouter } = ReactRouterDOM;
 const { Tag, Divider } = antd;
 import Gender from 'teamelf/components/Gender';
 import MemberInfoEditor from 'teamelf/member/MemberInfoEditor';
 
-class MemberItem extends React.Component {
+class MemberItem extends Page {
   constructor (props) {
     super(props);
     this.member = null;
@@ -31,17 +32,17 @@ class MemberItem extends React.Component {
       return r;
     });
   }
-  render () {
+  view () {
     if (!this.member) return <div/>;
     return (
-      <div>
+      <div style={{padding: 24, background: '#fff'}}>
         <Tag
           style={{float: 'right'}}
           color={this.member.role.color}
         >{this.member.role.name}</Tag>
         <h2>
           <Gender gender={this.member.gender}/>
-          {this.member.name}
+          <span> {this.member.name}</span>
         </h2>
         <Divider/>
         <MemberInfoEditor

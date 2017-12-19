@@ -8,7 +8,7 @@
  */
 
 const { Link, withRouter } = ReactRouterDOM;
-const { Menu, Icon, Avatar } = antd;
+const { Dropdown, Menu, Icon, Avatar } = antd;
 
 class AuthBar extends React.Component {
   constructor (props) {
@@ -35,41 +35,38 @@ class AuthBar extends React.Component {
       default:
     }
   }
-  getSelectedNav () {
-    let path = this.props.location.pathname;
-    if (path.match('/profile')) {
-      return 'profile';
-    }
-    return null;
-  }
   logout () {
     axios.post('auth/logout').then(r => {
       window.location.reload();
     });
   }
   render () {
-    return (
-      <Menu
-        theme="dark" mode="horizontal"
-        onClick={this.handleMenuClick.bind(this)}
-        style={{lineHeight: '64px', float: 'right'}}
-        selectedKeys={this.getSelectedNav()}
-      >
-        <Menu.Item key="profile">
+    const UserMenu = (
+      <Menu onClick={this.handleMenuClick.bind(this)}>
+        <Menu.Item>
           <Link to="/profile">
-            <Avatar style={{marginTop: 16, float: 'left'}}/>
-            <div style={{display: 'inline-block', marginLeft: 20, paddingTop: 17, height: 64}}>
-              <div style={{lineHeight: '20px'}}>{this.state.name}</div>
-              <div style={{lineHeight: '10px', fontSize: '.8em'}}>{this.state.role}</div>
-            </div>
+            <Icon type="user"/>
+            <span>个人中心</span>
           </Link>
         </Menu.Item>
+        <Menu.Divider/>
         <Menu.Item key="logout">
           <Icon type="logout"/>
-          安全登出
+          <span>安全登出</span>
         </Menu.Item>
       </Menu>
-    )
+    );
+    return (
+      <Dropdown overlay={UserMenu}>
+        <div className="auth-bar">
+          <Avatar style={{marginTop: 16, float: 'left'}}/>
+          <div style={{display: 'inline-block', marginLeft: 20, paddingTop: 17, height: 64}}>
+            <div style={{lineHeight: '20px'}}>{this.state.name}</div>
+            <div style={{lineHeight: '10px', fontSize: '.8em'}}>{this.state.role}</div>
+          </div>
+        </div>
+      </Dropdown>
+    );
   }
 }
 

@@ -11,7 +11,12 @@ const gulp = require('teamelf-gulp');
 
 gulp({
   modules: {
-    'teamelf': 'js/**/*.js'
+    'teamelf': './js/**/*.js'
   },
   output: './dist/app.js'
+}, {
+  modules: [
+    './less/**/*.less'
+  ],
+  output: './dist/app.css'
 });

@@ -7,11 +7,12 @@
  * file that was distributed with this source code.
  */
 
+import Page from 'teamelf/layout/Page';
 import MemberCardItem from 'teamelf/member/MemberCardItem';
 import MemberCreatorModal from 'teamelf/member/MemberCreatorModal';
 const { Row, Col, Icon, Divider, Checkbox } = antd;
 
-export default class extends React.Component {
+export default class extends Page {
   constructor (props) {
     super(props);
     this.state = {
@@ -47,9 +48,9 @@ export default class extends React.Component {
     this.setState({chosenRoles});
     this.fetchMemberList();
   }
-  render () {
+  header () {
     return (
-      <div className="clearfix">
+      <div>
         <div className="float-right">
           <MemberCreatorModal
             afterCreate={() => this.fetchMemberList()}
@@ -65,15 +66,18 @@ export default class extends React.Component {
             </Checkbox>
           ))}
         </div>
-        <Divider/>
-        <Row gutter={16}>
-          {this.state.members.map(o => (
-            <Col sm={24} md={12} lg={6} xxl={4} style={{height: 160}}>
-              <MemberCardItem key={o.id} {...o}/>
-            </Col>
-          ))}
-        </Row>
       </div>
+    );
+  }
+  view () {
+    return (
+      <Row gutter={16}>
+        {this.state.members.map(o => (
+          <Col sm={24} md={12} lg={8} xxl={6} style={{height: 160}}>
+            <MemberCardItem key={o.id} {...o}/>
+          </Col>
+        ))}
+      </Row>
     );
   }
 }

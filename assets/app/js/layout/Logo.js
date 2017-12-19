@@ -11,18 +11,15 @@ const { Link } = ReactRouterDOM;
 
 export default class extends React.Component {
   render () {
-    let style = Object.assign({}, {
-      marginRight: 20
-    }, this.props.style);
     return (
-      <Link to="/home" style={style}>
+      <Link to="/home" style={this.props.style}>
         <img
-          style={{height: 45, width: 45}}
+          style={{height: 45, verticalAlign: 'middle', display: 'inline-block'}}
           src={window.config.logo}
         />
-        <span
-          style={{marginLeft: 10, color: '#fff'}}
-        >{window.config.name}</span>
+        <div
+          style={{marginLeft: 10, color: '#fff', fontSize: 16, display: 'inline-block'}}
+        >{window.config.name}</div>
       </Link>
     )
   }

@@ -9,10 +9,9 @@
 
 const { Switch, Route, Redirect } = ReactRouterDOM;
 const { Layout } = antd;
-const { Content } = Layout;
 import { RedirectAs404 } from 'teamelf/Error'
+import SideNav from 'teamelf/layout/SideNav';
 import Header from 'teamelf/layout/Header'
-import Routes from 'teamelf/layout/Routes'
 import Footer from 'teamelf/layout/Footer'
 import Home from 'teamelf/Home';
 import Member from 'teamelf/Member';
@@ -26,20 +25,35 @@ export default class extends React.Component {
       {path: '/member', component: Member},
       {path: '/profile', exact: true, component: Profile}
     ];
+    this.state = {
+      collapsed: false
+    };
+  }
+  toggleCollapsed () {
+    const collapsed = !this.state.collapsed;
+    this.setState({collapsed});
   }
   render() {
     return (
       <Layout>
-        <Header/>
-        <Content style={{marginTop: '60px', padding: '0 50px'}}>
-          <Routes/>
-          <Switch>
-            <Route exact path="/" render={() => <Redirect to="/home"/>}/>
-            {this.routes.map(o => <Route path={o.path} exact={o.exact} component={o.component}/>)}
-            <Route component={RedirectAs404}/>
-          </Switch>
-        </Content>
-        <Footer/>
+        <SideNav
+          collapsed={this.state.collapsed}
+          toggleCollapsed={this.toggleCollapsed.bind(this)}
+        />
+        <Layout>
+          <Header
+            collapsed={this.state.collapsed}
+            toggleCollapsed={this.toggleCollapsed.bind(this)}
+          />
+          <Layout style={{margin: 24}}>
+            <Switch>
+              <Route exact path="/" render={() => <Redirect to="/home"/>}/>
+              {this.routes.map(o => <Route path={o.path} exact={o.exact} component={o.component}/>)}
+              <Route component={RedirectAs404}/>
+            </Switch>
+            <Footer/>
+          </Layout>
+        </Layout>
       </Layout>
     );
   }

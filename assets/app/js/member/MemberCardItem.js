@@ -26,6 +26,7 @@ export default class extends React.Component {
             size="large"
           >{this.props.name.substr(0, 1)}</Avatar>
           <Meta
+            style={{marginRight: 50, overflow: 'hidden'}}
             description={(
               <div>
                 <div>{this.props.email}</div>

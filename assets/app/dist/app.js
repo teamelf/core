@@ -1,9 +1,9 @@
 'use strict';
 
-System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/Header', 'teamelf/layout/Routes', 'teamelf/layout/Footer', 'teamelf/Home', 'teamelf/Member', 'teamelf/Profile'], function (_export, _context) {
+System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'teamelf/layout/Header', 'teamelf/layout/Footer', 'teamelf/Home', 'teamelf/Member', 'teamelf/Profile'], function (_export, _context) {
   "use strict";
 
-  var RedirectAs404, Header, Routes, Footer, Home, Member, Profile, _createClass, _ReactRouterDOM, Switch, Route, Redirect, _antd, Layout, Content, _class;
+  var RedirectAs404, SideNav, Header, Footer, Home, Member, Profile, _createClass, _ReactRouterDOM, Switch, Route, Redirect, _antd, Layout, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -38,10 +38,10 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/Header', 'teame
   return {
     setters: [function (_teamelfError) {
       RedirectAs404 = _teamelfError.RedirectAs404;
+    }, function (_teamelfLayoutSideNav) {
+      SideNav = _teamelfLayoutSideNav.default;
     }, function (_teamelfLayoutHeader) {
       Header = _teamelfLayoutHeader.default;
-    }, function (_teamelfLayoutRoutes) {
-      Routes = _teamelfLayoutRoutes.default;
     }, function (_teamelfLayoutFooter) {
       Footer = _teamelfLayoutFooter.default;
     }, function (_teamelfHome) {
@@ -76,7 +76,6 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/Header', 'teame
       Redirect = _ReactRouterDOM.Redirect;
       _antd = antd;
       Layout = _antd.Layout;
-      Content = Layout.Content;
 
       _class = function (_React$Component) {
         _inherits(_class, _React$Component);
@@ -87,33 +86,52 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/Header', 'teame
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
           _this.routes = [{ path: '/home', component: Home }, { path: '/member', component: Member }, { path: '/profile', exact: true, component: Profile }];
+          _this.state = {
+            collapsed: false
+          };
           return _this;
         }
 
         _createClass(_class, [{
+          key: 'toggleCollapsed',
+          value: function toggleCollapsed() {
+            var collapsed = !this.state.collapsed;
+            this.setState({ collapsed: collapsed });
+          }
+        }, {
           key: 'render',
           value: function render() {
             return React.createElement(
               Layout,
               null,
-              React.createElement(Header, null),
+              React.createElement(SideNav, {
+                collapsed: this.state.collapsed,
+                toggleCollapsed: this.toggleCollapsed.bind(this)
+              }),
               React.createElement(
-                Content,
-                { style: { marginTop: '60px', padding: '0 50px' } },
-                React.createElement(Routes, null),
+                Layout,
+                null,
+                React.createElement(Header, {
+                  collapsed: this.state.collapsed,
+                  toggleCollapsed: this.toggleCollapsed.bind(this)
+                }),
                 React.createElement(
-                  Switch,
-                  null,
-                  React.createElement(Route, { exact: true, path: '/', render: function render() {
-                      return React.createElement(Redirect, { to: '/home' });
-                    } }),
-                  this.routes.map(function (o) {
-                    return React.createElement(Route, { path: o.path, exact: o.exact, component: o.component });
-                  }),
-                  React.createElement(Route, { component: RedirectAs404 })
+                  Layout,
+                  { style: { margin: 24 } },
+                  React.createElement(
+                    Switch,
+                    null,
+                    React.createElement(Route, { exact: true, path: '/', render: function render() {
+                        return React.createElement(Redirect, { to: '/home' });
+                      } }),
+                    this.routes.map(function (o) {
+                      return React.createElement(Route, { path: o.path, exact: o.exact, component: o.component });
+                    }),
+                    React.createElement(Route, { component: RedirectAs404 })
+                  ),
+                  React.createElement(Footer, null)
                 )
-              ),
-              React.createElement(Footer, null)
+              )
             );
           }
         }]);
@@ -345,10 +363,10 @@ System.register('teamelf/Home', ['teamelf/layout/Page'], function (_export, _con
 });
 'use strict';
 
-System.register('teamelf/Member', ['teamelf/layout/Page', 'teamelf/Error', 'teamelf/member/MemberList', 'teamelf/member/MemberItem'], function (_export, _context) {
+System.register('teamelf/Member', ['teamelf/Error', 'teamelf/member/MemberList', 'teamelf/member/MemberItem'], function (_export, _context) {
   "use strict";
 
-  var Page, RedirectAs404, MemberList, MemberItem, _createClass, _ReactRouterDOM, Switch, Route, _class;
+  var RedirectAs404, MemberList, MemberItem, _createClass, _ReactRouterDOM, Switch, Route, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -381,9 +399,7 @@ System.register('teamelf/Member', ['teamelf/layout/Page', 'teamelf/Error', 'team
   }
 
   return {
-    setters: [function (_teamelfLayoutPage) {
-      Page = _teamelfLayoutPage.default;
-    }, function (_teamelfError) {
+    setters: [function (_teamelfError) {
       RedirectAs404 = _teamelfError.RedirectAs404;
     }, function (_teamelfMemberMemberList) {
       MemberList = _teamelfMemberMemberList.default;
@@ -413,8 +429,8 @@ System.register('teamelf/Member', ['teamelf/layout/Page', 'teamelf/Error', 'team
       Switch = _ReactRouterDOM.Switch;
       Route = _ReactRouterDOM.Route;
 
-      _class = function (_Page) {
-        _inherits(_class, _Page);
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
 
         function _class(props) {
           _classCallCheck(this, _class);
@@ -434,8 +450,8 @@ System.register('teamelf/Member', ['teamelf/layout/Page', 'teamelf/Error', 'team
         }
 
         _createClass(_class, [{
-          key: 'view',
-          value: function view() {
+          key: 'render',
+          value: function render() {
             return React.createElement(
               Switch,
               null,
@@ -448,7 +464,7 @@ System.register('teamelf/Member', ['teamelf/layout/Page', 'teamelf/Error', 'team
         }]);
 
         return _class;
-      }(Page);
+      }(React.Component);
 
       _export('default', _class);
     }
@@ -667,7 +683,7 @@ System.register("teamelf/components/Gender", [], function (_export, _context) {
 System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
   "use strict";
 
-  var _createClass, _ReactRouterDOM, Link, withRouter, _antd, Menu, Icon, Avatar, AuthBar;
+  var _createClass, _ReactRouterDOM, Link, withRouter, _antd, Dropdown, Menu, Icon, Avatar, AuthBar;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -724,6 +740,7 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
       Link = _ReactRouterDOM.Link;
       withRouter = _ReactRouterDOM.withRouter;
       _antd = antd;
+      Dropdown = _antd.Dropdown;
       Menu = _antd.Menu;
       Icon = _antd.Icon;
       Avatar = _antd.Avatar;
@@ -769,15 +786,6 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
             }
           }
         }, {
-          key: 'getSelectedNav',
-          value: function getSelectedNav() {
-            var path = this.props.location.pathname;
-            if (path.match('/profile')) {
-              return 'profile';
-            }
-            return null;
-          }
-        }, {
           key: 'logout',
           value: function logout() {
             axios.post('auth/logout').then(function (r) {
@@ -787,42 +795,56 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
         }, {
           key: 'render',
           value: function render() {
-            return React.createElement(
+            var UserMenu = React.createElement(
               Menu,
-              {
-                theme: 'dark', mode: 'horizontal',
-                onClick: this.handleMenuClick.bind(this),
-                style: { lineHeight: '64px', float: 'right' },
-                selectedKeys: this.getSelectedNav()
-              },
+              { onClick: this.handleMenuClick.bind(this) },
               React.createElement(
                 Menu.Item,
-                { key: 'profile' },
+                null,
                 React.createElement(
                   Link,
                   { to: '/profile' },
-                  React.createElement(Avatar, { style: { marginTop: 16, float: 'left' } }),
+                  React.createElement(Icon, { type: 'user' }),
                   React.createElement(
-                    'div',
-                    { style: { display: 'inline-block', marginLeft: 20, paddingTop: 17, height: 64 } },
-                    React.createElement(
-                      'div',
-                      { style: { lineHeight: '20px' } },
-                      this.state.name
-                    ),
-                    React.createElement(
-                      'div',
-                      { style: { lineHeight: '10px', fontSize: '.8em' } },
-                      this.state.role
-                    )
+                    'span',
+                    null,
+                    '\u4E2A\u4EBA\u4E2D\u5FC3'
                   )
                 )
               ),
+              React.createElement(Menu.Divider, null),
               React.createElement(
                 Menu.Item,
                 { key: 'logout' },
                 React.createElement(Icon, { type: 'logout' }),
-                '\u5B89\u5168\u767B\u51FA'
+                React.createElement(
+                  'span',
+                  null,
+                  '\u5B89\u5168\u767B\u51FA'
+                )
+              )
+            );
+            return React.createElement(
+              Dropdown,
+              { overlay: UserMenu },
+              React.createElement(
+                'div',
+                { className: 'auth-bar' },
+                React.createElement(Avatar, { style: { marginTop: 16, float: 'left' } }),
+                React.createElement(
+                  'div',
+                  { style: { display: 'inline-block', marginLeft: 20, paddingTop: 17, height: 64 } },
+                  React.createElement(
+                    'div',
+                    { style: { lineHeight: '20px' } },
+                    this.state.name
+                  ),
+                  React.createElement(
+                    'div',
+                    { style: { lineHeight: '10px', fontSize: '.8em' } },
+                    this.state.role
+                  )
+                )
               )
             );
           }
@@ -940,10 +962,10 @@ System.register("teamelf/layout/Footer", [], function (_export, _context) {
 });
 'use strict';
 
-System.register('teamelf/layout/Header', ['teamelf/layout/Logo', 'teamelf/layout/TopNav', 'teamelf/layout/AuthBar'], function (_export, _context) {
+System.register('teamelf/layout/Header', ['teamelf/layout/AuthBar'], function (_export, _context) {
   "use strict";
 
-  var Logo, TopNav, AuthBar, _createClass, _antd, Layout, Row, Col, Avatar, Icon, Header, _class;
+  var AuthBar, _createClass, _antd, Layout, Icon, Header, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -976,11 +998,7 @@ System.register('teamelf/layout/Header', ['teamelf/layout/Logo', 'teamelf/layout
   }
 
   return {
-    setters: [function (_teamelfLayoutLogo) {
-      Logo = _teamelfLayoutLogo.default;
-    }, function (_teamelfLayoutTopNav) {
-      TopNav = _teamelfLayoutTopNav.default;
-    }, function (_teamelfLayoutAuthBar) {
+    setters: [function (_teamelfLayoutAuthBar) {
       AuthBar = _teamelfLayoutAuthBar.default;
     }],
     execute: function () {
@@ -1004,9 +1022,6 @@ System.register('teamelf/layout/Header', ['teamelf/layout/Logo', 'teamelf/layout
 
       _antd = antd;
       Layout = _antd.Layout;
-      Row = _antd.Row;
-      Col = _antd.Col;
-      Avatar = _antd.Avatar;
       Icon = _antd.Icon;
       Header = Layout.Header;
 
@@ -1022,37 +1037,24 @@ System.register('teamelf/layout/Header', ['teamelf/layout/Logo', 'teamelf/layout
         _createClass(_class, [{
           key: 'render',
           value: function render() {
+            var style = {
+              position: 'relative',
+              background: '#fff',
+              boxShadow: '0 1px 4px rgba(0, 21, 41, 0.08)',
+              padding: '0 24px 0 0'
+            };
             return React.createElement(
-              Row,
-              { style: { position: 'fixed', left: 0, right: 0, zIndex: 999 } },
+              Header,
+              { style: style },
+              React.createElement(Icon, {
+                className: 'trigger',
+                type: this.props.collapsed ? 'menu-unfold' : 'menu-fold',
+                onClick: this.props.toggleCollapsed
+              }),
               React.createElement(
-                Col,
-                { xs: 0, lg: 24 },
-                React.createElement(
-                  Header,
-                  null,
-                  React.createElement(Logo, { style: { float: 'left' } }),
-                  React.createElement(TopNav, null),
-                  React.createElement(AuthBar, null)
-                )
-              ),
-              React.createElement(
-                Col,
-                { xs: 24, lg: 0 },
-                React.createElement(
-                  Header,
-                  { style: { textAlign: 'center' } },
-                  React.createElement(
-                    'div',
-                    { style: { float: 'left', paddingTop: 22, height: 64 } },
-                    React.createElement(Icon, {
-                      type: 'menu-unfold',
-                      style: { fontSize: 20, color: '#fff' }
-                    })
-                  ),
-                  React.createElement(Logo, null),
-                  React.createElement(Avatar, { style: { marginTop: 16, float: 'right' } })
-                )
+                'div',
+                { style: { float: 'right' } },
+                React.createElement(AuthBar, null)
               )
             );
           }
@@ -1065,9 +1067,9 @@ System.register('teamelf/layout/Header', ['teamelf/layout/Logo', 'teamelf/layout
     }
   };
 });
-"use strict";
+'use strict';
 
-System.register("teamelf/layout/Logo", [], function (_export, _context) {
+System.register('teamelf/layout/Logo', [], function (_export, _context) {
   "use strict";
 
   var _createClass, _ReactRouterDOM, Link, _class;
@@ -1136,22 +1138,19 @@ System.register("teamelf/layout/Logo", [], function (_export, _context) {
         }
 
         _createClass(_class, [{
-          key: "render",
+          key: 'render',
           value: function render() {
-            var style = Object.assign({}, {
-              marginRight: 20
-            }, this.props.style);
             return React.createElement(
               Link,
-              { to: "/home", style: style },
-              React.createElement("img", {
-                style: { height: 45, width: 45 },
+              { to: '/home', style: this.props.style },
+              React.createElement('img', {
+                style: { height: 45, verticalAlign: 'middle', display: 'inline-block' },
                 src: window.config.logo
               }),
               React.createElement(
-                "span",
+                'div',
                 {
-                  style: { marginLeft: 10, color: '#fff' }
+                  style: { marginLeft: 10, color: '#fff', fontSize: 16, display: 'inline-block' }
                 },
                 window.config.name
               )
@@ -1162,7 +1161,7 @@ System.register("teamelf/layout/Logo", [], function (_export, _context) {
         return _class;
       }(React.Component);
 
-      _export("default", _class);
+      _export('default', _class);
     }
   };
 });
@@ -1171,7 +1170,7 @@ System.register("teamelf/layout/Logo", [], function (_export, _context) {
 System.register('teamelf/layout/Page', [], function (_export, _context) {
   "use strict";
 
-  var _createClass, _ReactRouterDOM, Link, _antd, Layout, Menu, Sider, Content, Page;
+  var _createClass, _ReactRouterDOM, Link, _antd, Layout, Breadcrumb, Icon, Menu, Content, Page;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1228,8 +1227,9 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
       Link = _ReactRouterDOM.Link;
       _antd = antd;
       Layout = _antd.Layout;
+      Breadcrumb = _antd.Breadcrumb;
+      Icon = _antd.Icon;
       Menu = _antd.Menu;
-      Sider = Layout.Sider;
       Content = Layout.Content;
 
       Page = function (_React$Component) {
@@ -1245,41 +1245,47 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
           var _this = _possibleConstructorReturn(this, (Page.__proto__ || Object.getPrototypeOf(Page)).call(this, props));
 
           _this.navigations = []; // [{path, icon, title}]
+          _this.title = null;
+          _this.description = null;
           return _this;
         }
 
         _createClass(Page, [{
-          key: 'getSelectedNav',
-          value: function getSelectedNav() {
-            var path = this.props.location.pathname;
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-              for (var _iterator = this.navigations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var nav = _step.value;
-
-                if (path.match(nav.path)) {
-                  return nav.path;
-                }
-              }
-            } catch (err) {
-              _didIteratorError = true;
-              _iteratorError = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                  _iterator.return();
-                }
-              } finally {
-                if (_didIteratorError) {
-                  throw _iteratorError;
-                }
-              }
+          key: 'header',
+          value: function header() {
+            if (!this.navigations.length && !this.title && !this.description) {
+              return null;
             }
-
-            return null;
+            return React.createElement(
+              'div',
+              null,
+              this.navigations.length > 0 && React.createElement(
+                Breadcrumb,
+                { style: { marginBottom: 16 } },
+                this.navigations.map(function (o) {
+                  return React.createElement(
+                    Breadcrumb.Item,
+                    null,
+                    React.createElement(
+                      Link,
+                      { to: o.path },
+                      React.createElement(Icon, { type: o.icon }),
+                      o.title
+                    )
+                  );
+                })
+              ),
+              !!this.title && React.createElement(
+                'h2',
+                null,
+                this.title
+              ),
+              !!this.description && React.createElement(
+                'div',
+                null,
+                this.description
+              )
+            );
           }
         }, {
           key: 'view',
@@ -1293,35 +1299,18 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
         }, {
           key: 'render',
           value: function render() {
+            var Header = this.header();
             return React.createElement(
               Layout,
-              { style: { padding: '24px 0', background: '#fff' } },
-              this.navigations.length > 0 && React.createElement(
-                Sider,
-                { width: 200, style: { background: '#fff' } },
-                React.createElement(
-                  Menu,
-                  {
-                    mode: 'inline',
-                    style: { height: '100%' },
-                    selectedKeys: this.getSelectedNav() },
-                  this.navigations.map(function (o) {
-                    return React.createElement(
-                      Menu.Item,
-                      { key: o.path },
-                      React.createElement(
-                        Link,
-                        { to: o.path },
-                        React.createElement(Icon, { type: o.icon }),
-                        o.title
-                      )
-                    );
-                  })
-                )
+              { style: { margin: -24 } },
+              !!Header && React.createElement(
+                'div',
+                { style: { padding: '16px 32px', background: '#fff' } },
+                Header
               ),
               React.createElement(
                 Content,
-                { style: { padding: '0 24px', minHeight: 'calc(100vh - 300px)' } },
+                { style: { margin: 24 } },
                 this.view()
               )
             );
@@ -1337,10 +1326,10 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
 });
 'use strict';
 
-System.register('teamelf/layout/Routes', [], function (_export, _context) {
+System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_export, _context) {
   "use strict";
 
-  var _createClass, _antd, Breadcrumb, _class;
+  var Logo, _createClass, _ReactRouterDOM, Link, withRouter, _antd, Layout, Menu, Icon, Sider, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1373,109 +1362,9 @@ System.register('teamelf/layout/Routes', [], function (_export, _context) {
   }
 
   return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Breadcrumb = _antd.Breadcrumb;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class() {
-          _classCallCheck(this, _class);
-
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-        }
-
-        _createClass(_class, [{
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              Breadcrumb,
-              { style: { margin: '16px 0' } },
-              React.createElement(
-                Breadcrumb.Item,
-                null,
-                'Home'
-              ),
-              React.createElement(
-                Breadcrumb.Item,
-                null,
-                'List'
-              ),
-              React.createElement(
-                Breadcrumb.Item,
-                null,
-                'App'
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/layout/TopNav', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, _ReactRouterDOM, Link, withRouter, _antd, Menu, Icon, TopNav;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
+    setters: [function (_teamelfLayoutLogo) {
+      Logo = _teamelfLayoutLogo.default;
+    }],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {
@@ -1499,194 +1388,97 @@ System.register('teamelf/layout/TopNav', [], function (_export, _context) {
       Link = _ReactRouterDOM.Link;
       withRouter = _ReactRouterDOM.withRouter;
       _antd = antd;
+      Layout = _antd.Layout;
       Menu = _antd.Menu;
       Icon = _antd.Icon;
+      Sider = Layout.Sider;
 
-      TopNav = function (_React$Component) {
-        _inherits(TopNav, _React$Component);
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
 
-        function TopNav(props) {
-          _classCallCheck(this, TopNav);
+        function _class(props) {
+          _classCallCheck(this, _class);
 
-          var _this = _possibleConstructorReturn(this, (TopNav.__proto__ || Object.getPrototypeOf(TopNav)).call(this, props));
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-          _this.navigations = [{ path: '/home', icon: React.createElement(Icon, { type: 'home' }), title: '概览' }, { path: '/member', icon: React.createElement(Icon, { type: 'user' }), title: '成员管理' }];
+          _this.navigations = [{ icon: 'home', title: '概览', children: [{ path: '/home', icon: 'home', title: '工作台' }] }, { icon: 'user', title: '成员管理', children: [{ path: '/member', icon: 'user', title: '成员列表' }] }];
           return _this;
         }
 
-        _createClass(TopNav, [{
-          key: 'getSelectedNav',
-          value: function getSelectedNav() {
-            var path = this.props.location.pathname;
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-              for (var _iterator = this.navigations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var nav = _step.value;
-
-                if (path.match(nav.path)) {
-                  return nav.path;
-                }
-              }
-            } catch (err) {
-              _didIteratorError = true;
-              _iteratorError = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                  _iterator.return();
-                }
-              } finally {
-                if (_didIteratorError) {
-                  throw _iteratorError;
-                }
-              }
-            }
-
-            return null;
-          }
-        }, {
+        _createClass(_class, [{
           key: 'render',
           value: function render() {
+            var logoStyle = {
+              position: 'relative',
+              height: 64,
+              background: '#002140',
+              textAlign: 'center',
+              overflow: 'hidden'
+            };
             return React.createElement(
-              Menu,
+              Sider,
               {
-                theme: 'dark',
-                mode: 'horizontal',
-                style: { lineHeight: '64px', float: 'left' },
-                selectedKeys: this.getSelectedNav()
+                width: 256, breakpoint: 'md',
+                style: { boxShadow: '2px 0 6px rgba(0, 21, 41, 0.35)', zIndex: '999' },
+                collapsible: true, trigger: null,
+                collapsed: this.props.collapsed,
+                onCollapse: this.props.toggleCollapsed
               },
-              this.navigations.map(function (o) {
-                return React.createElement(
-                  Menu.Item,
-                  { key: o.path },
-                  React.createElement(
-                    Link,
-                    { to: o.path },
-                    o.icon,
-                    ' ',
-                    o.title
-                  )
-                );
-              })
+              React.createElement(
+                'div',
+                { style: logoStyle },
+                React.createElement(Logo, { style: { lineHeight: '64px' } })
+              ),
+              React.createElement(
+                Menu,
+                {
+                  theme: 'dark',
+                  mode: 'inline',
+                  style: { margin: '20px 0' }
+                },
+                this.navigations.map(function (grp, idx) {
+                  return React.createElement(
+                    Menu.SubMenu,
+                    {
+                      key: 'menu-' + idx,
+                      title: React.createElement(
+                        'span',
+                        null,
+                        React.createElement(Icon, { type: grp.icon }),
+                        React.createElement(
+                          'span',
+                          null,
+                          grp.title
+                        )
+                      )
+                    },
+                    grp.children.map(function (o) {
+                      return React.createElement(
+                        Menu.Item,
+                        { key: o.path },
+                        React.createElement(
+                          Link,
+                          { to: o.path },
+                          React.createElement(Icon, { type: o.icon }),
+                          React.createElement(
+                            'span',
+                            null,
+                            o.title
+                          )
+                        )
+                      );
+                    })
+                  );
+                })
+              )
             );
           }
         }]);
 
-        return TopNav;
+        return _class;
       }(React.Component);
 
-      _export('default', withRouter(TopNav));
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, AbstractModel;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      AbstractModel = function () {
-        function AbstractModel(props) {
-          _classCallCheck(this, AbstractModel);
-
-          if (new.target === AbstractModel) {
-            throw new Error('AbstractModel cannot be instanced directly!');
-          }
-
-          /**
-           * model's attributes
-           *
-           * @type {Object}
-           * @private
-           */
-          this._attributes = {};
-
-          /**
-           * the fetching api url
-           * @type {String}
-           * @private
-           */
-          this._url = '';
-        }
-
-        /**
-         * getter & setter of _attributes
-         */
-
-
-        _createClass(AbstractModel, [{
-          key: 'fetch',
-          value: function fetch() {
-            throw new Error('AbstractModel@fetch must be implemented by subclass');
-          }
-        }, {
-          key: 'create',
-          value: function create() {
-            throw new Error('AbstractModel@create must be implemented by subclass');
-          }
-        }, {
-          key: 'update',
-          value: function update() {
-            throw new Error('AbstractModel@update must be implemented by subclass');
-          }
-        }, {
-          key: 'delete',
-          value: function _delete() {
-            throw new Error('AbstractModel@delete must be implemented by subclass');
-          }
-        }, {
-          key: 'attributes',
-          get: function get() {
-            return this._attributes;
-          },
-          set: function set(attributes) {
-            this._attributes = attributes;
-          }
-        }, {
-          key: 'url',
-          get: function get() {
-            return this._url;
-          },
-          set: function set(url) {
-            this._url = url;
-          }
-        }]);
-
-        return AbstractModel;
-      }();
-
-      _export('default', AbstractModel);
+      _export('default', _class);
     }
   };
 });
@@ -1799,6 +1591,7 @@ System.register('teamelf/member/MemberCardItem', ['teamelf/components/Gender'], 
                   this.props.name.substr(0, 1)
                 ),
                 React.createElement(Meta, {
+                  style: { marginRight: 50, overflow: 'hidden' },
                   description: React.createElement(
                     'div',
                     null,
@@ -2257,10 +2050,10 @@ System.register('teamelf/member/MemberInfoEditor', [], function (_export, _conte
 });
 'use strict';
 
-System.register('teamelf/member/MemberItem', ['teamelf/components/Gender', 'teamelf/member/MemberInfoEditor'], function (_export, _context) {
+System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/components/Gender', 'teamelf/member/MemberInfoEditor'], function (_export, _context) {
   "use strict";
 
-  var Gender, MemberInfoEditor, _createClass, _ReactRouterDOM, withRouter, _antd, Tag, Divider, MemberItem;
+  var Page, Gender, MemberInfoEditor, _createClass, _ReactRouterDOM, withRouter, _antd, Tag, Divider, MemberItem;
 
   function _defineProperty(obj, key, value) {
     if (key in obj) {
@@ -2308,7 +2101,9 @@ System.register('teamelf/member/MemberItem', ['teamelf/components/Gender', 'team
   }
 
   return {
-    setters: [function (_teamelfComponentsGender) {
+    setters: [function (_teamelfLayoutPage) {
+      Page = _teamelfLayoutPage.default;
+    }, function (_teamelfComponentsGender) {
       Gender = _teamelfComponentsGender.default;
     }, function (_teamelfMemberMemberInfoEditor) {
       MemberInfoEditor = _teamelfMemberMemberInfoEditor.default;
@@ -2338,8 +2133,8 @@ System.register('teamelf/member/MemberItem', ['teamelf/components/Gender', 'team
       Tag = _antd.Tag;
       Divider = _antd.Divider;
 
-      MemberItem = function (_React$Component) {
-        _inherits(MemberItem, _React$Component);
+      MemberItem = function (_Page) {
+        _inherits(MemberItem, _Page);
 
         function MemberItem(props) {
           _classCallCheck(this, MemberItem);
@@ -2373,12 +2168,12 @@ System.register('teamelf/member/MemberItem', ['teamelf/components/Gender', 'team
             });
           }
         }, {
-          key: 'render',
-          value: function render() {
+          key: 'view',
+          value: function view() {
             if (!this.member) return React.createElement('div', null);
             return React.createElement(
               'div',
-              null,
+              { style: { padding: 24, background: '#fff' } },
               React.createElement(
                 Tag,
                 {
@@ -2391,7 +2186,12 @@ System.register('teamelf/member/MemberItem', ['teamelf/components/Gender', 'team
                 'h2',
                 null,
                 React.createElement(Gender, { gender: this.member.gender }),
-                this.member.name
+                React.createElement(
+                  'span',
+                  null,
+                  ' ',
+                  this.member.name
+                )
               ),
               React.createElement(Divider, null),
               React.createElement(MemberInfoEditor, {
@@ -2414,7 +2214,7 @@ System.register('teamelf/member/MemberItem', ['teamelf/components/Gender', 'team
         }]);
 
         return MemberItem;
-      }(React.Component);
+      }(Page);
 
       _export('default', withRouter(MemberItem));
     }
@@ -2422,10 +2222,10 @@ System.register('teamelf/member/MemberItem', ['teamelf/components/Gender', 'team
 });
 'use strict';
 
-System.register('teamelf/member/MemberList', ['teamelf/member/MemberCardItem', 'teamelf/member/MemberCreatorModal'], function (_export, _context) {
+System.register('teamelf/member/MemberList', ['teamelf/layout/Page', 'teamelf/member/MemberCardItem', 'teamelf/member/MemberCreatorModal'], function (_export, _context) {
   "use strict";
 
-  var MemberCardItem, MemberCreatorModal, _extends, _createClass, _antd, Row, Col, Icon, Divider, Checkbox, _class;
+  var Page, MemberCardItem, MemberCreatorModal, _extends, _createClass, _antd, Row, Col, Icon, Divider, Checkbox, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -2458,7 +2258,9 @@ System.register('teamelf/member/MemberList', ['teamelf/member/MemberCardItem', '
   }
 
   return {
-    setters: [function (_teamelfMemberMemberCardItem) {
+    setters: [function (_teamelfLayoutPage) {
+      Page = _teamelfLayoutPage.default;
+    }, function (_teamelfMemberMemberCardItem) {
       MemberCardItem = _teamelfMemberMemberCardItem.default;
     }, function (_teamelfMemberMemberCreatorModal) {
       MemberCreatorModal = _teamelfMemberMemberCreatorModal.default;
@@ -2503,8 +2305,8 @@ System.register('teamelf/member/MemberList', ['teamelf/member/MemberCardItem', '
       Divider = _antd.Divider;
       Checkbox = _antd.Checkbox;
 
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
+      _class = function (_Page) {
+        _inherits(_class, _Page);
 
         function _class(props) {
           _classCallCheck(this, _class);
@@ -2557,13 +2359,13 @@ System.register('teamelf/member/MemberList', ['teamelf/member/MemberCardItem', '
             this.fetchMemberList();
           }
         }, {
-          key: 'render',
-          value: function render() {
+          key: 'header',
+          value: function header() {
             var _this4 = this;
 
             return React.createElement(
               'div',
-              { className: 'clearfix' },
+              null,
               React.createElement(
                 'div',
                 { className: 'float-right' },
@@ -2590,27 +2392,138 @@ System.register('teamelf/member/MemberList', ['teamelf/member/MemberCardItem', '
                     )
                   );
                 })
-              ),
-              React.createElement(Divider, null),
-              React.createElement(
-                Row,
-                { gutter: 16 },
-                this.state.members.map(function (o) {
-                  return React.createElement(
-                    Col,
-                    { sm: 24, md: 12, lg: 6, xxl: 4, style: { height: 160 } },
-                    React.createElement(MemberCardItem, _extends({ key: o.id }, o))
-                  );
-                })
               )
+            );
+          }
+        }, {
+          key: 'view',
+          value: function view() {
+            return React.createElement(
+              Row,
+              { gutter: 16 },
+              this.state.members.map(function (o) {
+                return React.createElement(
+                  Col,
+                  { sm: 24, md: 12, lg: 8, xxl: 6, style: { height: 160 } },
+                  React.createElement(MemberCardItem, _extends({ key: o.id }, o))
+                );
+              })
             );
           }
         }]);
 
         return _class;
-      }(React.Component);
+      }(Page);
 
       _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, AbstractModel;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      AbstractModel = function () {
+        function AbstractModel(props) {
+          _classCallCheck(this, AbstractModel);
+
+          if (new.target === AbstractModel) {
+            throw new Error('AbstractModel cannot be instanced directly!');
+          }
+
+          /**
+           * model's attributes
+           *
+           * @type {Object}
+           * @private
+           */
+          this._attributes = {};
+
+          /**
+           * the fetching api url
+           * @type {String}
+           * @private
+           */
+          this._url = '';
+        }
+
+        /**
+         * getter & setter of _attributes
+         */
+
+
+        _createClass(AbstractModel, [{
+          key: 'fetch',
+          value: function fetch() {
+            throw new Error('AbstractModel@fetch must be implemented by subclass');
+          }
+        }, {
+          key: 'create',
+          value: function create() {
+            throw new Error('AbstractModel@create must be implemented by subclass');
+          }
+        }, {
+          key: 'update',
+          value: function update() {
+            throw new Error('AbstractModel@update must be implemented by subclass');
+          }
+        }, {
+          key: 'delete',
+          value: function _delete() {
+            throw new Error('AbstractModel@delete must be implemented by subclass');
+          }
+        }, {
+          key: 'attributes',
+          get: function get() {
+            return this._attributes;
+          },
+          set: function set(attributes) {
+            this._attributes = attributes;
+          }
+        }, {
+          key: 'url',
+          get: function get() {
+            return this._url;
+          },
+          set: function set(url) {
+            this._url = url;
+          }
+        }]);
+
+        return AbstractModel;
+      }();
+
+      _export('default', AbstractModel);
     }
   };
 });

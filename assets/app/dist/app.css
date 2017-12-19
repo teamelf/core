@@ -1,0 +1,28 @@
+.ant-layout-header .trigger {
+  font-size: 18px;
+  line-height: 64px;
+  padding: 0 24px;
+  cursor: pointer;
+  -webkit-transition: color .3s;
+  transition: color .3s;
+}
+.ant-layout-header .trigger:hover {
+  color: #1890ff;
+}
+.ant-layout-header .logo {
+  height: 32px;
+  background: rgba(255, 255, 255, 0.2);
+  margin: 16px;
+}
+.auth-bar {
+  padding: 0 20px;
+  cursor: pointer;
+  -webkit-transition: background .3s;
+  transition: background .3s;
+}
+.auth-bar:hover {
+  background: #e6f7ff;
+}
+.ant-dropdown-menu-item .anticon {
+  margin-right: 10px;
+}

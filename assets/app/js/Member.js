@@ -8,12 +8,11 @@
  */
 
 const { Switch, Route } = ReactRouterDOM;
-import Page from 'teamelf/layout/Page';
 import { RedirectAs404 } from 'teamelf/Error'
 import MemberList from 'teamelf/member/MemberList';
 import MemberItem from 'teamelf/member/MemberItem';
 
-export default class extends Page {
+export default class extends React.Component {
   constructor (props) {
     super(props);
     this.routes = [
@@ -29,7 +28,7 @@ export default class extends Page {
       }
     ];
   }
-  view () {
+  render () {
     return (
       <Switch>
         {this.routes.map(o => <Route exact={o.exact}  path={o.path} component={o.component}/>)}

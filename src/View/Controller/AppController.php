@@ -32,6 +32,7 @@ class AppController extends ViewController
         parent::addAssets();
         $this->assets
             ->addJs(__DIR__ . '/../../../assets/app/dist/app.js')
-            ->entry('teamelf/main');
+            ->entry('teamelf/main')
+            ->addCss(__DIR__ . '/../../../assets/app/dist/app.css');
     }
 }
