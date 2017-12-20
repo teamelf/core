@@ -20,14 +20,8 @@ export default class extends Page {
       <Security/>,
       <Logout/>
     ];
-    this.fetchUserData();
-  }
-  fetchUserData () {
-    axios.get('auth').then(r => {
-      this.title = r.data.name;
-      this.description = r.data.role.name;
-      this.forceUpdate();
-    })
+    this.title = window.auth.name;
+    this.description = window.auth.role.name;
   }
   view () {
     return (

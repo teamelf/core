@@ -562,22 +562,12 @@ System.register('teamelf/Profile', ['teamelf/layout/Page', 'teamelf/profile/Secu
 
           _this.bulletins = [];
           _this.operations = [React.createElement(Security, null), React.createElement(Logout, null)];
-          _this.fetchUserData();
+          _this.title = window.auth.name;
+          _this.description = window.auth.role.name;
           return _this;
         }
 
         _createClass(_class, [{
-          key: 'fetchUserData',
-          value: function fetchUserData() {
-            var _this2 = this;
-
-            axios.get('auth').then(function (r) {
-              _this2.title = r.data.name;
-              _this2.description = r.data.role.name;
-              _this2.forceUpdate();
-            });
-          }
-        }, {
           key: 'view',
           value: function view() {
             return React.createElement(
@@ -585,12 +575,12 @@ System.register('teamelf/Profile', ['teamelf/layout/Page', 'teamelf/profile/Secu
               { gutter: 16, className: 'profile-page' },
               React.createElement(
                 Col,
-                { xs: 24, lg: 18 },
+                { xs: 24, lg: 16 },
                 this.bulletins
               ),
               React.createElement(
                 Col,
-                { xs: 24, lg: 6 },
+                { xs: 24, lg: 8 },
                 this.operations
               )
             );
@@ -812,28 +802,13 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
           var _this = _possibleConstructorReturn(this, (AuthBar.__proto__ || Object.getPrototypeOf(AuthBar)).call(this, props));
 
           _this.state = {
-            name: '',
-            role: '',
             hover: false,
             active: false
           };
-          _this.fetchAuth();
           return _this;
         }
 
         _createClass(AuthBar, [{
-          key: 'fetchAuth',
-          value: function fetchAuth() {
-            var _this2 = this;
-
-            axios.get('auth').then(function (r) {
-              _this2.setState({
-                name: r.data.name,
-                role: r.data.role.name
-              });
-            });
-          }
-        }, {
           key: 'componentWillReceiveProps',
           value: function componentWillReceiveProps(nextProps) {
             // change navigation selected status when routes changed
@@ -880,12 +855,12 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
                   React.createElement(
                     'div',
                     { style: { lineHeight: '20px' } },
-                    this.state.name
+                    window.auth.name
                   ),
                   React.createElement(
                     'div',
                     { style: { lineHeight: '16px', fontSize: '.8em' } },
-                    this.state.role
+                    window.auth.role.name
                   )
                 )
               )
@@ -1183,18 +1158,28 @@ System.register('teamelf/layout/Logo', [], function (_export, _context) {
         _createClass(_class, [{
           key: 'render',
           value: function render() {
+            var imgStyle = {
+              display: 'inline-block',
+              height: 64,
+              paddingTop: (64 - 45) / 2
+            };
+            var textStyle = {
+              display: 'inline-block',
+              marginLeft: 10,
+              color: '#fff',
+              fontSize: 16
+            };
             return React.createElement(
               Link,
               { to: '/home', style: this.props.style },
-              React.createElement('img', {
-                style: { height: 45, verticalAlign: 'middle', display: 'inline-block' },
-                src: window.config.logo
-              }),
               React.createElement(
                 'div',
-                {
-                  style: { marginLeft: 10, color: '#fff', fontSize: 16, display: 'inline-block' }
-                },
+                { style: imgStyle },
+                React.createElement('img', { height: '45px', src: window.config.logo })
+              ),
+              React.createElement(
+                'div',
+                { style: textStyle },
                 window.config.name
               )
             );

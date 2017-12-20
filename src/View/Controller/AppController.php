@@ -13,6 +13,7 @@ namespace TeamELF\View\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use TeamELF\Http\ViewController;
+use TeamELF\View\ViewService;
 
 class AppController extends ViewController
 {
@@ -22,9 +23,22 @@ class AppController extends ViewController
     {
         parent::__construct($request, $parameters);
 
-        if (!$this->getAuth()) {
+        $member = $this->getAuth();
+        if (!$member) {
             $this->redirect = '/login?from=' . urlencode($this->request->getUri());
+        } else {
+            ViewService::getEngine()
+                ->addGlobal('auth', [
+                    'id' => $member->getId(),
+                    'username' => $member->getUsername(),
+                    'role' => [
+                        'id' => $member->getRole()->getId(),
+                        'name' => $member->getRole()->getName()
+                    ],
+                    'name' => $member->getName()
+                ]);
         }
+
     }
 
     protected function addAssets()

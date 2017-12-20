@@ -5,4 +5,5 @@
   <div id="react-render-target-app">
     {% include "layout/loading.twig" %}
   </div>
+  <script>window.auth = {{ auth | json_encode | raw }};</script>
 {% endblock %}

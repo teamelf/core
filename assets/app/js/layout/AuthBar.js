@@ -14,20 +14,9 @@ class AuthBar extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      name: '',
-      role: '',
       hover: false,
       active: false
     };
-    this.fetchAuth();
-  }
-  fetchAuth () {
-    axios.get('auth').then(r => {
-      this.setState({
-        name: r.data.name,
-        role: r.data.role.name
-      });
-    });
   }
   componentWillReceiveProps (nextProps) {
     // change navigation selected status when routes changed
@@ -61,8 +50,8 @@ class AuthBar extends React.Component {
         >
           <Avatar style={{marginTop: 16, float: 'left'}}/>
           <div style={{display: 'inline-block', marginLeft: 20, paddingTop: (64-20-16)/2, height: 64}}>
-            <div style={{lineHeight: '20px'}}>{this.state.name}</div>
-            <div style={{lineHeight: '16px', fontSize: '.8em'}}>{this.state.role}</div>
+            <div style={{lineHeight: '20px'}}>{window.auth.name}</div>
+            <div style={{lineHeight: '16px', fontSize: '.8em'}}>{window.auth.role.name}</div>
           </div>
         </div>
       </Link>
