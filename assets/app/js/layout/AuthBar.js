@@ -15,12 +15,8 @@ class AuthBar extends React.Component {
     super(props);
     this.state = {
       hover: false,
-      active: false
+      active: this.props.location.pathname === '/profile'
     };
-  }
-  componentWillReceiveProps (nextProps) {
-    // change navigation selected status when routes changed
-    this.setState({active: nextProps.location.pathname === '/profile'});
   }
   getStyle () {
     const style = {

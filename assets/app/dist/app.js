@@ -86,8 +86,9 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
           _this.routes = [{ path: '/home', component: Home }, { path: '/member', component: Member }, { path: '/profile', exact: true, component: Profile }];
+          // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge
           _this.state = {
-            collapsed: false
+            collapsed: localStorage.sideNavCollapsed === 'true'
           };
           return _this;
         }
@@ -97,6 +98,7 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
           value: function toggleCollapsed() {
             var collapsed = !this.state.collapsed;
             this.setState({ collapsed: collapsed });
+            localStorage.sideNavCollapsed = collapsed;
           }
         }, {
           key: 'render',
@@ -613,7 +615,7 @@ System.register('teamelf/main', ['teamelf/App', 'teamelf/Error'], function (_exp
       Route = _ReactRouterDOM.Route;
       app = React.createElement(
         BrowserRouter,
-        null,
+        { forceRefresh: true },
         React.createElement(Route, { render: function render(_ref) {
             var location = _ref.location;
             return location.isError ? React.createElement(Error, { error: location.error }) : React.createElement(App, null);
@@ -803,18 +805,12 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
 
           _this.state = {
             hover: false,
-            active: false
+            active: _this.props.location.pathname === '/profile'
           };
           return _this;
         }
 
         _createClass(AuthBar, [{
-          key: 'componentWillReceiveProps',
-          value: function componentWillReceiveProps(nextProps) {
-            // change navigation selected status when routes changed
-            this.setState({ active: nextProps.location.pathname === '/profile' });
-          }
-        }, {
           key: 'getStyle',
           value: function getStyle() {
             var style = {

@@ -12,7 +12,7 @@ import App from 'teamelf/App';
 import Error from 'teamelf/Error';
 
 const app = (
-  <BrowserRouter>
+  <BrowserRouter forceRefresh>
     <Route render={({ location }) => (
       location.isError
         ? <Error error={location.error}/>

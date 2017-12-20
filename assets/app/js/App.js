@@ -25,13 +25,15 @@ export default class extends React.Component {
       {path: '/member', component: Member},
       {path: '/profile', exact: true, component: Profile}
     ];
+    // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge
     this.state = {
-      collapsed: false
+      collapsed: localStorage.sideNavCollapsed === 'true'
     };
   }
   toggleCollapsed () {
     const collapsed = !this.state.collapsed;
     this.setState({collapsed});
+    localStorage.sideNavCollapsed = collapsed;
   }
   render() {
     return (
