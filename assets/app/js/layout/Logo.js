@@ -11,15 +11,23 @@ const { Link } = ReactRouterDOM;
 
 export default class extends React.Component {
   render () {
+    const imgStyle = {
+      display: 'inline-block',
+      height: 64,
+      paddingTop: (64 - 45) / 2
+    };
+    const textStyle = {
+      display: 'inline-block',
+      marginLeft: 10,
+      color: '#fff',
+      fontSize: 16
+    };
     return (
       <Link to="/home" style={this.props.style}>
-        <img
-          style={{height: 45, verticalAlign: 'middle', display: 'inline-block'}}
-          src={window.config.logo}
-        />
-        <div
-          style={{marginLeft: 10, color: '#fff', fontSize: 16, display: 'inline-block'}}
-        >{window.config.name}</div>
+        <div style={imgStyle}>
+          <img height="45px" src={window.config.logo}/>
+        </div>
+        <div style={textStyle}>{window.config.name}</div>
       </Link>
     )
   }
