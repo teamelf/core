@@ -19,8 +19,13 @@ class SideNav extends React.Component {
       {key: 'home', icon: 'home', title: '概览', children: [
         {path: '/home', icon: 'home', title: '工作台'}
       ]},
-      {key: 'user', icon: 'user', title: '成员管理', children: [
-        {path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'team', title: '编辑成员'}
+      {key: 'user', icon: 'user', title: '成员', children: [
+        {path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'user', title: '编辑成员'},
+        {path: '/role', icon: 'team', title: '成员组'}
+      ]},
+      {key: 'config', icon: 'tool', title: '站点', children: [
+        {path: '/config', icon: 'tool', title: '基本设置'},
+        {path: '/mailer', icon: 'mail', title: '邮箱设置'}
       ]}
     ];
     this.state = {

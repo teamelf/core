@@ -134,6 +134,7 @@ export default class extends React.Component {
         >添加新成员</Button>
         <Modal
           title="新建成员"
+          maskClosable={false}
           visible={this.state.visible}
           footer={null}
           onCancel={this.closeModal.bind(this)}

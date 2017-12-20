@@ -1,5 +1,7 @@
-CREATE TABLE email_account (
+CREATE TABLE mailer (
   id VARCHAR(50) NOT NULL,
+  `default` TINYINT(1) DEFAULT NULL,
+  remark VARCHAR(50) DEFAULT NULL,
   driver VARCHAR(10) NOT NULL,
   host VARCHAR(30) NOT NULL,
   port INT NOT NULL,

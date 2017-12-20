@@ -19,6 +19,7 @@ use TeamELF\Api\Controller\Auth\ResetPasswordController;
 use TeamELF\Api\Controller\Config\ConfigListController;
 use TeamELF\Api\Controller\Config\ConfigUpdateController;
 use TeamELF\Api\Controller\Helper\PinyinController;
+use TeamELF\Api\Controller\Mailer\MailerListController;
 use TeamELF\Api\Controller\Member\MemberCreateController;
 use TeamELF\Api\Controller\Member\MemberItemController;
 use TeamELF\Api\Controller\Member\MemberListController;
@@ -86,6 +87,12 @@ class ApiService extends AbstractService
             // --------------------
             ->prefix('/api/role')
             ->get('role-list', '', RoleListController::class)
+
+            // --------------------
+            // | Mailer
+            // --------------------
+            ->prefix('/api/mailer')
+            ->get('mailer-list', '', MailerListController::class)
 
             // set prefix back to empty
             ->prefix('');

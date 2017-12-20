@@ -15,12 +15,26 @@ use TeamELF\Database\AbstractModel;
 
 /**
  * @Entity
- * @Table(name="email_account")
+ * @Table(name="mailer")
  */
-class EmailAccount extends AbstractModel
+class Mailer extends AbstractModel
 {
     // ----------------------------------------
     // | ORM DEFINITIONS
+
+    /**
+     * @var boolean
+     *
+     * @Column(type="boolean", nullable=TRUE)
+     */
+    protected $default;
+
+    /**
+     * @var string
+     *
+     * @Column(type="string", length=50, nullable=TRUE)
+     */
+    protected $remark;
 
     /**
      * @var string
@@ -73,6 +87,50 @@ class EmailAccount extends AbstractModel
 
     // ----------------------------------------
     // | GETTERS & SETTERS
+
+    /**
+     * getter of $default
+     *
+     * @return bool
+     */
+    public function getDefault()
+    {
+        return !!$this->default;
+    }
+
+    /**
+     * setter of $default
+     *
+     * @param boolean $default
+     * @return $this
+     */
+    public function default(boolean $default)
+    {
+        $this->default = !!$default;
+        return $this;
+    }
+
+    /**
+     * getter of $remark
+     *
+     * @return string
+     */
+    public function getRemark()
+    {
+        return $this->remark;
+    }
+
+    /**
+     * setter of $remark
+     *
+     * @param string $remark
+     * @return $this
+     */
+    public function remark($remark)
+    {
+        $this->remark = $remark;
+        return $this;
+    }
 
     /**
      * getter of $driver

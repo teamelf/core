@@ -1,9 +1,9 @@
 'use strict';
 
-System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'teamelf/layout/Header', 'teamelf/layout/Footer', 'teamelf/Home', 'teamelf/Member', 'teamelf/Profile'], function (_export, _context) {
+System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'teamelf/layout/Header', 'teamelf/layout/Footer', 'teamelf/Home', 'teamelf/Member', 'teamelf/Mailer', 'teamelf/Profile'], function (_export, _context) {
   "use strict";
 
-  var RedirectAs404, SideNav, Header, Footer, Home, Member, Profile, _createClass, _ReactRouterDOM, Switch, Route, Redirect, _antd, Layout, _class;
+  var RedirectAs404, SideNav, Header, Footer, Home, Member, Mailer, Profile, _createClass, _ReactRouterDOM, Switch, Route, Redirect, _antd, Layout, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -48,6 +48,8 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
       Home = _teamelfHome.default;
     }, function (_teamelfMember) {
       Member = _teamelfMember.default;
+    }, function (_teamelfMailer) {
+      Mailer = _teamelfMailer.default;
     }, function (_teamelfProfile) {
       Profile = _teamelfProfile.default;
     }],
@@ -85,7 +87,7 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
 
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-          _this.routes = [{ path: '/home', component: Home }, { path: '/member', component: Member }, { path: '/profile', exact: true, component: Profile }];
+          _this.routes = [{ path: '/home', component: Home }, { path: '/member', component: Member }, { path: '/mailer', component: Mailer }, { path: '/profile', exact: true, component: Profile }];
           // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge
           _this.state = {
             collapsed: localStorage.sideNavCollapsed === 'true'
@@ -379,6 +381,122 @@ System.register('teamelf/Home', ['teamelf/layout/Page'], function (_export, _con
 });
 'use strict';
 
+System.register('teamelf/Mailer', ['teamelf/layout/Page', 'teamelf/mailer/MailerCardItem'], function (_export, _context) {
+  "use strict";
+
+  var Page, MailerCardItem, _createClass, _antd, Button, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLayoutPage) {
+      Page = _teamelfLayoutPage.default;
+    }, function (_teamelfMailerMailerCardItem) {
+      MailerCardItem = _teamelfMailerMailerCardItem.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Button = _antd.Button;
+
+      _class = function (_Page) {
+        _inherits(_class, _Page);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.title = '邮箱发信设置';
+          _this.description = React.createElement(
+            Button,
+            { type: 'primary' },
+            '\u65B0\u5EFA\u53D1\u4FE1\u90AE\u7BB1'
+          );
+          _this.state = {
+            mailers: []
+          };
+          _this.fetchEmailAccounts();
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'fetchEmailAccounts',
+          value: function fetchEmailAccounts() {
+            var _this2 = this;
+
+            axios.get('mailer').then(function (r) {
+              _this2.setState({ mailers: r.data });
+              console.log(r);
+            });
+          }
+        }, {
+          key: 'view',
+          value: function view() {
+            return React.createElement(
+              'div',
+              null,
+              this.state.mailers.map(function (o) {
+                return React.createElement(MailerCardItem, o);
+              })
+            );
+          }
+        }]);
+
+        return _class;
+      }(Page);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
 System.register('teamelf/Member', ['teamelf/Error', 'teamelf/member/MemberList', 'teamelf/member/MemberItem'], function (_export, _context) {
   "use strict";
 
@@ -626,6 +744,173 @@ System.register('teamelf/main', ['teamelf/App', 'teamelf/Error'], function (_exp
       if (target) {
         ReactDOM.render(app, target);
       }
+    }
+  };
+});
+"use strict";
+
+System.register("teamelf/mailer/MailerCardItem", [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Card, Button, Tag, Divider, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Button = _antd.Button;
+      Tag = _antd.Tag;
+      Divider = _antd.Divider;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: "renderCardHeader",
+          value: function renderCardHeader() {
+            return React.createElement(
+              "div",
+              null,
+              this.props.default && React.createElement(
+                Tag,
+                { color: "red" },
+                "\u9ED8\u8BA4"
+              ),
+              React.createElement(
+                "span",
+                null,
+                this.props.sender
+              )
+            );
+          }
+        }, {
+          key: "renderTools",
+          value: function renderTools() {
+            return React.createElement(
+              "div",
+              null,
+              this.props.default && React.createElement(
+                Button,
+                { style: { marginRight: 20 } },
+                "\u8BBE\u4E3A\u9ED8\u8BA4"
+              ),
+              React.createElement(
+                Button,
+                { type: "primary", style: { marginRight: 20 } },
+                "\u7F16\u8F91"
+              ),
+              React.createElement(
+                Button,
+                { type: "danger" },
+                "\u5220\u9664"
+              )
+            );
+          }
+        }, {
+          key: "render",
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                title: this.renderCardHeader(),
+                extra: this.props.host,
+                actions: ['设为默认', '编辑', '删除']
+              },
+              React.createElement(
+                "div",
+                { style: { color: 'gray' } },
+                "\u5907\u6CE8\uFF1A",
+                this.props.remark
+              ),
+              React.createElement(Divider, null),
+              React.createElement(
+                "div",
+                null,
+                this.props.driver
+              ),
+              React.createElement(
+                "div",
+                null,
+                this.props.encryption
+              ),
+              React.createElement(
+                "div",
+                null,
+                this.props.username
+              ),
+              React.createElement(
+                "div",
+                null,
+                this.props.password
+              ),
+              React.createElement(
+                "div",
+                null,
+                this.props.port
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export("default", _class);
     }
   };
 });
@@ -1444,7 +1729,7 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
 
           var _this = _possibleConstructorReturn(this, (SideNav.__proto__ || Object.getPrototypeOf(SideNav)).call(this, props));
 
-          _this.navigations = [{ key: 'home', icon: 'home', title: '概览', children: [{ path: '/home', icon: 'home', title: '工作台' }] }, { key: 'user', icon: 'user', title: '成员管理', children: [{ path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'team', title: '编辑成员' }] }];
+          _this.navigations = [{ key: 'home', icon: 'home', title: '概览', children: [{ path: '/home', icon: 'home', title: '工作台' }] }, { key: 'user', icon: 'user', title: '成员', children: [{ path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'user', title: '编辑成员' }, { path: '/role', icon: 'team', title: '成员组' }] }, { key: 'config', icon: 'tool', title: '站点', children: [{ path: '/config', icon: 'tool', title: '基本设置' }, { path: '/mailer', icon: 'mail', title: '邮箱设置' }] }];
           _this.state = _extends({}, _this.getNavigationFromRoute());
           return _this;
         }
@@ -2016,6 +2301,7 @@ System.register('teamelf/member/MemberCreatorModal', [], function (_export, _con
                 Modal,
                 {
                   title: '\u65B0\u5EFA\u6210\u5458',
+                  maskClosable: false,
                   visible: this.state.visible,
                   footer: null,
                   onCancel: this.closeModal.bind(this)
