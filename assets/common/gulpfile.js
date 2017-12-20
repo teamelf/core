@@ -12,6 +12,7 @@ const gulp = require('teamelf-gulp');
 gulp({
   files: [
     './bower_components/es6-micro-loader/dist/system-polyfill.min.js',
+    './bower_components/babel-polyfill/browser-polyfill.js',
     './bower_components/react/react.production.min.js',
     './bower_components/react/react-dom.production.min.js',
     './bower_components/jQuery/dist/jquery.min.js',

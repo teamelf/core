@@ -148,7 +148,7 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
 System.register('teamelf/Error', [], function (_export, _context) {
   "use strict";
 
-  var _createClass, _ReactRouterDOM, Redirect, _class, RedirectAs404;
+  var _extends, _createClass, _ReactRouterDOM, Redirect, _class, RedirectAs404;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -183,6 +183,20 @@ System.register('teamelf/Error', [], function (_export, _context) {
   return {
     setters: [],
     execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
       _createClass = function () {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -257,7 +271,7 @@ System.register('teamelf/Error', [], function (_export, _context) {
         _createClass(RedirectAs404, [{
           key: 'render',
           value: function render() {
-            return React.createElement(Redirect, { to: Object.assign({}, this.props.location, {
+            return React.createElement(Redirect, { to: _extends({}, this.props.location, {
                 isError: true,
                 error: {
                   code: 404,

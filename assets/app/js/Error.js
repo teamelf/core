@@ -24,13 +24,14 @@ export default class extends React.Component {
 export class RedirectAs404 extends React.Component {
   render () {
     return (
-      <Redirect to={Object.assign({}, this.props.location, {
+      <Redirect to={{
+        ...this.props.location,
         isError: true,
         error: {
           code: 404,
           message: 'Not found'
         }
-      })}/>
+      }}/>
     )
   }
 }
