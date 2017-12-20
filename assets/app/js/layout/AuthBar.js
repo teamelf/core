@@ -41,14 +41,20 @@ class AuthBar extends React.Component {
     });
   }
   render () {
+    const userNavigations = [
+      {path: '/profile', icon: 'user', title: '个人中心'},
+      {path: '/security', icon: 'lock', title: '安全设置'}
+    ];
     const UserMenu = (
       <Menu onClick={this.handleMenuClick.bind(this)}>
-        <Menu.Item>
-          <Link to="/profile">
-            <Icon type="user"/>
-            <span>个人中心</span>
-          </Link>
-        </Menu.Item>
+        {userNavigations.map(o => (
+          <Menu.Item>
+            <Link to={o.path}>
+              <Icon type={o.icon}/>
+              <span>{o.title}</span>
+            </Link>
+          </Menu.Item>
+        ))}
         <Menu.Divider/>
         <Menu.Item key="logout">
           <Icon type="logout"/>

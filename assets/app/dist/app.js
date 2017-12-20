@@ -809,23 +809,26 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
         }, {
           key: 'render',
           value: function render() {
+            var userNavigations = [{ path: '/profile', icon: 'user', title: '个人中心' }, { path: '/security', icon: 'lock', title: '安全设置' }];
             var UserMenu = React.createElement(
               Menu,
               { onClick: this.handleMenuClick.bind(this) },
-              React.createElement(
-                Menu.Item,
-                null,
-                React.createElement(
-                  Link,
-                  { to: '/profile' },
-                  React.createElement(Icon, { type: 'user' }),
+              userNavigations.map(function (o) {
+                return React.createElement(
+                  Menu.Item,
+                  null,
                   React.createElement(
-                    'span',
-                    null,
-                    '\u4E2A\u4EBA\u4E2D\u5FC3'
+                    Link,
+                    { to: o.path },
+                    React.createElement(Icon, { type: o.icon }),
+                    React.createElement(
+                      'span',
+                      null,
+                      o.title
+                    )
                   )
-                )
-              ),
+                );
+              }),
               React.createElement(Menu.Divider, null),
               React.createElement(
                 Menu.Item,
@@ -1343,7 +1346,7 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
 System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_export, _context) {
   "use strict";
 
-  var Logo, _createClass, _ReactRouterDOM, Link, withRouter, _antd, Layout, Menu, Icon, Sider, _class;
+  var Logo, _extends, _createClass, _ReactRouterDOM, Link, withRouter, _antd, Layout, Menu, Icon, Sider, SideNav;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1380,6 +1383,20 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
       Logo = _teamelfLayoutLogo.default;
     }],
     execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
       _createClass = function () {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -1407,19 +1424,116 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
       Icon = _antd.Icon;
       Sider = Layout.Sider;
 
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
+      SideNav = function (_React$Component) {
+        _inherits(SideNav, _React$Component);
 
-        function _class(props) {
-          _classCallCheck(this, _class);
+        function SideNav(props) {
+          _classCallCheck(this, SideNav);
 
-          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+          var _this = _possibleConstructorReturn(this, (SideNav.__proto__ || Object.getPrototypeOf(SideNav)).call(this, props));
 
-          _this.navigations = [{ icon: 'home', title: '概览', children: [{ path: '/home', icon: 'home', title: '工作台' }] }, { icon: 'user', title: '成员管理', children: [{ path: '/member', icon: 'user', title: '成员列表' }] }];
+          _this.navigations = [{ key: 'home', icon: 'home', title: '概览', children: [{ path: '/home', icon: 'home', title: '工作台' }] }, { key: 'user', icon: 'user', title: '成员管理', children: [{ path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'team', title: '编辑成员' }] }];
+          _this.state = _extends({}, _this.getNavigationFromRoute(), {
+            savedOpenedNavigationGroup: null
+          });
           return _this;
         }
 
-        _createClass(_class, [{
+        _createClass(SideNav, [{
+          key: 'componentWillReceiveProps',
+          value: function componentWillReceiveProps(nextProps) {
+            // change navigation selected status when routes changed
+            this.setState(this.getNavigationFromRoute(nextProps.location.pathname));
+          }
+        }, {
+          key: 'toggleCollapsed',
+          value: function toggleCollapsed(collapsed) {
+            this.props.toggleCollapsed();
+            if (collapsed) {
+              this.setState({
+                savedOpenedNavigationGroup: this.state.openedNavigationGroup,
+                openedNavigationGroup: null
+              });
+            } else {
+              this.setState({
+                savedOpenedNavigationGroup: null,
+                openedNavigationGroup: this.state.savedOpenedNavigationGroup
+              });
+            }
+          }
+        }, {
+          key: 'getNavigationFromRoute',
+          value: function getNavigationFromRoute() {
+            var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props.location.pathname;
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+              for (var _iterator = this.navigations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var nav = _step.value;
+                var _iteratorNormalCompletion2 = true;
+                var _didIteratorError2 = false;
+                var _iteratorError2 = undefined;
+
+                try {
+                  for (var _iterator2 = nav.children[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var o = _step2.value;
+
+                    if (path.match(o.pattern || o.path)) {
+                      return {
+                        openedNavigationGroup: nav.key,
+                        currentNavigation: o.path
+                      };
+                    }
+                  }
+                } catch (err) {
+                  _didIteratorError2 = true;
+                  _iteratorError2 = err;
+                } finally {
+                  try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                      _iterator2.return();
+                    }
+                  } finally {
+                    if (_didIteratorError2) {
+                      throw _iteratorError2;
+                    }
+                  }
+                }
+              }
+            } catch (err) {
+              _didIteratorError = true;
+              _iteratorError = err;
+            } finally {
+              try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                  _iterator.return();
+                }
+              } finally {
+                if (_didIteratorError) {
+                  throw _iteratorError;
+                }
+              }
+            }
+
+            return {
+              openedNavigationGroup: null,
+              currentNavigation: null
+            };
+          }
+        }, {
+          key: 'handleOpenNavigation',
+          value: function handleOpenNavigation(keys) {
+            var openedNavigationGroup = this.state.openedNavigationGroup;
+            if (keys.length === 0 || openedNavigationGroup === keys[keys.length - 1]) {
+              openedNavigationGroup = null;
+            } else {
+              openedNavigationGroup = keys[keys.length - 1];
+            }
+            this.setState({ openedNavigationGroup: openedNavigationGroup });
+          }
+        }, {
           key: 'render',
           value: function render() {
             var logoStyle = {
@@ -1436,7 +1550,7 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
                 style: { boxShadow: '2px 0 6px rgba(0, 21, 41, 0.35)', zIndex: '999' },
                 collapsible: true, trigger: null,
                 collapsed: this.props.collapsed,
-                onCollapse: this.props.toggleCollapsed
+                onCollapse: this.toggleCollapsed.bind(this)
               },
               React.createElement(
                 'div',
@@ -1448,13 +1562,16 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
                 {
                   theme: 'dark',
                   mode: 'inline',
-                  style: { margin: '20px 0' }
+                  style: { margin: '20px 0' },
+                  openKeys: [this.state.openedNavigationGroup],
+                  onOpenChange: this.handleOpenNavigation.bind(this),
+                  selectedKeys: [this.state.currentNavigation]
                 },
                 this.navigations.map(function (grp, idx) {
                   return React.createElement(
                     Menu.SubMenu,
                     {
-                      key: 'menu-' + idx,
+                      key: grp.key,
                       title: React.createElement(
                         'span',
                         null,
@@ -1489,10 +1606,10 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
           }
         }]);
 
-        return _class;
+        return SideNav;
       }(React.Component);
 
-      _export('default', _class);
+      _export('default', withRouter(SideNav));
     }
   };
 });
@@ -2378,11 +2495,11 @@ System.register('teamelf/member/MemberList', ['teamelf/layout/Page', 'teamelf/me
             var _this4 = this;
 
             return React.createElement(
-              'div',
-              null,
+              Row,
+              { type: 'flex' },
               React.createElement(
-                'div',
-                { className: 'float-right' },
+                Col,
+                { xs: 24, md: { span: 6, order: 2 }, align: 'right' },
                 React.createElement(MemberCreatorModal, {
                   afterCreate: function afterCreate() {
                     return _this4.fetchMemberList();
@@ -2390,8 +2507,8 @@ System.register('teamelf/member/MemberList', ['teamelf/layout/Page', 'teamelf/me
                 })
               ),
               React.createElement(
-                'div',
-                null,
+                Col,
+                { xs: 24, md: { span: 18, order: 1 }, style: { lineHeight: '32px' } },
                 this.state.roles.map(function (o) {
                   return React.createElement(
                     Checkbox,

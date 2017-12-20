@@ -12,17 +12,64 @@ const { Layout, Menu, Icon } = antd;
 const { Sider } = Layout;
 import Logo from 'teamelf/layout/Logo'
 
-export default class extends React.Component {
+class SideNav extends React.Component {
   constructor (props) {
     super(props);
     this.navigations = [
-      {icon: 'home', title: '概览', children: [
+      {key: 'home', icon: 'home', title: '概览', children: [
         {path: '/home', icon: 'home', title: '工作台'}
       ]},
-      {icon: 'user', title: '成员管理', children: [
-        {path: '/member', icon: 'user', title: '成员列表'}
+      {key: 'user', icon: 'user', title: '成员管理', children: [
+        {path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'team', title: '编辑成员'}
       ]}
     ];
+    this.state = {
+      ...this.getNavigationFromRoute(),
+      savedOpenedNavigationGroup: null
+    };
+  }
+  componentWillReceiveProps (nextProps) {
+    // change navigation selected status when routes changed
+    this.setState(this.getNavigationFromRoute(nextProps.location.pathname));
+  }
+  toggleCollapsed (collapsed) {
+    this.props.toggleCollapsed();
+    if (collapsed) {
+      this.setState({
+        savedOpenedNavigationGroup: this.state.openedNavigationGroup,
+        openedNavigationGroup: null
+      })
+    } else {
+      this.setState({
+        savedOpenedNavigationGroup: null,
+        openedNavigationGroup: this.state.savedOpenedNavigationGroup
+      })
+    }
+  }
+  getNavigationFromRoute (path = this.props.location.pathname) {
+    for (let nav of this.navigations) {
+      for (let o of nav.children) {
+        if (path.match(o.pattern || o.path)) {
+          return {
+            openedNavigationGroup: nav.key,
+            currentNavigation: o.path
+          }
+        }
+      }
+    }
+    return {
+      openedNavigationGroup: null,
+      currentNavigation: null
+    }
+  }
+  handleOpenNavigation (keys) {
+    let openedNavigationGroup = this.state.openedNavigationGroup;
+    if (keys.length === 0 || openedNavigationGroup === keys[keys.length - 1]) {
+      openedNavigationGroup = null;
+    } else {
+      openedNavigationGroup = keys[keys.length - 1];
+    }
+    this.setState({openedNavigationGroup});
   }
   render () {
     const logoStyle = {
@@ -38,7 +85,7 @@ export default class extends React.Component {
         style={{boxShadow: '2px 0 6px rgba(0, 21, 41, 0.35)', zIndex: '999'}}
         collapsible trigger={null}
         collapsed={this.props.collapsed}
-        onCollapse={this.props.toggleCollapsed}
+        onCollapse={this.toggleCollapsed.bind(this)}
       >
         <div style={logoStyle}>
           <Logo style={{lineHeight: '64px'}}/>
@@ -47,10 +94,13 @@ export default class extends React.Component {
           theme="dark"
           mode="inline"
           style={{margin: '20px 0'}}
+          openKeys={[this.state.openedNavigationGroup]}
+          onOpenChange={this.handleOpenNavigation.bind(this)}
+          selectedKeys={[this.state.currentNavigation]}
         >
           {this.navigations.map((grp, idx) => (
             <Menu.SubMenu
-              key={`menu-${idx}`}
+              key={grp.key}
               title={<span><Icon type={grp.icon}/><span>{grp.title}</span></span>}
             >
               {grp.children.map(o => (
@@ -68,3 +118,5 @@ export default class extends React.Component {
     );
   }
 }
+
+export default withRouter(SideNav);

@@ -50,13 +50,13 @@ export default class extends Page {
   }
   header () {
     return (
-      <div>
-        <div className="float-right">
+      <Row type="flex">
+        <Col xs={24} md={{span: 6, order: 2}} align="right">
           <MemberCreatorModal
             afterCreate={() => this.fetchMemberList()}
           />
-        </div>
-        <div>
+        </Col>
+        <Col xs={24} md={{span: 18, order: 1}} style={{lineHeight: '32px'}}>
           {this.state.roles.map(o => (
             <Checkbox
               onClick={this.handleRolesCheck.bind(this, o.slug)}
@@ -65,8 +65,8 @@ export default class extends Page {
               <span>{o.name}</span>
             </Checkbox>
           ))}
-        </div>
-      </div>
+        </Col>
+      </Row>
     );
   }
   view () {
