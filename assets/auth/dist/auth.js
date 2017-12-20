@@ -72,7 +72,7 @@ System.register('teamelf/auth/forget/ForgetPassword', ['teamelf/common/SimpleLay
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
           _this.state = {
-            username: '',
+            email: '',
             loading: false
           };
           return _this;
@@ -85,11 +85,11 @@ System.register('teamelf/auth/forget/ForgetPassword', ['teamelf/common/SimpleLay
 
             e.preventDefault();
             var user = {
-              username: this.state.username || ''
+              email: this.state.email || ''
             };
             this.setState({ loading: true });
             axios.post('/auth/forget', user).then(function (r) {
-              window.location.href = '/r' + '?type=success' + ('&message=\u5BC6\u7801\u91CD\u7F6E\u90AE\u4EF6\u5DF2\u53D1\u9001\u5230\u90AE\u7BB1 [ ' + r.data.email + ' ]\uFF0C\u8BF7\u6CE8\u610F\u67E5\u6536\u90AE\u4EF6');
+              window.location.href = '/r' + '?type=success' + ('&message=\u5982\u679C\u8BE5\u8D26\u6237\u5B58\u5728\uFF0C\u5BC6\u7801\u91CD\u7F6E\u90AE\u4EF6\u5C06\u53D1\u9001\u5230\u90AE\u7BB1 [ ' + user.email + ' ]\uFF0C\u8BF7\u6CE8\u610F\u67E5\u6536\u90AE\u4EF6');
             }).catch(function (e) {
               _this2.setState({ loading: false });
             });
@@ -109,10 +109,10 @@ System.register('teamelf/auth/forget/ForgetPassword', ['teamelf/common/SimpleLay
                 Form.Item,
                 null,
                 React.createElement(Input, {
-                  size: 'large', placeholder: '\u7528\u6237\u540D / \u90AE\u7BB1',
-                  value: this.state.username,
+                  size: 'large', placeholder: '\u90AE\u7BB1',
+                  value: this.state.email,
                   onChange: function onChange(e) {
-                    return _this3.setState({ username: e.target.value });
+                    return _this3.setState({ email: e.target.value });
                   },
                   disabled: this.state.loading
                 })
@@ -167,7 +167,7 @@ System.register('teamelf/auth/forget/main', ['teamelf/auth/forget/ForgetPassword
 System.register('teamelf/auth/login/Login', ['teamelf/common/SimpleLayout', 'teamelf/auth/login/LoginForm'], function (_export, _context) {
   "use strict";
 
-  var SimpleLayout, LoginForm, _createClass, _antd, Button, Icon, LoginPage;
+  var SimpleLayout, LoginForm, _createClass, _antd, Button, Icon, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -228,25 +228,34 @@ System.register('teamelf/auth/login/Login', ['teamelf/common/SimpleLayout', 'tea
       Button = _antd.Button;
       Icon = _antd.Icon;
 
-      LoginPage = function (_SimpleLayout) {
-        _inherits(LoginPage, _SimpleLayout);
+      _class = function (_SimpleLayout) {
+        _inherits(_class, _SimpleLayout);
 
-        function LoginPage(props) {
-          _classCallCheck(this, LoginPage);
+        function _class(props) {
+          _classCallCheck(this, _class);
 
-          var _this = _possibleConstructorReturn(this, (LoginPage.__proto__ || Object.getPrototypeOf(LoginPage)).call(this, props));
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
           _this.loginInterfaces = [{ icon: React.createElement(Icon, { type: 'qq' }), to: 'qq' }, { icon: React.createElement(Icon, { type: 'wechat' }), to: 'wechat' }, { icon: React.createElement(Icon, { type: 'gitlab' }), to: 'gitlab' }, { icon: React.createElement(Icon, { type: 'github' }), to: 'github' }];
           return _this;
         }
 
-        _createClass(LoginPage, [{
+        _createClass(_class, [{
+          key: 'handleLoginSucceed',
+          value: function handleLoginSucceed() {
+            var params = new URLSearchParams(window.location.search);
+            var redirect = params.get('from') || '/';
+            window.location.replace(redirect);
+          }
+        }, {
           key: 'view',
           value: function view() {
             return React.createElement(
               'div',
               null,
-              React.createElement(LoginForm, null),
+              React.createElement(LoginForm, {
+                loginSucceed: this.handleLoginSucceed.bind(this)
+              }),
               React.createElement(
                 'div',
                 { className: 'clearfix' },
@@ -284,10 +293,10 @@ System.register('teamelf/auth/login/Login', ['teamelf/common/SimpleLayout', 'tea
           }
         }]);
 
-        return LoginPage;
+        return _class;
       }(SimpleLayout);
 
-      _export('default', LoginPage);
+      _export('default', _class);
     }
   };
 });
@@ -387,7 +396,7 @@ System.register('teamelf/auth/login/LoginForm', [], function (_export, _context)
               };
               _this2.setState({ loading: true });
               axios.post('auth/login', user).then(function (r) {
-                window.location.href = '/';
+                _this2.props.loginSucceed();
               }).catch(function (e) {
                 _this2.setState({ loading: false });
               });

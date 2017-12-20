@@ -48,10 +48,15 @@ export default class Page extends React.Component {
   }
   render () {
     const Header = this.header();
+    const headerStyle = {
+      padding: '16px 32px',
+      background: '#fff',
+      boxShadow: '0 1px 4px rgba(0, 21, 41, 0.08)'
+    };
     return (
       <Layout style={{margin: -24}}>
         {!!Header && (
-          <div style={{padding: '16px 32px', background: '#fff'}}>
+          <div style={headerStyle}>
           {Header}
           </div>
         )}

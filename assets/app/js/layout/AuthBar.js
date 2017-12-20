@@ -8,14 +8,16 @@
  */
 
 const { Link, withRouter } = ReactRouterDOM;
-const { Dropdown, Menu, Icon, Avatar } = antd;
+const { Avatar } = antd;
 
 class AuthBar extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
       name: '',
-      role: ''
+      role: '',
+      hover: false,
+      active: false
     };
     this.fetchAuth();
   }
@@ -27,51 +29,43 @@ class AuthBar extends React.Component {
       });
     });
   }
-  handleMenuClick ({key}) {
-    switch (key) {
-      case 'logout':
-        this.logout();
-        break;
-      default:
+  componentWillReceiveProps (nextProps) {
+    // change navigation selected status when routes changed
+    this.setState({active: nextProps.location.pathname === '/profile'});
+  }
+  getStyle () {
+    const style = {
+      padding: '0 20px',
+      cursor: 'pointer',
+      transition: 'background .3s',
+    };
+    if (this.state.active || this.state.hover) {
+      return {
+        ...style,
+        background: '#e6f7ff'
+      };
+    } else {
+      return style;
     }
   }
-  logout () {
-    axios.post('auth/logout').then(r => {
-      window.location.reload();
-    });
+  handleHover (e) {
+    this.setState({hover: e.type === 'mouseenter'})
   }
   render () {
-    const userNavigations = [
-      {path: '/profile', icon: 'user', title: '个人中心'},
-      {path: '/security', icon: 'lock', title: '安全设置'}
-    ];
-    const UserMenu = (
-      <Menu onClick={this.handleMenuClick.bind(this)}>
-        {userNavigations.map(o => (
-          <Menu.Item>
-            <Link to={o.path}>
-              <Icon type={o.icon}/>
-              <span>{o.title}</span>
-            </Link>
-          </Menu.Item>
-        ))}
-        <Menu.Divider/>
-        <Menu.Item key="logout">
-          <Icon type="logout"/>
-          <span>安全登出</span>
-        </Menu.Item>
-      </Menu>
-    );
     return (
-      <Dropdown overlay={UserMenu}>
-        <div className="auth-bar">
+      <Link to="/profile">
+        <div
+          style={this.getStyle()}
+          onMouseEnter={this.handleHover.bind(this)}
+          onMouseLeave={this.handleHover.bind(this)}
+        >
           <Avatar style={{marginTop: 16, float: 'left'}}/>
-          <div style={{display: 'inline-block', marginLeft: 20, paddingTop: 17, height: 64}}>
+          <div style={{display: 'inline-block', marginLeft: 20, paddingTop: (64-20-16)/2, height: 64}}>
             <div style={{lineHeight: '20px'}}>{this.state.name}</div>
-            <div style={{lineHeight: '10px', fontSize: '.8em'}}>{this.state.role}</div>
+            <div style={{lineHeight: '16px', fontSize: '.8em'}}>{this.state.role}</div>
           </div>
         </div>
-      </Dropdown>
+      </Link>
     );
   }
 }

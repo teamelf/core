@@ -30,7 +30,7 @@ class LoginForm extends React.Component {
       };
       this.setState({loading: true});
       axios.post('auth/login', user).then(r => {
-        window.location.href = '/';
+        this.props.loginSucceed();
       }).catch(e => {
         this.setState({loading: false});
       });

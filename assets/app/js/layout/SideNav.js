@@ -24,27 +24,16 @@ class SideNav extends React.Component {
       ]}
     ];
     this.state = {
-      ...this.getNavigationFromRoute(),
-      savedOpenedNavigationGroup: null
+      ...this.getNavigationFromRoute()
     };
   }
   componentWillReceiveProps (nextProps) {
     // change navigation selected status when routes changed
-    this.setState(this.getNavigationFromRoute(nextProps.location.pathname));
-  }
-  toggleCollapsed (collapsed) {
-    this.props.toggleCollapsed();
-    if (collapsed) {
-      this.setState({
-        savedOpenedNavigationGroup: this.state.openedNavigationGroup,
-        openedNavigationGroup: null
-      })
-    } else {
-      this.setState({
-        savedOpenedNavigationGroup: null,
-        openedNavigationGroup: this.state.savedOpenedNavigationGroup
-      })
+    let navigations = this.getNavigationFromRoute(nextProps.location.pathname);
+    if (nextProps.collapsed) {
+      navigations.openedNavigationGroup = null;
     }
+    this.setState(navigations);
   }
   getNavigationFromRoute (path = this.props.location.pathname) {
     for (let nav of this.navigations) {
@@ -85,7 +74,7 @@ class SideNav extends React.Component {
         style={{boxShadow: '2px 0 6px rgba(0, 21, 41, 0.35)', zIndex: '999'}}
         collapsible trigger={null}
         collapsed={this.props.collapsed}
-        onCollapse={this.toggleCollapsed.bind(this)}
+        onCollapse={this.props.toggleCollapsed}
       >
         <div style={logoStyle}>
           <Logo style={{lineHeight: '64px'}}/>

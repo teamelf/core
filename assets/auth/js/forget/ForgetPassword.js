@@ -14,20 +14,20 @@ export default class extends SimpleLayout {
   constructor (props) {
     super(props);
     this.state = {
-      username: '',
+      email: '',
       loading: false
     };
   }
   handleSubmit (e) {
     e.preventDefault();
     let user = {
-      username: this.state.username || ''
+      email: this.state.email || ''
     };
     this.setState({loading: true});
     axios.post('/auth/forget', user).then(r => {
       window.location.href = '/r' +
         '?type=success' +
-        `&message=密码重置邮件已发送到邮箱 [ ${r.data.email} ]，请注意查收邮件`;
+        `&message=如果该账户存在，密码重置邮件将发送到邮箱 [ ${user.email} ]，请注意查收邮件`;
     }).catch(e => {
       this.setState({loading: false});
     });
@@ -40,9 +40,9 @@ export default class extends SimpleLayout {
       >
         <Form.Item>
           <Input
-            size="large" placeholder="用户名 / 邮箱"
-            value={this.state.username}
-            onChange={e => this.setState({username: e.target.value})}
+            size="large" placeholder="邮箱"
+            value={this.state.email}
+            onChange={e => this.setState({email: e.target.value})}
             disabled={this.state.loading}
           />
         </Form.Item>

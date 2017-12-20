@@ -11,7 +11,7 @@ import SimpleLayout from 'teamelf/common/SimpleLayout';
 const { Button, Icon } = antd;
 import LoginForm from 'teamelf/auth/login/LoginForm';
 
-export default class LoginPage extends SimpleLayout {
+export default class extends SimpleLayout {
   constructor (props) {
     super(props);
     this.loginInterfaces = [
@@ -21,10 +21,17 @@ export default class LoginPage extends SimpleLayout {
       {icon: <Icon type="github"/>, to: 'github'},
     ];
   }
+  handleLoginSucceed () {
+    const params = new URLSearchParams(window.location.search);
+    const redirect = params.get('from') || '/';
+    window.location.replace(redirect);
+  }
   view () {
     return (
       <div>
-        <LoginForm/>
+        <LoginForm
+          loginSucceed={this.handleLoginSucceed.bind(this)}
+        />
         <div className="clearfix">
           <div className="float-left" style={{lineHeight: '50px'}}>
             <span>其他登陆方式</span>

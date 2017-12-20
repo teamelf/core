@@ -23,7 +23,7 @@ class AppController extends ViewController
         parent::__construct($request, $parameters);
 
         if (!$this->getAuth()) {
-            $this->redirect = '/login';
+            $this->redirect = '/login?from=' . urlencode($this->request->getUri());
         }
     }
 

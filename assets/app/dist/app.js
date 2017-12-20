@@ -486,10 +486,10 @@ System.register('teamelf/Member', ['teamelf/Error', 'teamelf/member/MemberList',
 });
 'use strict';
 
-System.register('teamelf/Profile', ['teamelf/layout/Page'], function (_export, _context) {
+System.register('teamelf/Profile', ['teamelf/layout/Page', 'teamelf/profile/Security', 'teamelf/profile/Logout'], function (_export, _context) {
   "use strict";
 
-  var Page, _createClass, _class;
+  var Page, Security, Logout, _createClass, _antd, Row, Col, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -524,6 +524,10 @@ System.register('teamelf/Profile', ['teamelf/layout/Page'], function (_export, _
   return {
     setters: [function (_teamelfLayoutPage) {
       Page = _teamelfLayoutPage.default;
+    }, function (_teamelfProfileSecurity) {
+      Security = _teamelfProfileSecurity.default;
+    }, function (_teamelfProfileLogout) {
+      Logout = _teamelfProfileLogout.default;
     }],
     execute: function () {
       _createClass = function () {
@@ -544,22 +548,51 @@ System.register('teamelf/Profile', ['teamelf/layout/Page'], function (_export, _
         };
       }();
 
+      _antd = antd;
+      Row = _antd.Row;
+      Col = _antd.Col;
+
       _class = function (_Page) {
         _inherits(_class, _Page);
 
-        function _class() {
+        function _class(props) {
           _classCallCheck(this, _class);
 
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.bulletins = [];
+          _this.operations = [React.createElement(Security, null), React.createElement(Logout, null)];
+          _this.fetchUserData();
+          return _this;
         }
 
         _createClass(_class, [{
+          key: 'fetchUserData',
+          value: function fetchUserData() {
+            var _this2 = this;
+
+            axios.get('auth').then(function (r) {
+              _this2.title = r.data.name;
+              _this2.description = r.data.role.name;
+              _this2.forceUpdate();
+            });
+          }
+        }, {
           key: 'view',
           value: function view() {
             return React.createElement(
-              'div',
-              null,
-              'Profile'
+              Row,
+              { gutter: 16, className: 'profile-page' },
+              React.createElement(
+                Col,
+                { xs: 24, lg: 18 },
+                this.bulletins
+              ),
+              React.createElement(
+                Col,
+                { xs: 24, lg: 6 },
+                this.operations
+              )
             );
           }
         }]);
@@ -697,7 +730,7 @@ System.register("teamelf/components/Gender", [], function (_export, _context) {
 System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
   "use strict";
 
-  var _createClass, _ReactRouterDOM, Link, withRouter, _antd, Dropdown, Menu, Icon, Avatar, AuthBar;
+  var _extends, _createClass, _ReactRouterDOM, Link, withRouter, _antd, Avatar, AuthBar;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -732,6 +765,20 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
   return {
     setters: [],
     execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
       _createClass = function () {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -754,9 +801,6 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
       Link = _ReactRouterDOM.Link;
       withRouter = _ReactRouterDOM.withRouter;
       _antd = antd;
-      Dropdown = _antd.Dropdown;
-      Menu = _antd.Menu;
-      Icon = _antd.Icon;
       Avatar = _antd.Avatar;
 
       AuthBar = function (_React$Component) {
@@ -769,7 +813,9 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
 
           _this.state = {
             name: '',
-            role: ''
+            role: '',
+            hover: false,
+            active: false
           };
           _this.fetchAuth();
           return _this;
@@ -788,69 +834,49 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
             });
           }
         }, {
-          key: 'handleMenuClick',
-          value: function handleMenuClick(_ref) {
-            var key = _ref.key;
-
-            switch (key) {
-              case 'logout':
-                this.logout();
-                break;
-              default:
+          key: 'componentWillReceiveProps',
+          value: function componentWillReceiveProps(nextProps) {
+            // change navigation selected status when routes changed
+            this.setState({ active: nextProps.location.pathname === '/profile' });
+          }
+        }, {
+          key: 'getStyle',
+          value: function getStyle() {
+            var style = {
+              padding: '0 20px',
+              cursor: 'pointer',
+              transition: 'background .3s'
+            };
+            if (this.state.active || this.state.hover) {
+              return _extends({}, style, {
+                background: '#e6f7ff'
+              });
+            } else {
+              return style;
             }
           }
         }, {
-          key: 'logout',
-          value: function logout() {
-            axios.post('auth/logout').then(function (r) {
-              window.location.reload();
-            });
+          key: 'handleHover',
+          value: function handleHover(e) {
+            this.setState({ hover: e.type === 'mouseenter' });
           }
         }, {
           key: 'render',
           value: function render() {
-            var userNavigations = [{ path: '/profile', icon: 'user', title: '个人中心' }, { path: '/security', icon: 'lock', title: '安全设置' }];
-            var UserMenu = React.createElement(
-              Menu,
-              { onClick: this.handleMenuClick.bind(this) },
-              userNavigations.map(function (o) {
-                return React.createElement(
-                  Menu.Item,
-                  null,
-                  React.createElement(
-                    Link,
-                    { to: o.path },
-                    React.createElement(Icon, { type: o.icon }),
-                    React.createElement(
-                      'span',
-                      null,
-                      o.title
-                    )
-                  )
-                );
-              }),
-              React.createElement(Menu.Divider, null),
-              React.createElement(
-                Menu.Item,
-                { key: 'logout' },
-                React.createElement(Icon, { type: 'logout' }),
-                React.createElement(
-                  'span',
-                  null,
-                  '\u5B89\u5168\u767B\u51FA'
-                )
-              )
-            );
             return React.createElement(
-              Dropdown,
-              { overlay: UserMenu },
+              Link,
+              { to: '/profile' },
               React.createElement(
                 'div',
-                { className: 'auth-bar' },
+                {
+                  style: this.getStyle(),
+                  onMouseEnter: this.handleHover.bind(this),
+                  onMouseLeave: this.handleHover.bind(this)
+                },
                 React.createElement(Avatar, { style: { marginTop: 16, float: 'left' } }),
                 React.createElement(
                   'div',
-                  { style: { display: 'inline-block', marginLeft: 20, paddingTop: 17, height: 64 } },
+                  { style: { display: 'inline-block', marginLeft: 20, paddingTop: (64 - 20 - 16) / 2, height: 64 } },
                   React.createElement(
                     'div',
                     { style: { lineHeight: '20px' } },
@@ -858,7 +884,7 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
                   ),
                   React.createElement(
                     'div',
-                    { style: { lineHeight: '10px', fontSize: '.8em' } },
+                    { style: { lineHeight: '16px', fontSize: '.8em' } },
                     this.state.role
                   )
                 )
@@ -1317,12 +1343,17 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
           key: 'render',
           value: function render() {
             var Header = this.header();
+            var headerStyle = {
+              padding: '16px 32px',
+              background: '#fff',
+              boxShadow: '0 1px 4px rgba(0, 21, 41, 0.08)'
+            };
             return React.createElement(
               Layout,
               { style: { margin: -24 } },
               !!Header && React.createElement(
                 'div',
-                { style: { padding: '16px 32px', background: '#fff' } },
+                { style: headerStyle },
                 Header
               ),
               React.createElement(
@@ -1433,9 +1464,7 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
           var _this = _possibleConstructorReturn(this, (SideNav.__proto__ || Object.getPrototypeOf(SideNav)).call(this, props));
 
           _this.navigations = [{ key: 'home', icon: 'home', title: '概览', children: [{ path: '/home', icon: 'home', title: '工作台' }] }, { key: 'user', icon: 'user', title: '成员管理', children: [{ path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'team', title: '编辑成员' }] }];
-          _this.state = _extends({}, _this.getNavigationFromRoute(), {
-            savedOpenedNavigationGroup: null
-          });
+          _this.state = _extends({}, _this.getNavigationFromRoute());
           return _this;
         }
 
@@ -1443,23 +1472,11 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
           key: 'componentWillReceiveProps',
           value: function componentWillReceiveProps(nextProps) {
             // change navigation selected status when routes changed
-            this.setState(this.getNavigationFromRoute(nextProps.location.pathname));
-          }
-        }, {
-          key: 'toggleCollapsed',
-          value: function toggleCollapsed(collapsed) {
-            this.props.toggleCollapsed();
-            if (collapsed) {
-              this.setState({
-                savedOpenedNavigationGroup: this.state.openedNavigationGroup,
-                openedNavigationGroup: null
-              });
-            } else {
-              this.setState({
-                savedOpenedNavigationGroup: null,
-                openedNavigationGroup: this.state.savedOpenedNavigationGroup
-              });
+            var navigations = this.getNavigationFromRoute(nextProps.location.pathname);
+            if (nextProps.collapsed) {
+              navigations.openedNavigationGroup = null;
             }
+            this.setState(navigations);
           }
         }, {
           key: 'getNavigationFromRoute',
@@ -1550,7 +1567,7 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
                 style: { boxShadow: '2px 0 6px rgba(0, 21, 41, 0.35)', zIndex: '999' },
                 collapsible: true, trigger: null,
                 collapsed: this.props.collapsed,
-                onCollapse: this.toggleCollapsed.bind(this)
+                onCollapse: this.props.toggleCollapsed
               },
               React.createElement(
                 'div',
@@ -2655,6 +2672,212 @@ System.register('teamelf/model/AbstractModel', [], function (_export, _context) 
       }();
 
       _export('default', AbstractModel);
+    }
+  };
+});
+"use strict";
+
+System.register("teamelf/profile/Logout", [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Card, Button, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Button = _antd.Button;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: "logout",
+          value: function logout() {
+            axios.post('auth/logout').then(function (r) {
+              window.location.reload();
+            });
+          }
+        }, {
+          key: "render",
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                style: { marginBottom: 16 },
+                title: "\u9000\u51FA\u7CFB\u7EDF"
+              },
+              React.createElement(
+                Button,
+                {
+                  className: "full",
+                  type: "primary",
+                  onClick: this.logout.bind(this)
+                },
+                "\u70B9\u6B64\u5B89\u5168\u767B\u51FA"
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export("default", _class);
+    }
+  };
+});
+"use strict";
+
+System.register("teamelf/profile/Security", [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Card, Button, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Button = _antd.Button;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: "render",
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                style: { marginBottom: 16 },
+                title: "\u4FEE\u6539\u5BC6\u7801"
+              },
+              React.createElement(
+                Button,
+                {
+                  className: "full",
+                  type: "danger"
+                },
+                "\u53D1\u9001\u91CD\u7F6E\u5BC6\u7801\u90AE\u4EF6"
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export("default", _class);
     }
   };
 });

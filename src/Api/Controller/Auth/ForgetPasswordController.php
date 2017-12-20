@@ -12,6 +12,7 @@
 namespace TeamELF\Api\Controller\Auth;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use TeamELF\Core\Member;
 use TeamELF\Core\PasswordResetToken;
@@ -27,17 +28,22 @@ class ForgetPasswordController extends AbstractController
     public function handler(): Response
     {
         $data = $this->validate([
-            'username' => [
-                new NotBlank()
+            'email' => [
+                new NotBlank(),
+                new Email()
             ]
-        ]);
-        $member = Member::search($data['username']);
-        $token = new PasswordResetToken();
-        $token->member($member)
-            ->save();
-        // TODO: send token [$token->getId()] to email [$member->getEmail()]
-        return response([
-            'email' => $member->getEmail()
-        ]);
+        ], false);
+        if (count($data) > 0) {
+            var_dump('email checked');
+            $member = Member::findBy($data);
+            if ($member) {
+                var_dump('member checked');
+                $token = new PasswordResetToken();
+                $token->member($member)
+                    ->save();
+                // TODO: send token [$token->getId()] to email [$member->getEmail()]
+            }
+        }
+        return response();
     }
 }

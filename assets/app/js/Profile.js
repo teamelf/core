@@ -8,9 +8,37 @@
  */
 
 import Page from 'teamelf/layout/Page';
+const { Row, Col } = antd;
+import Security from 'teamelf/profile/Security';
+import Logout from 'teamelf/profile/Logout';
 
 export default class extends Page {
+  constructor (props) {
+    super(props);
+    this.bulletins = [];
+    this.operations = [
+      <Security/>,
+      <Logout/>
+    ];
+    this.fetchUserData();
+  }
+  fetchUserData () {
+    axios.get('auth').then(r => {
+      this.title = r.data.name;
+      this.description = r.data.role.name;
+      this.forceUpdate();
+    })
+  }
   view () {
-    return <div>Profile</div>
+    return (
+      <Row gutter={16} className="profile-page">
+        <Col xs={24} lg={16}>
+          {this.bulletins}
+        </Col>
+        <Col xs={24} lg={8}>
+          {this.operations}
+        </Col>
+      </Row>
+    )
   }
 }
