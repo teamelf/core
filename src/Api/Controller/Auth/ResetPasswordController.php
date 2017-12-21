@@ -12,6 +12,7 @@
 namespace TeamELF\Api\Controller\Auth;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use TeamELF\Core\Member;
 use TeamELF\Core\PasswordResetToken;
@@ -28,10 +29,13 @@ class ResetPasswordController extends AbstractController
      */
     public function handler(): Response
     {
+        $memberData = $this->validate([
+            'email' => [
+                new NotBlank(),
+                new Email()
+            ]
+        ]);
         $data = $this->validate([
-            'username' => [
-                new NotBlank()
-            ],
             'password' => [
                 new NotBlank()
             ],
@@ -43,7 +47,7 @@ class ResetPasswordController extends AbstractController
             throw new HttpForbiddenException();
         }
         $token = PasswordResetToken::find($this->getParameter('token'));
-        $member = Member::search($data['username']);
+        $member = Member::findBy($memberData);
         if (!$token || !$token->isValid() || !$member || $token->getMember()->getId() !== $member->getId()) {
             throw new HttpForbiddenException();
         }

@@ -13,15 +13,15 @@ namespace TeamELF\View\Controller;
 
 use TeamELF\Http\ViewController;
 
-class ResetPasswordController extends ViewController
+class MailController extends ViewController
 {
-    protected $template = 'password-reset.twig';
+    protected $template = 'login.twig';
 
     protected function addAssets()
     {
         parent::addAssets();
         $this->assets
             ->addJs(__DIR__ . '/../../../assets/auth/dist/auth.js')
-            ->entry('teamelf/auth/reset/main');
+            ->entry('teamelf/auth/login/main');
     }
 }

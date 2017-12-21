@@ -85,7 +85,7 @@ if (!function_exists('view')) {
      *
      * @param string $template
      * @param array  $data
-     * @return string
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     function view($template, $data = [])
     {

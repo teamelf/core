@@ -8,7 +8,7 @@
  */
 
 import SimpleLayout from 'teamelf/common/SimpleLayout';
-const { Icon } = antd;
+const { Icon, Button } = antd;
 
 export default class extends SimpleLayout {
   constructor (props) {
@@ -17,30 +17,47 @@ export default class extends SimpleLayout {
     this.icons = {
       success: <Icon type="check-circle" style={{color: '#52c41a', fontSize}}/>
     };
+    this.query = new URLSearchParams(window.location.search);
+    this.redirect = this.query.get('redirect');
+    this.redirect = JSON.parse(this.query.get('redirect'));
+    if (this.redirect) {
+      this.flushSeconds();
+    }
   }
-  getQuiries () {
-    let q = {};
-    for (let kv of window.location.search.substr(1).split('&')) {
-      let [key, value] = kv.split('=');
-      q[key] = decodeURIComponent(value || '');
+  componentDidMount () {
+    document.getElementById('message').innerHTML = this.query.get('message');
+  }
+  flushSeconds () {
+    if (this.redirect.time > 0) {
+      setTimeout(() => {
+        this.redirect.time -= 1;
+        this.forceUpdate();
+        this.flushSeconds();
+      }, 1000)
+    } else if (this.redirect.time === 0) {
+      window.location.href = this.redirect.link;
     }
-    q.redirect = +q.redirect || 0;
-    if (q.redirect > 0) {
-      setTimeout(() => window.location.href = '/', q.redirect * 1000);
+  }
+  renderRedirect () {
+    if (this.redirect) {
+      return (
+        <div style={{margin: '20px 0'}}>
+          将在 {this.redirect.time} 秒后自动跳转至 {this.redirect.name}，
+          <a href={this.redirect.link}>或点此立即跳转</a>
+        </div>
+      );
+    } else {
+      return null;
     }
-    return q;
   }
   view () {
-    let query = this.getQuiries();
-    const Icon = this.icons[query.type] || this.icons.success;
+    const Icon = this.icons[this.query.type] || this.icons.success;
     return (
       <div>
         <div style={{margin: '50px 0'}}>{Icon}</div>
-        <h3>{query.message}</h3>
-        <div>
-          {query.redirect > 0 && <span>将在 {query.redirect} 秒后自动跳转首页，或点此立即</span>}
-          <a href="/">返回首页</a>
-        </div>
+        <h3 id="message"/>
+        {this.renderRedirect()}
+        <Button type="primary" href="/">返回首页</Button>
       </div>
     );
   }

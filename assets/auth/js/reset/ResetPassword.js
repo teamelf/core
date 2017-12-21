@@ -13,31 +13,37 @@ const { Form, Button, Input } = antd;
 export default class extends SimpleLayout {
   constructor (props) {
     super(props);
+    const query = new URLSearchParams(window.location.search);
     this.state = {
-      username: '',
+      email: query.get('email'),
       password: '',
       passwordConfirmation: '',
       loading: false
     };
   }
   token () {
-    let token = window.location.href.split('/');
+    let token = window.location.pathname.split('/');
     token = token[token.length - 1];
     return token;
   }
   handleSubmit (e) {
     e.preventDefault();
     let user = {
-      username: this.state.username || '',
+      email: this.state.email || '',
       password: this.state.password ? CryptoJS.SHA1(this.state.password).toString() : '',
       passwordConfirmation: this.state.passwordConfirmation ? CryptoJS.SHA1(this.state.passwordConfirmation).toString() : '',
     };
     this.setState({loading: true});
     axios.post('/auth/reset/' + this.token(), user).then(r => {
+      const redirect = {
+        link: '/login',
+        name: '登录页',
+        time: 5
+      };
       window.location.href = '/r' +
         '?type=success' +
         '&message=密码重置成功' +
-        '&redirect=5';
+        '&redirect=' + encodeURIComponent(JSON.stringify(redirect));
     }).catch(e => {
       this.setState({loading: false});
     });
@@ -47,9 +53,9 @@ export default class extends SimpleLayout {
       <Form onSubmit={this.handleSubmit.bind(this)}>
         <Form.Item>
           <Input
-            size="large" placeholder="用户名 / 邮箱"
-            value={this.state.username}
-            onChange={e => this.setState({username: e.target.value})}
+            size="large" placeholder="邮箱"
+            value={this.state.email}
+            onChange={e => this.setState({email: e.target.value})}
             disabled={this.state.loading}
           />
         </Form.Item>

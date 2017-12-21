@@ -1,0 +1,21 @@
+<div style="padding: 50px; background: url({{ baseUrl }}/static/bg.png) center center / cover no-repeat;">
+  {% block header %}
+    <div align="center">
+      <img
+        height="100px" width="100px"
+        src="{{ baseUrl }}{{ config.logo }}"
+      />
+    </div>
+    <h2 align="center">{{ config.name }}</h2>
+  {% endblock %}
+
+  <div style="margin: 100px 0">
+    {% block body %}
+    {% endblock %}
+  </div>
+
+  {% block footer %}
+    <div align="right">{{ config.name }}</div>
+    <div align="right">{{ 'now' | date('Y-m-d') }}</div>
+  {% endblock %}
+</div>

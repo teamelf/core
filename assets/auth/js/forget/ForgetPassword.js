@@ -27,7 +27,7 @@ export default class extends SimpleLayout {
     axios.post('/auth/forget', user).then(r => {
       window.location.href = '/r' +
         '?type=success' +
-        `&message=如果该账户存在，密码重置邮件将发送到邮箱 [ ${user.email} ]，请注意查收邮件`;
+        '&message=' + encodeURIComponent(`如果该账户存在，密码重置邮件将发送到邮箱<br/>${user.email}<br/>请注意查收邮件`);
     }).catch(e => {
       this.setState({loading: false});
     });

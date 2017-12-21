@@ -33,21 +33,24 @@ class ForgetPasswordController extends AbstractController
                 new NotBlank(),
                 new Email()
             ]
-        ], false);
+        ]);
         if (count($data) > 0) {
             $member = Member::findBy($data);
             if ($member) {
                 $token = (new PasswordResetToken())
                     ->member($member)
                     ->save();
-                $sender = Mailer::createWithDefaultMailer();
-                $sender->send(
-                    $member->getEmail(),
-                    'Reset Password',
-                    'Your token ' . $token->getId()
-                );
-                // TODO: use html template
+                Mailer::createWithDefaultMailer()
+                    ->subject('重置密码')
+                    ->view(
+                        'mail/password-reset.twig',
+                        ['token' => $token->getId()]
+                    )->send($member->getEmail());
+            } else {
+                sleep(1); // avoid judging status through time used
             }
+        } else {
+            sleep(1); // avoid judging status through time used
         }
         return response();
     }

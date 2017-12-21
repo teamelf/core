@@ -17,6 +17,7 @@ use TeamELF\Event\RoutesWillBeLoaded;
 use TeamELF\View\Controller\AppController;
 use TeamELF\View\Controller\ForgetPasswordController;
 use TeamELF\View\Controller\LoginController;
+use TeamELF\View\Controller\MailController;
 use TeamELF\View\Controller\ResetPasswordController;
 use TeamELF\View\Controller\ResultController;
 
@@ -57,6 +58,7 @@ class ViewService extends AbstractService
             static::$engine = new \Twig_Environment($loader);
             static::$engine->addGlobal('assets', static::getAssetManager());
             static::$engine->addGlobal('config', Config::get());
+            static::$engine->addGlobal('baseUrl', env('BASE_URL'));
         }
         return static::$engine;
     }
@@ -72,6 +74,7 @@ class ViewService extends AbstractService
     public function handleRoutes(RoutesWillBeLoaded $event)
     {
         $event->getRouter()->prefix('')
+            ->get('test', '/test', MailController::class)
             ->get('fe-login', '/login', LoginController::class)
             ->get('fe-forget-password', '/password/forget', ForgetPasswordController::class)
             ->get('fe-reset-password', '/password/reset/{token}', ResetPasswordController::class)
