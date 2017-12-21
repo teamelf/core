@@ -2506,6 +2506,8 @@ System.register('teamelf/mailer/MailerCardItem', ['teamelf/components/InfoEditor
               } else {
                 _this5.setState({ status: 'error' });
               }
+            }).catch(function (e) {
+              _this5.setState({ status: 'error' });
             });
           }
         }, {

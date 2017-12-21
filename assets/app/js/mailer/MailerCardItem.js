@@ -75,7 +75,9 @@ export default class extends React.Component {
       } else {
         this.setState({status: 'error'});
       }
-    });
+    }).catch(e => {
+      this.setState({status: 'error'});
+    })
   }
   render () {
     return (
