@@ -21,7 +21,7 @@ class SideNav extends React.Component {
       ]},
       {key: 'user', icon: 'user', title: '成员', children: [
         {path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'user', title: '编辑成员'},
-        {path: '/role', icon: 'team', title: '成员组'}
+        {path: '/permission', icon: 'key', title: '成员组权限管理'}
       ]},
       {key: 'config', icon: 'tool', title: '站点', children: [
         {path: '/config', icon: 'tool', title: '基本设置'},

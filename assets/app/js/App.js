@@ -18,6 +18,7 @@ import Member from 'teamelf/Member';
 import Config from 'teamelf/Config';
 import Mailer from 'teamelf/Mailer';
 import Profile from 'teamelf/Profile';
+import Permission from 'teamelf/Permission';
 
 export default class extends React.Component {
   constructor (props) {
@@ -27,7 +28,9 @@ export default class extends React.Component {
       {path: '/member', component: Member},
       {path: '/config', component: Config},
       {path: '/mailer', component: Mailer},
-      {path: '/profile', exact: true, component: Profile}
+      {path: '/profile', exact: true, component: Profile},
+      {path: '/permission', exact: true, component: Permission},
+
     ];
     // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge
     this.state = {

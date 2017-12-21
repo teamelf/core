@@ -11,6 +11,7 @@ const { Switch, Route } = ReactRouterDOM;
 import { RedirectAs404 } from 'teamelf/Error'
 import MemberList from 'teamelf/member/MemberList';
 import MemberItem from 'teamelf/member/MemberItem';
+import RoleList from 'teamelf/member/RoleList';
 
 export default class extends React.Component {
   constructor (props) {
@@ -25,6 +26,11 @@ export default class extends React.Component {
         path: '/member/:username',
         exact: true,
         component: MemberItem
+      },
+      {
+        path: '/role',
+        exact: true,
+        component: RoleList
       }
     ];
   }

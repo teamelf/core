@@ -8,7 +8,7 @@
  */
 
 import Page from 'teamelf/layout/Page';
-const { Row, Col, Button, Input } = antd;
+const { Button } = antd;
 import InfoEditor from 'teamelf/components/InfoEditor';
 
 export default class extends Page {

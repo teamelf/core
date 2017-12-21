@@ -35,12 +35,6 @@ class Permission extends AbstractModel
      */
     protected $role;
 
-    /**
-     * @ManyToOne(targetEntity="Member")
-     * @JoinColumn(name="member_id", referencedColumnName="id")
-     */
-    protected $member;
-
     // ----------------------------------------
     // | GETTERS & SETTERS
 
