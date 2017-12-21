@@ -25,7 +25,7 @@ class Mailer extends AbstractModel
     /**
      * @var boolean
      *
-     * @Column(type="boolean", nullable=TRUE)
+     * @Column(name="`default`", type="boolean", nullable=TRUE)
      */
     protected $default;
 
@@ -104,7 +104,7 @@ class Mailer extends AbstractModel
      * @param boolean $default
      * @return $this
      */
-    public function default(boolean $default)
+    public function default(bool $default)
     {
         $this->default = !!$default;
         return $this;

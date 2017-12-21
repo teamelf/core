@@ -27,7 +27,7 @@ class MemberCreateForm extends React.Component {
       gender: this.state.gender,
     };
     axios.post('member', member).then(r => {
-      this.props.afterCreate();
+      this.props.done();
       this.props.form.resetFields();
     });
   }
@@ -121,7 +121,7 @@ export default class extends React.Component {
   }
   closeModal () {
     this.setState({visible: false});
-    this.props.afterCreate();
+    this.props.done();
   }
   render () {
     const MemberCreateFormWrapper = Form.create()(MemberCreateForm);
@@ -141,7 +141,7 @@ export default class extends React.Component {
         >
           <MemberCreateFormWrapper
             loading={this.state.loading}
-            afterCreate={this.closeModal.bind(this)}
+            done={this.closeModal.bind(this)}
           />
         </Modal>
       </span>

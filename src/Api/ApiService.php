@@ -19,7 +19,11 @@ use TeamELF\Api\Controller\Auth\ResetPasswordController;
 use TeamELF\Api\Controller\Config\ConfigListController;
 use TeamELF\Api\Controller\Config\ConfigUpdateController;
 use TeamELF\Api\Controller\Helper\PinyinController;
+use TeamELF\Api\Controller\Mailer\MailerCreateController;
+use TeamELF\Api\Controller\Mailer\MailerDeleteController;
 use TeamELF\Api\Controller\Mailer\MailerListController;
+use TeamELF\Api\Controller\Mailer\MailerSetAsDefaultController;
+use TeamELF\Api\Controller\Mailer\MailerUpdateController;
 use TeamELF\Api\Controller\Member\MemberCreateController;
 use TeamELF\Api\Controller\Member\MemberItemController;
 use TeamELF\Api\Controller\Member\MemberListController;
@@ -93,6 +97,10 @@ class ApiService extends AbstractService
             // --------------------
             ->prefix('/api/mailer')
             ->get('mailer-list', '', MailerListController::class)
+            ->post('mailer-create', '', MailerCreateController::class)
+            ->put('mailer-update', '/{id}', MailerUpdateController::class)
+            ->put('mailer-set-default', '/{id}/default', MailerSetAsDefaultController::class)
+            ->delete('mailer-delete', '/{id}', MailerDeleteController::class)
 
             // set prefix back to empty
             ->prefix('');

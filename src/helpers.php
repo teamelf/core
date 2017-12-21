@@ -52,11 +52,13 @@ if (!function_exists('response')) {
      */
     function response($content = null, $status = 200, array $headers = [])
     {
+        if ($status === 0) {
+            $status = 500;
+        }
         switch (gettype($content)) {
             case 'NULL':
             case 'string':
                 return new \Symfony\Component\HttpFoundation\Response($content, $status, $headers);
-                break;
             default:
                 return new \Symfony\Component\HttpFoundation\JsonResponse($content, $status, $headers);
         }

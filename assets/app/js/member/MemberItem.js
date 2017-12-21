@@ -11,7 +11,7 @@ import Page from 'teamelf/layout/Page';
 const { withRouter } = ReactRouterDOM;
 const { Tag, Divider } = antd;
 import Gender from 'teamelf/components/Gender';
-import MemberInfoEditor from 'teamelf/member/MemberInfoEditor';
+import InfoEditor from 'teamelf/components/InfoEditor';
 
 class MemberItem extends Page {
   constructor (props) {
@@ -45,17 +45,17 @@ class MemberItem extends Page {
           <span> {this.member.name}</span>
         </h2>
         <Divider/>
-        <MemberInfoEditor
+        <InfoEditor
           label="登录名"
           value={this.member.username}
           disabled
         />
-        <MemberInfoEditor
+        <InfoEditor
           label="邮　箱"
           value={this.member.email}
           onEdit={this.edit.bind(this, 'email')}
         />
-        <MemberInfoEditor
+        <InfoEditor
           label="手　机"
           value={this.member.phone}
           onEdit={this.edit.bind(this, 'phone')}

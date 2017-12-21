@@ -53,7 +53,7 @@ export default class extends Page {
       <Row type="flex">
         <Col xs={24} md={{span: 6, order: 2}} align="right">
           <MemberCreatorModal
-            afterCreate={() => this.fetchMemberList()}
+            done={() => this.fetchMemberList()}
           />
         </Col>
         <Col xs={24} md={{span: 18, order: 1}} style={{lineHeight: '32px'}}>

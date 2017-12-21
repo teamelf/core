@@ -8,14 +8,20 @@
  */
 
 import Page from 'teamelf/layout/Page';
-const { Button } = antd;
+const { Row, Col, Button } = antd;
 import MailerCardItem from 'teamelf/mailer/MailerCardItem';
 
 export default class extends Page {
   constructor (props) {
     super(props);
     this.title = '邮箱发信设置';
-    this.description = <Button type="primary">新建发信邮箱</Button>;
+    this.description = (
+      <Button
+        type="primary"
+        icon="mail"
+        onClick={this.createMailer.bind(this)}
+      >新建发信邮箱</Button>
+    );
     this.state = {
       mailers: []
     };
@@ -24,14 +30,29 @@ export default class extends Page {
   fetchEmailAccounts () {
     axios.get('mailer').then(r => {
       this.setState({mailers: r.data});
-      console.log(r);
+    })
+  }
+  createMailer () {
+    axios.post('mailer').then(r => {
+      this.fetchEmailAccounts();
+      antd.notification.success({
+        message: '新建成功',
+        description: '新建发信邮箱成功，请修改配置详情'
+      })
     })
   }
   view () {
     return (
-      <div>
-        {this.state.mailers.map(o => <MailerCardItem {...o}/>)}
-      </div>
+      <Row gutter={16} type="flex">
+        {this.state.mailers.map(o => (
+          <Col xs={24} md={12} lg={8}>
+            <MailerCardItem
+              {...o}
+              done={() => this.fetchEmailAccounts()}
+            />
+          </Col>
+        ))}
+      </Row>
     );
   }
 }
