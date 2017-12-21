@@ -1,9 +1,9 @@
 'use strict';
 
-System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'teamelf/layout/Header', 'teamelf/layout/Footer', 'teamelf/Home', 'teamelf/Member', 'teamelf/Mailer', 'teamelf/Profile'], function (_export, _context) {
+System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'teamelf/layout/Header', 'teamelf/layout/Footer', 'teamelf/Home', 'teamelf/Member', 'teamelf/Config', 'teamelf/Mailer', 'teamelf/Profile'], function (_export, _context) {
   "use strict";
 
-  var RedirectAs404, SideNav, Header, Footer, Home, Member, Mailer, Profile, _createClass, _ReactRouterDOM, Switch, Route, Redirect, _antd, Layout, _class;
+  var RedirectAs404, SideNav, Header, Footer, Home, Member, Config, Mailer, Profile, _createClass, _ReactRouterDOM, Switch, Route, Redirect, _antd, Layout, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -48,6 +48,8 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
       Home = _teamelfHome.default;
     }, function (_teamelfMember) {
       Member = _teamelfMember.default;
+    }, function (_teamelfConfig) {
+      Config = _teamelfConfig.default;
     }, function (_teamelfMailer) {
       Mailer = _teamelfMailer.default;
     }, function (_teamelfProfile) {
@@ -87,7 +89,7 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
 
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-          _this.routes = [{ path: '/home', component: Home }, { path: '/member', component: Member }, { path: '/mailer', component: Mailer }, { path: '/profile', exact: true, component: Profile }];
+          _this.routes = [{ path: '/home', component: Home }, { path: '/member', component: Member }, { path: '/config', component: Config }, { path: '/mailer', component: Mailer }, { path: '/profile', exact: true, component: Profile }];
           // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge
           _this.state = {
             collapsed: localStorage.sideNavCollapsed === 'true'
@@ -142,6 +144,166 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
 
         return _class;
       }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/Config', ['teamelf/layout/Page', 'teamelf/components/InfoEditor'], function (_export, _context) {
+  "use strict";
+
+  var Page, InfoEditor, _extends, _createClass, _antd, Row, Col, Button, Input, _class;
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLayoutPage) {
+      Page = _teamelfLayoutPage.default;
+    }, function (_teamelfComponentsInfoEditor) {
+      InfoEditor = _teamelfComponentsInfoEditor.default;
+    }],
+    execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Row = _antd.Row;
+      Col = _antd.Col;
+      Button = _antd.Button;
+      Input = _antd.Input;
+
+      _class = function (_Page) {
+        _inherits(_class, _Page);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.title = '站点基本设置';
+          _this.description = React.createElement(
+            Button,
+            {
+              type: 'primary',
+              icon: 'reload',
+              onClick: _this.reload.bind(_this)
+            },
+            '\u4FEE\u6539\u7AD9\u70B9\u914D\u7F6E\u987B\u70B9\u6B64\u5237\u65B0\u65B9\u53EF\u751F\u6548'
+          );
+          _this.state = _extends({}, window.config);
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'reload',
+          value: function reload() {
+            window.location.reload();
+          }
+        }, {
+          key: 'edit',
+          value: function edit(key, value) {
+            var _this2 = this;
+
+            return axios.put('config/' + key, { value: value }).then(function (r) {
+              _this2.setState(_defineProperty({}, key, value));
+            });
+          }
+        }, {
+          key: 'view',
+          value: function view() {
+            return React.createElement(
+              'div',
+              null,
+              React.createElement(InfoEditor, {
+                label: '\u56E2\u961F\u540D\u79F0',
+                value: this.state.name,
+                onEdit: this.edit.bind(this, 'name')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u56E2\u961F\u63CF\u8FF0',
+                value: this.state.description,
+                onEdit: this.edit.bind(this, 'description')
+              })
+            );
+          }
+        }]);
+
+        return _class;
+      }(Page);
 
       _export('default', _class);
     }
@@ -789,6 +951,220 @@ System.register('teamelf/main', ['teamelf/App', 'teamelf/Error'], function (_exp
     }
   };
 });
+'use strict';
+
+System.register('teamelf/mailer/MailerCardItem', ['teamelf/components/InfoEditor'], function (_export, _context) {
+  "use strict";
+
+  var InfoEditor, _createClass, _antd, Card, Button, Tag, _class;
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfComponentsInfoEditor) {
+      InfoEditor = _teamelfComponentsInfoEditor.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Button = _antd.Button;
+      Tag = _antd.Tag;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'setAsDefault',
+          value: function setAsDefault() {
+            var _this2 = this;
+
+            axios.put('mailer/' + this.props.id + '/default').then(function (r) {
+              _this2.props.done();
+              antd.notification.success({
+                message: '默认发信邮箱设置成功'
+              });
+            });
+          }
+        }, {
+          key: 'delete',
+          value: function _delete() {
+            var _this3 = this;
+
+            antd.Modal.confirm({
+              title: '不可恢复',
+              content: '确定要删除么？该操作可能无法恢复',
+              onOk: function onOk() {
+                axios.delete('mailer/' + _this3.props.id).then(function (r) {
+                  _this3.props.done();
+                  antd.notification.success({
+                    message: '删除成功'
+                  });
+                });
+              }
+            });
+          }
+        }, {
+          key: 'edit',
+          value: function edit(key, value) {
+            var _this4 = this;
+
+            return axios.put('mailer/' + this.props.id, _defineProperty({}, key, value)).then(function (r) {
+              _this4.props.done();
+              return r;
+            });
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                style: { marginBottom: 20 },
+                title: this.props.sender,
+                extra: this.props.default && React.createElement(
+                  Tag,
+                  { color: 'red' },
+                  '\u9ED8\u8BA4'
+                ),
+                actions: [React.createElement(
+                  Button,
+                  {
+                    ghost: true, type: 'primary',
+                    disabled: this.props.default,
+                    onClick: this.setAsDefault.bind(this)
+                  },
+                  '\u8BBE\u4E3A\u9ED8\u8BA4'
+                ), React.createElement(
+                  Button,
+                  {
+                    type: 'danger',
+                    onClick: this.delete.bind(this)
+                  },
+                  '\u5220\u9664'
+                )]
+              },
+              React.createElement(InfoEditor, {
+                label: '\u9A71\u52A8',
+                value: this.props.driver,
+                onEdit: this.edit.bind(this, 'driver'),
+                type: 'radio',
+                options: [{ label: 'SMTP', value: 'smtp' }, { label: 'POP3', value: 'pop3' }, { label: 'IMAP', value: 'imap' }]
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u4E3B\u673A',
+                value: this.props.host,
+                onEdit: this.edit.bind(this, 'host')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u7AEF\u53E3',
+                value: this.props.port,
+                onEdit: this.edit.bind(this, 'port')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u52A0\u5BC6\u65B9\u5F0F',
+                value: this.props.encryption,
+                onEdit: this.edit.bind(this, 'encryption'),
+                type: 'radio',
+                options: [{ label: 'SSL', value: 'ssl' }, { label: 'TLS', value: 'tls' }, { label: '不加密', value: '' }]
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u767B\u5F55\u540D',
+                value: this.props.username,
+                onEdit: this.edit.bind(this, 'username')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u5BC6\u7801',
+                value: this.props.password,
+                onEdit: this.edit.bind(this, 'password')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u53D1\u4FE1\u90AE\u7BB1',
+                value: this.props.sender,
+                onEdit: this.edit.bind(this, 'sender')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u5907\u6CE8',
+                value: this.props.remark,
+                onEdit: this.edit.bind(this, 'remark')
+              })
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
 "use strict";
 
 System.register("teamelf/components/Gender", [], function (_export, _context) {
@@ -1000,16 +1376,31 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
             );
           }
         }, {
+          key: 'renderTextArea',
+          value: function renderTextArea() {
+            var _this4 = this;
+
+            return React.createElement(Input.TextArea, {
+              autosize: { minRows: 2, maxRows: 6 },
+              style: { width: 'auto', resize: 'horizontal' },
+              value: this.state.value,
+              onChange: function onChange(e) {
+                return _this4.setState({ value: e.target.value });
+              },
+              onPressEnter: this.submitChange.bind(this)
+            });
+          }
+        }, {
           key: 'renderInput',
           value: function renderInput() {
-            var _this4 = this;
+            var _this5 = this;
 
             return React.createElement(Input, {
               type: this.props.type || 'text',
               style: { width: 'auto' },
               value: this.state.value,
               onChange: function onChange(e) {
-                return _this4.setState({ value: e.target.value });
+                return _this5.setState({ value: e.target.value });
               },
               onPressEnter: this.submitChange.bind(this)
             });
@@ -1020,6 +1411,8 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
             switch (this.props.type) {
               case 'radio':
                 return this.renderRadioGroup();
+              case 'textarea':
+                return this.renderTextArea();
               case 'text':
               case 'password':
               default:
@@ -1039,7 +1432,7 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
               ),
               !this.state.editor && React.createElement(
                 'div',
-                { style: { display: 'inline-block' } },
+                { style: { display: 'inline' } },
                 this.props.value || React.createElement(
                   'span',
                   { style: { color: '#ddd' } },
@@ -1055,479 +1448,6 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
                   onClick: this.toggleEditor.bind(this) })
               ),
               this.state.editor && this.renderEditor()
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/mailer/MailerCardItem', ['teamelf/components/InfoEditor'], function (_export, _context) {
-  "use strict";
-
-  var InfoEditor, _createClass, _antd, Card, Button, Tag, _class;
-
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfComponentsInfoEditor) {
-      InfoEditor = _teamelfComponentsInfoEditor.default;
-    }],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Card = _antd.Card;
-      Button = _antd.Button;
-      Tag = _antd.Tag;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class() {
-          _classCallCheck(this, _class);
-
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-        }
-
-        _createClass(_class, [{
-          key: 'setAsDefault',
-          value: function setAsDefault() {
-            var _this2 = this;
-
-            axios.put('/mailer/' + this.props.id + '/default').then(function (r) {
-              _this2.props.done();
-              antd.notification.success({
-                message: '默认发信邮箱设置成功'
-              });
-            });
-          }
-        }, {
-          key: 'delete',
-          value: function _delete() {
-            var _this3 = this;
-
-            antd.Modal.confirm({
-              title: '不可恢复',
-              content: '确定要删除么？该操作可能无法恢复',
-              onOk: function onOk() {
-                axios.delete('/mailer/' + _this3.props.id).then(function (r) {
-                  _this3.props.done();
-                  antd.notification.success({
-                    message: '删除成功'
-                  });
-                });
-              }
-            });
-          }
-        }, {
-          key: 'edit',
-          value: function edit(key, value) {
-            var _this4 = this;
-
-            return axios.put('/mailer/' + this.props.id, _defineProperty({}, key, value)).then(function (r) {
-              _this4.props.done();
-              return r;
-            });
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              Card,
-              {
-                style: { marginBottom: 20 },
-                title: this.props.sender,
-                extra: this.props.default && React.createElement(
-                  Tag,
-                  { color: 'red' },
-                  '\u9ED8\u8BA4'
-                ),
-                actions: [React.createElement(
-                  Button,
-                  {
-                    ghost: true, type: 'primary',
-                    disabled: this.props.default,
-                    onClick: this.setAsDefault.bind(this)
-                  },
-                  '\u8BBE\u4E3A\u9ED8\u8BA4'
-                ), React.createElement(
-                  Button,
-                  {
-                    type: 'danger',
-                    onClick: this.delete.bind(this)
-                  },
-                  '\u5220\u9664'
-                )]
-              },
-              React.createElement(InfoEditor, {
-                label: '\u9A71\u52A8',
-                value: this.props.driver,
-                onEdit: this.edit.bind(this, 'driver'),
-                type: 'radio',
-                options: [{ label: 'SMTP', value: 'smtp' }, { label: 'POP3', value: 'pop3' }, { label: 'IMAP', value: 'imap' }]
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u4E3B\u673A',
-                value: this.props.host,
-                onEdit: this.edit.bind(this, 'host')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u7AEF\u53E3',
-                value: this.props.port,
-                onEdit: this.edit.bind(this, 'port')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u52A0\u5BC6\u65B9\u5F0F',
-                value: this.props.encryption,
-                onEdit: this.edit.bind(this, 'encryption'),
-                type: 'radio',
-                options: [{ label: 'SSL', value: 'ssl' }, { label: 'TLS', value: 'tls' }, { label: '不加密', value: '' }]
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u767B\u5F55\u540D',
-                value: this.props.username,
-                onEdit: this.edit.bind(this, 'username')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u5BC6\u7801',
-                value: this.props.password,
-                onEdit: this.edit.bind(this, 'password')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u53D1\u4FE1\u90AE\u7BB1',
-                value: this.props.sender,
-                onEdit: this.edit.bind(this, 'sender')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u5907\u6CE8',
-                value: this.props.remark,
-                onEdit: this.edit.bind(this, 'remark')
-              })
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/mailer/MailerEditorModal', [], function (_export, _context) {
-  "use strict";
-
-  var _extends, _createClass, _antd, Button, Modal, Form, Input, Radio, MailerForm, _class;
-
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _extends = Object.assign || function (target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
-          }
-        }
-
-        return target;
-      };
-
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Button = _antd.Button;
-      Modal = _antd.Modal;
-      Form = _antd.Form;
-      Input = _antd.Input;
-      Radio = _antd.Radio;
-
-      MailerForm = function (_React$Component) {
-        _inherits(MailerForm, _React$Component);
-
-        function MailerForm(props) {
-          _classCallCheck(this, MailerForm);
-
-          var _this = _possibleConstructorReturn(this, (MailerForm.__proto__ || Object.getPrototypeOf(MailerForm)).call(this, props));
-
-          _this.state = _extends({
-            driver: 'smtp',
-            host: '',
-            port: 0,
-            encryption: '',
-            username: '',
-            password: '',
-            sender: '',
-            remark: ''
-          }, _this.props);
-          console.log(_this.state);
-          return _this;
-        }
-
-        _createClass(MailerForm, [{
-          key: 'render',
-          value: function render() {
-            var _this2 = this;
-
-            var getFieldDecorator = this.props.form.getFieldDecorator;
-
-            var formItemLayout = {
-              labelCol: {
-                xs: { span: 24 },
-                sm: { span: 6 }
-              },
-              wrapperCol: {
-                xs: { span: 24 },
-                sm: { span: 18 }
-              }
-            };
-            var formItems = [{ label: '主机', key: 'host' }, { label: '端口', key: 'port' }, { label: '加密方式', key: 'encryption' }, { label: '登录名', key: 'username' }, { label: '密码', key: 'password' }, { label: '发信地址', key: 'sender' }, { label: '备注', key: 'remark' }];
-            return React.createElement(
-              Form,
-              null,
-              React.createElement(
-                Form.Item,
-                _extends({}, formItemLayout, { label: '\u9A71\u52A8' }),
-                React.createElement(
-                  Radio.Group,
-                  null,
-                  React.createElement(
-                    Radio,
-                    { value: 'smtp' },
-                    'SMTP'
-                  ),
-                  React.createElement(
-                    Radio,
-                    { value: 'pop3' },
-                    'POP3'
-                  ),
-                  React.createElement(
-                    Radio,
-                    { value: 'imap' },
-                    'IMAP'
-                  )
-                )
-              ),
-              formItems.map(function (o) {
-                return React.createElement(
-                  Form.Item,
-                  _extends({}, formItemLayout, { label: o.label }),
-                  JSON.stringify(o),
-                  ', ',
-                  _this2.state[o.key],
-                  getFieldDecorator(o.key, {
-                    rules: [{
-                      required: true, message: '请输入' + o.label
-                    }]
-                  })(React.createElement(Input, {
-                    size: 'large',
-                    value: _this2.state[o.key],
-                    onChange: function onChange(e) {
-                      return _this2.setState(_defineProperty({}, o.key, e.target.value));
-                    },
-                    disabled: _this2.props.loading
-                  }))
-                );
-              })
-            );
-          }
-        }]);
-
-        return MailerForm;
-      }(React.Component);
-
-      _class = function (_React$Component2) {
-        _inherits(_class, _React$Component2);
-
-        function _class(props) {
-          _classCallCheck(this, _class);
-
-          var _this3 = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-          _this3.state = {
-            visible: false
-          };
-          return _this3;
-        }
-
-        _createClass(_class, [{
-          key: 'getTitle',
-          value: function getTitle() {
-            if (this.props.new) {
-              return '新建发信邮箱';
-            } else {
-              return '编辑发信邮箱设置';
-            }
-          }
-        }, {
-          key: 'closeModal',
-          value: function closeModal() {
-            this.setState({ visible: false });
-            this.props.done();
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            var _this4 = this;
-
-            var MailerFormWrapper = Form.create()(MailerForm);
-            return React.createElement(
-              'span',
-              null,
-              React.createElement(
-                Button,
-                {
-                  type: 'primary',
-                  icon: 'user-add',
-                  onClick: function onClick() {
-                    return _this4.setState({ visible: true });
-                  }
-                },
-                this.getTitle()
-              ),
-              React.createElement(
-                Modal,
-                {
-                  title: this.getTitle(),
-                  maskClosable: false,
-                  visible: this.state.visible,
-                  footer: null,
-                  onCancel: this.closeModal.bind(this)
-                },
-                React.createElement(MailerFormWrapper, this.props)
-              )
             );
           }
         }]);

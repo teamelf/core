@@ -49,6 +49,17 @@ export default class extends React.Component {
       </Radio.Group>
     );
   }
+  renderTextArea () {
+    return (
+      <Input.TextArea
+        autosize={{minRows: 2,maxRows: 6}}
+        style={{width: 'auto', resize: 'horizontal'}}
+        value={this.state.value}
+        onChange={e => this.setState({value: e.target.value})}
+        onPressEnter={this.submitChange.bind(this)}
+      />
+    );
+  }
   renderInput () {
     return (
       <Input
@@ -64,10 +75,12 @@ export default class extends React.Component {
     switch (this.props.type) {
       case 'radio':
         return this.renderRadioGroup();
+      case 'textarea':
+        return this.renderTextArea();
       case 'text':
       case 'password':
       default:
-        return this.renderInput()
+        return this.renderInput();
     }
   }
   render () {
@@ -76,7 +89,7 @@ export default class extends React.Component {
         <h3 style={{display: 'inline-block', marginRight: 20}}>{this.props.label}</h3>
 
         {!this.state.editor && (
-          <div style={{display: 'inline-block'}}>
+          <div style={{display: 'inline'}}>
             {this.props.value || <span style={{color: '#ddd'}}>&lt;无&gt;</span>}
           </div>
         )}

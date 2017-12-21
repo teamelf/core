@@ -15,6 +15,7 @@ import Header from 'teamelf/layout/Header'
 import Footer from 'teamelf/layout/Footer'
 import Home from 'teamelf/Home';
 import Member from 'teamelf/Member';
+import Config from 'teamelf/Config';
 import Mailer from 'teamelf/Mailer';
 import Profile from 'teamelf/Profile';
 
@@ -24,6 +25,7 @@ export default class extends React.Component {
     this.routes = [
       {path: '/home', component: Home},
       {path: '/member', component: Member},
+      {path: '/config', component: Config},
       {path: '/mailer', component: Mailer},
       {path: '/profile', exact: true, component: Profile}
     ];

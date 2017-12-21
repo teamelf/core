@@ -12,7 +12,7 @@ import InfoEditor from 'teamelf/components/InfoEditor';
 
 export default class extends React.Component {
   setAsDefault () {
-    axios.put(`/mailer/${this.props.id}/default`).then(r => {
+    axios.put(`mailer/${this.props.id}/default`).then(r => {
       this.props.done();
       antd.notification.success({
         message: '默认发信邮箱设置成功'
@@ -24,7 +24,7 @@ export default class extends React.Component {
       title: '不可恢复',
       content: '确定要删除么？该操作可能无法恢复',
       onOk: () => {
-        axios.delete('/mailer/' + this.props.id).then(r => {
+        axios.delete('mailer/' + this.props.id).then(r => {
           this.props.done();
           antd.notification.success({
             message: '删除成功'
@@ -34,7 +34,7 @@ export default class extends React.Component {
     });
   }
   edit (key, value) {
-    return axios.put('/mailer/' + this.props.id, {[key]: value}).then(r => {
+    return axios.put('mailer/' + this.props.id, {[key]: value}).then(r => {
       this.props.done();
       return r;
     });
