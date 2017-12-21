@@ -23,6 +23,7 @@ use TeamELF\Api\Controller\Mailer\MailerCreateController;
 use TeamELF\Api\Controller\Mailer\MailerDeleteController;
 use TeamELF\Api\Controller\Mailer\MailerListController;
 use TeamELF\Api\Controller\Mailer\MailerSetAsDefaultController;
+use TeamELF\Api\Controller\Mailer\MailerTestController;
 use TeamELF\Api\Controller\Mailer\MailerUpdateController;
 use TeamELF\Api\Controller\Member\MemberCreateController;
 use TeamELF\Api\Controller\Member\MemberItemController;
@@ -101,6 +102,7 @@ class ApiService extends AbstractService
             ->put('mailer-update', '/{id}', MailerUpdateController::class)
             ->put('mailer-set-default', '/{id}/default', MailerSetAsDefaultController::class)
             ->delete('mailer-delete', '/{id}', MailerDeleteController::class)
+            ->post('mailer-test', '/{id}/test', MailerTestController::class)
 
             // set prefix back to empty
             ->prefix('');

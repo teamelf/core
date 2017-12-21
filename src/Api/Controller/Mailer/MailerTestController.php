@@ -12,12 +12,11 @@
 namespace TeamELF\Api\Controller\Mailer;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use TeamELF\Core\Mailer;
 use TeamELF\Exception\HttpForbiddenException;
 use TeamELF\Http\AbstractController;
 
-class MailerCreateController extends AbstractController
+class MailerTestController extends AbstractController
 {
     /**
      * handle the request
@@ -27,19 +26,13 @@ class MailerCreateController extends AbstractController
      */
     public function handler(): Response
     {
-        $mailer = new Mailer([
-            'driver' => 'smtp',
-            'host' => 'host',
-            'port' => 0,
-            'encryption' => '',
-            'username' => 'username',
-            'password' => 'password',
-            'sender' => 'sender',
-            'remark' => ''
-        ]);
-        $mailer->save();
+        $mailer = Mailer::find($this->getParameter('id'));
+        if (!$mailer) {
+            throw new HttpForbiddenException();
+        }
+        $m = new \TeamELF\Mailer\Mailer($mailer);
         return response([
-            'id' => $mailer->getId()
+            'connection' => $m->test()
         ]);
     }
 }

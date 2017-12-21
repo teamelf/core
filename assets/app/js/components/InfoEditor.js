@@ -72,7 +72,7 @@ export default class extends React.Component {
     );
   }
   renderEditor () {
-    switch (this.props.type.toLowerCase()) {
+    switch (this.props.type) {
       case 'radio':
         return this.renderRadioGroup();
       case 'textarea':

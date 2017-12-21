@@ -17,6 +17,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 use TeamELF\Core\Member;
 use TeamELF\Core\PasswordResetToken;
 use TeamELF\Http\AbstractController;
+use TeamELF\Mailer\Mailer;
 
 class ForgetPasswordController extends AbstractController
 {
@@ -34,14 +35,18 @@ class ForgetPasswordController extends AbstractController
             ]
         ], false);
         if (count($data) > 0) {
-            var_dump('email checked');
             $member = Member::findBy($data);
             if ($member) {
-                var_dump('member checked');
-                $token = new PasswordResetToken();
-                $token->member($member)
+                $token = (new PasswordResetToken())
+                    ->member($member)
                     ->save();
-                // TODO: send token [$token->getId()] to email [$member->getEmail()]
+                $sender = Mailer::createWithDefaultMailer();
+                $sender->send(
+                    $member->getEmail(),
+                    'Reset Password',
+                    'Your token ' . $token->getId()
+                );
+                // TODO: use html template
             }
         }
         return response();

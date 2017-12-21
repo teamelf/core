@@ -1393,7 +1393,7 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
         }, {
           key: 'renderEditor',
           value: function renderEditor() {
-            switch (this.props.type.toLowerCase()) {
+            switch (this.props.type) {
               case 'radio':
                 return this.renderRadioGroup();
               case 'textarea':
@@ -2421,10 +2421,37 @@ System.register('teamelf/mailer/MailerCardItem', ['teamelf/components/InfoEditor
       _class = function (_React$Component) {
         _inherits(_class, _React$Component);
 
-        function _class() {
+        function _class(props) {
           _classCallCheck(this, _class);
 
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.testBtnStatus = {
+            default: {
+              loading: false,
+              type: '',
+              text: '测试连接'
+            },
+            testing: {
+              loading: true,
+              type: 'dashed',
+              text: '测试中'
+            },
+            success: {
+              loading: false,
+              type: 'primary',
+              text: '连接成功'
+            },
+            error: {
+              loading: false,
+              type: 'danger',
+              text: '连接失败，再试一次？'
+            }
+          };
+          _this.state = {
+            status: 'default'
+          };
+          return _this;
         }
 
         _createClass(_class, [{
@@ -2468,6 +2495,20 @@ System.register('teamelf/mailer/MailerCardItem', ['teamelf/components/InfoEditor
             });
           }
         }, {
+          key: 'testConnection',
+          value: function testConnection() {
+            var _this5 = this;
+
+            this.setState({ status: 'testing' });
+            axios.post('mailer/' + this.props.id + '/test').then(function (r) {
+              if (r.data.connection === true) {
+                _this5.setState({ status: 'success' });
+              } else {
+                _this5.setState({ status: 'error' });
+              }
+            });
+          }
+        }, {
           key: 'render',
           value: function render() {
             return React.createElement(
@@ -2502,7 +2543,7 @@ System.register('teamelf/mailer/MailerCardItem', ['teamelf/components/InfoEditor
                 value: this.props.driver,
                 onEdit: this.edit.bind(this, 'driver'),
                 type: 'radio',
-                options: [{ label: 'SMTP', value: 'smtp' }, { label: 'POP3', value: 'pop3' }, { label: 'IMAP', value: 'imap' }]
+                options: [{ label: 'SMTP', value: 'smtp' }]
               }),
               React.createElement(InfoEditor, {
                 label: '\u4E3B\u673A',
@@ -2540,7 +2581,17 @@ System.register('teamelf/mailer/MailerCardItem', ['teamelf/components/InfoEditor
                 label: '\u5907\u6CE8',
                 value: this.props.remark,
                 onEdit: this.edit.bind(this, 'remark')
-              })
+              }),
+              React.createElement(
+                Button,
+                {
+                  className: 'full',
+                  loading: this.testBtnStatus[this.state.status].loading,
+                  type: this.testBtnStatus[this.state.status].type,
+                  onClick: this.testConnection.bind(this)
+                },
+                this.testBtnStatus[this.state.status].text
+              )
             );
           }
         }]);

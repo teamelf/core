@@ -11,6 +11,34 @@ const { Card, Button, Tag } = antd;
 import InfoEditor from 'teamelf/components/InfoEditor';
 
 export default class extends React.Component {
+  constructor (props) {
+    super(props);
+    this.testBtnStatus = {
+      default: {
+        loading: false,
+        type: '',
+        text: '测试连接',
+      },
+      testing: {
+        loading: true,
+        type: 'dashed',
+        text: '测试中',
+      },
+      success: {
+        loading: false,
+        type: 'primary',
+        text: '连接成功',
+      },
+      error: {
+        loading: false,
+        type: 'danger',
+        text: '连接失败，再试一次？',
+      }
+    };
+    this.state = {
+      status: 'default'
+    };
+  }
   setAsDefault () {
     axios.put(`mailer/${this.props.id}/default`).then(r => {
       this.props.done();
@@ -39,6 +67,16 @@ export default class extends React.Component {
       return r;
     });
   }
+  testConnection () {
+    this.setState({status: 'testing'});
+    axios.post(`mailer/${this.props.id}/test`).then(r => {
+      if (r.data.connection === true) {
+        this.setState({status: 'success'});
+      } else {
+        this.setState({status: 'error'});
+      }
+    });
+  }
   render () {
     return (
       <Card
@@ -64,8 +102,8 @@ export default class extends React.Component {
           type="radio"
           options={[
             {label: 'SMTP', value: 'smtp'},
-            {label: 'POP3', value: 'pop3'},
-            {label: 'IMAP', value: 'imap'}
+            // {label: 'POP3', value: 'pop3'},
+            // {label: 'IMAP', value: 'imap'}
           ]}
         />
         <InfoEditor
@@ -109,6 +147,12 @@ export default class extends React.Component {
           value={this.props.remark}
           onEdit={this.edit.bind(this, 'remark')}
         />
+        <Button
+          className="full"
+          loading={this.testBtnStatus[this.state.status].loading}
+          type={this.testBtnStatus[this.state.status].type}
+          onClick={this.testConnection.bind(this)}
+        >{this.testBtnStatus[this.state.status].text}</Button>
       </Card>
     );
   }

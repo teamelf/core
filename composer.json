@@ -37,7 +37,8 @@
     "symfony/validator": "^4.0",
     "twig/twig": "^2.4",
     "doctrine/migrations": "^1.6",
-    "overtrue/pinyin": "~3.0"
+    "overtrue/pinyin": "~3.0",
+    "swiftmailer/swiftmailer": "^6.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^6.5",
