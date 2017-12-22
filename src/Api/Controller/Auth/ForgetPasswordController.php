@@ -42,10 +42,10 @@ class ForgetPasswordController extends AbstractController
                     ->save();
                 Mailer::createWithDefaultMailer()
                     ->subject('重置密码')
-                    ->view(
-                        'mail/password-reset.twig',
-                        ['token' => $token->getId()]
-                    )->send($member->getEmail());
+                    ->view('mail/password-reset.twig', [
+                        'token' => $token->getId(),
+                        'email' => $member->getEmail()
+                    ])->send($member->getEmail());
             } else {
                 sleep(1); // avoid judging status through time used
             }
