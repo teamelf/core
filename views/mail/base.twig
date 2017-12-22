@@ -10,13 +10,17 @@
   {% endblock %}
 
   <div style="margin: 100px 0">
-    {% block body %}
-    {% endblock %}
+    <div style="max-width: 500px; margin: 0 auto;">
+      {% block body %}
+      {% endblock %}
+    </div>
   </div>
 
+  <div style="max-width: 500px; margin: 0 auto;">
   {% block footer %}
     <div align="right">{{ config.name }}</div>
     <div align="right">{{ 'now' | date('Y-m-d') }}</div>
   {% endblock %}
+  </div>
   <div style="margin-top: 50px; color: #aaa; font-size: .9em; text-align: center;">该邮件为系统发送，请不要直接回复</div>
 </div>
