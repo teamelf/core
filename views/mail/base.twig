@@ -1,9 +1,9 @@
-<div style="padding: 50px; background: url({{ baseUrl }}/static/bg.png) center center / cover no-repeat;">
+<div style="padding: 50px; background: url({{ embedBg }}) center center / cover no-repeat;">
   {% block header %}
     <div align="center">
       <img
         height="100px" width="100px"
-        src="{{ baseUrl }}{{ config.logo }}"
+        src="{{ embedLogo }}"
       />
     </div>
     <h2 align="center">{{ config.name }}</h2>
