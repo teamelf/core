@@ -631,13 +631,22 @@ System.register('teamelf/Mailer', ['teamelf/layout/Page', 'teamelf/mailer/Mailer
 
           _this.title = '邮箱发信设置';
           _this.description = React.createElement(
-            Button,
-            {
-              type: 'primary',
-              icon: 'mail',
-              onClick: _this.createMailer.bind(_this)
-            },
-            '\u65B0\u5EFA\u53D1\u4FE1\u90AE\u7BB1'
+            'div',
+            null,
+            React.createElement(
+              'p',
+              null,
+              '\u9ED8\u8BA4\u53D1\u4FE1\u90AE\u7BB1\u5C06\u4F5C\u4E3A\u91CD\u8BBE\u5BC6\u7801\u3001\u7AD9\u5185\u6D88\u606F\u7B49\u53D1\u9001\u90AE\u7BB1'
+            ),
+            React.createElement(
+              Button,
+              {
+                type: 'primary',
+                icon: 'mail',
+                onClick: _this.createMailer.bind(_this)
+              },
+              '\u65B0\u5EFA\u53D1\u4FE1\u90AE\u7BB1'
+            )
           );
           _this.state = {
             mailers: []

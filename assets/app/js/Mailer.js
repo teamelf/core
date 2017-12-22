@@ -16,11 +16,14 @@ export default class extends Page {
     super(props);
     this.title = '邮箱发信设置';
     this.description = (
-      <Button
-        type="primary"
-        icon="mail"
-        onClick={this.createMailer.bind(this)}
-      >新建发信邮箱</Button>
+      <div>
+        <p>默认发信邮箱将作为重设密码、站内消息等发送邮箱</p>
+        <Button
+          type="primary"
+          icon="mail"
+          onClick={this.createMailer.bind(this)}
+        >新建发信邮箱</Button>
+      </div>
     );
     this.state = {
       mailers: []
