@@ -2747,7 +2747,7 @@ System.register('teamelf/member/MemberCardItem', ['teamelf/components/Gender'], 
 System.register('teamelf/member/MemberCreatorModal', [], function (_export, _context) {
   "use strict";
 
-  var _createClass, _antd, Modal, Button, Form, Input, Radio, MemberCreateForm, _class;
+  var _createClass, _antd, Modal, Button, Form, Input, Radio, Checkbox, MemberCreateForm, _class;
 
   function _toArray(arr) {
     return Array.isArray(arr) ? arr : Array.from(arr);
@@ -2810,6 +2810,7 @@ System.register('teamelf/member/MemberCreatorModal', [], function (_export, _con
       Form = _antd.Form;
       Input = _antd.Input;
       Radio = _antd.Radio;
+      Checkbox = _antd.Checkbox;
 
       MemberCreateForm = function (_React$Component) {
         _inherits(MemberCreateForm, _React$Component);
@@ -2820,10 +2821,12 @@ System.register('teamelf/member/MemberCreatorModal', [], function (_export, _con
           var _this = _possibleConstructorReturn(this, (MemberCreateForm.__proto__ || Object.getPrototypeOf(MemberCreateForm)).call(this, props));
 
           _this.state = {
+            loading: false,
             username: '',
             email: '',
             name: '',
-            gender: 0
+            gender: 0,
+            activate: false
           };
           return _this;
         }
@@ -2837,11 +2840,16 @@ System.register('teamelf/member/MemberCreatorModal', [], function (_export, _con
               username: this.state.username,
               email: this.state.email,
               name: this.state.name,
-              gender: this.state.gender
+              gender: this.state.gender,
+              activate: this.state.activate || false
             };
+            this.setState({ loading: true });
             axios.post('member', member).then(function (r) {
+              _this2.setState({ loading: false });
               _this2.props.done();
               _this2.props.form.resetFields();
+            }).catch(function (e) {
+              _this2.setState({ loading: false });
             });
           }
         }, {
@@ -2949,11 +2957,26 @@ System.register('teamelf/member/MemberCreatorModal', [], function (_export, _con
                 Form.Item,
                 null,
                 React.createElement(
+                  Checkbox,
+                  {
+                    value: this.state.activate,
+                    onChange: function onChange(e) {
+                      return _this4.setState({ activate: e.target.checked });
+                    }
+                  },
+                  '\u53D1\u9001\u6FC0\u6D3B\u90AE\u4EF6'
+                )
+              ),
+              React.createElement(
+                Form.Item,
+                null,
+                React.createElement(
                   Button,
                   {
                     className: 'full',
                     type: 'primary', size: 'large',
-                    onClick: this.submitForm.bind(this)
+                    onClick: this.submitForm.bind(this),
+                    loading: this.state.loading
                   },
                   '\u521B\u65B0\u65B0\u6210\u5458'
                 )

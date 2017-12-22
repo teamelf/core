@@ -140,7 +140,6 @@ class Mailer
     public function send($to)
     {
         $this->message->setTo($to);
-        var_dump($this->message->toString());
         return !!$this->driver->send($this->message);
     }
 }

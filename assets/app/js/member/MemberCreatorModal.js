@@ -7,16 +7,18 @@
  * file that was distributed with this source code.
  */
 
-const { Modal, Button, Form, Input, Radio } = antd;
+const { Modal, Button, Form, Input, Radio, Checkbox } = antd;
 
 class MemberCreateForm extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
+      loading: false,
       username: '',
       email: '',
       name: '',
-      gender: 0
+      gender: 0,
+      activate: false
     };
   }
   submitForm () {
@@ -25,11 +27,16 @@ class MemberCreateForm extends React.Component {
       email: this.state.email,
       name: this.state.name,
       gender: this.state.gender,
+      activate: this.state.activate || false
     };
+    this.setState({loading: true});
     axios.post('member', member).then(r => {
+      this.setState({loading: false});
       this.props.done();
       this.props.form.resetFields();
-    });
+    }).catch(e => {
+      this.setState({loading: false});
+    })
   }
   getUsernameByName () {
     let params = {chinese: this.state.name};
@@ -100,10 +107,17 @@ class MemberCreateForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
+          <Checkbox
+            value={this.state.activate}
+            onChange={e => this.setState({activate: e.target.checked})}
+          >发送激活邮件</Checkbox>
+        </Form.Item>
+        <Form.Item>
           <Button
             className="full"
             type="primary" size="large"
             onClick={this.submitForm.bind(this)}
+            loading={this.state.loading}
           >创新新成员</Button>
         </Form.Item>
       </Form>
