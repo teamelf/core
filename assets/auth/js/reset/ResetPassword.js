@@ -19,18 +19,62 @@ export default class extends SimpleLayout {
       password: '',
       passwordConfirmation: '',
       loading: false,
-      sending: false,
+      status: 'default',
+      retry: 0
     };
+  }
+  getSendButtonLoading () {
+    return this.state.status === 'sending';
+  }
+  getSendButtonDisabled () {
+    return this.state.status === 'success'
+      || this.state.status === 'error';
+  }
+  getSendButtonType () {
+    if (this.state.status === 'error') {
+      return 'danger';
+    } else {
+      return 'primary';
+    }
+  }
+  getSendButtonText () {
+    switch (this.state.status) {
+      case 'success':
+      case 'error':
+        return this.state.retry + '秒后重试';
+      case 'sending':
+        return '发送中';
+      case 'default':
+      default:
+        return '发送验证码';
+    }
+  }
+  retryAfter (seconds) {
+    const timer = setInterval(() => {
+      if (seconds === 0) {
+        clearInterval(timer);
+        this.setState({status: 'default', retry: seconds});
+      } else {
+        seconds -= 1;
+        this.setState({retry: seconds});
+      }
+    }, 1000);
   }
   sendResetToken () {
     let user = {
       email: this.state.email || ''
     };
-    this.setState({sending: true});
+    this.setState({status: 'sending'});
     axios.post('/auth/forget', user).then(r => {
-      this.setState({sending: false});
+      this.setState({status: 'success', retry: 60});
+      this.retryAfter(60);
     }).catch(e => {
-      this.setState({sending: false});
+      if (e.response.status === 422) {
+        this.setState({status: 'default'});
+      } else {
+        this.setState({status: 'error', retry: 20});
+        this.retryAfter(20);
+      }
     })
   }
   handleSubmit (e) {
@@ -69,10 +113,11 @@ export default class extends SimpleLayout {
         <Form.Item>
           <Button
             style={{float: 'right', width: 120}}
-            size="large" type="primary"
+            size="large" type={this.getSendButtonType()}
             onClick={this.sendResetToken.bind(this)}
-            loading={this.state.sending}
-          >发送验证码</Button>
+            loading={this.getSendButtonLoading()}
+            disabled={this.getSendButtonDisabled()}
+          >{this.getSendButtonText()}</Button>
           <Input
             style={{float: 'left', width: 'calc(100% - 130px)'}}
             size="large" placeholder="验证码"

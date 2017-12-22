@@ -1,169 +1,5 @@
 'use strict';
 
-System.register('teamelf/auth/forget/ForgetPassword', ['teamelf/common/SimpleLayout'], function (_export, _context) {
-  "use strict";
-
-  var SimpleLayout, _createClass, _antd, Form, Button, Input, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfCommonSimpleLayout) {
-      SimpleLayout = _teamelfCommonSimpleLayout.default;
-    }],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Form = _antd.Form;
-      Button = _antd.Button;
-      Input = _antd.Input;
-
-      _class = function (_SimpleLayout) {
-        _inherits(_class, _SimpleLayout);
-
-        function _class(props) {
-          _classCallCheck(this, _class);
-
-          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-          _this.state = {
-            email: '',
-            loading: false
-          };
-          return _this;
-        }
-
-        _createClass(_class, [{
-          key: 'handleSubmit',
-          value: function handleSubmit(e) {
-            var _this2 = this;
-
-            e.preventDefault();
-            var user = {
-              email: this.state.email || ''
-            };
-            this.setState({ loading: true });
-            axios.post('/auth/forget', user).then(function (r) {
-              window.location.href = '/r' + '?type=success' + '&message=' + encodeURIComponent('\u5982\u679C\u8BE5\u8D26\u6237\u5B58\u5728\uFF0C\u5BC6\u7801\u91CD\u7F6E\u90AE\u4EF6\u5C06\u53D1\u9001\u5230\u90AE\u7BB1<br/>' + user.email + '<br/>\u8BF7\u6CE8\u610F\u67E5\u6536\u90AE\u4EF6');
-            }).catch(function (e) {
-              _this2.setState({ loading: false });
-            });
-          }
-        }, {
-          key: 'view',
-          value: function view() {
-            var _this3 = this;
-
-            return React.createElement(
-              Form,
-              {
-                style: { marginTop: 50 },
-                onSubmit: this.handleSubmit.bind(this)
-              },
-              React.createElement(
-                Form.Item,
-                null,
-                React.createElement(Input, {
-                  size: 'large', placeholder: '\u90AE\u7BB1',
-                  value: this.state.email,
-                  onChange: function onChange(e) {
-                    return _this3.setState({ email: e.target.value });
-                  },
-                  disabled: this.state.loading
-                })
-              ),
-              React.createElement(
-                Form.Item,
-                null,
-                React.createElement(
-                  Button,
-                  {
-                    htmlType: 'submit',
-                    className: 'full',
-                    type: 'primary', size: 'large',
-                    loading: this.state.loading,
-                    icon: 'question'
-                  },
-                  '\u5FD8\u8BB0\u5BC6\u7801'
-                )
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(SimpleLayout);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/auth/forget/main', ['teamelf/auth/forget/ForgetPassword'], function (_export, _context) {
-  "use strict";
-
-  var ForgetPassword, target;
-  return {
-    setters: [function (_teamelfAuthForgetForgetPassword) {
-      ForgetPassword = _teamelfAuthForgetForgetPassword.default;
-    }],
-    execute: function () {
-      target = document.getElementById('react-render-target-password-forget');
-
-      if (target) {
-        ReactDOM.render(React.createElement(ForgetPassword, null), target);
-      }
-    }
-  };
-});
-'use strict';
-
 System.register('teamelf/auth/login/Login', ['teamelf/common/SimpleLayout', 'teamelf/auth/login/LoginForm'], function (_export, _context) {
   "use strict";
 
@@ -596,30 +432,85 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
             password: '',
             passwordConfirmation: '',
             loading: false,
-            sending: false
+            status: 'default',
+            retry: 0
           };
           return _this;
         }
 
         _createClass(_class, [{
+          key: 'getSendButtonLoading',
+          value: function getSendButtonLoading() {
+            return this.state.status === 'sending';
+          }
+        }, {
+          key: 'getSendButtonDisabled',
+          value: function getSendButtonDisabled() {
+            return this.state.status === 'success' || this.state.status === 'error';
+          }
+        }, {
+          key: 'getSendButtonType',
+          value: function getSendButtonType() {
+            if (this.state.status === 'error') {
+              return 'danger';
+            } else {
+              return 'primary';
+            }
+          }
+        }, {
+          key: 'getSendButtonText',
+          value: function getSendButtonText() {
+            switch (this.state.status) {
+              case 'success':
+              case 'error':
+                return this.state.retry + '秒后重试';
+              case 'sending':
+                return '发送中';
+              case 'default':
+              default:
+                return '发送验证码';
+            }
+          }
+        }, {
+          key: 'retryAfter',
+          value: function retryAfter(seconds) {
+            var _this2 = this;
+
+            var timer = setInterval(function () {
+              if (seconds === 0) {
+                clearInterval(timer);
+                _this2.setState({ status: 'default', retry: seconds });
+              } else {
+                seconds -= 1;
+                _this2.setState({ retry: seconds });
+              }
+            }, 1000);
+          }
+        }, {
           key: 'sendResetToken',
           value: function sendResetToken() {
-            var _this2 = this;
+            var _this3 = this;
 
             var user = {
               email: this.state.email || ''
             };
-            this.setState({ sending: true });
+            this.setState({ status: 'sending' });
             axios.post('/auth/forget', user).then(function (r) {
-              _this2.setState({ sending: false });
+              _this3.setState({ status: 'success', retry: 60 });
+              _this3.retryAfter(60);
             }).catch(function (e) {
-              _this2.setState({ sending: false });
+              if (e.response.status === 422) {
+                _this3.setState({ status: 'default' });
+              } else {
+                _this3.setState({ status: 'error', retry: 20 });
+                _this3.retryAfter(20);
+              }
             });
           }
         }, {
           key: 'handleSubmit',
           value: function handleSubmit(e) {
-            var _this3 = this;
+            var _this4 = this;
 
             e.preventDefault();
             var user = {
@@ -636,13 +527,13 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
               };
               window.location.href = '/r' + '?type=success' + '&message=密码重置成功' + '&redirect=' + encodeURIComponent(JSON.stringify(redirect));
             }).catch(function (e) {
-              _this3.setState({ loading: false });
+              _this4.setState({ loading: false });
             });
           }
         }, {
           key: 'view',
           value: function view() {
-            var _this4 = this;
+            var _this5 = this;
 
             return React.createElement(
               Form,
@@ -654,7 +545,7 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
                   size: 'large', placeholder: '\u90AE\u7BB1',
                   value: this.state.email,
                   onChange: function onChange(e) {
-                    return _this4.setState({ email: e.target.value });
+                    return _this5.setState({ email: e.target.value });
                   },
                   disabled: this.state.loading
                 })
@@ -666,18 +557,19 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
                   Button,
                   {
                     style: { float: 'right', width: 120 },
-                    size: 'large', type: 'primary',
+                    size: 'large', type: this.getSendButtonType(),
                     onClick: this.sendResetToken.bind(this),
-                    loading: this.state.sending
+                    loading: this.getSendButtonLoading(),
+                    disabled: this.getSendButtonDisabled()
                   },
-                  '\u53D1\u9001\u9A8C\u8BC1\u7801'
+                  this.getSendButtonText()
                 ),
                 React.createElement(Input, {
                   style: { float: 'left', width: 'calc(100% - 130px)' },
                   size: 'large', placeholder: '\u9A8C\u8BC1\u7801',
                   value: this.state.token,
                   onChange: function onChange(e) {
-                    return _this4.setState({ token: e.target.value });
+                    return _this5.setState({ token: e.target.value });
                   },
                   disabled: this.state.loading
                 })
@@ -689,7 +581,7 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
                   type: 'password', size: 'large', placeholder: '\u65B0\u5BC6\u7801',
                   value: this.state.password,
                   onChange: function onChange(e) {
-                    return _this4.setState({ password: e.target.value });
+                    return _this5.setState({ password: e.target.value });
                   },
                   disabled: this.state.loading
                 })
@@ -701,7 +593,7 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
                   type: 'password', size: 'large', placeholder: '\u786E\u8BA4\u5BC6\u7801',
                   value: this.state.passwordConfirmation,
                   onChange: function onChange(e) {
-                    return _this4.setState({ passwordConfirmation: e.target.value });
+                    return _this5.setState({ passwordConfirmation: e.target.value });
                   },
                   disabled: this.state.loading
                 })
