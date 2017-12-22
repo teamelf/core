@@ -467,7 +467,7 @@ System.register('teamelf/auth/login/LoginForm', [], function (_export, _context)
                   { className: 'float-right' },
                   React.createElement(
                     'a',
-                    { href: '/password/forget' },
+                    { href: '/password/reset' },
                     '\u5FD8\u8BB0\u5BC6\u7801'
                   )
                 )
@@ -590,27 +590,36 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
 
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-          var query = new URLSearchParams(window.location.search);
           _this.state = {
-            email: query.get('email'),
+            email: '',
+            token: '',
             password: '',
             passwordConfirmation: '',
-            loading: false
+            loading: false,
+            sending: false
           };
           return _this;
         }
 
         _createClass(_class, [{
-          key: 'token',
-          value: function token() {
-            var token = window.location.pathname.split('/');
-            token = token[token.length - 1];
-            return token;
+          key: 'sendResetToken',
+          value: function sendResetToken() {
+            var _this2 = this;
+
+            var user = {
+              email: this.state.email || ''
+            };
+            this.setState({ sending: true });
+            axios.post('/auth/forget', user).then(function (r) {
+              _this2.setState({ sending: false });
+            }).catch(function (e) {
+              _this2.setState({ sending: false });
+            });
           }
         }, {
           key: 'handleSubmit',
           value: function handleSubmit(e) {
-            var _this2 = this;
+            var _this3 = this;
 
             e.preventDefault();
             var user = {
@@ -619,7 +628,7 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
               passwordConfirmation: this.state.passwordConfirmation ? CryptoJS.SHA1(this.state.passwordConfirmation).toString() : ''
             };
             this.setState({ loading: true });
-            axios.post('/auth/reset/' + this.token(), user).then(function (r) {
+            axios.post('/auth/reset/' + this.state.token, user).then(function (r) {
               var redirect = {
                 link: '/login',
                 name: '登录页',
@@ -627,13 +636,13 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
               };
               window.location.href = '/r' + '?type=success' + '&message=密码重置成功' + '&redirect=' + encodeURIComponent(JSON.stringify(redirect));
             }).catch(function (e) {
-              _this2.setState({ loading: false });
+              _this3.setState({ loading: false });
             });
           }
         }, {
           key: 'view',
           value: function view() {
-            var _this3 = this;
+            var _this4 = this;
 
             return React.createElement(
               Form,
@@ -645,7 +654,30 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
                   size: 'large', placeholder: '\u90AE\u7BB1',
                   value: this.state.email,
                   onChange: function onChange(e) {
-                    return _this3.setState({ email: e.target.value });
+                    return _this4.setState({ email: e.target.value });
+                  },
+                  disabled: this.state.loading
+                })
+              ),
+              React.createElement(
+                Form.Item,
+                null,
+                React.createElement(
+                  Button,
+                  {
+                    style: { float: 'right', width: 120 },
+                    size: 'large', type: 'primary',
+                    onClick: this.sendResetToken.bind(this),
+                    loading: this.state.sending
+                  },
+                  '\u53D1\u9001\u9A8C\u8BC1\u7801'
+                ),
+                React.createElement(Input, {
+                  style: { float: 'left', width: 'calc(100% - 130px)' },
+                  size: 'large', placeholder: '\u9A8C\u8BC1\u7801',
+                  value: this.state.token,
+                  onChange: function onChange(e) {
+                    return _this4.setState({ token: e.target.value });
                   },
                   disabled: this.state.loading
                 })
@@ -657,7 +689,7 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
                   type: 'password', size: 'large', placeholder: '\u65B0\u5BC6\u7801',
                   value: this.state.password,
                   onChange: function onChange(e) {
-                    return _this3.setState({ password: e.target.value });
+                    return _this4.setState({ password: e.target.value });
                   },
                   disabled: this.state.loading
                 })
@@ -669,7 +701,7 @@ System.register('teamelf/auth/reset/ResetPassword', ['teamelf/common/SimpleLayou
                   type: 'password', size: 'large', placeholder: '\u786E\u8BA4\u5BC6\u7801',
                   value: this.state.passwordConfirmation,
                   onChange: function onChange(e) {
-                    return _this3.setState({ passwordConfirmation: e.target.value });
+                    return _this4.setState({ passwordConfirmation: e.target.value });
                   },
                   disabled: this.state.loading
                 })

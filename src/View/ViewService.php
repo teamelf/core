@@ -76,8 +76,7 @@ class ViewService extends AbstractService
         $event->getRouter()->prefix('')
             ->get('test', '/test', MailController::class)
             ->get('fe-login', '/login', LoginController::class)
-            ->get('fe-forget-password', '/password/forget', ForgetPasswordController::class)
-            ->get('fe-reset-password', '/password/reset/{token}', ResetPasswordController::class)
+            ->get('fe-reset-password', '/password/reset', ResetPasswordController::class)
             ->get('fe-result', '/r', ResultController::class)
             ->add(
                 'GET',

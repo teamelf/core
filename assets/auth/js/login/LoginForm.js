@@ -77,7 +77,7 @@ class LoginForm extends React.Component {
             >记住我</Checkbox>
           </div>
           <div className="float-right">
-            <a href="/password/forget">忘记密码</a>
+            <a href="/password/reset">忘记密码</a>
           </div>
         </Form.Item>
         <Form.Item>
