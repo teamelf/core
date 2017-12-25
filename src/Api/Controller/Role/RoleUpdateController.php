@@ -12,6 +12,7 @@
 namespace TeamELF\Api\Controller\Role;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use TeamELF\Core\Role;
 use TeamELF\Exception\HttpForbiddenException;
 use TeamELF\Http\AbstractController;
