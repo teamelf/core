@@ -19,11 +19,17 @@ export default class Page extends React.Component {
     super(props);
 
     this.navigations = []; // [{path, icon, title}]
-    this.title = null;
-    this.description = null;
+  }
+  title () {
+    return null;
+  }
+  description () {
+    return null;
   }
   header () {
-    if (!this.navigations.length && !this.title && !this.description) {
+    const title = this.title();
+    const description = this.description();
+    if (!this.navigations.length && !title && !description) {
       return null;
     }
     return (
@@ -38,8 +44,8 @@ export default class Page extends React.Component {
             </Breadcrumb.Item>
           ))}
         </Breadcrumb>}
-        {!!this.title && <h2>{this.title}</h2>}
-        {!!this.description && <div>{this.description}</div>}
+        {!!title && <h2>{title}</h2>}
+        {!!description && <div>{description}</div>}
       </div>
     );
   }

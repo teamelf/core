@@ -253,16 +253,6 @@ System.register('teamelf/Config', ['teamelf/layout/Page', 'teamelf/components/In
 
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-          _this.title = '站点基本设置';
-          _this.description = React.createElement(
-            Button,
-            {
-              type: 'primary',
-              icon: 'reload',
-              onClick: _this.reload.bind(_this)
-            },
-            '\u4FEE\u6539\u7AD9\u70B9\u914D\u7F6E\u987B\u70B9\u6B64\u5237\u65B0\u65B9\u53EF\u751F\u6548'
-          );
           _this.state = _extends({}, window.config);
           return _this;
         }
@@ -280,6 +270,24 @@ System.register('teamelf/Config', ['teamelf/layout/Page', 'teamelf/components/In
             return axios.put('config/' + key, { value: value }).then(function (r) {
               _this2.setState(_defineProperty({}, key, value));
             });
+          }
+        }, {
+          key: 'title',
+          value: function title() {
+            return '站点基本设置';
+          }
+        }, {
+          key: 'description',
+          value: function description() {
+            return React.createElement(
+              Button,
+              {
+                type: 'primary',
+                icon: 'reload',
+                onClick: this.reload.bind(this)
+              },
+              '\u4FEE\u6539\u7AD9\u70B9\u914D\u7F6E\u987B\u70B9\u6B64\u5237\u65B0\u65B9\u53EF\u751F\u6548'
+            );
           }
         }, {
           key: 'view',
@@ -629,25 +637,6 @@ System.register('teamelf/Mailer', ['teamelf/layout/Page', 'teamelf/mailer/Mailer
 
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-          _this.title = '邮箱发信设置';
-          _this.description = React.createElement(
-            'div',
-            null,
-            React.createElement(
-              'p',
-              null,
-              '\u9ED8\u8BA4\u53D1\u4FE1\u90AE\u7BB1\u5C06\u4F5C\u4E3A\u91CD\u8BBE\u5BC6\u7801\u3001\u7AD9\u5185\u6D88\u606F\u7B49\u53D1\u9001\u90AE\u7BB1'
-            ),
-            React.createElement(
-              Button,
-              {
-                type: 'primary',
-                icon: 'mail',
-                onClick: _this.createMailer.bind(_this)
-              },
-              '\u65B0\u5EFA\u53D1\u4FE1\u90AE\u7BB1'
-            )
-          );
           _this.state = {
             mailers: []
           };
@@ -676,6 +665,33 @@ System.register('teamelf/Mailer', ['teamelf/layout/Page', 'teamelf/mailer/Mailer
                 description: '新建发信邮箱成功，请修改配置详情'
               });
             });
+          }
+        }, {
+          key: 'title',
+          value: function title() {
+            return '邮箱发信设置';
+          }
+        }, {
+          key: 'description',
+          value: function description() {
+            return React.createElement(
+              'div',
+              null,
+              React.createElement(
+                'p',
+                null,
+                '\u9ED8\u8BA4\u53D1\u4FE1\u90AE\u7BB1\u5C06\u4F5C\u4E3A\u91CD\u8BBE\u5BC6\u7801\u3001\u7AD9\u5185\u6D88\u606F\u7B49\u53D1\u9001\u90AE\u7BB1'
+              ),
+              React.createElement(
+                Button,
+                {
+                  type: 'primary',
+                  icon: 'mail',
+                  onClick: this.createMailer.bind(this)
+                },
+                '\u65B0\u5EFA\u53D1\u4FE1\u90AE\u7BB1'
+              )
+            );
           }
         }, {
           key: 'view',
@@ -824,10 +840,10 @@ System.register('teamelf/Member', ['teamelf/Error', 'teamelf/member/MemberList',
 });
 'use strict';
 
-System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/permission/PermissionCardItem'], function (_export, _context) {
+System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/RoleEditorCardItem', 'teamelf/permission/PermissionCardItem'], function (_export, _context) {
   "use strict";
 
-  var Page, PermissionCardItem, _extends, _createClass, _antd, Row, Col, _class;
+  var Page, RoleEditorCardItem, PermissionCardItem, _extends, _createClass, _antd, Row, Col, _class;
 
   function _asyncToGenerator(fn) {
     return function () {
@@ -891,6 +907,8 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/permissio
   return {
     setters: [function (_teamelfLayoutPage) {
       Page = _teamelfLayoutPage.default;
+    }, function (_teamelfRoleRoleEditorCardItem) {
+      RoleEditorCardItem = _teamelfRoleRoleEditorCardItem.default;
     }, function (_teamelfPermissionPermissionCardItem) {
       PermissionCardItem = _teamelfPermissionPermissionCardItem.default;
     }],
@@ -939,7 +957,6 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/permissio
 
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-          _this.title = '成员组权限设置';
           _this.state = {
             roles: []
           };
@@ -987,9 +1004,41 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/permissio
             });
           }
         }, {
+          key: 'title',
+          value: function title() {
+            return '成员组权限设置';
+          }
+        }, {
+          key: 'description',
+          value: function description() {
+            var _this3 = this;
+
+            return React.createElement(
+              Row,
+              { type: 'flex', gutter: 16 },
+              this.state.roles.map(function (o) {
+                return React.createElement(
+                  Col,
+                  { xs: 12, md: 6, lg: 3 },
+                  React.createElement(RoleEditorCardItem, _extends({}, o, {
+                    done: _this3.fetch.bind(_this3)
+                  }))
+                );
+              }),
+              React.createElement(
+                Col,
+                { xs: 12, md: 6, lg: 3 },
+                React.createElement(RoleEditorCardItem, {
+                  'new': true,
+                  done: this.fetch.bind(this)
+                })
+              )
+            );
+          }
+        }, {
           key: 'view',
           value: function view() {
-            var _this3 = this;
+            var _this4 = this;
 
             return React.createElement(
               Row,
@@ -1000,7 +1049,7 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/permissio
                   null,
                   React.createElement(PermissionCardItem, _extends({}, o, {
                     done: function done() {
-                      return _this3.fetch();
+                      return _this4.fetch();
                     }
                   }))
                 );
@@ -1094,12 +1143,20 @@ System.register('teamelf/Profile', ['teamelf/layout/Page', 'teamelf/profile/Secu
 
           _this.bulletins = [];
           _this.operations = [React.createElement(Security, null), React.createElement(Logout, null)];
-          _this.title = window.auth.name;
-          _this.description = window.auth.role.name;
           return _this;
         }
 
         _createClass(_class, [{
+          key: 'title',
+          value: function title() {
+            return window.auth.name;
+          }
+        }, {
+          key: 'description',
+          value: function description() {
+            return window.auth.role.name;
+          }
+        }, {
           key: 'view',
           value: function view() {
             return React.createElement(
@@ -2005,15 +2062,25 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
           var _this = _possibleConstructorReturn(this, (Page.__proto__ || Object.getPrototypeOf(Page)).call(this, props));
 
           _this.navigations = []; // [{path, icon, title}]
-          _this.title = null;
-          _this.description = null;
           return _this;
         }
 
         _createClass(Page, [{
+          key: 'title',
+          value: function title() {
+            return null;
+          }
+        }, {
+          key: 'description',
+          value: function description() {
+            return null;
+          }
+        }, {
           key: 'header',
           value: function header() {
-            if (!this.navigations.length && !this.title && !this.description) {
+            var title = this.title();
+            var description = this.description();
+            if (!this.navigations.length && !title && !description) {
               return null;
             }
             return React.createElement(
@@ -2035,15 +2102,15 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
                   );
                 })
               ),
-              !!this.title && React.createElement(
+              !!title && React.createElement(
                 'h2',
                 null,
-                this.title
+                title
               ),
-              !!this.description && React.createElement(
+              !!description && React.createElement(
                 'div',
                 null,
-                this.description
+                description
               )
             );
           }
@@ -3854,6 +3921,258 @@ System.register("teamelf/profile/Security", [], function (_export, _context) {
             );
           }
         }]);
+
+        return _class;
+      }(React.Component);
+
+      _export("default", _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/role/RoleEditorCardItem', ['teamelf/components/InfoEditor'], function (_export, _context) {
+  "use strict";
+
+  var InfoEditor, _createClass, _antd, Card, Icon, Modal, _class;
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfComponentsInfoEditor) {
+      InfoEditor = _teamelfComponentsInfoEditor.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Icon = _antd.Icon;
+      Modal = _antd.Modal;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.state = {
+            visible: false
+          };
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'renderCard',
+          value: function renderCard() {
+            var _this2 = this;
+
+            if (this.props.new) {
+              return React.createElement(
+                Card,
+                {
+                  hoverable: true,
+                  style: { textAlign: 'center', color: '#aaa' },
+                  onClick: function onClick(e) {
+                    return _this2.setState({ visible: true });
+                  }
+                },
+                React.createElement(Icon, {
+                  type: 'plus',
+                  style: { fontSize: 20 }
+                }),
+                React.createElement(
+                  'div',
+                  null,
+                  '\u6DFB\u52A0'
+                )
+              );
+            } else {
+              return React.createElement(
+                Card,
+                {
+                  hoverable: true,
+                  style: { textAlign: 'center', color: this.props.color },
+                  onClick: function onClick(e) {
+                    return _this2.setState({ visible: true });
+                  }
+                },
+                React.createElement(Icon, {
+                  type: this.props.icon,
+                  style: { fontSize: 20 }
+                }),
+                React.createElement(
+                  'div',
+                  null,
+                  this.props.name
+                )
+              );
+            }
+          }
+        }, {
+          key: 'edit',
+          value: function edit(key, value) {
+            var _this3 = this;
+
+            return axios.put('role/' + this.props.slug, _defineProperty({}, key, value)).then(function (r) {
+              _this3.props.done();
+              return r;
+            });
+          }
+        }, {
+          key: 'closeModal',
+          value: function closeModal() {
+            this.setState({ visible: false });
+          }
+        }, {
+          key: 'renderModal',
+          value: function renderModal() {
+            return React.createElement(
+              Modal,
+              {
+                title: this.props.new ? '添加新角色' : '编辑 ' + this.props.name,
+                visible: this.state.visible,
+                footer: null,
+                onCancel: this.closeModal.bind(this)
+              },
+              React.createElement(InfoEditor, {
+                label: '\u540D\u79F0',
+                value: this.props.name,
+                onEdit: this.edit.bind(this, 'name')
+              })
+            );
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              'div',
+              null,
+              this.renderCard(),
+              this.renderModal()
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+"use strict";
+
+System.register("teamelf/role/RoleEditorModal", [], function (_export, _context) {
+  "use strict";
+
+  var _antd, Modal, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _antd = antd;
+      Modal = _antd.Modal;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
 
         return _class;
       }(React.Component);

@@ -20,8 +20,12 @@ export default class extends Page {
       <Security/>,
       <Logout/>
     ];
-    this.title = window.auth.name;
-    this.description = window.auth.role.name;
+  }
+  title () {
+    return window.auth.name;
+  }
+  description () {
+    return window.auth.role.name;
   }
   view () {
     return (

@@ -14,14 +14,6 @@ import InfoEditor from 'teamelf/components/InfoEditor';
 export default class extends Page {
   constructor (props) {
     super(props);
-    this.title = '站点基本设置';
-    this.description = (
-      <Button
-        type="primary"
-        icon="reload"
-        onClick={this.reload.bind(this)}
-      >修改站点配置须点此刷新方可生效</Button>
-    );
     this.state = {
       ...window.config
     }
@@ -33,6 +25,18 @@ export default class extends Page {
     return axios.put('config/' + key, {value}).then(r => {
       this.setState({[key]: value});
     });
+  }
+  title () {
+    return '站点基本设置';
+  }
+  description () {
+    return (
+      <Button
+        type="primary"
+        icon="reload"
+        onClick={this.reload.bind(this)}
+      >修改站点配置须点此刷新方可生效</Button>
+    );
   }
   view () {
     return (
