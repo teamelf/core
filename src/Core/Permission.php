@@ -25,7 +25,7 @@ class Permission extends AbstractModel
     /**
      * @var string
      *
-     * @Column(type="string", length=50, unique=TRUE)
+     * @Column(type="string", length=50)
      */
     protected $permission;
 
@@ -37,6 +37,50 @@ class Permission extends AbstractModel
 
     // ----------------------------------------
     // | GETTERS & SETTERS
+
+    /**
+     * getter of $permission
+     *
+     * @return string
+     */
+    public function getPermission()
+    {
+        return $this->permission;
+    }
+
+    /**
+     * setter of $permission
+     *
+     * @param string $permission
+     * @return $this
+     */
+    public function permission($permission)
+    {
+        $this->permission = $permission;
+        return $this;
+    }
+
+    /**
+     * getter of $role
+     *
+     * @return Role
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * setter of $role
+     *
+     * @param Role $role
+     * @return $this
+     */
+    public function role(Role $role)
+    {
+        $this->role = $role;
+        return $this;
+    }
 
     // ----------------------------------------
     // | HELPER FUNCTIONS

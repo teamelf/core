@@ -840,10 +840,10 @@ System.register('teamelf/Member', ['teamelf/Error', 'teamelf/member/MemberList',
 });
 'use strict';
 
-System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/RoleEditorCardItem', 'teamelf/role/RoleCreateCardItem', 'teamelf/permission/PermissionCardItem'], function (_export, _context) {
+System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/RoleEditorCardItem', 'teamelf/role/RoleCreateCardItem'], function (_export, _context) {
   "use strict";
 
-  var Page, RoleEditorCardItem, RoleCreateCardItem, PermissionCardItem, _extends, _createClass, _antd, Row, Col, _class;
+  var Page, RoleEditorCardItem, RoleCreateCardItem, _extends, _createClass, _antd, Row, Col, Table, Icon, Checkbox, _class;
 
   function _asyncToGenerator(fn) {
     return function () {
@@ -911,8 +911,6 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
       RoleEditorCardItem = _teamelfRoleRoleEditorCardItem.default;
     }, function (_teamelfRoleRoleCreateCardItem) {
       RoleCreateCardItem = _teamelfRoleRoleCreateCardItem.default;
-    }, function (_teamelfPermissionPermissionCardItem) {
-      PermissionCardItem = _teamelfPermissionPermissionCardItem.default;
     }],
     execute: function () {
       _extends = Object.assign || function (target) {
@@ -950,6 +948,9 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
       _antd = antd;
       Row = _antd.Row;
       Col = _antd.Col;
+      Table = _antd.Table;
+      Icon = _antd.Icon;
+      Checkbox = _antd.Checkbox;
 
       _class = function (_Page) {
         _inherits(_class, _Page);
@@ -960,7 +961,11 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
           _this.state = {
-            roles: []
+            roles: [],
+            permissions: [],
+            dataSource: [],
+            columns: [],
+            loading: false
           };
           _this.fetch();
           return _this;
@@ -970,7 +975,10 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
           key: 'fetch',
           value: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-              var roles;
+              var _this2 = this;
+
+              var roles, permissions, columns, dataSource, _loop, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, permission, _loop2, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, role;
+
               return regeneratorRuntime.wrap(function _callee$(_context2) {
                 while (1) {
                   switch (_context2.prev = _context2.next) {
@@ -980,13 +988,167 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
 
                     case 2:
                       roles = _context2.sent.data;
+                      _context2.next = 5;
+                      return this.fetchPermissions();
 
-                    case 3:
+                    case 5:
+                      permissions = _context2.sent.data;
+                      columns = [{
+                        title: '权限',
+                        dataIndex: 'name',
+                        colSpan: 2
+                        // width: 150,
+                        // fixed: 'left'
+                      }, {
+                        dataIndex: 'permission',
+                        colSpan: 0
+                        // width: 250,
+                        // fixed: 'left'
+                      }];
+                      dataSource = [{
+                        name: '更新站点信息',
+                        permission: 'config.update'
+                      }, {
+                        name: '创建新成员',
+                        permission: 'member.create'
+                      }, {
+                        name: '成员升级',
+                        permission: 'member.role.update'
+                      }, {
+                        name: '成员密码重设',
+                        permission: 'member.password.reset'
+                      }];
+
+                      _loop = function _loop(permission) {
+                        var d = dataSource.find(function (o) {
+                          return o.permission === permission.permission;
+                        });
+                        d['r_' + permission.role.id] = true;
+                      };
+
+                      _iteratorNormalCompletion = true;
+                      _didIteratorError = false;
+                      _iteratorError = undefined;
+                      _context2.prev = 12;
+
+                      for (_iterator = permissions[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                        permission = _step.value;
+
+                        _loop(permission);
+                      }
+                      _context2.next = 20;
+                      break;
+
+                    case 16:
+                      _context2.prev = 16;
+                      _context2.t0 = _context2['catch'](12);
+                      _didIteratorError = true;
+                      _iteratorError = _context2.t0;
+
+                    case 20:
+                      _context2.prev = 20;
+                      _context2.prev = 21;
+
+                      if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                      }
+
+                    case 23:
+                      _context2.prev = 23;
+
+                      if (!_didIteratorError) {
+                        _context2.next = 26;
+                        break;
+                      }
+
+                      throw _iteratorError;
+
+                    case 26:
+                      return _context2.finish(23);
+
+                    case 27:
+                      return _context2.finish(20);
+
+                    case 28:
+                      _loop2 = function _loop2(role) {
+                        columns.push({
+                          title: React.createElement(
+                            'div',
+                            { style: { color: role.color, textAlign: 'center' } },
+                            React.createElement(Icon, { type: role.icon }),
+                            React.createElement(
+                              'div',
+                              null,
+                              role.name
+                            )
+                          ),
+                          dataIndex: 'r_' + role.id,
+                          render: function render(text, record, index) {
+                            return React.createElement(
+                              'div',
+                              { style: { textAlign: 'center' } },
+                              React.createElement(Checkbox, {
+                                checked: text,
+                                onClick: function onClick(e) {
+                                  return _this2.updatePermission(role.id, record.permission, e.target.checked);
+                                }
+                              })
+                            );
+                          }
+                        });
+                      };
+
+                      _iteratorNormalCompletion2 = true;
+                      _didIteratorError2 = false;
+                      _iteratorError2 = undefined;
+                      _context2.prev = 32;
+                      for (_iterator2 = roles[Symbol.iterator](); !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                        role = _step2.value;
+
+                        _loop2(role);
+                      }
+                      _context2.next = 40;
+                      break;
+
+                    case 36:
+                      _context2.prev = 36;
+                      _context2.t1 = _context2['catch'](32);
+                      _didIteratorError2 = true;
+                      _iteratorError2 = _context2.t1;
+
+                    case 40:
+                      _context2.prev = 40;
+                      _context2.prev = 41;
+
+                      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                      }
+
+                    case 43:
+                      _context2.prev = 43;
+
+                      if (!_didIteratorError2) {
+                        _context2.next = 46;
+                        break;
+                      }
+
+                      throw _iteratorError2;
+
+                    case 46:
+                      return _context2.finish(43);
+
+                    case 47:
+                      return _context2.finish(40);
+
+                    case 48:
+                      this.setState({ columns: columns, dataSource: dataSource });
+
+                    case 49:
                     case 'end':
                       return _context2.stop();
                   }
                 }
-              }, _callee, this);
+              }, _callee, this, [[12, 16, 20, 28], [21,, 23, 27], [32, 36, 40, 48], [41,, 43, 47]]);
             }));
 
             function fetch() {
@@ -998,11 +1160,41 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
         }, {
           key: 'fetchRoles',
           value: function fetchRoles() {
-            var _this2 = this;
+            var _this3 = this;
 
+            this.setState({ loading: true });
             return axios.get('role').then(function (r) {
-              _this2.setState({ roles: r.data });
+              _this3.setState({ loading: false });
+              _this3.setState({ roles: r.data });
               return r;
+            });
+          }
+        }, {
+          key: 'fetchPermissions',
+          value: function fetchPermissions() {
+            var _this4 = this;
+
+            this.setState({ loading: true });
+            return axios.get('permission').then(function (r) {
+              _this4.setState({ loading: false });
+              _this4.setState({ permissions: r.data });
+              return r;
+            });
+          }
+        }, {
+          key: 'updatePermission',
+          value: function updatePermission(role_id, permission, value) {
+            var _this5 = this;
+
+            var data = {
+              role_id: role_id,
+              permission: permission,
+              value: value
+            };
+            this.setState({ loading: true });
+            axios.put('permission', data).then(function (r) {
+              _this5.setState({ loading: false });
+              _this5.fetch();
             });
           }
         }, {
@@ -1013,7 +1205,7 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
         }, {
           key: 'description',
           value: function description() {
-            var _this3 = this;
+            var _this6 = this;
 
             return React.createElement(
               Row,
@@ -1023,7 +1215,7 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                   Col,
                   { xs: 12, md: 6, lg: 3 },
                   React.createElement(RoleEditorCardItem, _extends({}, o, {
-                    done: _this3.fetch.bind(_this3)
+                    done: _this6.fetch.bind(_this6)
                   }))
                 );
               }),
@@ -1039,21 +1231,14 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
         }, {
           key: 'view',
           value: function view() {
-            var _this4 = this;
-
             return React.createElement(
-              Row,
-              { type: 'flex', justify: 'space-between' },
-              this.state.roles.map(function (o) {
-                return React.createElement(
-                  Col,
-                  null,
-                  React.createElement(PermissionCardItem, _extends({}, o, {
-                    done: function done() {
-                      return _this4.fetch();
-                    }
-                  }))
-                );
+              'div',
+              { style: { background: '#fff' } },
+              React.createElement(Table, {
+                loading: this.state.loading,
+                dataSource: this.state.dataSource,
+                columns: this.state.columns,
+                pagination: false
               })
             );
           }

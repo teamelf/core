@@ -30,6 +30,8 @@ use TeamELF\Api\Controller\Member\MemberItemController;
 use TeamELF\Api\Controller\Member\MemberListController;
 use TeamELF\Api\Controller\Member\MemberSecurityController;
 use TeamELF\Api\Controller\Member\MemberUpdateController;
+use TeamELF\Api\Controller\Permission\PermissionListController;
+use TeamELF\Api\Controller\Permission\PermissionUpdateController;
 use TeamELF\Api\Controller\Role\RoleCreateController;
 use TeamELF\Api\Controller\Role\RoleDeleteController;
 use TeamELF\Api\Controller\Role\RoleListController;
@@ -62,6 +64,13 @@ class ApiService extends AbstractService
             // --------------------
             ->prefix('/api/helper')
             ->get('helper-pinyin', '/pinyin', PinyinController::class)
+
+            // --------------------
+            // | Permission
+            // --------------------
+            ->prefix('/api/permission')
+            ->get('permission-list', '', PermissionListController::class)
+            ->put('permission-update', '', PermissionUpdateController::class)
 
             // --------------------
             // | Config
