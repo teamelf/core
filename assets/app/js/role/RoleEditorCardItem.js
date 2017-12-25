@@ -39,11 +39,17 @@ export default class extends React.Component {
     });
   }
   deleteRole () {
-    return axios.delete('role/' + this.props.id).then(r => {
-      this.props.done();
-      this.closeModal();
-      return r;
-    })
+    Modal.confirm({
+      title: '不可恢复',
+      content: '确定要删除么？该操作可能无法恢复',
+      onOk: () => {
+        axios.delete('role/' + this.props.id).then(r => {
+          this.props.done();
+          this.closeModal();
+          return r;
+        })
+      }
+    });
   }
   closeModal () {
     this.setState({visible: false});

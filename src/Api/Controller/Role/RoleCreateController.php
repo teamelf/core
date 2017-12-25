@@ -12,6 +12,7 @@
 namespace TeamELF\Api\Controller\Role;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use TeamELF\Core\Role;
 use TeamELF\Http\AbstractController;
 
@@ -25,8 +26,12 @@ class RoleCreateController extends AbstractController
     public function handler(): Response
     {
         $data = $this->validate([
-            'name' => [],
-            'slug' => []
+            'name' => [
+                new NotBlank()
+            ],
+            'slug' => [
+                new NotBlank()
+            ]
         ]);
         $role = new Role($data);
         $role->save();

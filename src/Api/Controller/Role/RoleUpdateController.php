@@ -27,8 +27,12 @@ class RoleUpdateController extends AbstractController
     public function handler(): Response
     {
         $data = $this->validate([
-            'name' => [],
-            'slug' => [],
+            'name' => [
+                new NotBlank()
+            ],
+            'slug' => [
+                new NotBlank()
+            ],
             'color' => [],
             'icon' => [],
         ]);

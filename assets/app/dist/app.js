@@ -4275,10 +4275,16 @@ System.register('teamelf/role/RoleEditorCardItem', ['teamelf/components/InfoEdit
           value: function deleteRole() {
             var _this4 = this;
 
-            return axios.delete('role/' + this.props.id).then(function (r) {
-              _this4.props.done();
-              _this4.closeModal();
-              return r;
+            Modal.confirm({
+              title: '不可恢复',
+              content: '确定要删除么？该操作可能无法恢复',
+              onOk: function onOk() {
+                axios.delete('role/' + _this4.props.id).then(function (r) {
+                  _this4.props.done();
+                  _this4.closeModal();
+                  return r;
+                });
+              }
             });
           }
         }, {
