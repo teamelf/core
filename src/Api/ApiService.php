@@ -30,7 +30,10 @@ use TeamELF\Api\Controller\Member\MemberItemController;
 use TeamELF\Api\Controller\Member\MemberListController;
 use TeamELF\Api\Controller\Member\MemberSecurityController;
 use TeamELF\Api\Controller\Member\MemberUpdateController;
+use TeamELF\Api\Controller\Role\RoleCreateController;
+use TeamELF\Api\Controller\Role\RoleDeleteController;
 use TeamELF\Api\Controller\Role\RoleListController;
+use TeamELF\Api\Controller\Role\RoleUpdateController;
 use TeamELF\Application\AbstractService;
 use TeamELF\Event\RoutesWillBeLoaded;
 
@@ -92,6 +95,9 @@ class ApiService extends AbstractService
             // --------------------
             ->prefix('/api/role')
             ->get('role-list', '', RoleListController::class)
+            ->post('role-create', '', RoleCreateController::class)
+            ->put('role-update', '/{id}', RoleUpdateController::class)
+            ->delete('role-delete', '/{id}', RoleDeleteController::class)
 
             // --------------------
             // | Mailer

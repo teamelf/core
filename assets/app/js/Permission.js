@@ -9,25 +9,48 @@
 
 import Page from 'teamelf/layout/Page';
 const { Row, Col } = antd;
+import RoleEditorCardItem from 'teamelf/role/RoleEditorCardItem';
+import RoleCreateCardItem from 'teamelf/role/RoleCreateCardItem';
 import PermissionCardItem from 'teamelf/permission/PermissionCardItem';
 
 export default class extends Page {
   constructor (props) {
     super(props);
-    this.title = '成员组权限设置';
     this.state = {
       roles: []
     };
     this.fetch();
   }
   async fetch () {
-    let roles = (await this.fetchRoles()).data;
+    const roles = (await this.fetchRoles()).data;
   }
   fetchRoles () {
     return axios.get('role').then(r => {
       this.setState({roles: r.data});
       return r
     })
+  }
+  title () {
+    return '成员组权限设置';
+  }
+  description () {
+    return (
+      <Row type="flex" gutter={16}>
+        {this.state.roles.map(o => (
+          <Col xs={12} md={6} lg={3}>
+            <RoleEditorCardItem
+              {...o}
+              done={this.fetch.bind(this)}
+            />
+          </Col>
+        ))}
+        <Col xs={12} md={6} lg={3}>
+          <RoleCreateCardItem
+            done={this.fetch.bind(this)}
+          />
+        </Col>
+      </Row>
+    );
   }
   view () {
     return (
