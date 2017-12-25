@@ -19,6 +19,8 @@ use TeamELF\Http\AbstractController;
 
 class ConfigUpdateController extends AbstractController
 {
+    protected $needPermissions = ['config.update'];
+
     /**
      * handle the request
      *

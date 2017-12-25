@@ -18,6 +18,8 @@ use TeamELF\Http\AbstractController;
 
 class MemberItemController extends AbstractController
 {
+    protected $needPermissions = ['member.item'];
+
     /**
      * handle the request
      *

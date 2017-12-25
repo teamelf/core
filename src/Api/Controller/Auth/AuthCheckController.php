@@ -26,9 +26,6 @@ class AuthCheckController extends AbstractController
     public function handler(): Response
     {
         $member = $this->getAuth();
-        if (!$member) {
-            throw new HttpUnauthorizedException();
-        }
         return response([
             'id' => $member->getId(),
             'username' => $member->getUsername(),

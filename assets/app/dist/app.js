@@ -1005,14 +1005,50 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                         name: '更新站点信息',
                         permission: 'config.update'
                       }, {
+                        name: '查看权限列表',
+                        permission: 'permission.list'
+                      }, {
+                        name: '更新权限',
+                        permission: 'permission.update'
+                      }, {
+                        name: '查看成员列表',
+                        permission: 'member.list'
+                      }, {
+                        name: '查看成员详情',
+                        permission: 'member.item'
+                      }, {
                         name: '创建新成员',
                         permission: 'member.create'
                       }, {
-                        name: '成员升级',
+                        name: '更新成员信息',
+                        permission: 'member.update'
+                      }, {
+                        name: '成员角色更改',
                         permission: 'member.role.update'
                       }, {
                         name: '成员密码重设',
                         permission: 'member.password.reset'
+                      }, {
+                        name: '创新新角色',
+                        permission: 'role.create'
+                      }, {
+                        name: '更新角色信息',
+                        permission: 'role.update'
+                      }, {
+                        name: '删除角色',
+                        permission: 'role.delete'
+                      }, {
+                        name: '查看发信邮箱列表',
+                        permission: 'mailer.list'
+                      }, {
+                        name: '创新发信邮箱',
+                        permission: 'mailer.create'
+                      }, {
+                        name: '更新发信邮箱',
+                        permission: 'mailer.update'
+                      }, {
+                        name: '删除发信邮箱',
+                        permission: 'mailer.delete'
                       }];
 
                       _loop = function _loop(permission) {
@@ -1191,6 +1227,8 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
             axios.put('permission', data).then(function (r) {
               _this5.setState({ loading: false });
               _this5.fetch();
+            }).catch(function (e) {
+              _this5.setState({ loading: false });
             });
           }
         }, {
@@ -2865,6 +2903,228 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
 });
 'use strict';
 
+System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, AbstractModel;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      AbstractModel = function () {
+        function AbstractModel(props) {
+          _classCallCheck(this, AbstractModel);
+
+          if (new.target === AbstractModel) {
+            throw new Error('AbstractModel cannot be instanced directly!');
+          }
+
+          /**
+           * model's attributes
+           *
+           * @type {Object}
+           * @private
+           */
+          this._attributes = {};
+
+          /**
+           * the fetching api url
+           * @type {String}
+           * @private
+           */
+          this._url = '';
+        }
+
+        /**
+         * getter & setter of _attributes
+         */
+
+
+        _createClass(AbstractModel, [{
+          key: 'fetch',
+          value: function fetch() {
+            throw new Error('AbstractModel@fetch must be implemented by subclass');
+          }
+        }, {
+          key: 'create',
+          value: function create() {
+            throw new Error('AbstractModel@create must be implemented by subclass');
+          }
+        }, {
+          key: 'update',
+          value: function update() {
+            throw new Error('AbstractModel@update must be implemented by subclass');
+          }
+        }, {
+          key: 'delete',
+          value: function _delete() {
+            throw new Error('AbstractModel@delete must be implemented by subclass');
+          }
+        }, {
+          key: 'attributes',
+          get: function get() {
+            return this._attributes;
+          },
+          set: function set(attributes) {
+            this._attributes = attributes;
+          }
+        }, {
+          key: 'url',
+          get: function get() {
+            return this._url;
+          },
+          set: function set(url) {
+            this._url = url;
+          }
+        }]);
+
+        return AbstractModel;
+      }();
+
+      _export('default', AbstractModel);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/permission/PermissionCardItem', ['teamelf/components/InfoEditor'], function (_export, _context) {
+  "use strict";
+
+  var InfoEditor, _createClass, _antd, Card, Button, Tag, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfComponentsInfoEditor) {
+      InfoEditor = _teamelfComponentsInfoEditor.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Button = _antd.Button;
+      Tag = _antd.Tag;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                style: { marginBottom: 20 },
+                title: this.props.name
+              },
+              React.createElement(
+                'div',
+                null,
+                '\u66F4\u65B0\u7AD9\u70B9\u4FE1\u606F config.update'
+              ),
+              React.createElement(
+                'div',
+                null,
+                '\u521B\u5EFA\u65B0\u6210\u5458 member.create'
+              ),
+              React.createElement(
+                'div',
+                null,
+                '\u6210\u5458\u5347\u7EA7 member.role.update'
+              ),
+              React.createElement(
+                'div',
+                null,
+                '\u6210\u5458\u5BC6\u7801\u91CD\u8BBE member.password.reset'
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
 System.register('teamelf/member/MemberCardItem', ['teamelf/components/Gender'], function (_export, _context) {
   "use strict";
 
@@ -3683,228 +3943,6 @@ System.register('teamelf/member/MemberList', ['teamelf/layout/Page', 'teamelf/me
     }
   };
 });
-'use strict';
-
-System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, AbstractModel;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      AbstractModel = function () {
-        function AbstractModel(props) {
-          _classCallCheck(this, AbstractModel);
-
-          if (new.target === AbstractModel) {
-            throw new Error('AbstractModel cannot be instanced directly!');
-          }
-
-          /**
-           * model's attributes
-           *
-           * @type {Object}
-           * @private
-           */
-          this._attributes = {};
-
-          /**
-           * the fetching api url
-           * @type {String}
-           * @private
-           */
-          this._url = '';
-        }
-
-        /**
-         * getter & setter of _attributes
-         */
-
-
-        _createClass(AbstractModel, [{
-          key: 'fetch',
-          value: function fetch() {
-            throw new Error('AbstractModel@fetch must be implemented by subclass');
-          }
-        }, {
-          key: 'create',
-          value: function create() {
-            throw new Error('AbstractModel@create must be implemented by subclass');
-          }
-        }, {
-          key: 'update',
-          value: function update() {
-            throw new Error('AbstractModel@update must be implemented by subclass');
-          }
-        }, {
-          key: 'delete',
-          value: function _delete() {
-            throw new Error('AbstractModel@delete must be implemented by subclass');
-          }
-        }, {
-          key: 'attributes',
-          get: function get() {
-            return this._attributes;
-          },
-          set: function set(attributes) {
-            this._attributes = attributes;
-          }
-        }, {
-          key: 'url',
-          get: function get() {
-            return this._url;
-          },
-          set: function set(url) {
-            this._url = url;
-          }
-        }]);
-
-        return AbstractModel;
-      }();
-
-      _export('default', AbstractModel);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/permission/PermissionCardItem', ['teamelf/components/InfoEditor'], function (_export, _context) {
-  "use strict";
-
-  var InfoEditor, _createClass, _antd, Card, Button, Tag, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfComponentsInfoEditor) {
-      InfoEditor = _teamelfComponentsInfoEditor.default;
-    }],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Card = _antd.Card;
-      Button = _antd.Button;
-      Tag = _antd.Tag;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class() {
-          _classCallCheck(this, _class);
-
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-        }
-
-        _createClass(_class, [{
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              Card,
-              {
-                style: { marginBottom: 20 },
-                title: this.props.name
-              },
-              React.createElement(
-                'div',
-                null,
-                '\u66F4\u65B0\u7AD9\u70B9\u4FE1\u606F config.update'
-              ),
-              React.createElement(
-                'div',
-                null,
-                '\u521B\u5EFA\u65B0\u6210\u5458 member.create'
-              ),
-              React.createElement(
-                'div',
-                null,
-                '\u6210\u5458\u5347\u7EA7 member.role.update'
-              ),
-              React.createElement(
-                'div',
-                null,
-                '\u6210\u5458\u5BC6\u7801\u91CD\u8BBE member.password.reset'
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
 "use strict";
 
 System.register("teamelf/profile/Logout", [], function (_export, _context) {
@@ -4535,65 +4573,6 @@ System.register('teamelf/role/RoleEditorCardItem', ['teamelf/components/InfoEdit
       }(React.Component);
 
       _export('default', _class);
-    }
-  };
-});
-"use strict";
-
-System.register("teamelf/role/RoleEditorModal", [], function (_export, _context) {
-  "use strict";
-
-  var _antd, Modal, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _antd = antd;
-      Modal = _antd.Modal;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class() {
-          _classCallCheck(this, _class);
-
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-        }
-
-        return _class;
-      }(React.Component);
-
-      _export("default", _class);
     }
   };
 });

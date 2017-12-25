@@ -19,6 +19,8 @@ use TeamELF\Http\AbstractController;
 
 class MemberUpdateController extends AbstractController
 {
+    protected $needPermissions = ['member.update'];
+
     /**
      * handle the request
      *

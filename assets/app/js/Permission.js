@@ -39,14 +39,50 @@ export default class extends Page {
       name: '更新站点信息',
       permission: 'config.update',
     }, {
+      name: '查看权限列表',
+      permission: 'permission.list',
+    }, {
+      name: '更新权限',
+      permission: 'permission.update',
+    }, {
+      name: '查看成员列表',
+      permission: 'member.list',
+    }, {
+      name: '查看成员详情',
+      permission: 'member.item',
+    }, {
       name: '创建新成员',
       permission: 'member.create',
     }, {
-      name: '成员升级',
+      name: '更新成员信息',
+      permission: 'member.update',
+    }, {
+      name: '成员角色更改',
       permission: 'member.role.update',
     }, {
       name: '成员密码重设',
       permission: 'member.password.reset',
+    }, {
+      name: '创新新角色',
+      permission: 'role.create',
+    }, {
+      name: '更新角色信息',
+      permission: 'role.update',
+    }, {
+      name: '删除角色',
+      permission: 'role.delete',
+    }, {
+      name: '查看发信邮箱列表',
+      permission: 'mailer.list'
+    }, {
+      name: '创新发信邮箱',
+      permission: 'mailer.create'
+    }, {
+      name: '更新发信邮箱',
+      permission: 'mailer.update'
+    }, {
+      name: '删除发信邮箱',
+      permission: 'mailer.delete'
     }];
     for (const permission of permissions) {
       const d = dataSource.find(o => o.permission === permission.permission);
@@ -101,6 +137,8 @@ export default class extends Page {
     axios.put('permission', data).then(r => {
       this.setState({loading: false});
       this.fetch();
+    }).catch(e => {
+      this.setState({loading: false});
     })
   }
   title () {

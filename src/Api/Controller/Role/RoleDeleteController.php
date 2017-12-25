@@ -18,6 +18,8 @@ use TeamELF\Http\AbstractController;
 
 class RoleDeleteController extends AbstractController
 {
+    protected $needPermissions = ['role.delete'];
+
     /**
      * handle the request
      *

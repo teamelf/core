@@ -97,7 +97,6 @@ class ApiService extends AbstractService
             ->post('member-create', '', MemberCreateController::class)
             ->get('member-item', '/{username}', MemberItemController::class)
             ->put('member-update', '/{username}', MemberUpdateController::class)
-            ->put('member-security', '/{username}/security', MemberSecurityController::class)
 
             // --------------------
             // | Role

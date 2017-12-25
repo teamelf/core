@@ -18,6 +18,8 @@ use TeamELF\Http\AbstractController;
 
 class MailerDeleteController extends AbstractController
 {
+    protected $needPermissions = ['mailer.delete'];
+
     /**
      * handle the request
      *

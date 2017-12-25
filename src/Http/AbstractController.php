@@ -16,6 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Validator\Validation;
 use TeamELF\Core\Member;
+use TeamELF\Exception\HttpForbiddenException;
+use TeamELF\Exception\HttpUnauthorizedException;
 use TeamELF\Exception\HttpValidationException;
 
 abstract class AbstractController
@@ -42,6 +44,16 @@ abstract class AbstractController
     protected $parameters;
 
     /**
+     * @var bool
+     */
+    protected $needLogin = true;
+
+    /**
+     * @var array
+     */
+    protected $needPermissions = [];
+
+    /**
      * @var \Symfony\Component\Validator\Validator\ValidatorInterface
      */
     protected $validator;
@@ -56,6 +68,15 @@ abstract class AbstractController
         $this->session->start();
 
         $this->validator = Validation::createValidator();
+
+        if ($this->needLogin && !$this->getAuth()) {
+            throw new HttpUnauthorizedException();
+        }
+        foreach ($this->needPermissions as $permission) {
+            if (!$this->can($permission)) {
+                throw new HttpForbiddenException();
+            }
+        }
     }
 
     /**

@@ -17,6 +17,8 @@ use TeamELF\Http\AbstractController;
 
 class PermissionListController extends AbstractController
 {
+    protected $needPermissions = ['permission.list'];
+
     /**
      * handle the request
      *

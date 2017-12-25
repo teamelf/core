@@ -21,6 +21,8 @@ use TeamELF\Http\AbstractController;
 
 class ResetPasswordController extends AbstractController
 {
+    protected $needLogin = false;
+
     /**
      * handle the request
      *

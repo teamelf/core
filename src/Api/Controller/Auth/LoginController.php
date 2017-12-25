@@ -19,6 +19,8 @@ use TeamELF\Http\AbstractController;
 
 class LoginController extends AbstractController
 {
+    protected $needLogin = false;
+
     /**
      * handle the request
      *

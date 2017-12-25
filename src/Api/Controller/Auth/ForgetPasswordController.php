@@ -21,6 +21,8 @@ use TeamELF\Mailer\Mailer;
 
 class ForgetPasswordController extends AbstractController
 {
+    protected $needLogin = false;
+
     /**
      * handle the request
      *

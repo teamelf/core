@@ -23,6 +23,8 @@ use TeamELF\Mailer\Mailer;
 
 class MemberCreateController extends AbstractController
 {
+    protected $needPermissions = ['member.create'];
+
     /**
      * handle the request
      *

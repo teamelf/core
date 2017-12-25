@@ -19,6 +19,8 @@ use TeamELF\Http\AbstractController;
 
 class MailerSetAsDefaultController extends AbstractController
 {
+    protected $needPermissions = ['mailer.update'];
+
     /**
      * handle the request
      *

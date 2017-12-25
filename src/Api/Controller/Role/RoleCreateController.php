@@ -18,6 +18,8 @@ use TeamELF\Http\AbstractController;
 
 class RoleCreateController extends AbstractController
 {
+    protected $needPermissions = ['role.create'];
+
     /**
      * handle the request
      *

@@ -17,6 +17,8 @@ use TeamELF\Http\AbstractController;
 
 class MailerListController extends AbstractController
 {
+    protected $needPermissions = ['mailer.list'];
+
     /**
      * handle the request
      *

@@ -251,8 +251,10 @@ class Member extends AbstractModel
      */
     public function can($permission)
     {
-        $permission = Permission::findBy(['permission' => $permission, 'member' => $this])
-            ?? Permission::findBy(['permission' => $permission, 'role' => $this->getRole()]);
+        $permission = Permission::findBy([
+            'permission' => $permission,
+            'role' => $this->getRole()
+        ]);
         return !!$permission;
     }
 }
