@@ -997,13 +997,9 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                         title: '权限',
                         dataIndex: 'name',
                         colSpan: 2
-                        // width: 150,
-                        // fixed: 'left'
                       }, {
                         dataIndex: 'permission',
                         colSpan: 0
-                        // width: 250,
-                        // fixed: 'left'
                       }];
                       dataSource = [{
                         name: '更新站点信息',

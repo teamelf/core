@@ -30,14 +30,10 @@ export default class extends Page {
     let columns = [{
       title: '权限',
       dataIndex: 'name',
-      colSpan: 2,
-      // width: 150,
-      // fixed: 'left'
+      colSpan: 2
     }, {
       dataIndex: 'permission',
-      colSpan: 0,
-      // width: 250,
-      // fixed: 'left'
+      colSpan: 0
     }];
     let dataSource = [{
       name: '更新站点信息',
