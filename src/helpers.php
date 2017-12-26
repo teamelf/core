@@ -52,8 +52,8 @@ if (!function_exists('response')) {
      */
     function response($content = null, $status = 200, array $headers = [])
     {
-        if ($status === 0) {
-            $status = 500;
+        if ($status < 100) {
+            $status += 500;
         }
         switch (gettype($content)) {
             case 'NULL':
