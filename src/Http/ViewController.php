@@ -18,6 +18,14 @@ use TeamELF\View\ViewService;
 class ViewController extends AbstractController
 {
     /**
+     * {@inherit}
+     *
+     * This has to be set to false
+     * In case it is supposed to be a view, not 401 error when not login
+     */
+    protected $needLogin = false;
+
+    /**
      * template's relative path to views/
      * @var string
      */
