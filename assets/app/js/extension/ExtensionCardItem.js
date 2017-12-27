@@ -19,8 +19,7 @@ export default class extends React.Component {
   activate (activation) {
     this.setState({loading: true});
     axios.put(`extension/${this.props.vendor}/${this.props.package}`, {activation}).then(r => {
-      this.props.done();
-      this.setState({loading: false});
+      window.location.reload();
     }).catch(e => {
       this.setState({loading: false});
     });
@@ -35,8 +34,7 @@ export default class extends React.Component {
       onOk: () => {
         this.setState({loading: true});
         axios.delete(`extension/${this.props.vendor}/${this.props.package}`).then(r => {
-          this.props.done();
-          this.setState({loading: false});
+          window.location.reload();
         }).catch(e => {
           this.setState({loading: false});
         });

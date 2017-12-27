@@ -22,20 +22,7 @@ export default class extends Page {
       columns: [],
       loading: false
     };
-    this.fetch();
-  }
-  async fetch () {
-    const roles = (await this.fetchRoles()).data;
-    const permissions = (await this.fetchPermissions()).data;
-    let columns = [{
-      title: '权限',
-      dataIndex: 'name',
-      colSpan: 2
-    }, {
-      dataIndex: 'permission',
-      colSpan: 0
-    }];
-    let dataSource = [{
+    this.permissions = [{
       name: '更新站点信息',
       permission: 'config.update',
     }, {
@@ -89,7 +76,21 @@ export default class extends Page {
     }, {
       name: '删除发信邮箱',
       permission: 'mailer.delete'
+    }, ...(this.permissions || [])];
+    this.fetch();
+  }
+  async fetch () {
+    const roles = (await this.fetchRoles()).data;
+    const permissions = (await this.fetchPermissions()).data;
+    let columns = [{
+      title: '权限',
+      dataIndex: 'name',
+      colSpan: 2
+    }, {
+      dataIndex: 'permission',
+      colSpan: 0
     }];
+    let dataSource = _.cloneDeep(this.permissions);
     for (const permission of permissions) {
       const d = dataSource.find(o => o.permission === permission.permission);
       d['r_' + permission.role.id] = true;

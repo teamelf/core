@@ -480,7 +480,7 @@ System.register('teamelf/Error', [], function (_export, _context) {
 System.register('teamelf/Extension', ['teamelf/layout/Page', 'teamelf/extension/ExtensionCardItem'], function (_export, _context) {
   "use strict";
 
-  var Page, ExtensionCardItem, _extends, _createClass, _antd, Row, Col, Button, _class;
+  var Page, ExtensionCardItem, _createClass, _antd, Row, Col, Button, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -519,20 +519,6 @@ System.register('teamelf/Extension', ['teamelf/layout/Page', 'teamelf/extension/
       ExtensionCardItem = _teamelfExtensionExtensionCardItem.default;
     }],
     execute: function () {
-      _extends = Object.assign || function (target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
-          }
-        }
-
-        return target;
-      };
-
       _createClass = function () {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -607,8 +593,6 @@ System.register('teamelf/Extension', ['teamelf/layout/Page', 'teamelf/extension/
         }, {
           key: 'view',
           value: function view() {
-            var _this3 = this;
-
             return React.createElement(
               Row,
               null,
@@ -616,9 +600,7 @@ System.register('teamelf/Extension', ['teamelf/layout/Page', 'teamelf/extension/
                 return React.createElement(
                   Col,
                   { sm: 24, md: 12, lg: 8, xxl: 6, style: { height: 160 } },
-                  React.createElement(ExtensionCardItem, _extends({}, o, {
-                    done: _this3.fetchExtensions.bind(_this3)
-                  }))
+                  React.createElement(ExtensionCardItem, o)
                 );
               })
             );
@@ -1050,6 +1032,18 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
     };
   }
 
+  function _toConsumableArray(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+        arr2[i] = arr[i];
+      }
+
+      return arr2;
+    } else {
+      return Array.from(arr);
+    }
+  }
+
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -1143,6 +1137,61 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
             columns: [],
             loading: false
           };
+          _this.permissions = [{
+            name: '更新站点信息',
+            permission: 'config.update'
+          }, {
+            name: '查看权限列表',
+            permission: 'permission.list'
+          }, {
+            name: '更新权限',
+            permission: 'permission.update'
+          }, {
+            name: '查看插件列表',
+            permission: 'extension.list'
+          }, {
+            name: '激活/停用插件',
+            permission: 'extension.activate'
+          }, {
+            name: '查看成员列表',
+            permission: 'member.list'
+          }, {
+            name: '查看成员详情',
+            permission: 'member.item'
+          }, {
+            name: '创建新成员',
+            permission: 'member.create'
+          }, {
+            name: '更新成员信息',
+            permission: 'member.update'
+          }, {
+            name: '成员角色更改',
+            permission: 'member.role.update'
+          }, {
+            name: '成员密码重设',
+            permission: 'member.password.reset'
+          }, {
+            name: '创新新角色',
+            permission: 'role.create'
+          }, {
+            name: '更新角色信息',
+            permission: 'role.update'
+          }, {
+            name: '删除角色',
+            permission: 'role.delete'
+          }, {
+            name: '查看发信邮箱列表',
+            permission: 'mailer.list'
+          }, {
+            name: '创新发信邮箱',
+            permission: 'mailer.create'
+          }, {
+            name: '更新发信邮箱',
+            permission: 'mailer.update'
+          }, {
+            name: '删除发信邮箱',
+            permission: 'mailer.delete'
+          }].concat(_toConsumableArray(_this.permissions || []));
           _this.fetch();
           return _this;
         }
@@ -1177,61 +1226,7 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                         dataIndex: 'permission',
                         colSpan: 0
                       }];
-                      dataSource = [{
-                        name: '更新站点信息',
-                        permission: 'config.update'
-                      }, {
-                        name: '查看权限列表',
-                        permission: 'permission.list'
-                      }, {
-                        name: '更新权限',
-                        permission: 'permission.update'
-                      }, {
-                        name: '查看插件列表',
-                        permission: 'extension.list'
-                      }, {
-                        name: '激活/停用插件',
-                        permission: 'extension.activate'
-                      }, {
-                        name: '查看成员列表',
-                        permission: 'member.list'
-                      }, {
-                        name: '查看成员详情',
-                        permission: 'member.item'
-                      }, {
-                        name: '创建新成员',
-                        permission: 'member.create'
-                      }, {
-                        name: '更新成员信息',
-                        permission: 'member.update'
-                      }, {
-                        name: '成员角色更改',
-                        permission: 'member.role.update'
-                      }, {
-                        name: '成员密码重设',
-                        permission: 'member.password.reset'
-                      }, {
-                        name: '创新新角色',
-                        permission: 'role.create'
-                      }, {
-                        name: '更新角色信息',
-                        permission: 'role.update'
-                      }, {
-                        name: '删除角色',
-                        permission: 'role.delete'
-                      }, {
-                        name: '查看发信邮箱列表',
-                        permission: 'mailer.list'
-                      }, {
-                        name: '创新发信邮箱',
-                        permission: 'mailer.create'
-                      }, {
-                        name: '更新发信邮箱',
-                        permission: 'mailer.update'
-                      }, {
-                        name: '删除发信邮箱',
-                        permission: 'mailer.delete'
-                      }];
+                      dataSource = _.cloneDeep(this.permissions);
 
                       _loop = function _loop(permission) {
                         var d = dataSource.find(function (o) {
@@ -1996,8 +1991,7 @@ System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _c
 
             this.setState({ loading: true });
             axios.put('extension/' + this.props.vendor + '/' + this.props.package, { activation: activation }).then(function (r) {
-              _this2.props.done();
-              _this2.setState({ loading: false });
+              window.location.reload();
             }).catch(function (e) {
               _this2.setState({ loading: false });
             });
@@ -2018,8 +2012,7 @@ System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _c
               onOk: function onOk() {
                 _this3.setState({ loading: true });
                 axios.delete('extension/' + _this3.props.vendor + '/' + _this3.props.package).then(function (r) {
-                  _this3.props.done();
-                  _this3.setState({ loading: false });
+                  window.location.reload();
                 }).catch(function (e) {
                   _this3.setState({ loading: false });
                 });
@@ -2723,7 +2716,7 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
 System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_export, _context) {
   "use strict";
 
-  var Logo, _extends, _createClass, _ReactRouterDOM, Link, withRouter, _antd, Layout, Menu, Icon, Sider, SideNav;
+  var Logo, _createClass, _ReactRouterDOM, Link, withRouter, _antd, Layout, Menu, Icon, Sider, SideNav;
 
   function _toConsumableArray(arr) {
     if (Array.isArray(arr)) {
@@ -2772,20 +2765,6 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
       Logo = _teamelfLayoutLogo.default;
     }],
     execute: function () {
-      _extends = Object.assign || function (target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
-          }
-        }
-
-        return target;
-      };
-
       _createClass = function () {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -2821,22 +2800,14 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
 
           var _this = _possibleConstructorReturn(this, (SideNav.__proto__ || Object.getPrototypeOf(SideNav)).call(this, props));
 
-          _this.navigations = [{ key: 'home', icon: 'home', title: '概览', children: [{ path: '/home', icon: 'home', title: '工作台' }] }, { key: 'user', icon: 'user', title: '成员', children: [{ path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'user', title: '编辑成员' }, { path: '/permission', icon: 'key', title: '成员组权限管理' }] }, { key: 'config', icon: 'tool', title: '站点', children: [{ path: '/config', icon: 'tool', title: '基本设置' }, { path: '/mailer', icon: 'mail', title: '邮箱设置' }, { path: '/extension', icon: 'tool', title: '插件管理' }] }].concat(_toConsumableArray(_this.navigations || []));
-          _this.state = _extends({}, _this.getNavigationFromRoute());
+          _this.navigations = [{ path: '/home', icon: 'home', title: '工作台' }, { path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'user', title: '编辑成员' }, { path: '/permission', icon: 'key', title: '成员组权限管理' }, { path: '/config', icon: 'tool', title: '基本设置' }, { path: '/mailer', icon: 'mail', title: '邮箱设置' }, { path: '/extension', icon: 'tool', title: '插件管理' }].concat(_toConsumableArray(_this.navigations || []));
+          _this.state = {
+            currentNavigation: _this.getNavigationFromRoute()
+          };
           return _this;
         }
 
         _createClass(SideNav, [{
-          key: 'componentWillReceiveProps',
-          value: function componentWillReceiveProps(nextProps) {
-            // change navigation selected status when routes changed
-            var navigations = this.getNavigationFromRoute(nextProps.location.pathname);
-            if (nextProps.collapsed) {
-              navigations.openedNavigationGroup = null;
-            }
-            this.setState(navigations);
-          }
-        }, {
           key: 'getNavigationFromRoute',
           value: function getNavigationFromRoute() {
             var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props.location.pathname;
@@ -2847,34 +2818,9 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
             try {
               for (var _iterator = this.navigations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 var nav = _step.value;
-                var _iteratorNormalCompletion2 = true;
-                var _didIteratorError2 = false;
-                var _iteratorError2 = undefined;
 
-                try {
-                  for (var _iterator2 = nav.children[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                    var o = _step2.value;
-
-                    if (path.match(o.pattern || o.path)) {
-                      return {
-                        openedNavigationGroup: nav.key,
-                        currentNavigation: o.path
-                      };
-                    }
-                  }
-                } catch (err) {
-                  _didIteratorError2 = true;
-                  _iteratorError2 = err;
-                } finally {
-                  try {
-                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                      _iterator2.return();
-                    }
-                  } finally {
-                    if (_didIteratorError2) {
-                      throw _iteratorError2;
-                    }
-                  }
+                if (path.match(nav.pattern || nav.path)) {
+                  return nav.path;
                 }
               }
             } catch (err) {
@@ -2892,21 +2838,7 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
               }
             }
 
-            return {
-              openedNavigationGroup: null,
-              currentNavigation: null
-            };
-          }
-        }, {
-          key: 'handleOpenNavigation',
-          value: function handleOpenNavigation(keys) {
-            var openedNavigationGroup = this.state.openedNavigationGroup;
-            if (keys.length === 0 || openedNavigationGroup === keys[keys.length - 1]) {
-              openedNavigationGroup = null;
-            } else {
-              openedNavigationGroup = keys[keys.length - 1];
-            }
-            this.setState({ openedNavigationGroup: openedNavigationGroup });
+            return null;
           }
         }, {
           key: 'render',
@@ -2938,42 +2870,22 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
                   theme: 'dark',
                   mode: 'inline',
                   style: { margin: '20px 0' },
-                  openKeys: [this.state.openedNavigationGroup],
-                  onOpenChange: this.handleOpenNavigation.bind(this),
                   selectedKeys: [this.state.currentNavigation]
                 },
-                this.navigations.map(function (grp, idx) {
+                this.navigations.map(function (o) {
                   return React.createElement(
-                    Menu.SubMenu,
-                    {
-                      key: grp.key,
-                      title: React.createElement(
+                    Menu.Item,
+                    { key: o.path },
+                    React.createElement(
+                      Link,
+                      { to: o.path },
+                      React.createElement(Icon, { type: o.icon }),
+                      React.createElement(
                         'span',
                         null,
-                        React.createElement(Icon, { type: grp.icon }),
-                        React.createElement(
-                          'span',
-                          null,
-                          grp.title
-                        )
+                        o.title
                       )
-                    },
-                    grp.children.map(function (o) {
-                      return React.createElement(
-                        Menu.Item,
-                        { key: o.path },
-                        React.createElement(
-                          Link,
-                          { to: o.path },
-                          React.createElement(Icon, { type: o.icon }),
-                          React.createElement(
-                            'span',
-                            null,
-                            o.title
-                          )
-                        )
-                      );
-                    })
+                    )
                   );
                 })
               )

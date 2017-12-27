@@ -42,10 +42,7 @@ export default class extends Page {
       <Row>
         {this.state.extensions.map(o => (
           <Col sm={24} md={12} lg={8} xxl={6} style={{height: 160}}>
-            <ExtensionCardItem
-              {...o}
-              done={this.fetchExtensions.bind(this)}
-            />
+            <ExtensionCardItem {...o}/>
           </Col>
         ))}
       </Row>
