@@ -19,6 +19,7 @@ use TeamELF\Event\RoutesHaveBeenLoaded;
 use TeamELF\Event\RoutesWillBeLoaded;
 use TeamELF\Exception\HttpMethodNotAllowedException;
 use TeamELF\Exception\HttpNotFoundException;
+use TeamELF\Extension\ExtensionManager;
 use TeamELF\Router\Router;
 use TeamELF\View\ViewService;
 
@@ -39,12 +40,33 @@ class Server extends AbstractApplication
      */
     protected $viewService;
 
+    /**
+     * @var ExtensionManager
+     */
+    protected $extensionManager;
+
     function __construct($basePath, $storagePath = null)
     {
         parent::__construct($basePath, $storagePath);
         $this->router = new Router();
         $this->apiService = new ApiService();
         $this->viewService = new ViewService();
+        $this->extensionManager = new ExtensionManager();
+        $this->extensionManager->load($this->basePath . '/vendor');
+    }
+
+    /**
+     * application's interface maker
+     *
+     * @param string $key
+     * @return \Doctrine\ORM\EntityManager|\Monolog\Logger|\Symfony\Component\Filesystem\Filesystem|AbstractApplication|\TeamELF\Config\Config|ExtensionManager
+     */
+    public function make($key)
+    {
+        switch ($key) {
+            case 'extension': return $this->extensionManager;
+            default: return parent::make($key);
+        }
     }
 
     /**

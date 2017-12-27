@@ -1,9 +1,9 @@
 'use strict';
 
-System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'teamelf/layout/Header', 'teamelf/layout/Footer', 'teamelf/Home', 'teamelf/Member', 'teamelf/Config', 'teamelf/Mailer', 'teamelf/Profile', 'teamelf/Permission'], function (_export, _context) {
+System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'teamelf/layout/Header', 'teamelf/layout/Footer', 'teamelf/Home', 'teamelf/Member', 'teamelf/Config', 'teamelf/Mailer', 'teamelf/Profile', 'teamelf/Permission', 'teamelf/Extension'], function (_export, _context) {
   "use strict";
 
-  var RedirectAs404, SideNav, Header, Footer, Home, Member, Config, Mailer, Profile, Permission, _createClass, _ReactRouterDOM, Switch, Route, Redirect, _antd, Layout, _class;
+  var RedirectAs404, SideNav, Header, Footer, Home, Member, Config, Mailer, Profile, Permission, Extension, _createClass, _ReactRouterDOM, Switch, Route, Redirect, _antd, Layout, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -56,6 +56,8 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
       Profile = _teamelfProfile.default;
     }, function (_teamelfPermission) {
       Permission = _teamelfPermission.default;
+    }, function (_teamelfExtension) {
+      Extension = _teamelfExtension.default;
     }],
     execute: function () {
       _createClass = function () {
@@ -91,7 +93,7 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
 
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-          _this.routes = [{ path: '/home', component: Home }, { path: '/member', component: Member }, { path: '/config', component: Config }, { path: '/mailer', component: Mailer }, { path: '/profile', exact: true, component: Profile }, { path: '/permission', exact: true, component: Permission }];
+          _this.routes = [{ path: '/home', component: Home }, { path: '/member', component: Member }, { path: '/config', component: Config }, { path: '/mailer', component: Mailer }, { path: '/profile', exact: true, component: Profile }, { path: '/permission', exact: true, component: Permission }, { path: '/extension', exact: true, component: Extension }];
           // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge
           _this.state = {
             collapsed: localStorage.sideNavCollapsed === 'true'
@@ -458,6 +460,153 @@ System.register('teamelf/Error', [], function (_export, _context) {
       }(React.Component));
 
       _export('RedirectAs404', RedirectAs404);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/Extension', ['teamelf/layout/Page', 'teamelf/extension/ExtensionCardItem'], function (_export, _context) {
+  "use strict";
+
+  var Page, ExtensionCardItem, _extends, _createClass, _antd, Row, Col, Button, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLayoutPage) {
+      Page = _teamelfLayoutPage.default;
+    }, function (_teamelfExtensionExtensionCardItem) {
+      ExtensionCardItem = _teamelfExtensionExtensionCardItem.default;
+    }],
+    execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Row = _antd.Row;
+      Col = _antd.Col;
+      Button = _antd.Button;
+
+      _class = function (_Page) {
+        _inherits(_class, _Page);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.state = {
+            extensions: []
+          };
+          _this.fetchExtensions();
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'fetchExtensions',
+          value: function fetchExtensions() {
+            var _this2 = this;
+
+            axios.get('extension').then(function (r) {
+              _this2.setState({ extensions: r.data });
+            });
+          }
+        }, {
+          key: 'title',
+          value: function title() {
+            return '插件管理';
+          }
+        }, {
+          key: 'description',
+          value: function description() {
+            return React.createElement(
+              Button,
+              { type: 'primary' },
+              '\u5B89\u88C5\u65B0\u63D2\u4EF6'
+            );
+          }
+        }, {
+          key: 'view',
+          value: function view() {
+            var _this3 = this;
+
+            return React.createElement(
+              Row,
+              null,
+              this.state.extensions.map(function (o) {
+                return React.createElement(
+                  Col,
+                  { sm: 24, md: 12, lg: 8, xxl: 6, style: { height: 160 } },
+                  React.createElement(ExtensionCardItem, _extends({}, o, {
+                    done: _this3.fetchExtensions.bind(_this3)
+                  }))
+                );
+              })
+            );
+          }
+        }]);
+
+        return _class;
+      }(Page);
+
+      _export('default', _class);
     }
   };
 });
@@ -1011,6 +1160,12 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                         name: '更新权限',
                         permission: 'permission.update'
                       }, {
+                        name: '查看插件列表',
+                        permission: 'extension.list'
+                      }, {
+                        name: '激活/停用插件',
+                        permission: 'extension.activate'
+                      }, {
                         name: '查看成员列表',
                         permission: 'member.list'
                       }, {
@@ -1436,273 +1591,6 @@ System.register('teamelf/main', ['teamelf/App', 'teamelf/Error'], function (_exp
     }
   };
 });
-'use strict';
-
-System.register('teamelf/mailer/MailerCardItem', ['teamelf/components/InfoEditor'], function (_export, _context) {
-  "use strict";
-
-  var InfoEditor, _createClass, _antd, Card, Button, Tag, _class;
-
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfComponentsInfoEditor) {
-      InfoEditor = _teamelfComponentsInfoEditor.default;
-    }],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Card = _antd.Card;
-      Button = _antd.Button;
-      Tag = _antd.Tag;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class(props) {
-          _classCallCheck(this, _class);
-
-          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-          _this.testBtnStatus = {
-            default: {
-              loading: false,
-              type: '',
-              text: '测试连接'
-            },
-            testing: {
-              loading: true,
-              type: 'dashed',
-              text: '测试中'
-            },
-            success: {
-              loading: false,
-              type: 'primary',
-              text: '连接成功'
-            },
-            error: {
-              loading: false,
-              type: 'danger',
-              text: '连接失败，再试一次？'
-            }
-          };
-          _this.state = {
-            status: 'default'
-          };
-          return _this;
-        }
-
-        _createClass(_class, [{
-          key: 'setAsDefault',
-          value: function setAsDefault() {
-            var _this2 = this;
-
-            axios.put('mailer/' + this.props.id + '/default').then(function (r) {
-              _this2.props.done();
-              antd.notification.success({
-                message: '默认发信邮箱设置成功'
-              });
-            });
-          }
-        }, {
-          key: 'delete',
-          value: function _delete() {
-            var _this3 = this;
-
-            antd.Modal.confirm({
-              title: '不可恢复',
-              content: '确定要删除么？该操作可能无法恢复',
-              onOk: function onOk() {
-                axios.delete('mailer/' + _this3.props.id).then(function (r) {
-                  _this3.props.done();
-                  antd.notification.success({
-                    message: '删除成功'
-                  });
-                });
-              }
-            });
-          }
-        }, {
-          key: 'edit',
-          value: function edit(key, value) {
-            var _this4 = this;
-
-            return axios.put('mailer/' + this.props.id, _defineProperty({}, key, value)).then(function (r) {
-              _this4.props.done();
-              return r;
-            });
-          }
-        }, {
-          key: 'testConnection',
-          value: function testConnection() {
-            var _this5 = this;
-
-            this.setState({ status: 'testing' });
-            axios.post('mailer/' + this.props.id + '/test').then(function (r) {
-              if (r.data.connection === true) {
-                _this5.setState({ status: 'success' });
-              } else {
-                _this5.setState({ status: 'error' });
-              }
-            }).catch(function (e) {
-              _this5.setState({ status: 'error' });
-            });
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              Card,
-              {
-                style: { marginBottom: 20 },
-                title: this.props.sender,
-                extra: this.props.default && React.createElement(
-                  Tag,
-                  { color: 'red' },
-                  '\u9ED8\u8BA4'
-                ),
-                actions: [React.createElement(
-                  Button,
-                  {
-                    ghost: true, type: 'primary',
-                    disabled: this.props.default,
-                    onClick: this.setAsDefault.bind(this)
-                  },
-                  '\u8BBE\u4E3A\u9ED8\u8BA4'
-                ), React.createElement(
-                  Button,
-                  {
-                    type: 'danger',
-                    onClick: this.delete.bind(this)
-                  },
-                  '\u5220\u9664'
-                )]
-              },
-              React.createElement(InfoEditor, {
-                label: '\u9A71\u52A8',
-                value: this.props.driver,
-                onEdit: this.edit.bind(this, 'driver'),
-                type: 'radio',
-                options: [{ label: 'SMTP', value: 'smtp' }]
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u4E3B\u673A',
-                value: this.props.host,
-                onEdit: this.edit.bind(this, 'host')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u7AEF\u53E3',
-                value: this.props.port,
-                onEdit: this.edit.bind(this, 'port')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u52A0\u5BC6\u65B9\u5F0F',
-                value: this.props.encryption,
-                onEdit: this.edit.bind(this, 'encryption'),
-                type: 'radio',
-                options: [{ label: 'SSL', value: 'ssl' }, { label: 'TLS', value: 'tls' }, { label: '不加密', value: '' }]
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u767B\u5F55\u540D',
-                value: this.props.username,
-                onEdit: this.edit.bind(this, 'username')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u5BC6\u7801',
-                value: this.props.password,
-                onEdit: this.edit.bind(this, 'password')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u53D1\u4FE1\u90AE\u7BB1',
-                value: this.props.sender,
-                onEdit: this.edit.bind(this, 'sender')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u5907\u6CE8',
-                value: this.props.remark,
-                onEdit: this.edit.bind(this, 'remark')
-              }),
-              React.createElement(
-                Button,
-                {
-                  className: 'full',
-                  loading: this.testBtnStatus[this.state.status].loading,
-                  type: this.testBtnStatus[this.state.status].type,
-                  onClick: this.testConnection.bind(this)
-                },
-                this.testBtnStatus[this.state.status].text
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
 "use strict";
 
 System.register("teamelf/components/Gender", [], function (_export, _context) {
@@ -1986,6 +1874,419 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
                   onClick: this.toggleEditor.bind(this) })
               ),
               this.state.editor && this.renderEditor()
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Card, Switch, Button, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Switch = _antd.Switch;
+      Button = _antd.Button;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.state = {
+            loading: false
+          };
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'activate',
+          value: function activate(activation) {
+            var _this2 = this;
+
+            this.setState({ loading: true });
+            axios.put('extension/' + this.props.package, { activation: activation }).then(function (r) {
+              _this2.props.done();
+              _this2.setState({ loading: false });
+            }).catch(function (e) {
+              _this2.setState({ loading: false });
+            });
+          }
+        }, {
+          key: 'upgrade',
+          value: function upgrade() {
+            alert('not supported yet!');
+          }
+        }, {
+          key: 'uninstall',
+          value: function uninstall() {
+            alert('not supported yet!');
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                title: this.props.package,
+                extra: this.props.version,
+                actions: [React.createElement(Switch, {
+                  checked: this.props.isActivated,
+                  checkedChildren: '\u542F\u7528',
+                  unCheckedChildren: '\u505C\u7528',
+                  onChange: this.activate.bind(this),
+                  loading: this.state.loading
+                }), React.createElement(
+                  Button,
+                  {
+                    type: 'primary', size: 'small',
+                    onClick: this.upgrade.bind(this)
+                  },
+                  '\u5347\u7EA7'
+                ), React.createElement(
+                  Button,
+                  {
+                    type: 'danger', size: 'small',
+                    onClick: this.uninstall.bind(this)
+                  },
+                  '\u5378\u8F7D'
+                )]
+              },
+              React.createElement(
+                'div',
+                null,
+                this.props.description
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/mailer/MailerCardItem', ['teamelf/components/InfoEditor'], function (_export, _context) {
+  "use strict";
+
+  var InfoEditor, _createClass, _antd, Card, Button, Tag, _class;
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfComponentsInfoEditor) {
+      InfoEditor = _teamelfComponentsInfoEditor.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Button = _antd.Button;
+      Tag = _antd.Tag;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.testBtnStatus = {
+            default: {
+              loading: false,
+              type: '',
+              text: '测试连接'
+            },
+            testing: {
+              loading: true,
+              type: 'dashed',
+              text: '测试中'
+            },
+            success: {
+              loading: false,
+              type: 'primary',
+              text: '连接成功'
+            },
+            error: {
+              loading: false,
+              type: 'danger',
+              text: '连接失败，再试一次？'
+            }
+          };
+          _this.state = {
+            status: 'default'
+          };
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'setAsDefault',
+          value: function setAsDefault() {
+            var _this2 = this;
+
+            axios.put('mailer/' + this.props.id + '/default').then(function (r) {
+              _this2.props.done();
+              antd.notification.success({
+                message: '默认发信邮箱设置成功'
+              });
+            });
+          }
+        }, {
+          key: 'delete',
+          value: function _delete() {
+            var _this3 = this;
+
+            antd.Modal.confirm({
+              title: '不可恢复',
+              content: '确定要删除么？该操作可能无法恢复',
+              onOk: function onOk() {
+                axios.delete('mailer/' + _this3.props.id).then(function (r) {
+                  _this3.props.done();
+                  antd.notification.success({
+                    message: '删除成功'
+                  });
+                });
+              }
+            });
+          }
+        }, {
+          key: 'edit',
+          value: function edit(key, value) {
+            var _this4 = this;
+
+            return axios.put('mailer/' + this.props.id, _defineProperty({}, key, value)).then(function (r) {
+              _this4.props.done();
+              return r;
+            });
+          }
+        }, {
+          key: 'testConnection',
+          value: function testConnection() {
+            var _this5 = this;
+
+            this.setState({ status: 'testing' });
+            axios.post('mailer/' + this.props.id + '/test').then(function (r) {
+              if (r.data.connection === true) {
+                _this5.setState({ status: 'success' });
+              } else {
+                _this5.setState({ status: 'error' });
+              }
+            }).catch(function (e) {
+              _this5.setState({ status: 'error' });
+            });
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                style: { marginBottom: 20 },
+                title: this.props.sender,
+                extra: this.props.default && React.createElement(
+                  Tag,
+                  { color: 'red' },
+                  '\u9ED8\u8BA4'
+                ),
+                actions: [React.createElement(
+                  Button,
+                  {
+                    ghost: true, type: 'primary',
+                    disabled: this.props.default,
+                    onClick: this.setAsDefault.bind(this)
+                  },
+                  '\u8BBE\u4E3A\u9ED8\u8BA4'
+                ), React.createElement(
+                  Button,
+                  {
+                    type: 'danger',
+                    onClick: this.delete.bind(this)
+                  },
+                  '\u5220\u9664'
+                )]
+              },
+              React.createElement(InfoEditor, {
+                label: '\u9A71\u52A8',
+                value: this.props.driver,
+                onEdit: this.edit.bind(this, 'driver'),
+                type: 'radio',
+                options: [{ label: 'SMTP', value: 'smtp' }]
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u4E3B\u673A',
+                value: this.props.host,
+                onEdit: this.edit.bind(this, 'host')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u7AEF\u53E3',
+                value: this.props.port,
+                onEdit: this.edit.bind(this, 'port')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u52A0\u5BC6\u65B9\u5F0F',
+                value: this.props.encryption,
+                onEdit: this.edit.bind(this, 'encryption'),
+                type: 'radio',
+                options: [{ label: 'SSL', value: 'ssl' }, { label: 'TLS', value: 'tls' }, { label: '不加密', value: '' }]
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u767B\u5F55\u540D',
+                value: this.props.username,
+                onEdit: this.edit.bind(this, 'username')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u5BC6\u7801',
+                value: this.props.password,
+                onEdit: this.edit.bind(this, 'password')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u53D1\u4FE1\u90AE\u7BB1',
+                value: this.props.sender,
+                onEdit: this.edit.bind(this, 'sender')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u5907\u6CE8',
+                value: this.props.remark,
+                onEdit: this.edit.bind(this, 'remark')
+              }),
+              React.createElement(
+                Button,
+                {
+                  className: 'full',
+                  loading: this.testBtnStatus[this.state.status].loading,
+                  type: this.testBtnStatus[this.state.status].type,
+                  onClick: this.testConnection.bind(this)
+                },
+                this.testBtnStatus[this.state.status].text
+              )
             );
           }
         }]);
@@ -2734,7 +3035,7 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
 
           var _this = _possibleConstructorReturn(this, (SideNav.__proto__ || Object.getPrototypeOf(SideNav)).call(this, props));
 
-          _this.navigations = [{ key: 'home', icon: 'home', title: '概览', children: [{ path: '/home', icon: 'home', title: '工作台' }] }, { key: 'user', icon: 'user', title: '成员', children: [{ path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'user', title: '编辑成员' }, { path: '/permission', icon: 'key', title: '成员组权限管理' }] }, { key: 'config', icon: 'tool', title: '站点', children: [{ path: '/config', icon: 'tool', title: '基本设置' }, { path: '/mailer', icon: 'mail', title: '邮箱设置' }] }];
+          _this.navigations = [{ key: 'home', icon: 'home', title: '概览', children: [{ path: '/home', icon: 'home', title: '工作台' }] }, { key: 'user', icon: 'user', title: '成员', children: [{ path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'user', title: '编辑成员' }, { path: '/permission', icon: 'key', title: '成员组权限管理' }] }, { key: 'config', icon: 'tool', title: '站点', children: [{ path: '/config', icon: 'tool', title: '基本设置' }, { path: '/mailer', icon: 'mail', title: '邮箱设置' }, { path: '/extension', icon: 'tool', title: '插件管理' }] }];
           _this.state = _extends({}, _this.getNavigationFromRoute());
           return _this;
         }
@@ -2898,228 +3199,6 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
       }(React.Component);
 
       _export('default', withRouter(SideNav));
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, AbstractModel;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      AbstractModel = function () {
-        function AbstractModel(props) {
-          _classCallCheck(this, AbstractModel);
-
-          if (new.target === AbstractModel) {
-            throw new Error('AbstractModel cannot be instanced directly!');
-          }
-
-          /**
-           * model's attributes
-           *
-           * @type {Object}
-           * @private
-           */
-          this._attributes = {};
-
-          /**
-           * the fetching api url
-           * @type {String}
-           * @private
-           */
-          this._url = '';
-        }
-
-        /**
-         * getter & setter of _attributes
-         */
-
-
-        _createClass(AbstractModel, [{
-          key: 'fetch',
-          value: function fetch() {
-            throw new Error('AbstractModel@fetch must be implemented by subclass');
-          }
-        }, {
-          key: 'create',
-          value: function create() {
-            throw new Error('AbstractModel@create must be implemented by subclass');
-          }
-        }, {
-          key: 'update',
-          value: function update() {
-            throw new Error('AbstractModel@update must be implemented by subclass');
-          }
-        }, {
-          key: 'delete',
-          value: function _delete() {
-            throw new Error('AbstractModel@delete must be implemented by subclass');
-          }
-        }, {
-          key: 'attributes',
-          get: function get() {
-            return this._attributes;
-          },
-          set: function set(attributes) {
-            this._attributes = attributes;
-          }
-        }, {
-          key: 'url',
-          get: function get() {
-            return this._url;
-          },
-          set: function set(url) {
-            this._url = url;
-          }
-        }]);
-
-        return AbstractModel;
-      }();
-
-      _export('default', AbstractModel);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/permission/PermissionCardItem', ['teamelf/components/InfoEditor'], function (_export, _context) {
-  "use strict";
-
-  var InfoEditor, _createClass, _antd, Card, Button, Tag, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfComponentsInfoEditor) {
-      InfoEditor = _teamelfComponentsInfoEditor.default;
-    }],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Card = _antd.Card;
-      Button = _antd.Button;
-      Tag = _antd.Tag;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class() {
-          _classCallCheck(this, _class);
-
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-        }
-
-        _createClass(_class, [{
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              Card,
-              {
-                style: { marginBottom: 20 },
-                title: this.props.name
-              },
-              React.createElement(
-                'div',
-                null,
-                '\u66F4\u65B0\u7AD9\u70B9\u4FE1\u606F config.update'
-              ),
-              React.createElement(
-                'div',
-                null,
-                '\u521B\u5EFA\u65B0\u6210\u5458 member.create'
-              ),
-              React.createElement(
-                'div',
-                null,
-                '\u6210\u5458\u5347\u7EA7 member.role.update'
-              ),
-              React.createElement(
-                'div',
-                null,
-                '\u6210\u5458\u5BC6\u7801\u91CD\u8BBE member.password.reset'
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
     }
   };
 });
@@ -3940,6 +4019,228 @@ System.register('teamelf/member/MemberList', ['teamelf/layout/Page', 'teamelf/me
       }(Page);
 
       _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/permission/PermissionCardItem', ['teamelf/components/InfoEditor'], function (_export, _context) {
+  "use strict";
+
+  var InfoEditor, _createClass, _antd, Card, Button, Tag, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfComponentsInfoEditor) {
+      InfoEditor = _teamelfComponentsInfoEditor.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Button = _antd.Button;
+      Tag = _antd.Tag;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                style: { marginBottom: 20 },
+                title: this.props.name
+              },
+              React.createElement(
+                'div',
+                null,
+                '\u66F4\u65B0\u7AD9\u70B9\u4FE1\u606F config.update'
+              ),
+              React.createElement(
+                'div',
+                null,
+                '\u521B\u5EFA\u65B0\u6210\u5458 member.create'
+              ),
+              React.createElement(
+                'div',
+                null,
+                '\u6210\u5458\u5347\u7EA7 member.role.update'
+              ),
+              React.createElement(
+                'div',
+                null,
+                '\u6210\u5458\u5BC6\u7801\u91CD\u8BBE member.password.reset'
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, AbstractModel;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      AbstractModel = function () {
+        function AbstractModel(props) {
+          _classCallCheck(this, AbstractModel);
+
+          if (new.target === AbstractModel) {
+            throw new Error('AbstractModel cannot be instanced directly!');
+          }
+
+          /**
+           * model's attributes
+           *
+           * @type {Object}
+           * @private
+           */
+          this._attributes = {};
+
+          /**
+           * the fetching api url
+           * @type {String}
+           * @private
+           */
+          this._url = '';
+        }
+
+        /**
+         * getter & setter of _attributes
+         */
+
+
+        _createClass(AbstractModel, [{
+          key: 'fetch',
+          value: function fetch() {
+            throw new Error('AbstractModel@fetch must be implemented by subclass');
+          }
+        }, {
+          key: 'create',
+          value: function create() {
+            throw new Error('AbstractModel@create must be implemented by subclass');
+          }
+        }, {
+          key: 'update',
+          value: function update() {
+            throw new Error('AbstractModel@update must be implemented by subclass');
+          }
+        }, {
+          key: 'delete',
+          value: function _delete() {
+            throw new Error('AbstractModel@delete must be implemented by subclass');
+          }
+        }, {
+          key: 'attributes',
+          get: function get() {
+            return this._attributes;
+          },
+          set: function set(attributes) {
+            this._attributes = attributes;
+          }
+        }, {
+          key: 'url',
+          get: function get() {
+            return this._url;
+          },
+          set: function set(url) {
+            this._url = url;
+          }
+        }]);
+
+        return AbstractModel;
+      }();
+
+      _export('default', AbstractModel);
     }
   };
 });

@@ -45,6 +45,12 @@ export default class extends Page {
       name: '更新权限',
       permission: 'permission.update',
     }, {
+      name: '查看插件列表',
+      permission: 'extension.list',
+    }, {
+      name: '激活/停用插件',
+      permission: 'extension.activate',
+    }, {
       name: '查看成员列表',
       permission: 'member.list',
     }, {

@@ -25,7 +25,8 @@ class SideNav extends React.Component {
       ]},
       {key: 'config', icon: 'tool', title: '站点', children: [
         {path: '/config', icon: 'tool', title: '基本设置'},
-        {path: '/mailer', icon: 'mail', title: '邮箱设置'}
+        {path: '/mailer', icon: 'mail', title: '邮箱设置'},
+        {path: '/extension', icon: 'tool', title: '插件管理'}
       ]}
     ];
     this.state = {

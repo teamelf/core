@@ -19,6 +19,7 @@ import Config from 'teamelf/Config';
 import Mailer from 'teamelf/Mailer';
 import Profile from 'teamelf/Profile';
 import Permission from 'teamelf/Permission';
+import Extension from 'teamelf/Extension';
 
 export default class extends React.Component {
   constructor (props) {
@@ -30,6 +31,7 @@ export default class extends React.Component {
       {path: '/mailer', component: Mailer},
       {path: '/profile', exact: true, component: Profile},
       {path: '/permission', exact: true, component: Permission},
+      {path: '/extension', exact: true, component: Extension}
 
     ];
     // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge

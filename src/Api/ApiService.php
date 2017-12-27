@@ -18,6 +18,8 @@ use TeamELF\Api\Controller\Auth\LogoutController;
 use TeamELF\Api\Controller\Auth\ResetPasswordController;
 use TeamELF\Api\Controller\Config\ConfigListController;
 use TeamELF\Api\Controller\Config\ConfigUpdateController;
+use TeamELF\Api\Controller\Extension\ExtensionActivateController;
+use TeamELF\Api\Controller\Extension\ExtensionListController;
 use TeamELF\Api\Controller\Helper\PinyinController;
 use TeamELF\Api\Controller\Mailer\MailerCreateController;
 use TeamELF\Api\Controller\Mailer\MailerDeleteController;
@@ -117,6 +119,13 @@ class ApiService extends AbstractService
             ->put('mailer-set-default', '/{id}/default', MailerSetAsDefaultController::class)
             ->delete('mailer-delete', '/{id}', MailerDeleteController::class)
             ->post('mailer-test', '/{id}/test', MailerTestController::class)
+
+            // --------------------
+            // | Extension
+            // --------------------
+            ->prefix('/api/extension')
+            ->get('extension-list', '', ExtensionListController::class)
+            ->put('extension-activate', '/{vendor}/{package}', ExtensionActivateController::class)
 
             // set prefix back to empty
             ->prefix('');
