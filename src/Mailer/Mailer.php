@@ -125,18 +125,20 @@ class Mailer
      */
     public function view($template, $data = [])
     {
-        $data['embedLogo'] = $this->message->embed(new \Swift_Image(
-            file_get_contents(__DIR__ . '/../../assets/static/logo.png'),
-            'logo.png',
-            'image/png'
-        ));
-        $data['embedBg'] = $this->message->embed(new \Swift_Image(
-            file_get_contents(__DIR__ . '/../../assets/static/bg.png'),
-            'bg.png',
-            'image/png'
-        ));
-        $html = ViewService::getEngine()
-            ->render($template, $data);
+        $config = Config::get();
+        $data['embed'] = [
+            'logo' => $this->message->embed(new \Swift_Image(
+                file_get_contents(env('BASE_URL') . $config['logo']),
+                'logo.png',
+                'image/png'
+            )),
+            'bg' => $this->message->embed(new \Swift_Image(
+                file_get_contents(env('BASE_URL') . $config['bg']),
+                'bg.png',
+                'image/png'
+            ))
+        ];
+        $html = ViewService::getEngine()->render($template, $data);
         $this->message->setBody($html, 'text/html');
         return $this;
     }

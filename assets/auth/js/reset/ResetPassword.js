@@ -13,8 +13,9 @@ const { Form, Button, Input } = antd;
 export default class extends SimpleLayout {
   constructor (props) {
     super(props);
+    const query = new URLSearchParams(window.location.search);
     this.state = {
-      email: '',
+      email: query.get('email'),
       token: '',
       password: '',
       passwordConfirmation: '',

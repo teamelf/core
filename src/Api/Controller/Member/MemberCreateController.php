@@ -57,16 +57,14 @@ class MemberCreateController extends AbstractController
         $member->save();
         if ($this->request->get('activate', false) === true) {
             try {
-                $token = (new PasswordResetToken())
-                    ->member($member)
-                    ->save();
                 Mailer::createWithDefaultMailer()
                     ->subject('欢迎')
                     ->view('mail/welcome.twig', [
-                        'token' => $token->getId(),
                         'name' => $member->getName(),
                         'username' => $member->getUsername(),
-                        'email' => $member->getEmail()
+                        'url' => env('BASE_URL')
+                            . '/password/reset?email='
+                            . urlencode($member->getEmail())
                     ])->send($member->getEmail());
             } catch (\Exception $exception) {}
         }

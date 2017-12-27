@@ -63,7 +63,6 @@ class ViewService extends AbstractService
             static::$engine = new \Twig_Environment($loader);
             static::$engine->addGlobal('assets', static::getAssetManager());
             static::$engine->addGlobal('config', Config::get());
-            static::$engine->addGlobal('baseUrl', env('BASE_URL'));
         }
         return static::$engine;
     }
