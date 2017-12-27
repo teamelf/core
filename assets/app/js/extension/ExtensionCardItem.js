@@ -29,7 +29,19 @@ export default class extends React.Component {
     alert('not supported yet!');
   }
   uninstall () {
-    alert('not supported yet!');
+    antd.Modal.confirm({
+      title: '不可恢复',
+      content: '确定要删除么？该操作将删除所有插件数据并且无法恢复。如不使用插件建议停用即可',
+      onOk: () => {
+        this.setState({loading: true});
+        axios.delete(`extension/${this.props.vendor}/${this.props.package}`).then(r => {
+          this.props.done();
+          this.setState({loading: false});
+        }).catch(e => {
+          this.setState({loading: false});
+        });
+      }
+    });
   }
   render () {
     return (

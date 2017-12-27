@@ -15,7 +15,7 @@ use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;
 use TeamELF\Exception\Exception;
 
-class Migration
+class MigrationManager
 {
     /**
      * @var \Doctrine\DBAL\Schema\AbstractSchemaManager
@@ -40,18 +40,29 @@ class Migration
         }
     }
 
-    public function migrate($path)
+    public function migrate($path, $extension = null)
     {
         $migrations = array_diff(
             $this->getMigrationList($path),
             $this->getMigratedList()
         );
         foreach ($migrations as $migration) {
-            $this->up($path, $migration);
+            $this->up($path, $migration, $extension);
         }
     }
 
-    protected function up($path, $version)
+    public function revert($path, $extension = null)
+    {
+        $migrations = array_intersect(
+            $this->getMigrationList($path),
+            $this->getMigratedList()
+        );
+        foreach ($migrations as $migration) {
+            $this->down($path, $migration, $extension);
+        }
+    }
+
+    protected function up($path, $version, $extension = null)
     {
         $filename = $path . '/' . $version . '.up.sql';
         if (!file_exists($filename)) {
@@ -59,9 +70,12 @@ class Migration
         }
         $sql = file_get_contents($filename);
         app('em')->getConnection()->exec($sql);
+        app('em')->getConnection()
+            ->prepare('INSERT INTO migration (version, extension) VALUES (?, ?)')
+            ->execute([$version, $extension]);
     }
 
-    protected function down($path, $version)
+    protected function down($path, $version, $extension = null)
     {
         $filename = $path . '/' . $version . '.down.sql';
         if (!file_exists($filename)) {
@@ -69,6 +83,9 @@ class Migration
         }
         $sql = file_get_contents($filename);
         app('em')->getConnection()->exec($sql);
+        app('em')->getConnection()
+            ->prepare('DELETE FROM migration WHERE version=? AND extension=?')
+            ->execute([$version, $extension]);
     }
 
     protected function getMigrationList($path)

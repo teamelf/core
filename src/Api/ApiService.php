@@ -20,6 +20,7 @@ use TeamELF\Api\Controller\Config\ConfigListController;
 use TeamELF\Api\Controller\Config\ConfigUpdateController;
 use TeamELF\Api\Controller\Extension\ExtensionActivateController;
 use TeamELF\Api\Controller\Extension\ExtensionListController;
+use TeamELF\Api\Controller\Extension\ExtensionUninstallController;
 use TeamELF\Api\Controller\Helper\PinyinController;
 use TeamELF\Api\Controller\Mailer\MailerCreateController;
 use TeamELF\Api\Controller\Mailer\MailerDeleteController;
@@ -126,6 +127,7 @@ class ApiService extends AbstractService
             ->prefix('/api/extension')
             ->get('extension-list', '', ExtensionListController::class)
             ->put('extension-activate', '/{vendor}/{package}', ExtensionActivateController::class)
+            ->delete('extension-uninstall', '/{vendor}/{package}', ExtensionUninstallController::class)
 
             // set prefix back to empty
             ->prefix('');

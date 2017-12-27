@@ -23,6 +23,7 @@ use Monolog\Processor\WebProcessor;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\Filesystem\Filesystem;
 use TeamELF\Config\Config;
+use TeamELF\Database\MigrationManager;
 use TeamELF\Event\AbstractEvent;
 use TeamELF\Exception\Exception;
 use TeamELF\Exception\HttpException;
@@ -74,6 +75,11 @@ abstract class AbstractApplication
      * @var EntityManager
      */
     protected $entityManager;
+
+    /**
+     * @var MigrationManager
+     */
+    protected $migrationManager;
 
     /**
      * @var Logger
@@ -134,6 +140,8 @@ abstract class AbstractApplication
 
         $this->extensionManager->load();
 
+        $this->migrationManager = new MigrationManager();
+
         $this->logger = new Logger('system');
         foreach (Logger::getLevels() as $logLevel) {
             if ($logLevel >= $this->config->debugLevel) {
@@ -151,13 +159,15 @@ abstract class AbstractApplication
      * application's interface maker
      *
      * @param string $key
-     * @return EntityManager|Logger|Filesystem|AbstractApplication|Config
+     * @return EntityManager|Logger|Filesystem|AbstractApplication|Config|MigrationManager|ExtensionManager
      */
     public function make($key)
     {
         switch ($key) {
             case 'config': return $this->config;
             case 'em': return $this->entityManager;
+            case 'extension': return $this->extensionManager;
+            case 'migration': return $this->migrationManager;
             case 'log': return $this->logger;
             case 'file': return $this->files;
             default: return $this;

@@ -180,6 +180,7 @@ class Extension extends AbstractModel
      */
     public function activate()
     {
+        $this->install();
         return $this->activation(true)
             ->save();
     }
@@ -206,6 +207,35 @@ class Extension extends AbstractModel
             . '/vendor'
             . '/' . $this->getVendor()
             . '/' . $this->getPackage();
+    }
+
+    /**
+     * install the extension
+     *
+     * @return $this
+     */
+    public function install()
+    {
+        app('migration')->migrate(
+            $this->getPath() . '/migrations',
+            $this->getPackage()
+        );
+        return $this;
+    }
+
+    /**
+     * uninstall the extension
+     *
+     * @return $this
+     */
+    public function uninstall()
+    {
+        $this->deactivate();
+        app('migration')->revert(
+            $this->getPath() . '/migrations',
+            $this->getPackage()
+        );
+        return $this;
     }
 
     /**

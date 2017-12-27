@@ -14,7 +14,7 @@ if (! function_exists('app')) {
      * get the application instance
      *
      * @param string $make
-     * @return mixed|\Doctrine\ORM\EntityManager|\Monolog\Logger|\TeamELF\Application\AbstractApplication|\TeamELF\Config\Config|\TeamELF\Extension\ExtensionManager
+     * @return mixed|\Doctrine\ORM\EntityManager|\Monolog\Logger|\TeamELF\Application\AbstractApplication|\TeamELF\Config\Config|\TeamELF\Extension\ExtensionManager|\TeamELF\Database\MigrationManager
      */
     function app($make = null)
     {

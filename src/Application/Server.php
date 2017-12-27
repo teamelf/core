@@ -49,20 +49,6 @@ class Server extends AbstractApplication
     }
 
     /**
-     * application's interface maker
-     *
-     * @param string $key
-     * @return \Doctrine\ORM\EntityManager|\Monolog\Logger|\Symfony\Component\Filesystem\Filesystem|AbstractApplication|\TeamELF\Config\Config|ExtensionManager
-     */
-    public function make($key)
-    {
-        switch ($key) {
-            case 'extension': return $this->extensionManager;
-            default: return parent::make($key);
-        }
-    }
-
-    /**
      * register all services
      */
     protected function register(): void
