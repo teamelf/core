@@ -12,6 +12,8 @@
 namespace TeamELF\View\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use TeamELF\Event\AppAssetsHaveBeAdded;
+use TeamELF\Event\AppAssetsWillBeAdded;
 use TeamELF\Http\ViewController;
 use TeamELF\View\ViewService;
 
@@ -44,9 +46,11 @@ class AppController extends ViewController
     protected function addAssets()
     {
         parent::addAssets();
+        app()->dispatch(new AppAssetsWillBeAdded($this->assets));
         $this->assets
             ->addJs(__DIR__ . '/../../../assets/app/dist/app.js')
-            ->entry('teamelf/main')
             ->addCss(__DIR__ . '/../../../assets/app/dist/app.css');
+        app()->dispatch(new AppAssetsHaveBeAdded($this->assets));
+        $this->assets->entry('teamelf/main');
     }
 }

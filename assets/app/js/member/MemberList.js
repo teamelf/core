@@ -48,7 +48,7 @@ export default class extends Page {
     this.setState({chosenRoles});
     this.fetchMemberList();
   }
-  header () {
+  description () {
     return (
       <Row type="flex">
         <Col xs={24} md={{span: 6, order: 2}} align="right">

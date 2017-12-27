@@ -10,6 +10,12 @@
 import Page from 'teamelf/layout/Page';
 
 export default class extends Page {
+  title () {
+    return window.config.name;
+  }
+  description () {
+    return window.config.description;
+  }
   view () {
     return <div>HOME</div>
   }

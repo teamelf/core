@@ -30,13 +30,13 @@ export default class extends Page {
     return '站点基本设置';
   }
   description () {
-    return (
+    return [
       <Button
         type="primary"
         icon="reload"
         onClick={this.reload.bind(this)}
       >修改站点配置须点此刷新方可生效</Button>
-    );
+    ];
   }
   view () {
     return (

@@ -28,7 +28,14 @@ export default class extends Page {
     return '插件管理';
   }
   description () {
-    return <Button type="primary">安装新插件</Button>;
+    return [
+      <p>安装插件后可能需要刷新页面后才能生效</p>,
+      <Button
+        type="primary"
+        icon="reload"
+        onClick={e => window.location.reload()}
+      >刷新页面</Button>
+    ];
   }
   view () {
     return (

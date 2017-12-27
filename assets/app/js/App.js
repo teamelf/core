@@ -31,8 +31,8 @@ export default class extends React.Component {
       {path: '/mailer', component: Mailer},
       {path: '/profile', exact: true, component: Profile},
       {path: '/permission', exact: true, component: Permission},
-      {path: '/extension', exact: true, component: Extension}
-
+      {path: '/extension', exact: true, component: Extension},
+      ...(this.routes || [])
     ];
     // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge
     this.state = {

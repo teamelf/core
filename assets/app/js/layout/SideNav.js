@@ -12,7 +12,7 @@ const { Layout, Menu, Icon } = antd;
 const { Sider } = Layout;
 import Logo from 'teamelf/layout/Logo'
 
-class SideNav extends React.Component {
+export class SideNav extends React.Component {
   constructor (props) {
     super(props);
     this.navigations = [
@@ -27,7 +27,8 @@ class SideNav extends React.Component {
         {path: '/config', icon: 'tool', title: '基本设置'},
         {path: '/mailer', icon: 'mail', title: '邮箱设置'},
         {path: '/extension', icon: 'tool', title: '插件管理'}
-      ]}
+      ]},
+      ...(this.navigations || [])
     ];
     this.state = {
       ...this.getNavigationFromRoute()
