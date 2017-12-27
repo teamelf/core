@@ -17,8 +17,9 @@ export default class Page extends React.Component {
       throw new Error('ContentComponent cannot be instanced directly!');
     }
     super(props);
-
-    this.navigations = []; // [{path, icon, title}]
+  }
+  navigations () {
+    return []; // [{path, icon, title}]
   }
   title () {
     return null;
@@ -29,13 +30,14 @@ export default class Page extends React.Component {
   header () {
     const title = this.title();
     const description = this.description();
-    if (!this.navigations.length && !title && !description) {
+    const navigations = this.navigations();
+    if (!navigations.length && !title && !description) {
       return null;
     }
     return (
       <div>
-        {this.navigations.length > 0 && <Breadcrumb style={{marginBottom: 16}}>
-          {this.navigations.map(o => (
+        {navigations.length > 0 && <Breadcrumb style={{marginBottom: 16}}>
+          {navigations.map(o => (
             <Breadcrumb.Item>
               <Link to={o.path}>
                 <Icon type={o.icon}/>

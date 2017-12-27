@@ -9,7 +9,7 @@
 
 import Page from 'teamelf/layout/Page';
 const { withRouter } = ReactRouterDOM;
-const { Tag, Divider } = antd;
+const { Tag, Icon } = antd;
 import Gender from 'teamelf/components/Gender';
 import InfoEditor from 'teamelf/components/InfoEditor';
 
@@ -32,19 +32,38 @@ class MemberItem extends Page {
       return r;
     });
   }
+  navigations () {
+    if (this.member) {
+      return [
+        {path: '/member', icon: 'user', title: '成员管理'},
+        {path: '/member/' + this.member.username, icon: this.member.role.icon, title: this.member.name}
+      ]
+    } else {
+      return [];
+    }
+  }
+  title () {
+    if (this.member) {
+      return [
+        <Gender gender={this.member.gender}/>,
+        this.member.name
+      ];
+    }
+  }
+  description () {
+    if (this.member) {
+      return (
+        <Tag color={this.member.role.color}>
+          <Icon type={this.member.role.icon}/>
+          {this.member.role.name}
+        </Tag>
+      );
+    }
+  }
   view () {
     if (!this.member) return <div/>;
     return (
       <div style={{padding: 24, background: '#fff'}}>
-        <Tag
-          style={{float: 'right'}}
-          color={this.member.role.color}
-        >{this.member.role.name}</Tag>
-        <h2>
-          <Gender gender={this.member.gender}/>
-          <span> {this.member.name}</span>
-        </h2>
-        <Divider/>
         <InfoEditor
           label="登录名"
           value={this.member.username}

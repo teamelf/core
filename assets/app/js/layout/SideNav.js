@@ -17,10 +17,10 @@ export class SideNav extends React.Component {
     super(props);
     this.navigations = [
       {path: '/home', icon: 'home', title: '工作台'},
-      {path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'user', title: '编辑成员'},
-      {path: '/permission', icon: 'key', title: '成员组权限管理'},
-      {path: '/config', icon: 'tool', title: '基本设置'},
-      {path: '/mailer', icon: 'mail', title: '邮箱设置'},
+      {path: '/member', icon: 'user', title: '成员管理'},
+      {path: '/permission', icon: 'key', title: '权限管理'},
+      {path: '/config', icon: 'tool', title: '团队信息'},
+      {path: '/mailer', icon: 'mail', title: '发信邮箱'},
       {path: '/extension', icon: 'tool', title: '插件管理'},
       ...(this.navigations || [])
     ];

@@ -105,7 +105,7 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
 
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-          _this.routes = [{ path: '/home', component: Home }, { path: '/member', component: Member }, { path: '/config', component: Config }, { path: '/mailer', component: Mailer }, { path: '/profile', exact: true, component: Profile }, { path: '/permission', exact: true, component: Permission }, { path: '/extension', exact: true, component: Extension }].concat(_toConsumableArray(_this.routes || []));
+          _this.routes = [{ path: '/home', exact: true, component: Home }, { path: '/member', component: Member }, { path: '/config', exact: true, component: Config }, { path: '/mailer', exact: true, component: Mailer }, { path: '/profile', exact: true, component: Profile }, { path: '/permission', exact: true, component: Permission }, { path: '/extension', exact: true, component: Extension }].concat(_toConsumableArray(_this.routes || []));
           // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge
           _this.state = {
             collapsed: localStorage.sideNavCollapsed === 'true'
@@ -2613,14 +2613,15 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
           if (new.target === Page) {
             throw new Error('ContentComponent cannot be instanced directly!');
           }
-
-          var _this = _possibleConstructorReturn(this, (Page.__proto__ || Object.getPrototypeOf(Page)).call(this, props));
-
-          _this.navigations = []; // [{path, icon, title}]
-          return _this;
+          return _possibleConstructorReturn(this, (Page.__proto__ || Object.getPrototypeOf(Page)).call(this, props));
         }
 
         _createClass(Page, [{
+          key: 'navigations',
+          value: function navigations() {
+            return []; // [{path, icon, title}]
+          }
+        }, {
           key: 'title',
           value: function title() {
             return null;
@@ -2635,16 +2636,17 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
           value: function header() {
             var title = this.title();
             var description = this.description();
-            if (!this.navigations.length && !title && !description) {
+            var navigations = this.navigations();
+            if (!navigations.length && !title && !description) {
               return null;
             }
             return React.createElement(
               'div',
               null,
-              this.navigations.length > 0 && React.createElement(
+              navigations.length > 0 && React.createElement(
                 Breadcrumb,
                 { style: { marginBottom: 16 } },
-                this.navigations.map(function (o) {
+                navigations.map(function (o) {
                   return React.createElement(
                     Breadcrumb.Item,
                     null,
@@ -2800,7 +2802,7 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
 
           var _this = _possibleConstructorReturn(this, (SideNav.__proto__ || Object.getPrototypeOf(SideNav)).call(this, props));
 
-          _this.navigations = [{ path: '/home', icon: 'home', title: '工作台' }, { path: '/member', pattern: /^\/member(\/[^\/]*)?$/, icon: 'user', title: '编辑成员' }, { path: '/permission', icon: 'key', title: '成员组权限管理' }, { path: '/config', icon: 'tool', title: '基本设置' }, { path: '/mailer', icon: 'mail', title: '邮箱设置' }, { path: '/extension', icon: 'tool', title: '插件管理' }].concat(_toConsumableArray(_this.navigations || []));
+          _this.navigations = [{ path: '/home', icon: 'home', title: '工作台' }, { path: '/member', icon: 'user', title: '成员管理' }, { path: '/permission', icon: 'key', title: '权限管理' }, { path: '/config', icon: 'tool', title: '团队信息' }, { path: '/mailer', icon: 'mail', title: '发信邮箱' }, { path: '/extension', icon: 'tool', title: '插件管理' }].concat(_toConsumableArray(_this.navigations || []));
           _this.state = {
             currentNavigation: _this.getNavigationFromRoute()
           };
@@ -3623,7 +3625,7 @@ System.register('teamelf/member/MemberCreatorModal', [], function (_export, _con
 System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/components/Gender', 'teamelf/components/InfoEditor'], function (_export, _context) {
   "use strict";
 
-  var Page, Gender, InfoEditor, _createClass, _ReactRouterDOM, withRouter, _antd, Tag, Divider, MemberItem;
+  var Page, Gender, InfoEditor, _createClass, _ReactRouterDOM, withRouter, _antd, Tag, Icon, MemberItem;
 
   function _defineProperty(obj, key, value) {
     if (key in obj) {
@@ -3701,7 +3703,7 @@ System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/co
       withRouter = _ReactRouterDOM.withRouter;
       _antd = antd;
       Tag = _antd.Tag;
-      Divider = _antd.Divider;
+      Icon = _antd.Icon;
 
       MemberItem = function (_Page) {
         _inherits(MemberItem, _Page);
@@ -3738,32 +3740,40 @@ System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/co
             });
           }
         }, {
+          key: 'navigations',
+          value: function navigations() {
+            if (this.member) {
+              return [{ path: '/member', icon: 'user', title: '成员管理' }, { path: '/member/' + this.member.username, icon: this.member.role.icon, title: this.member.name }];
+            } else {
+              return [];
+            }
+          }
+        }, {
+          key: 'title',
+          value: function title() {
+            if (this.member) {
+              return [React.createElement(Gender, { gender: this.member.gender }), this.member.name];
+            }
+          }
+        }, {
+          key: 'description',
+          value: function description() {
+            if (this.member) {
+              return React.createElement(
+                Tag,
+                { color: this.member.role.color },
+                React.createElement(Icon, { type: this.member.role.icon }),
+                this.member.role.name
+              );
+            }
+          }
+        }, {
           key: 'view',
           value: function view() {
             if (!this.member) return React.createElement('div', null);
             return React.createElement(
               'div',
               { style: { padding: 24, background: '#fff' } },
-              React.createElement(
-                Tag,
-                {
-                  style: { float: 'right' },
-                  color: this.member.role.color
-                },
-                this.member.role.name
-              ),
-              React.createElement(
-                'h2',
-                null,
-                React.createElement(Gender, { gender: this.member.gender }),
-                React.createElement(
-                  'span',
-                  null,
-                  ' ',
-                  this.member.name
-                )
-              ),
-              React.createElement(Divider, null),
               React.createElement(InfoEditor, {
                 label: '\u767B\u5F55\u540D',
                 value: this.member.username,

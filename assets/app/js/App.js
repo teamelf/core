@@ -25,10 +25,10 @@ export default class extends React.Component {
   constructor (props) {
     super(props);
     this.routes = [
-      {path: '/home', component: Home},
+      {path: '/home', exact: true, component: Home},
       {path: '/member', component: Member},
-      {path: '/config', component: Config},
-      {path: '/mailer', component: Mailer},
+      {path: '/config', exact: true, component: Config},
+      {path: '/mailer', exact: true, component: Mailer},
       {path: '/profile', exact: true, component: Profile},
       {path: '/permission', exact: true, component: Permission},
       {path: '/extension', exact: true, component: Extension},
