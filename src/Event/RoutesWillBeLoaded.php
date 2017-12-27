@@ -22,7 +22,12 @@ class RoutesWillBeLoaded extends AbstractEvent
 
     /**
      * RoutesWillBeLoaded constructor.
-     * routes will be loaded after this event
+     * all extension routes must be added here
+     *
+     * !! BE CAREFUL !!
+     *     DO NOT use same name or same routes with core,
+     *     or the routes in core will be covered,
+     *     unless it's what you want to do
      *
      * @param Router $router
      */

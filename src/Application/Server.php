@@ -40,19 +40,12 @@ class Server extends AbstractApplication
      */
     protected $viewService;
 
-    /**
-     * @var ExtensionManager
-     */
-    protected $extensionManager;
-
     function __construct($basePath, $storagePath = null)
     {
         parent::__construct($basePath, $storagePath);
         $this->router = new Router();
         $this->apiService = new ApiService();
         $this->viewService = new ViewService();
-        $this->extensionManager = new ExtensionManager();
-        $this->extensionManager->load($this->basePath . '/vendor');
     }
 
     /**
@@ -86,6 +79,14 @@ class Server extends AbstractApplication
      */
     protected function boot(): void
     {
+        // boot extensions
+        foreach ($this->extensionManager->getExtensions() as $extension) {
+            if ($extension->isActivated()) {
+                $extension->boot();
+            }
+        }
+
+        // boot app
         $this->dispatch(new RoutesWillBeLoaded($this->router));
         $this->dispatch(new RoutesHaveBeenLoaded($this->router));
 

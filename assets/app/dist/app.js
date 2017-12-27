@@ -1968,7 +1968,7 @@ System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _c
             var _this2 = this;
 
             this.setState({ loading: true });
-            axios.put('extension/' + this.props.package, { activation: activation }).then(function (r) {
+            axios.put('extension/' + this.props.vendor + '/' + this.props.package, { activation: activation }).then(function (r) {
               _this2.props.done();
               _this2.setState({ loading: false });
             }).catch(function (e) {

@@ -13,11 +13,9 @@ namespace TeamELF\View;
 
 use TeamELF\Application\AbstractService;
 use TeamELF\Core\Config;
-use TeamELF\Event\RoutesWillBeLoaded;
+use TeamELF\Event\RoutesHaveBeenLoaded;
 use TeamELF\View\Controller\AppController;
-use TeamELF\View\Controller\ForgetPasswordController;
 use TeamELF\View\Controller\LoginController;
-use TeamELF\View\Controller\MailController;
 use TeamELF\View\Controller\ResetPasswordController;
 use TeamELF\View\Controller\ResultController;
 
@@ -54,7 +52,14 @@ class ViewService extends AbstractService
     public static function getEngine()
     {
         if (!static::$engine) {
-            $loader = new \Twig_Loader_Filesystem(__DIR__ . '/../../views');
+            $loader = new \Twig_Loader_Filesystem();
+            $loader->setPaths(__DIR__ . '/../../views');
+            foreach (app('extension')->getExtensions() as $extension) {
+                $loader->setPaths(
+                    $extension->getPath() . '/views',
+                    $extension->getPackage()
+                );
+            }
             static::$engine = new \Twig_Environment($loader);
             static::$engine->addGlobal('assets', static::getAssetManager());
             static::$engine->addGlobal('config', Config::get());
@@ -68,13 +73,12 @@ class ViewService extends AbstractService
      */
     public function register()
     {
-        app()->listen(RoutesWillBeLoaded::class, [$this, 'handleRoutes']);
+        app()->listen(RoutesHaveBeenLoaded::class, [$this, 'handleRoutes']);
     }
 
-    public function handleRoutes(RoutesWillBeLoaded $event)
+    public function handleRoutes(RoutesHaveBeenLoaded $event)
     {
         $event->getRouter()->prefix('')
-            ->get('test', '/test', MailController::class)
             ->get('fe-login', '/login', LoginController::class)
             ->get('fe-reset-password', '/password/reset', ResetPasswordController::class)
             ->get('fe-result', '/r', ResultController::class)

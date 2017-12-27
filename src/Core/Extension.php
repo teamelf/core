@@ -27,6 +27,13 @@ class Extension extends AbstractModel
      *
      * @Column(type="string", length=100)
      */
+    protected $vendor;
+
+    /**
+     * @var string
+     *
+     * @Column(type="string", length=100)
+     */
     protected $package;
 
     /**
@@ -52,6 +59,28 @@ class Extension extends AbstractModel
 
     // ----------------------------------------
     // | GETTERS & SETTERS
+
+    /**
+     * getter of $vendor
+     *
+     * @return string
+     */
+    public function getVendor()
+    {
+        return $this->vendor;
+    }
+
+    /**
+     * setter of $vendor
+     *
+     * @param string $vendor
+     * @return $this
+     */
+    public function vendor($vendor)
+    {
+        $this->vendor = $vendor;
+        return $this;
+    }
 
     /**
      * getter of $package
@@ -130,14 +159,29 @@ class Extension extends AbstractModel
     }
 
     /**
+     * setter of $activation
+     *
+     * @param bool $activation
+     * @return $this
+     */
+    public function activation(bool $activation)
+    {
+        $this->activation = $activation;
+        return $this;
+    }
+
+    // ----------------------------------------
+    // | HELPER FUNCTIONS
+
+    /**
      * activate the extension
      *
      * @return $this
      */
     public function activate()
     {
-        $this->activation = true;
-        return $this;
+        return $this->activation(true)
+            ->save();
     }
 
     /**
@@ -147,10 +191,34 @@ class Extension extends AbstractModel
      */
     public function deactivate()
     {
-        $this->activation = false;
-        return $this;
+        return $this->activation(false)
+            ->save();
     }
 
-    // ----------------------------------------
-    // | HELPER FUNCTIONS
+    /**
+     * get extension's path in vendor
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return app()->getBasePath()
+            . '/vendor'
+            . '/' . $this->getVendor()
+            . '/' . $this->getPackage();
+    }
+
+    /**
+     * boot the extension
+     *
+     * @return $this
+     */
+    public function boot()
+    {
+        $bootstrap = $this->getPath() . '/bootstrap.php';
+        if (file_exists($bootstrap)) {
+            require $bootstrap;
+        }
+        return $this;
+    }
 }

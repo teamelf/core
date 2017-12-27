@@ -18,7 +18,7 @@ export default class extends React.Component {
   }
   activate (activation) {
     this.setState({loading: true});
-    axios.put('extension/' + this.props.package, {activation}).then(r => {
+    axios.put(`extension/${this.props.vendor}/${this.props.package}`, {activation}).then(r => {
       this.props.done();
       this.setState({loading: false});
     }).catch(e => {

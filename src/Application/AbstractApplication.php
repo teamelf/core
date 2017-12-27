@@ -29,6 +29,7 @@ use TeamELF\Exception\HttpException;
 use TeamELF\Exception\HttpMethodNotAllowedException;
 use TeamELF\Exception\HttpNotFoundException;
 use TeamELF\Exception\HttpValidationException;
+use TeamELF\Extension\ExtensionManager;
 
 abstract class AbstractApplication
 {
@@ -63,6 +64,11 @@ abstract class AbstractApplication
      * @var EventDispatcher
      */
     protected $dispatcher;
+
+    /**
+     * @var ExtensionManager
+     */
+    protected $extensionManager;
 
     /**
      * @var EntityManager
@@ -109,8 +115,14 @@ abstract class AbstractApplication
 
         $this->dispatcher = new EventDispatcher();
 
+        $this->extensionManager = new ExtensionManager($this->basePath . '/vendor');
+
+        $paths = [__DIR__ . '/../../src'];
+        foreach ($this->extensionManager->getPackages() as $package) {
+            $paths[] = $this->basePath . '/vendor/' . $package['name'] . '/src';
+        }
         $entityManagerConfig = Setup::createAnnotationMetadataConfiguration(
-            [__DIR__ . '/../../src'],
+            $paths,
             $this->config->isDev(),
             $this->storagePath . '/proxies',
             $this->config->isDev() ? new ArrayCache() : new ApcuCache()
@@ -119,6 +131,8 @@ abstract class AbstractApplication
             $this->config->db,
             $entityManagerConfig
         );
+
+        $this->extensionManager->load();
 
         $this->logger = new Logger('system');
         foreach (Logger::getLevels() as $logLevel) {

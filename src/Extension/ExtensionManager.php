@@ -21,26 +21,71 @@ class ExtensionManager
      */
     protected $extensions;
 
-    public function load($vendorPath)
+    /**
+     * @var string
+     */
+    protected $vendorPath;
+
+    function __construct($vendorPath)
     {
-        $filename = $vendorPath . '/composer/installed.json';
+        $this->vendorPath = $vendorPath;
+    }
+
+    /**
+     * get extensions repository
+     *
+     * @return Extension[]
+     */
+    public function getExtensions()
+    {
+        return $this->extensions;
+    }
+
+    /**
+     * get install packages
+     *
+     * @return array
+     * @throws Exception
+     */
+    public function getPackages()
+    {
+        $filename = $this->vendorPath . '/composer/installed.json';
         if (!file_exists($filename)) {
             throw new Exception($filename . ' not exists!');
         }
-        $this->extensions = [];
-        $packages = json_decode(file_get_contents($filename), true);
-        foreach ($packages as $package) {
+        $packages = [];
+        foreach (json_decode(file_get_contents($filename), true) as $package) {
             if ($package['type'] === 'teamelf-extension') {
-                $extension = Extension::findBy(['package' => $package['name']]);
-                if (!$extension) {
-                    $extension = (new Extension())
-                        ->package($package['name'])
-                        ->version($package['version'] ?? '')
-                        ->description($package['description'] ?? '')
-                        ->save();
-                }
-                $this->extensions[] = $extension;
+                $packages[] = $package;
             }
         }
+        return $packages;
+    }
+
+    /**
+     * sync install packages with extension repository
+     *
+     * @return $this
+     */
+    public function load()
+    {
+        $this->extensions = [];
+        foreach ($this->getPackages() as $package) {
+            [$v, $p] = explode('/', $package['name']);
+            $extension = Extension::findBy([
+                'vendor' => $v,
+                'package' => $p
+            ]);
+            if (!$extension) {
+                $extension = (new Extension())
+                    ->vendor($v)
+                    ->package($p)
+                    ->version($package['version'] ?? '')
+                    ->description($package['description'] ?? '')
+                    ->save();
+            }
+            $this->extensions[] = $extension;
+        }
+        return $this;
     }
 }

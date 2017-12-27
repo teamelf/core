@@ -1,5 +1,6 @@
 CREATE TABLE extension (
   id VARCHAR(50) NOT NULL,
+  vendor VARCHAR(100) NOT NULL,
   package VARCHAR(100) NOT NULL,
   version VARCHAR(20) DEFAULT NULL,
   description VARCHAR(200) DEFAULT NULL,

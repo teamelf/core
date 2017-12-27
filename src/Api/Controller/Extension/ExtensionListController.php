@@ -29,6 +29,7 @@ class ExtensionListController extends AbstractController
         $response = [];
         foreach (Extension::all() as $extension) {
             $response[] = [
+                'vendor' => $extension->getVendor(),
                 'package' => $extension->getPackage(),
                 'version' => $extension->getVersion(),
                 'description' => $extension->getDescription(),

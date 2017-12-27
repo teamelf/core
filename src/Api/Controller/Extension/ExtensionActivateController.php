@@ -28,16 +28,17 @@ class ExtensionActivateController extends AbstractController
      */
     public function handler(): Response
     {
-        $vendor = $this->getParameter('vendor');
-        $package = $this->getParameter('package');
-        $extension = Extension::findBy(['package' => $vendor . '/' . $package]);
+        $extension = Extension::findBy([
+            'vendor' => $this->getParameter('vendor'),
+            'package' => $this->getParameter('package')
+        ]);
         if (!$extension) {
             throw new HttpForbiddenException();
         }
         if ($this->request->get('activation') === true) {
-            $extension->activate()->save();
+            $extension->activate();
         } else {
-            $extension->deactivate()->save();
+            $extension->deactivate();
         }
         return response();
     }

@@ -22,7 +22,8 @@ class RoutesHaveBeenLoaded extends AbstractEvent
 
     /**
      * RoutesWillBeLoaded constructor.
-     * routes has been loaded before this event
+     * core routes will be loaded here
+     * DO NOT add extension routes here, it CANNOT be dealt correctly
      *
      * @param Router $router
      */
