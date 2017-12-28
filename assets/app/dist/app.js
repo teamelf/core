@@ -2618,7 +2618,7 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
 
           var _this = _possibleConstructorReturn(this, (SideNav.__proto__ || Object.getPrototypeOf(SideNav)).call(this, props));
 
-          _this.navigations = [{ path: '/home', icon: 'home', title: '工作台' }, { path: '/member', icon: 'user', title: '成员管理' }, { path: '/permission', icon: 'key', title: '权限管理' }, { path: '/config', icon: 'tool', title: '团队信息' }, { path: '/extension', icon: 'tool', title: '插件管理' }].concat(_toConsumableArray(_this.navigations || []));
+          _this.navigations = [{ path: '/home', icon: 'home', title: '工作台' }, { path: '/member', icon: 'user', title: '成员管理' }, { path: '/permission', icon: 'key', title: '权限管理' }, { path: '/config', icon: 'tool', title: '团队信息' }, { path: '/extension', icon: 'appstore-o', title: '插件管理' }].concat(_toConsumableArray(_this.navigations || []));
           _this.state = {
             currentNavigation: _this.getNavigationFromRoute()
           };

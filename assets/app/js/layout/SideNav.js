@@ -20,7 +20,7 @@ export class SideNav extends React.Component {
       {path: '/member', icon: 'user', title: '成员管理'},
       {path: '/permission', icon: 'key', title: '权限管理'},
       {path: '/config', icon: 'tool', title: '团队信息'},
-      {path: '/extension', icon: 'tool', title: '插件管理'},
+      {path: '/extension', icon: 'appstore-o', title: '插件管理'},
       ...(this.navigations || [])
     ];
     this.state = {
