@@ -593,11 +593,11 @@ System.register('teamelf/Extension', ['teamelf/layout/Page', 'teamelf/extension/
           value: function view() {
             return React.createElement(
               Row,
-              { gutter: 16 },
+              { type: 'flex', gutter: 16 },
               this.state.extensions.map(function (o) {
                 return React.createElement(
                   Col,
-                  { sm: 24, md: 12, lg: 8, xxl: 6, style: { height: 160 } },
+                  { sm: 24, md: 12, lg: 8, xxl: 6 },
                   React.createElement(ExtensionCardItem, o)
                 );
               })
@@ -1547,6 +1547,7 @@ System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _c
             return React.createElement(
               Card,
               {
+                style: { marginBottom: 16 },
                 title: this.props.package,
                 extra: this.props.version,
                 actions: [React.createElement(Switch, {
@@ -1876,6 +1877,835 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
 
         return _class;
       }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/member/MemberCardItem', ['teamelf/components/Gender'], function (_export, _context) {
+  "use strict";
+
+  var Gender, _createClass, _ReactRouterDOM, Link, _antd, Card, Tag, Avatar, Meta, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfComponentsGender) {
+      Gender = _teamelfComponentsGender.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _ReactRouterDOM = ReactRouterDOM;
+      Link = _ReactRouterDOM.Link;
+      _antd = antd;
+      Card = _antd.Card;
+      Tag = _antd.Tag;
+      Avatar = _antd.Avatar;
+      Meta = Card.Meta;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Link,
+              { to: '/member/' + this.props.username },
+              React.createElement(
+                Card,
+                {
+                  style: { marginBottom: 16 },
+                  hoverable: true,
+                  title: React.createElement(
+                    'div',
+                    null,
+                    React.createElement(Gender, { gender: this.props.gender }),
+                    ' ',
+                    this.props.name
+                  ),
+                  extra: React.createElement(
+                    Tag,
+                    { color: this.props.role.color },
+                    this.props.role.name
+                  )
+                },
+                React.createElement(
+                  Avatar,
+                  {
+                    style: { float: 'right' },
+                    size: 'large'
+                  },
+                  this.props.name.substr(0, 1)
+                ),
+                React.createElement(Meta, {
+                  style: { marginRight: 50, overflow: 'hidden' },
+                  description: React.createElement(
+                    'div',
+                    null,
+                    React.createElement(
+                      'div',
+                      null,
+                      this.props.email
+                    ),
+                    React.createElement(
+                      'div',
+                      null,
+                      this.props.phone
+                    )
+                  )
+                })
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/member/MemberCreatorModal', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Modal, Button, Form, Input, Radio, Checkbox, MemberCreateForm, _class;
+
+  function _toArray(arr) {
+    return Array.isArray(arr) ? arr : Array.from(arr);
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Modal = _antd.Modal;
+      Button = _antd.Button;
+      Form = _antd.Form;
+      Input = _antd.Input;
+      Radio = _antd.Radio;
+      Checkbox = _antd.Checkbox;
+
+      MemberCreateForm = function (_React$Component) {
+        _inherits(MemberCreateForm, _React$Component);
+
+        function MemberCreateForm(props) {
+          _classCallCheck(this, MemberCreateForm);
+
+          var _this = _possibleConstructorReturn(this, (MemberCreateForm.__proto__ || Object.getPrototypeOf(MemberCreateForm)).call(this, props));
+
+          _this.state = {
+            loading: false,
+            username: '',
+            email: '',
+            name: '',
+            gender: 0,
+            activate: false
+          };
+          return _this;
+        }
+
+        _createClass(MemberCreateForm, [{
+          key: 'submitForm',
+          value: function submitForm() {
+            var _this2 = this;
+
+            var member = {
+              username: this.state.username,
+              email: this.state.email,
+              name: this.state.name,
+              gender: this.state.gender,
+              activate: this.state.activate || false
+            };
+            this.setState({ loading: true });
+            axios.post('member', member).then(function (r) {
+              _this2.setState({ loading: false });
+              _this2.props.done();
+              _this2.props.form.resetFields();
+            }).catch(function (e) {
+              _this2.setState({ loading: false });
+            });
+          }
+        }, {
+          key: 'getUsernameByName',
+          value: function getUsernameByName() {
+            var _this3 = this;
+
+            var params = { chinese: this.state.name };
+            axios.get('helper/pinyin', { params: params }).then(function (r) {
+              var _r$data$pinyin = _toArray(r.data.pinyin),
+                  lastname = _r$data$pinyin[0],
+                  firstname = _r$data$pinyin.slice(1);
+
+              var username = firstname.join('') + '.' + lastname;
+              _this3.setState({ username: username });
+              _this3.props.form.setFieldsValue({ username: username });
+            });
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            var _this4 = this;
+
+            var getFieldDecorator = this.props.form.getFieldDecorator;
+
+            return React.createElement(
+              Form,
+              null,
+              React.createElement(
+                Form.Item,
+                { style: { float: 'right', marginTop: 10, marginBottom: -10 } },
+                React.createElement(
+                  Radio.Group,
+                  {
+                    value: this.state.gender,
+                    onChange: function onChange(e) {
+                      return _this4.setState({ gender: e.target.value });
+                    },
+                    disabled: this.props.loading
+                  },
+                  React.createElement(
+                    Radio,
+                    { value: 0 },
+                    '\u7537'
+                  ),
+                  React.createElement(
+                    Radio,
+                    { value: 1 },
+                    '\u5973'
+                  )
+                )
+              ),
+              React.createElement(
+                Form.Item,
+                { style: { width: 'calc(100% - 150px)' } },
+                getFieldDecorator('name', {
+                  rules: [{
+                    required: true, message: '请输入姓名'
+                  }]
+                })(React.createElement(Input, {
+                  size: 'large', placeholder: '\u59D3\u540D',
+                  value: this.state.name,
+                  onChange: function onChange(e) {
+                    return _this4.setState({ name: e.target.value });
+                  },
+                  onBlur: this.getUsernameByName.bind(this),
+                  disabled: this.props.loading
+                }))
+              ),
+              React.createElement(
+                Form.Item,
+                null,
+                getFieldDecorator('username', {
+                  rules: [{
+                    required: true, message: '请输入用户名'
+                  }]
+                })(React.createElement(Input, {
+                  size: 'large', placeholder: '\u7528\u6237\u540D',
+                  value: this.state.username,
+                  onChange: function onChange(e) {
+                    return _this4.setState({ username: e.target.value });
+                  },
+                  disabled: this.props.loading
+                }))
+              ),
+              React.createElement(
+                Form.Item,
+                null,
+                getFieldDecorator('email', {
+                  rules: [{
+                    required: true, message: '请输入用户名'
+                  }, {
+                    type: 'email', message: '邮箱不合法'
+                  }]
+                })(React.createElement(Input, {
+                  size: 'large', placeholder: '\u90AE\u7BB1',
+                  value: this.state.email,
+                  onChange: function onChange(e) {
+                    return _this4.setState({ email: e.target.value });
+                  },
+                  disabled: this.props.loading
+                }))
+              ),
+              React.createElement(
+                Form.Item,
+                null,
+                React.createElement(
+                  Checkbox,
+                  {
+                    value: this.state.activate,
+                    onChange: function onChange(e) {
+                      return _this4.setState({ activate: e.target.checked });
+                    }
+                  },
+                  '\u53D1\u9001\u6FC0\u6D3B\u90AE\u4EF6'
+                )
+              ),
+              React.createElement(
+                Form.Item,
+                null,
+                React.createElement(
+                  Button,
+                  {
+                    className: 'full',
+                    type: 'primary', size: 'large',
+                    onClick: this.submitForm.bind(this),
+                    loading: this.state.loading
+                  },
+                  '\u521B\u65B0\u65B0\u6210\u5458'
+                )
+              )
+            );
+          }
+        }]);
+
+        return MemberCreateForm;
+      }(React.Component);
+
+      _class = function (_React$Component2) {
+        _inherits(_class, _React$Component2);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this5 = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this5.state = {
+            visible: false,
+            loading: false
+          };
+          return _this5;
+        }
+
+        _createClass(_class, [{
+          key: 'closeModal',
+          value: function closeModal() {
+            this.setState({ visible: false });
+            this.props.done();
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            var _this6 = this;
+
+            var MemberCreateFormWrapper = Form.create()(MemberCreateForm);
+            return React.createElement(
+              'span',
+              null,
+              React.createElement(
+                Button,
+                {
+                  type: 'primary',
+                  icon: 'user-add',
+                  onClick: function onClick() {
+                    return _this6.setState({ visible: true });
+                  }
+                },
+                '\u6DFB\u52A0\u65B0\u6210\u5458'
+              ),
+              React.createElement(
+                Modal,
+                {
+                  title: '\u65B0\u5EFA\u6210\u5458',
+                  maskClosable: false,
+                  visible: this.state.visible,
+                  footer: null,
+                  onCancel: this.closeModal.bind(this)
+                },
+                React.createElement(MemberCreateFormWrapper, {
+                  loading: this.state.loading,
+                  done: this.closeModal.bind(this)
+                })
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/components/Gender', 'teamelf/components/InfoEditor'], function (_export, _context) {
+  "use strict";
+
+  var Page, Gender, InfoEditor, _createClass, _ReactRouterDOM, withRouter, _antd, Tag, Icon, MemberItem;
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLayoutPage) {
+      Page = _teamelfLayoutPage.default;
+    }, function (_teamelfComponentsGender) {
+      Gender = _teamelfComponentsGender.default;
+    }, function (_teamelfComponentsInfoEditor) {
+      InfoEditor = _teamelfComponentsInfoEditor.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _ReactRouterDOM = ReactRouterDOM;
+      withRouter = _ReactRouterDOM.withRouter;
+      _antd = antd;
+      Tag = _antd.Tag;
+      Icon = _antd.Icon;
+
+      MemberItem = function (_Page) {
+        _inherits(MemberItem, _Page);
+
+        function MemberItem(props) {
+          _classCallCheck(this, MemberItem);
+
+          var _this = _possibleConstructorReturn(this, (MemberItem.__proto__ || Object.getPrototypeOf(MemberItem)).call(this, props));
+
+          _this.member = null;
+          _this.fetchMember();
+          return _this;
+        }
+
+        _createClass(MemberItem, [{
+          key: 'fetchMember',
+          value: function fetchMember() {
+            var _this2 = this;
+
+            axios.get('member/' + this.props.match.params.username).then(function (r) {
+              _this2.member = r.data;
+              _this2.forceUpdate();
+            });
+          }
+        }, {
+          key: 'edit',
+          value: function edit(key, value) {
+            var _this3 = this;
+
+            return axios.put('member/' + this.member.username, _defineProperty({}, key, value)).then(function (r) {
+              _this3.member[key] = value;
+              _this3.forceUpdate();
+              return r;
+            });
+          }
+        }, {
+          key: 'navigations',
+          value: function navigations() {
+            if (this.member) {
+              return [{ path: '/member', icon: 'user', title: '成员管理' }, { path: '/member/' + this.member.username, icon: this.member.role.icon, title: this.member.name }];
+            } else {
+              return [];
+            }
+          }
+        }, {
+          key: 'title',
+          value: function title() {
+            if (this.member) {
+              return [React.createElement(Gender, { gender: this.member.gender }), this.member.name];
+            }
+          }
+        }, {
+          key: 'description',
+          value: function description() {
+            if (this.member) {
+              return React.createElement(
+                Tag,
+                { color: this.member.role.color },
+                React.createElement(Icon, { type: this.member.role.icon }),
+                this.member.role.name
+              );
+            }
+          }
+        }, {
+          key: 'view',
+          value: function view() {
+            if (!this.member) return React.createElement('div', null);
+            return React.createElement(
+              'div',
+              { style: { padding: 24, background: '#fff' } },
+              React.createElement(InfoEditor, {
+                label: '\u767B\u5F55\u540D',
+                value: this.member.username,
+                disabled: true
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u90AE\u3000\u7BB1',
+                value: this.member.email,
+                onEdit: this.edit.bind(this, 'email')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u624B\u3000\u673A',
+                value: this.member.phone,
+                onEdit: this.edit.bind(this, 'phone')
+              })
+            );
+          }
+        }]);
+
+        return MemberItem;
+      }(Page);
+
+      _export('default', withRouter(MemberItem));
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/member/MemberList', ['teamelf/layout/Page', 'teamelf/member/MemberCardItem', 'teamelf/member/MemberCreatorModal'], function (_export, _context) {
+  "use strict";
+
+  var Page, MemberCardItem, MemberCreatorModal, _extends, _createClass, _antd, Row, Col, Icon, Divider, Checkbox, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLayoutPage) {
+      Page = _teamelfLayoutPage.default;
+    }, function (_teamelfMemberMemberCardItem) {
+      MemberCardItem = _teamelfMemberMemberCardItem.default;
+    }, function (_teamelfMemberMemberCreatorModal) {
+      MemberCreatorModal = _teamelfMemberMemberCreatorModal.default;
+    }],
+    execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Row = _antd.Row;
+      Col = _antd.Col;
+      Icon = _antd.Icon;
+      Divider = _antd.Divider;
+      Checkbox = _antd.Checkbox;
+
+      _class = function (_Page) {
+        _inherits(_class, _Page);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.state = {
+            members: [],
+            roles: [],
+            chosenRoles: []
+          };
+          _this.fetchMemberList();
+          _this.fetchRoleList();
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'fetchMemberList',
+          value: function fetchMemberList() {
+            var _this2 = this;
+
+            var params = {
+              roles: this.state.chosenRoles.join(',')
+            };
+            return axios.get('member', { params: params }).then(function (r) {
+              _this2.setState({ members: r.data });
+              return r;
+            });
+          }
+        }, {
+          key: 'fetchRoleList',
+          value: function fetchRoleList() {
+            var _this3 = this;
+
+            return axios.get('role').then(function (r) {
+              _this3.setState({ roles: r.data });
+            });
+          }
+        }, {
+          key: 'handleRolesCheck',
+          value: function handleRolesCheck(role, e) {
+            var chosenRoles = this.state.chosenRoles;
+            var idx = chosenRoles.indexOf(role);
+            if (idx === -1) {
+              chosenRoles.push(role);
+            } else {
+              chosenRoles.splice(idx, 1);
+            }
+            this.setState({ chosenRoles: chosenRoles });
+            this.fetchMemberList();
+          }
+        }, {
+          key: 'description',
+          value: function description() {
+            var _this4 = this;
+
+            return React.createElement(
+              Row,
+              { type: 'flex' },
+              React.createElement(
+                Col,
+                { xs: 24, md: { span: 6, order: 2 }, align: 'right' },
+                React.createElement(MemberCreatorModal, {
+                  done: function done() {
+                    return _this4.fetchMemberList();
+                  }
+                })
+              ),
+              React.createElement(
+                Col,
+                { xs: 24, md: { span: 18, order: 1 }, style: { lineHeight: '32px' } },
+                this.state.roles.map(function (o) {
+                  return React.createElement(
+                    Checkbox,
+                    {
+                      onClick: _this4.handleRolesCheck.bind(_this4, o.slug)
+                    },
+                    React.createElement(Icon, { type: o.icon, style: { color: o.color } }),
+                    React.createElement(
+                      'span',
+                      null,
+                      o.name
+                    )
+                  );
+                })
+              )
+            );
+          }
+        }, {
+          key: 'view',
+          value: function view() {
+            return React.createElement(
+              Row,
+              { type: 'flex', gutter: 16 },
+              this.state.members.map(function (o) {
+                return React.createElement(
+                  Col,
+                  { sm: 24, md: 12, lg: 8, xxl: 6 },
+                  React.createElement(MemberCardItem, _extends({ key: o.id }, o))
+                );
+              })
+            );
+          }
+        }]);
+
+        return _class;
+      }(Page);
 
       _export('default', _class);
     }
@@ -2722,834 +3552,6 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
 });
 'use strict';
 
-System.register('teamelf/member/MemberCardItem', ['teamelf/components/Gender'], function (_export, _context) {
-  "use strict";
-
-  var Gender, _createClass, _ReactRouterDOM, Link, _antd, Card, Tag, Avatar, Meta, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfComponentsGender) {
-      Gender = _teamelfComponentsGender.default;
-    }],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _ReactRouterDOM = ReactRouterDOM;
-      Link = _ReactRouterDOM.Link;
-      _antd = antd;
-      Card = _antd.Card;
-      Tag = _antd.Tag;
-      Avatar = _antd.Avatar;
-      Meta = Card.Meta;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class() {
-          _classCallCheck(this, _class);
-
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-        }
-
-        _createClass(_class, [{
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              Link,
-              { to: '/member/' + this.props.username },
-              React.createElement(
-                Card,
-                {
-                  hoverable: true,
-                  title: React.createElement(
-                    'div',
-                    null,
-                    React.createElement(Gender, { gender: this.props.gender }),
-                    ' ',
-                    this.props.name
-                  ),
-                  extra: React.createElement(
-                    Tag,
-                    { color: this.props.role.color },
-                    this.props.role.name
-                  )
-                },
-                React.createElement(
-                  Avatar,
-                  {
-                    style: { float: 'right' },
-                    size: 'large'
-                  },
-                  this.props.name.substr(0, 1)
-                ),
-                React.createElement(Meta, {
-                  style: { marginRight: 50, overflow: 'hidden' },
-                  description: React.createElement(
-                    'div',
-                    null,
-                    React.createElement(
-                      'div',
-                      null,
-                      this.props.email
-                    ),
-                    React.createElement(
-                      'div',
-                      null,
-                      this.props.phone
-                    )
-                  )
-                })
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/member/MemberCreatorModal', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, _antd, Modal, Button, Form, Input, Radio, Checkbox, MemberCreateForm, _class;
-
-  function _toArray(arr) {
-    return Array.isArray(arr) ? arr : Array.from(arr);
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Modal = _antd.Modal;
-      Button = _antd.Button;
-      Form = _antd.Form;
-      Input = _antd.Input;
-      Radio = _antd.Radio;
-      Checkbox = _antd.Checkbox;
-
-      MemberCreateForm = function (_React$Component) {
-        _inherits(MemberCreateForm, _React$Component);
-
-        function MemberCreateForm(props) {
-          _classCallCheck(this, MemberCreateForm);
-
-          var _this = _possibleConstructorReturn(this, (MemberCreateForm.__proto__ || Object.getPrototypeOf(MemberCreateForm)).call(this, props));
-
-          _this.state = {
-            loading: false,
-            username: '',
-            email: '',
-            name: '',
-            gender: 0,
-            activate: false
-          };
-          return _this;
-        }
-
-        _createClass(MemberCreateForm, [{
-          key: 'submitForm',
-          value: function submitForm() {
-            var _this2 = this;
-
-            var member = {
-              username: this.state.username,
-              email: this.state.email,
-              name: this.state.name,
-              gender: this.state.gender,
-              activate: this.state.activate || false
-            };
-            this.setState({ loading: true });
-            axios.post('member', member).then(function (r) {
-              _this2.setState({ loading: false });
-              _this2.props.done();
-              _this2.props.form.resetFields();
-            }).catch(function (e) {
-              _this2.setState({ loading: false });
-            });
-          }
-        }, {
-          key: 'getUsernameByName',
-          value: function getUsernameByName() {
-            var _this3 = this;
-
-            var params = { chinese: this.state.name };
-            axios.get('helper/pinyin', { params: params }).then(function (r) {
-              var _r$data$pinyin = _toArray(r.data.pinyin),
-                  lastname = _r$data$pinyin[0],
-                  firstname = _r$data$pinyin.slice(1);
-
-              var username = firstname.join('') + '.' + lastname;
-              _this3.setState({ username: username });
-              _this3.props.form.setFieldsValue({ username: username });
-            });
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            var _this4 = this;
-
-            var getFieldDecorator = this.props.form.getFieldDecorator;
-
-            return React.createElement(
-              Form,
-              null,
-              React.createElement(
-                Form.Item,
-                { style: { float: 'right', marginTop: 10, marginBottom: -10 } },
-                React.createElement(
-                  Radio.Group,
-                  {
-                    value: this.state.gender,
-                    onChange: function onChange(e) {
-                      return _this4.setState({ gender: e.target.value });
-                    },
-                    disabled: this.props.loading
-                  },
-                  React.createElement(
-                    Radio,
-                    { value: 0 },
-                    '\u7537'
-                  ),
-                  React.createElement(
-                    Radio,
-                    { value: 1 },
-                    '\u5973'
-                  )
-                )
-              ),
-              React.createElement(
-                Form.Item,
-                { style: { width: 'calc(100% - 150px)' } },
-                getFieldDecorator('name', {
-                  rules: [{
-                    required: true, message: '请输入姓名'
-                  }]
-                })(React.createElement(Input, {
-                  size: 'large', placeholder: '\u59D3\u540D',
-                  value: this.state.name,
-                  onChange: function onChange(e) {
-                    return _this4.setState({ name: e.target.value });
-                  },
-                  onBlur: this.getUsernameByName.bind(this),
-                  disabled: this.props.loading
-                }))
-              ),
-              React.createElement(
-                Form.Item,
-                null,
-                getFieldDecorator('username', {
-                  rules: [{
-                    required: true, message: '请输入用户名'
-                  }]
-                })(React.createElement(Input, {
-                  size: 'large', placeholder: '\u7528\u6237\u540D',
-                  value: this.state.username,
-                  onChange: function onChange(e) {
-                    return _this4.setState({ username: e.target.value });
-                  },
-                  disabled: this.props.loading
-                }))
-              ),
-              React.createElement(
-                Form.Item,
-                null,
-                getFieldDecorator('email', {
-                  rules: [{
-                    required: true, message: '请输入用户名'
-                  }, {
-                    type: 'email', message: '邮箱不合法'
-                  }]
-                })(React.createElement(Input, {
-                  size: 'large', placeholder: '\u90AE\u7BB1',
-                  value: this.state.email,
-                  onChange: function onChange(e) {
-                    return _this4.setState({ email: e.target.value });
-                  },
-                  disabled: this.props.loading
-                }))
-              ),
-              React.createElement(
-                Form.Item,
-                null,
-                React.createElement(
-                  Checkbox,
-                  {
-                    value: this.state.activate,
-                    onChange: function onChange(e) {
-                      return _this4.setState({ activate: e.target.checked });
-                    }
-                  },
-                  '\u53D1\u9001\u6FC0\u6D3B\u90AE\u4EF6'
-                )
-              ),
-              React.createElement(
-                Form.Item,
-                null,
-                React.createElement(
-                  Button,
-                  {
-                    className: 'full',
-                    type: 'primary', size: 'large',
-                    onClick: this.submitForm.bind(this),
-                    loading: this.state.loading
-                  },
-                  '\u521B\u65B0\u65B0\u6210\u5458'
-                )
-              )
-            );
-          }
-        }]);
-
-        return MemberCreateForm;
-      }(React.Component);
-
-      _class = function (_React$Component2) {
-        _inherits(_class, _React$Component2);
-
-        function _class(props) {
-          _classCallCheck(this, _class);
-
-          var _this5 = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-          _this5.state = {
-            visible: false,
-            loading: false
-          };
-          return _this5;
-        }
-
-        _createClass(_class, [{
-          key: 'closeModal',
-          value: function closeModal() {
-            this.setState({ visible: false });
-            this.props.done();
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            var _this6 = this;
-
-            var MemberCreateFormWrapper = Form.create()(MemberCreateForm);
-            return React.createElement(
-              'span',
-              null,
-              React.createElement(
-                Button,
-                {
-                  type: 'primary',
-                  icon: 'user-add',
-                  onClick: function onClick() {
-                    return _this6.setState({ visible: true });
-                  }
-                },
-                '\u6DFB\u52A0\u65B0\u6210\u5458'
-              ),
-              React.createElement(
-                Modal,
-                {
-                  title: '\u65B0\u5EFA\u6210\u5458',
-                  maskClosable: false,
-                  visible: this.state.visible,
-                  footer: null,
-                  onCancel: this.closeModal.bind(this)
-                },
-                React.createElement(MemberCreateFormWrapper, {
-                  loading: this.state.loading,
-                  done: this.closeModal.bind(this)
-                })
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/components/Gender', 'teamelf/components/InfoEditor'], function (_export, _context) {
-  "use strict";
-
-  var Page, Gender, InfoEditor, _createClass, _ReactRouterDOM, withRouter, _antd, Tag, Icon, MemberItem;
-
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfLayoutPage) {
-      Page = _teamelfLayoutPage.default;
-    }, function (_teamelfComponentsGender) {
-      Gender = _teamelfComponentsGender.default;
-    }, function (_teamelfComponentsInfoEditor) {
-      InfoEditor = _teamelfComponentsInfoEditor.default;
-    }],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _ReactRouterDOM = ReactRouterDOM;
-      withRouter = _ReactRouterDOM.withRouter;
-      _antd = antd;
-      Tag = _antd.Tag;
-      Icon = _antd.Icon;
-
-      MemberItem = function (_Page) {
-        _inherits(MemberItem, _Page);
-
-        function MemberItem(props) {
-          _classCallCheck(this, MemberItem);
-
-          var _this = _possibleConstructorReturn(this, (MemberItem.__proto__ || Object.getPrototypeOf(MemberItem)).call(this, props));
-
-          _this.member = null;
-          _this.fetchMember();
-          return _this;
-        }
-
-        _createClass(MemberItem, [{
-          key: 'fetchMember',
-          value: function fetchMember() {
-            var _this2 = this;
-
-            axios.get('member/' + this.props.match.params.username).then(function (r) {
-              _this2.member = r.data;
-              _this2.forceUpdate();
-            });
-          }
-        }, {
-          key: 'edit',
-          value: function edit(key, value) {
-            var _this3 = this;
-
-            return axios.put('member/' + this.member.username, _defineProperty({}, key, value)).then(function (r) {
-              _this3.member[key] = value;
-              _this3.forceUpdate();
-              return r;
-            });
-          }
-        }, {
-          key: 'navigations',
-          value: function navigations() {
-            if (this.member) {
-              return [{ path: '/member', icon: 'user', title: '成员管理' }, { path: '/member/' + this.member.username, icon: this.member.role.icon, title: this.member.name }];
-            } else {
-              return [];
-            }
-          }
-        }, {
-          key: 'title',
-          value: function title() {
-            if (this.member) {
-              return [React.createElement(Gender, { gender: this.member.gender }), this.member.name];
-            }
-          }
-        }, {
-          key: 'description',
-          value: function description() {
-            if (this.member) {
-              return React.createElement(
-                Tag,
-                { color: this.member.role.color },
-                React.createElement(Icon, { type: this.member.role.icon }),
-                this.member.role.name
-              );
-            }
-          }
-        }, {
-          key: 'view',
-          value: function view() {
-            if (!this.member) return React.createElement('div', null);
-            return React.createElement(
-              'div',
-              { style: { padding: 24, background: '#fff' } },
-              React.createElement(InfoEditor, {
-                label: '\u767B\u5F55\u540D',
-                value: this.member.username,
-                disabled: true
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u90AE\u3000\u7BB1',
-                value: this.member.email,
-                onEdit: this.edit.bind(this, 'email')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u624B\u3000\u673A',
-                value: this.member.phone,
-                onEdit: this.edit.bind(this, 'phone')
-              })
-            );
-          }
-        }]);
-
-        return MemberItem;
-      }(Page);
-
-      _export('default', withRouter(MemberItem));
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/member/MemberList', ['teamelf/layout/Page', 'teamelf/member/MemberCardItem', 'teamelf/member/MemberCreatorModal'], function (_export, _context) {
-  "use strict";
-
-  var Page, MemberCardItem, MemberCreatorModal, _extends, _createClass, _antd, Row, Col, Icon, Divider, Checkbox, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfLayoutPage) {
-      Page = _teamelfLayoutPage.default;
-    }, function (_teamelfMemberMemberCardItem) {
-      MemberCardItem = _teamelfMemberMemberCardItem.default;
-    }, function (_teamelfMemberMemberCreatorModal) {
-      MemberCreatorModal = _teamelfMemberMemberCreatorModal.default;
-    }],
-    execute: function () {
-      _extends = Object.assign || function (target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
-          }
-        }
-
-        return target;
-      };
-
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Row = _antd.Row;
-      Col = _antd.Col;
-      Icon = _antd.Icon;
-      Divider = _antd.Divider;
-      Checkbox = _antd.Checkbox;
-
-      _class = function (_Page) {
-        _inherits(_class, _Page);
-
-        function _class(props) {
-          _classCallCheck(this, _class);
-
-          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-          _this.state = {
-            members: [],
-            roles: [],
-            chosenRoles: []
-          };
-          _this.fetchMemberList();
-          _this.fetchRoleList();
-          return _this;
-        }
-
-        _createClass(_class, [{
-          key: 'fetchMemberList',
-          value: function fetchMemberList() {
-            var _this2 = this;
-
-            var params = {
-              roles: this.state.chosenRoles.join(',')
-            };
-            return axios.get('member', { params: params }).then(function (r) {
-              _this2.setState({ members: r.data });
-              return r;
-            });
-          }
-        }, {
-          key: 'fetchRoleList',
-          value: function fetchRoleList() {
-            var _this3 = this;
-
-            return axios.get('role').then(function (r) {
-              _this3.setState({ roles: r.data });
-            });
-          }
-        }, {
-          key: 'handleRolesCheck',
-          value: function handleRolesCheck(role, e) {
-            var chosenRoles = this.state.chosenRoles;
-            var idx = chosenRoles.indexOf(role);
-            if (idx === -1) {
-              chosenRoles.push(role);
-            } else {
-              chosenRoles.splice(idx, 1);
-            }
-            this.setState({ chosenRoles: chosenRoles });
-            this.fetchMemberList();
-          }
-        }, {
-          key: 'description',
-          value: function description() {
-            var _this4 = this;
-
-            return React.createElement(
-              Row,
-              { type: 'flex' },
-              React.createElement(
-                Col,
-                { xs: 24, md: { span: 6, order: 2 }, align: 'right' },
-                React.createElement(MemberCreatorModal, {
-                  done: function done() {
-                    return _this4.fetchMemberList();
-                  }
-                })
-              ),
-              React.createElement(
-                Col,
-                { xs: 24, md: { span: 18, order: 1 }, style: { lineHeight: '32px' } },
-                this.state.roles.map(function (o) {
-                  return React.createElement(
-                    Checkbox,
-                    {
-                      onClick: _this4.handleRolesCheck.bind(_this4, o.slug)
-                    },
-                    React.createElement(Icon, { type: o.icon, style: { color: o.color } }),
-                    React.createElement(
-                      'span',
-                      null,
-                      o.name
-                    )
-                  );
-                })
-              )
-            );
-          }
-        }, {
-          key: 'view',
-          value: function view() {
-            return React.createElement(
-              Row,
-              { gutter: 16 },
-              this.state.members.map(function (o) {
-                return React.createElement(
-                  Col,
-                  { sm: 24, md: 12, lg: 8, xxl: 6, style: { height: 160 } },
-                  React.createElement(MemberCardItem, _extends({ key: o.id }, o))
-                );
-              })
-            );
-          }
-        }]);
-
-        return _class;
-      }(Page);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
 System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
   "use strict";
 
@@ -3970,7 +3972,7 @@ System.register('teamelf/role/RoleCreateCardItem', ['teamelf/components/InfoEdit
               Card,
               {
                 hoverable: true,
-                style: { textAlign: 'center', color: '#aaa', marginBottom: 20 },
+                style: { textAlign: 'center', color: '#aaa', marginBottom: 16 },
                 onClick: function onClick(e) {
                   return _this2.setState({ visible: true });
                 }
@@ -4176,7 +4178,7 @@ System.register('teamelf/role/RoleEditorCardItem', ['teamelf/components/InfoEdit
               Card,
               {
                 hoverable: true,
-                style: { textAlign: 'center', color: this.props.color, marginBottom: 20 },
+                style: { textAlign: 'center', color: this.props.color, marginBottom: 16 },
                 onClick: function onClick(e) {
                   return _this2.setState({ visible: true });
                 }

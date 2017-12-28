@@ -17,6 +17,7 @@ export default class extends React.Component {
     return (
       <Link to={`/member/${this.props.username}`}>
         <Card
+          style={{marginBottom: 16}}
           hoverable
           title={<div><Gender gender={this.props.gender}/> {this.props.name}</div>}
           extra={<Tag color={this.props.role.color}>{this.props.role.name}</Tag>}

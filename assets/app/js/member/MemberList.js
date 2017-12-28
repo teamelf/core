@@ -71,9 +71,9 @@ export default class extends Page {
   }
   view () {
     return (
-      <Row gutter={16}>
+      <Row type="flex" gutter={16}>
         {this.state.members.map(o => (
-          <Col sm={24} md={12} lg={8} xxl={6} style={{height: 160}}>
+          <Col sm={24} md={12} lg={8} xxl={6}>
             <MemberCardItem key={o.id} {...o}/>
           </Col>
         ))}

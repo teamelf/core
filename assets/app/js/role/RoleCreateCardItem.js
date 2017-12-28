@@ -25,7 +25,7 @@ export default class extends React.Component {
     return (
       <Card
         hoverable
-        style={{textAlign: 'center', color: '#aaa', marginBottom: 20}}
+        style={{textAlign: 'center', color: '#aaa', marginBottom: 16}}
         onClick={e => this.setState({visible: true})}
       >
         <Icon

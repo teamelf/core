@@ -44,6 +44,7 @@ export default class extends React.Component {
   render () {
     return (
       <Card
+        style={{marginBottom: 16}}
         title={this.props.package}
         extra={this.props.version}
         actions={[
