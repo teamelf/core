@@ -22,16 +22,9 @@ use TeamELF\Api\Controller\Extension\ExtensionActivateController;
 use TeamELF\Api\Controller\Extension\ExtensionListController;
 use TeamELF\Api\Controller\Extension\ExtensionUninstallController;
 use TeamELF\Api\Controller\Helper\PinyinController;
-use TeamELF\Api\Controller\Mailer\MailerCreateController;
-use TeamELF\Api\Controller\Mailer\MailerDeleteController;
-use TeamELF\Api\Controller\Mailer\MailerListController;
-use TeamELF\Api\Controller\Mailer\MailerSetAsDefaultController;
-use TeamELF\Api\Controller\Mailer\MailerTestController;
-use TeamELF\Api\Controller\Mailer\MailerUpdateController;
 use TeamELF\Api\Controller\Member\MemberCreateController;
 use TeamELF\Api\Controller\Member\MemberItemController;
 use TeamELF\Api\Controller\Member\MemberListController;
-use TeamELF\Api\Controller\Member\MemberSecurityController;
 use TeamELF\Api\Controller\Member\MemberUpdateController;
 use TeamELF\Api\Controller\Permission\PermissionListController;
 use TeamELF\Api\Controller\Permission\PermissionUpdateController;
@@ -109,17 +102,6 @@ class ApiService extends AbstractService
             ->post('role-create', '', RoleCreateController::class)
             ->put('role-update', '/{id}', RoleUpdateController::class)
             ->delete('role-delete', '/{id}', RoleDeleteController::class)
-
-            // --------------------
-            // | Mailer
-            // --------------------
-            ->prefix('/api/mailer')
-            ->get('mailer-list', '', MailerListController::class)
-            ->post('mailer-create', '', MailerCreateController::class)
-            ->put('mailer-update', '/{id}', MailerUpdateController::class)
-            ->put('mailer-set-default', '/{id}/default', MailerSetAsDefaultController::class)
-            ->delete('mailer-delete', '/{id}', MailerDeleteController::class)
-            ->post('mailer-test', '/{id}/test', MailerTestController::class)
 
             // --------------------
             // | Extension

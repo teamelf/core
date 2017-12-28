@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use TeamELF\Core\Member;
 use TeamELF\Core\PasswordResetToken;
+use TeamELF\Event\VerifyTokenNeedsToBeSent;
 use TeamELF\Http\AbstractController;
 use TeamELF\Mailer\Mailer;
 
@@ -42,11 +43,7 @@ class ForgetPasswordController extends AbstractController
                 $token = (new PasswordResetToken())
                     ->member($member)
                     ->save();
-                Mailer::createWithDefaultMailer()
-                    ->subject('重置密码')
-                    ->view('mail/token.twig', [
-                        'token' => $token->getId()
-                    ])->send($member->getEmail());
+                app()->dispatch(new VerifyTokenNeedsToBeSent($member, $token));
             } else {
                 sleep(mt_rand(1, 3)); // avoid judging status through time used
             }

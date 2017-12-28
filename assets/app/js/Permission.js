@@ -64,18 +64,6 @@ export default class extends Page {
     }, {
       name: '删除角色',
       permission: 'role.delete',
-    }, {
-      name: '查看发信邮箱列表',
-      permission: 'mailer.list'
-    }, {
-      name: '创新发信邮箱',
-      permission: 'mailer.create'
-    }, {
-      name: '更新发信邮箱',
-      permission: 'mailer.update'
-    }, {
-      name: '删除发信邮箱',
-      permission: 'mailer.delete'
     }, ...(this.permissions || [])];
     this.fetch();
   }

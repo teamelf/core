@@ -16,7 +16,6 @@ import Footer from 'teamelf/layout/Footer'
 import Home from 'teamelf/Home';
 import Member from 'teamelf/Member';
 import Config from 'teamelf/Config';
-import Mailer from 'teamelf/Mailer';
 import Profile from 'teamelf/Profile';
 import Permission from 'teamelf/Permission';
 import Extension from 'teamelf/Extension';
@@ -28,7 +27,6 @@ export default class extends React.Component {
       {path: '/home', exact: true, component: Home},
       {path: '/member', component: Member},
       {path: '/config', exact: true, component: Config},
-      {path: '/mailer', exact: true, component: Mailer},
       {path: '/profile', exact: true, component: Profile},
       {path: '/permission', exact: true, component: Permission},
       {path: '/extension', exact: true, component: Extension},

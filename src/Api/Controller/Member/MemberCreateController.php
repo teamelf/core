@@ -15,11 +15,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use TeamELF\Core\Member;
-use TeamELF\Core\PasswordResetToken;
 use TeamELF\Core\Role;
+use TeamELF\Event\WelcomeMessageNeedsToBeSent;
 use TeamELF\Exception\HttpForbiddenException;
 use TeamELF\Http\AbstractController;
-use TeamELF\Mailer\Mailer;
 
 class MemberCreateController extends AbstractController
 {
@@ -56,17 +55,7 @@ class MemberCreateController extends AbstractController
         $member->role($role);
         $member->save();
         if ($this->request->get('activate', false) === true) {
-            try {
-                Mailer::createWithDefaultMailer()
-                    ->subject('欢迎')
-                    ->view('mail/welcome.twig', [
-                        'name' => $member->getName(),
-                        'username' => $member->getUsername(),
-                        'url' => env('BASE_URL')
-                            . '/password/reset?email='
-                            . urlencode($member->getEmail())
-                    ])->send($member->getEmail());
-            } catch (\Exception $exception) {}
+            app()->dispatch(new WelcomeMessageNeedsToBeSent($member));
         }
         return response();
     }
