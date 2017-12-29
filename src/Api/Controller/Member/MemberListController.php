@@ -48,6 +48,7 @@ class MemberListController extends AbstractController
                 'name' => $member->getName(),
                 'gender' => $member->getGender(),
                 'role' => [
+                    'slug' => $r->getSlug(),
                     'name' => $r->getName(),
                     'color' => $r->getColor(),
                     'icon' => $r->getIcon()

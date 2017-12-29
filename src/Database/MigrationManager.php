@@ -57,7 +57,7 @@ class MigrationManager
             $this->getMigrationList($path),
             $this->getMigratedList()
         );
-        foreach ($migrations as $migration) {
+        foreach (array_reverse($migrations) as $migration) {
             $this->down($path, $migration, $extension);
         }
     }

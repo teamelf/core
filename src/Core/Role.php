@@ -39,7 +39,7 @@ class Role extends AbstractModel
     /**
      * @var Member[]
      *
-     * @OneToMany(targetEntity="Member", mappedBy="role_id")
+     * @OneToMany(targetEntity="Member", mappedBy="role")
      */
     protected $members;
 
