@@ -69,6 +69,11 @@ class ViewController extends AbstractController
     {
         if ($this->redirect) {
             return response(null, 302, ['Location' => $this->redirect]);
+        } elseif ($this->request->query->has('error')) {
+            return view('error.twig', [
+                'error' => $this->request->query->get('error'),
+                'message' => $this->request->query->get('message')
+            ]);
         } else {
             $this->addAssets();
             return view($this->template, $this->data);

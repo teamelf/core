@@ -9,28 +9,15 @@
 
 const { Redirect } = ReactRouterDOM;
 
-export default class extends React.Component {
-  render () {
-    return (
-      <div>
-        <h1>ERROR</h1>
-        <div>code: {this.props.error.code}</div>
-        <div>message: {this.props.error.message}</div>
-      </div>
-    );
-  }
-}
-
 export class RedirectAs404 extends React.Component {
   render () {
+    const query = new URLSearchParams(window.location.search);
+    query.set('error', 404);
+    query.set('message', 'Not found');
     return (
       <Redirect to={{
         ...this.props.location,
-        isError: true,
-        error: {
-          code: 404,
-          message: 'Not found'
-        }
+        search: '?' + query.toString()
       }}/>
     )
   }

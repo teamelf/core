@@ -333,7 +333,7 @@ System.register('teamelf/Config', ['teamelf/layout/Page', 'teamelf/components/In
 System.register('teamelf/Error', [], function (_export, _context) {
   "use strict";
 
-  var _extends, _createClass, _ReactRouterDOM, Redirect, _class, RedirectAs404;
+  var _extends, _createClass, _ReactRouterDOM, Redirect, RedirectAs404;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -403,49 +403,8 @@ System.register('teamelf/Error', [], function (_export, _context) {
       _ReactRouterDOM = ReactRouterDOM;
       Redirect = _ReactRouterDOM.Redirect;
 
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class() {
-          _classCallCheck(this, _class);
-
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-        }
-
-        _createClass(_class, [{
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              'div',
-              null,
-              React.createElement(
-                'h1',
-                null,
-                'ERROR'
-              ),
-              React.createElement(
-                'div',
-                null,
-                'code: ',
-                this.props.error.code
-              ),
-              React.createElement(
-                'div',
-                null,
-                'message: ',
-                this.props.error.message
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-
-      _export('RedirectAs404', RedirectAs404 = function (_React$Component2) {
-        _inherits(RedirectAs404, _React$Component2);
+      _export('RedirectAs404', RedirectAs404 = function (_React$Component) {
+        _inherits(RedirectAs404, _React$Component);
 
         function RedirectAs404() {
           _classCallCheck(this, RedirectAs404);
@@ -456,12 +415,11 @@ System.register('teamelf/Error', [], function (_export, _context) {
         _createClass(RedirectAs404, [{
           key: 'render',
           value: function render() {
+            var query = new URLSearchParams(window.location.search);
+            query.set('error', 404);
+            query.set('message', 'Not found');
             return React.createElement(Redirect, { to: _extends({}, this.props.location, {
-                isError: true,
-                error: {
-                  code: 404,
-                  message: 'Not found'
-                }
+                search: '?' + query.toString()
               }) });
           }
         }]);
@@ -1398,16 +1356,14 @@ System.register('teamelf/Profile', ['teamelf/layout/Page', 'teamelf/profile/Secu
 });
 'use strict';
 
-System.register('teamelf/main', ['teamelf/App', 'teamelf/Error'], function (_export, _context) {
+System.register('teamelf/main', ['teamelf/App'], function (_export, _context) {
   "use strict";
 
-  var App, Error, _ReactRouterDOM, BrowserRouter, Route, app, target;
+  var App, _ReactRouterDOM, BrowserRouter, Route, app, target;
 
   return {
     setters: [function (_teamelfApp) {
       App = _teamelfApp.default;
-    }, function (_teamelfError) {
-      Error = _teamelfError.default;
     }],
     execute: function () {
       _ReactRouterDOM = ReactRouterDOM;
@@ -1416,10 +1372,7 @@ System.register('teamelf/main', ['teamelf/App', 'teamelf/Error'], function (_exp
       app = React.createElement(
         BrowserRouter,
         { forceRefresh: true },
-        React.createElement(Route, { render: function render(_ref) {
-            var location = _ref.location;
-            return location.isError ? React.createElement(Error, { error: location.error }) : React.createElement(App, null);
-          } })
+        React.createElement(Route, { component: App })
       );
       target = document.getElementById('react-render-target-app');
 
@@ -3550,114 +3503,6 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
     }
   };
 });
-'use strict';
-
-System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, AbstractModel;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      AbstractModel = function () {
-        function AbstractModel(props) {
-          _classCallCheck(this, AbstractModel);
-
-          if (new.target === AbstractModel) {
-            throw new Error('AbstractModel cannot be instanced directly!');
-          }
-
-          /**
-           * model's attributes
-           *
-           * @type {Object}
-           * @private
-           */
-          this._attributes = {};
-
-          /**
-           * the fetching api url
-           * @type {String}
-           * @private
-           */
-          this._url = '';
-        }
-
-        /**
-         * getter & setter of _attributes
-         */
-
-
-        _createClass(AbstractModel, [{
-          key: 'fetch',
-          value: function fetch() {
-            throw new Error('AbstractModel@fetch must be implemented by subclass');
-          }
-        }, {
-          key: 'create',
-          value: function create() {
-            throw new Error('AbstractModel@create must be implemented by subclass');
-          }
-        }, {
-          key: 'update',
-          value: function update() {
-            throw new Error('AbstractModel@update must be implemented by subclass');
-          }
-        }, {
-          key: 'delete',
-          value: function _delete() {
-            throw new Error('AbstractModel@delete must be implemented by subclass');
-          }
-        }, {
-          key: 'attributes',
-          get: function get() {
-            return this._attributes;
-          },
-          set: function set(attributes) {
-            this._attributes = attributes;
-          }
-        }, {
-          key: 'url',
-          get: function get() {
-            return this._url;
-          },
-          set: function set(url) {
-            this._url = url;
-          }
-        }]);
-
-        return AbstractModel;
-      }();
-
-      _export('default', AbstractModel);
-    }
-  };
-});
 "use strict";
 
 System.register("teamelf/profile/Logout", [], function (_export, _context) {
@@ -3861,6 +3706,114 @@ System.register("teamelf/profile/Security", [], function (_export, _context) {
       }(React.Component);
 
       _export("default", _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, AbstractModel;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      AbstractModel = function () {
+        function AbstractModel(props) {
+          _classCallCheck(this, AbstractModel);
+
+          if (new.target === AbstractModel) {
+            throw new Error('AbstractModel cannot be instanced directly!');
+          }
+
+          /**
+           * model's attributes
+           *
+           * @type {Object}
+           * @private
+           */
+          this._attributes = {};
+
+          /**
+           * the fetching api url
+           * @type {String}
+           * @private
+           */
+          this._url = '';
+        }
+
+        /**
+         * getter & setter of _attributes
+         */
+
+
+        _createClass(AbstractModel, [{
+          key: 'fetch',
+          value: function fetch() {
+            throw new Error('AbstractModel@fetch must be implemented by subclass');
+          }
+        }, {
+          key: 'create',
+          value: function create() {
+            throw new Error('AbstractModel@create must be implemented by subclass');
+          }
+        }, {
+          key: 'update',
+          value: function update() {
+            throw new Error('AbstractModel@update must be implemented by subclass');
+          }
+        }, {
+          key: 'delete',
+          value: function _delete() {
+            throw new Error('AbstractModel@delete must be implemented by subclass');
+          }
+        }, {
+          key: 'attributes',
+          get: function get() {
+            return this._attributes;
+          },
+          set: function set(attributes) {
+            this._attributes = attributes;
+          }
+        }, {
+          key: 'url',
+          get: function get() {
+            return this._url;
+          },
+          set: function set(url) {
+            this._url = url;
+          }
+        }]);
+
+        return AbstractModel;
+      }();
+
+      _export('default', AbstractModel);
     }
   };
 });

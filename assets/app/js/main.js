@@ -9,15 +9,10 @@
 
 const { BrowserRouter, Route } = ReactRouterDOM;
 import App from 'teamelf/App';
-import Error from 'teamelf/Error';
 
 const app = (
   <BrowserRouter forceRefresh>
-    <Route render={({ location }) => (
-      location.isError
-        ? <Error error={location.error}/>
-        : <App/>
-    )}/>
+    <Route component={App}/>
   </BrowserRouter>
 );
 
