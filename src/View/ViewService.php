@@ -55,10 +55,10 @@ class ViewService extends AbstractService
             $loader = new \Twig_Loader_Filesystem();
             $loader->setPaths(__DIR__ . '/../../views');
             foreach (app('extension')->getExtensions() as $extension) {
-                $loader->setPaths(
-                    $extension->getPath() . '/views',
-                    $extension->getPackage()
-                );
+                $path = $extension->getPath() . '/views';
+                if (file_exists($path)) {
+                    $loader->setPaths($path, $extension->getPackage());
+                }
             }
             static::$engine = new \Twig_Environment($loader);
             static::$engine->addGlobal('assets', static::getAssetManager());

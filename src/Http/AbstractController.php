@@ -77,6 +77,15 @@ abstract class AbstractController
                 throw new HttpForbiddenException();
             }
         }
+        $this->middleware();
+    }
+
+    /**
+     * deal things before handler
+     * override this
+     */
+    protected function middleware()
+    {
     }
 
     /**

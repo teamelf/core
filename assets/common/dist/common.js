@@ -23518,7 +23518,7 @@ System.register('teamelf/common/SimpleLayout', ['teamelf/common/Header'], functi
               backgroundSize: 'cover'
             };
             var contentStyle = {
-              width: 350, maxWidth: '90%', margin: '0 auto'
+              width: 450, maxWidth: '90%', margin: '0 auto'
             };
             var footerStyle = {
               background: 'transparent',
@@ -23539,6 +23539,7 @@ System.register('teamelf/common/SimpleLayout', ['teamelf/common/Header'], functi
                 React.createElement(
                   'span',
                   null,
+                  window.config.name,
                   ' \xA92017 Created by '
                 ),
                 React.createElement(

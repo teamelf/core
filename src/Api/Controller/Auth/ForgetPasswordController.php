@@ -43,7 +43,7 @@ class ForgetPasswordController extends AbstractController
                 $token = (new PasswordResetToken())
                     ->member($member)
                     ->save();
-                app()->dispatch(new VerifyTokenNeedsToBeSent($member, $token));
+                app()->dispatch(new VerifyTokenNeedsToBeSent($member, $token->getId()));
             } else {
                 sleep(mt_rand(1, 3)); // avoid judging status through time used
             }

@@ -38,7 +38,7 @@ class ViewController extends AbstractController
     protected $data = [];
 
     /**
-     * a 301 redirect will be sent if not null
+     * a 302 redirect will be sent if not null
      * @var null|string
      */
     protected $redirect = null;

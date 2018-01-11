@@ -23,7 +23,7 @@ export default class extends React.Component {
       backgroundSize: 'cover'
     };
     const contentStyle = {
-      width: 350, maxWidth: '90%', margin: '0 auto'
+      width: 450, maxWidth: '90%', margin: '0 auto'
     };
     const footerStyle = {
       background: 'transparent',
@@ -36,7 +36,7 @@ export default class extends React.Component {
           {this.view()}
         </Content>
         <Footer style={footerStyle}>
-          <span> &copy;2017 Created by </span>
+          <span>{window.config.name} &copy;2017 Created by </span>
           <a href="https://github.com/teamelf/teamelf" target="_blank">TeamELF</a>
         </Footer>
       </Layout>
