@@ -89,7 +89,8 @@ class Config
                     'port'     => env('DB_PORT', '3306'),
                     'dbname'   => env('DB_DATABASE', 'teamelf'),
                     'user'     => env('DB_USERNAME', 'teamelf'),
-                    'password' => env('DB_PASSWORD', 'teamelf')
+                    'password' => env('DB_PASSWORD', 'teamelf'),
+                    'charset'  => 'UTF8'
                 ];
                 break;
             default:
