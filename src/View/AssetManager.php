@@ -47,7 +47,7 @@ class AssetManager
                 $hashcode,
                 $info['extension']
             );
-            $assetPath = app()->getPublicPath() . $assetFilename;
+            $assetPath = app()->getStoragePath() . $assetFilename;
             if (!file_exists($assetPath)) {
                 app('file')->copy($filename, $assetPath);
             }
