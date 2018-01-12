@@ -15,7 +15,7 @@ export default class extends React.Component {
     return (
       <Footer style={{ textAlign: 'center' }}>
         <span>{window.config.name}</span>
-        <span> &copy;2017 Created by </span>
+        <span> &copy;2017 Powered by </span>
         <a href="https://github.com/teamelf/teamelf" target="_blank">TeamELF</a>
       </Footer>
     )

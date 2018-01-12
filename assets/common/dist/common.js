@@ -23540,7 +23540,7 @@ System.register('teamelf/common/SimpleLayout', ['teamelf/common/Header'], functi
                   'span',
                   null,
                   window.config.name,
-                  ' \xA92017 Created by '
+                  ' \xA92017 Powered by '
                 ),
                 React.createElement(
                   'a',

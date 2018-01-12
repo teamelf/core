@@ -1837,6 +1837,845 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
 });
 'use strict';
 
+System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
+  "use strict";
+
+  var _extends, _createClass, _ReactRouterDOM, Link, withRouter, _antd, Avatar, AuthBar;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _ReactRouterDOM = ReactRouterDOM;
+      Link = _ReactRouterDOM.Link;
+      withRouter = _ReactRouterDOM.withRouter;
+      _antd = antd;
+      Avatar = _antd.Avatar;
+
+      AuthBar = function (_React$Component) {
+        _inherits(AuthBar, _React$Component);
+
+        function AuthBar(props) {
+          _classCallCheck(this, AuthBar);
+
+          var _this = _possibleConstructorReturn(this, (AuthBar.__proto__ || Object.getPrototypeOf(AuthBar)).call(this, props));
+
+          _this.state = {
+            hover: false,
+            active: _this.props.location.pathname === '/profile'
+          };
+          return _this;
+        }
+
+        _createClass(AuthBar, [{
+          key: 'getStyle',
+          value: function getStyle() {
+            var style = {
+              padding: '0 20px',
+              cursor: 'pointer',
+              transition: 'background .3s'
+            };
+            if (this.state.active || this.state.hover) {
+              return _extends({}, style, {
+                background: '#e6f7ff'
+              });
+            } else {
+              return style;
+            }
+          }
+        }, {
+          key: 'handleHover',
+          value: function handleHover(e) {
+            this.setState({ hover: e.type === 'mouseenter' });
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Link,
+              { to: '/profile' },
+              React.createElement(
+                'div',
+                {
+                  style: this.getStyle(),
+                  onMouseEnter: this.handleHover.bind(this),
+                  onMouseLeave: this.handleHover.bind(this)
+                },
+                React.createElement(Avatar, { style: { marginTop: 16, float: 'left' } }),
+                React.createElement(
+                  'div',
+                  { style: { display: 'inline-block', marginLeft: 20, paddingTop: (64 - 20 - 16) / 2, height: 64 } },
+                  React.createElement(
+                    'div',
+                    { style: { lineHeight: '20px' } },
+                    window.auth.name
+                  ),
+                  React.createElement(
+                    'div',
+                    { style: { lineHeight: '16px', fontSize: '.8em' } },
+                    window.auth.role.name
+                  )
+                )
+              )
+            );
+          }
+        }]);
+
+        return AuthBar;
+      }(React.Component);
+
+      _export('default', withRouter(AuthBar));
+    }
+  };
+});
+"use strict";
+
+System.register("teamelf/layout/Footer", [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Layout, Footer, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Layout = _antd.Layout;
+      Footer = Layout.Footer;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: "render",
+          value: function render() {
+            return React.createElement(
+              Footer,
+              { style: { textAlign: 'center' } },
+              React.createElement(
+                "span",
+                null,
+                window.config.name
+              ),
+              React.createElement(
+                "span",
+                null,
+                " \xA92017 Powered by "
+              ),
+              React.createElement(
+                "a",
+                { href: "https://github.com/teamelf/teamelf", target: "_blank" },
+                "TeamELF"
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export("default", _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/layout/Header', ['teamelf/layout/AuthBar'], function (_export, _context) {
+  "use strict";
+
+  var AuthBar, _createClass, _antd, Layout, Icon, Header, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLayoutAuthBar) {
+      AuthBar = _teamelfLayoutAuthBar.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Layout = _antd.Layout;
+      Icon = _antd.Icon;
+      Header = Layout.Header;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'render',
+          value: function render() {
+            var style = {
+              position: 'relative',
+              background: '#fff',
+              boxShadow: '0 1px 4px rgba(0, 21, 41, 0.08)',
+              padding: '0 24px 0 0'
+            };
+            return React.createElement(
+              Header,
+              { style: style },
+              React.createElement(Icon, {
+                className: 'trigger',
+                type: this.props.collapsed ? 'menu-unfold' : 'menu-fold',
+                onClick: this.props.toggleCollapsed
+              }),
+              React.createElement(
+                'div',
+                { style: { float: 'right' } },
+                React.createElement(AuthBar, null)
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/layout/Logo', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _ReactRouterDOM, Link, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _ReactRouterDOM = ReactRouterDOM;
+      Link = _ReactRouterDOM.Link;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'render',
+          value: function render() {
+            var imgStyle = {
+              display: 'inline-block',
+              height: 64,
+              paddingTop: (64 - 45) / 2
+            };
+            var textStyle = {
+              display: 'inline-block',
+              marginLeft: 10,
+              color: '#fff',
+              fontSize: 16
+            };
+            return React.createElement(
+              Link,
+              { to: '/home', style: this.props.style },
+              React.createElement(
+                'div',
+                { style: imgStyle },
+                React.createElement('img', { height: '45px', src: window.config.logo })
+              ),
+              React.createElement(
+                'div',
+                { style: textStyle },
+                window.config.name
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/layout/Page', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _ReactRouterDOM, Link, _antd, Layout, Breadcrumb, Icon, Menu, Content, Page;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _ReactRouterDOM = ReactRouterDOM;
+      Link = _ReactRouterDOM.Link;
+      _antd = antd;
+      Layout = _antd.Layout;
+      Breadcrumb = _antd.Breadcrumb;
+      Icon = _antd.Icon;
+      Menu = _antd.Menu;
+      Content = Layout.Content;
+
+      Page = function (_React$Component) {
+        _inherits(Page, _React$Component);
+
+        function Page(props) {
+          _classCallCheck(this, Page);
+
+          if (new.target === Page) {
+            throw new Error('ContentComponent cannot be instanced directly!');
+          }
+          return _possibleConstructorReturn(this, (Page.__proto__ || Object.getPrototypeOf(Page)).call(this, props));
+        }
+
+        _createClass(Page, [{
+          key: 'navigations',
+          value: function navigations() {
+            return []; // [{path, icon, title}]
+          }
+        }, {
+          key: 'title',
+          value: function title() {
+            return null;
+          }
+        }, {
+          key: 'description',
+          value: function description() {
+            return null;
+          }
+        }, {
+          key: 'header',
+          value: function header() {
+            var title = this.title();
+            var description = this.description();
+            var navigations = this.navigations();
+            if (!navigations.length && !title && !description) {
+              return null;
+            }
+            return React.createElement(
+              'div',
+              null,
+              navigations.length > 0 && React.createElement(
+                Breadcrumb,
+                { style: { marginBottom: 16 } },
+                navigations.map(function (o) {
+                  return React.createElement(
+                    Breadcrumb.Item,
+                    null,
+                    React.createElement(
+                      Link,
+                      { to: o.path },
+                      React.createElement(Icon, { type: o.icon }),
+                      o.title
+                    )
+                  );
+                })
+              ),
+              !!title && React.createElement(
+                'h2',
+                null,
+                title
+              ),
+              !!description && React.createElement(
+                'div',
+                null,
+                description
+              )
+            );
+          }
+        }, {
+          key: 'view',
+          value: function view() {
+            return React.createElement(
+              'div',
+              null,
+              'page works'
+            );
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            var Header = this.header();
+            var headerStyle = {
+              padding: '16px 32px',
+              background: '#fff',
+              boxShadow: '0 1px 4px rgba(0, 21, 41, 0.08)'
+            };
+            return React.createElement(
+              Layout,
+              { style: { margin: -24 } },
+              !!Header && React.createElement(
+                'div',
+                { style: headerStyle },
+                Header
+              ),
+              React.createElement(
+                Content,
+                { style: { margin: 24 } },
+                this.view()
+              )
+            );
+          }
+        }]);
+
+        return Page;
+      }(React.Component);
+
+      _export('default', Page);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_export, _context) {
+  "use strict";
+
+  var Logo, _createClass, _ReactRouterDOM, Link, withRouter, _antd, Layout, Menu, Icon, Sider, SideNav;
+
+  function _toConsumableArray(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+        arr2[i] = arr[i];
+      }
+
+      return arr2;
+    } else {
+      return Array.from(arr);
+    }
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfLayoutLogo) {
+      Logo = _teamelfLayoutLogo.default;
+    }],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _ReactRouterDOM = ReactRouterDOM;
+      Link = _ReactRouterDOM.Link;
+      withRouter = _ReactRouterDOM.withRouter;
+      _antd = antd;
+      Layout = _antd.Layout;
+      Menu = _antd.Menu;
+      Icon = _antd.Icon;
+      Sider = Layout.Sider;
+
+      _export('SideNav', SideNav = function (_React$Component) {
+        _inherits(SideNav, _React$Component);
+
+        function SideNav(props) {
+          _classCallCheck(this, SideNav);
+
+          var _this = _possibleConstructorReturn(this, (SideNav.__proto__ || Object.getPrototypeOf(SideNav)).call(this, props));
+
+          _this.navigations = [{ path: '/home', icon: 'home', title: '工作台' }, { path: '/member', icon: 'user', title: '成员管理' }, { path: '/permission', icon: 'key', title: '权限管理' }, { path: '/config', icon: 'tool', title: '团队信息' }, { path: '/extension', icon: 'appstore-o', title: '插件管理' }].concat(_toConsumableArray(_this.navigations || []));
+          _this.state = {
+            currentNavigation: _this.getNavigationFromRoute()
+          };
+          return _this;
+        }
+
+        _createClass(SideNav, [{
+          key: 'getNavigationFromRoute',
+          value: function getNavigationFromRoute() {
+            var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props.location.pathname;
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+              for (var _iterator = this.navigations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var nav = _step.value;
+
+                if (path.match(nav.pattern || nav.path)) {
+                  return nav.path;
+                }
+              }
+            } catch (err) {
+              _didIteratorError = true;
+              _iteratorError = err;
+            } finally {
+              try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                  _iterator.return();
+                }
+              } finally {
+                if (_didIteratorError) {
+                  throw _iteratorError;
+                }
+              }
+            }
+
+            return null;
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            var logoStyle = {
+              position: 'relative',
+              height: 64,
+              background: '#002140',
+              textAlign: 'center',
+              overflow: 'hidden'
+            };
+            return React.createElement(
+              Sider,
+              {
+                width: 256, breakpoint: 'md',
+                style: { boxShadow: '2px 0 6px rgba(0, 21, 41, 0.35)', zIndex: '999' },
+                collapsible: true, trigger: null,
+                collapsed: this.props.collapsed,
+                onCollapse: this.props.toggleCollapsed
+              },
+              React.createElement(
+                'div',
+                { style: logoStyle },
+                React.createElement(Logo, { style: { lineHeight: '64px' } })
+              ),
+              React.createElement(
+                Menu,
+                {
+                  theme: 'dark',
+                  mode: 'inline',
+                  style: { margin: '20px 0' },
+                  selectedKeys: [this.state.currentNavigation]
+                },
+                this.navigations.map(function (o) {
+                  return React.createElement(
+                    Menu.Item,
+                    { key: o.path },
+                    React.createElement(
+                      Link,
+                      { to: o.path },
+                      React.createElement(Icon, { type: o.icon }),
+                      React.createElement(
+                        'span',
+                        null,
+                        o.title
+                      )
+                    )
+                  );
+                })
+              )
+            );
+          }
+        }]);
+
+        return SideNav;
+      }(React.Component));
+
+      _export('SideNav', SideNav);
+
+      _export('default', withRouter(SideNav));
+    }
+  };
+});
+'use strict';
+
 System.register('teamelf/member/MemberCardItem', ['teamelf/components/Gender'], function (_export, _context) {
   "use strict";
 
@@ -2666,193 +3505,15 @@ System.register('teamelf/member/MemberList', ['teamelf/layout/Page', 'teamelf/me
 });
 'use strict';
 
-System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
+System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
   "use strict";
 
-  var _extends, _createClass, _ReactRouterDOM, Link, withRouter, _antd, Avatar, AuthBar;
+  var _createClass, AbstractModel;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
     }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _extends = Object.assign || function (target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
-          }
-        }
-
-        return target;
-      };
-
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _ReactRouterDOM = ReactRouterDOM;
-      Link = _ReactRouterDOM.Link;
-      withRouter = _ReactRouterDOM.withRouter;
-      _antd = antd;
-      Avatar = _antd.Avatar;
-
-      AuthBar = function (_React$Component) {
-        _inherits(AuthBar, _React$Component);
-
-        function AuthBar(props) {
-          _classCallCheck(this, AuthBar);
-
-          var _this = _possibleConstructorReturn(this, (AuthBar.__proto__ || Object.getPrototypeOf(AuthBar)).call(this, props));
-
-          _this.state = {
-            hover: false,
-            active: _this.props.location.pathname === '/profile'
-          };
-          return _this;
-        }
-
-        _createClass(AuthBar, [{
-          key: 'getStyle',
-          value: function getStyle() {
-            var style = {
-              padding: '0 20px',
-              cursor: 'pointer',
-              transition: 'background .3s'
-            };
-            if (this.state.active || this.state.hover) {
-              return _extends({}, style, {
-                background: '#e6f7ff'
-              });
-            } else {
-              return style;
-            }
-          }
-        }, {
-          key: 'handleHover',
-          value: function handleHover(e) {
-            this.setState({ hover: e.type === 'mouseenter' });
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              Link,
-              { to: '/profile' },
-              React.createElement(
-                'div',
-                {
-                  style: this.getStyle(),
-                  onMouseEnter: this.handleHover.bind(this),
-                  onMouseLeave: this.handleHover.bind(this)
-                },
-                React.createElement(Avatar, { style: { marginTop: 16, float: 'left' } }),
-                React.createElement(
-                  'div',
-                  { style: { display: 'inline-block', marginLeft: 20, paddingTop: (64 - 20 - 16) / 2, height: 64 } },
-                  React.createElement(
-                    'div',
-                    { style: { lineHeight: '20px' } },
-                    window.auth.name
-                  ),
-                  React.createElement(
-                    'div',
-                    { style: { lineHeight: '16px', fontSize: '.8em' } },
-                    window.auth.role.name
-                  )
-                )
-              )
-            );
-          }
-        }]);
-
-        return AuthBar;
-      }(React.Component);
-
-      _export('default', withRouter(AuthBar));
-    }
-  };
-});
-"use strict";
-
-System.register("teamelf/layout/Footer", [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, _antd, Layout, Footer, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
   }
 
   return {
@@ -2876,630 +3537,77 @@ System.register("teamelf/layout/Footer", [], function (_export, _context) {
         };
       }();
 
-      _antd = antd;
-      Layout = _antd.Layout;
-      Footer = Layout.Footer;
+      AbstractModel = function () {
+        function AbstractModel(props) {
+          _classCallCheck(this, AbstractModel);
 
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
+          if (new.target === AbstractModel) {
+            throw new Error('AbstractModel cannot be instanced directly!');
+          }
 
-        function _class() {
-          _classCallCheck(this, _class);
+          /**
+           * model's attributes
+           *
+           * @type {Object}
+           * @private
+           */
+          this._attributes = {};
 
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+          /**
+           * the fetching api url
+           * @type {String}
+           * @private
+           */
+          this._url = '';
         }
 
-        _createClass(_class, [{
-          key: "render",
-          value: function render() {
-            return React.createElement(
-              Footer,
-              { style: { textAlign: 'center' } },
-              React.createElement(
-                "span",
-                null,
-                window.config.name
-              ),
-              React.createElement(
-                "span",
-                null,
-                " \xA92017 Created by "
-              ),
-              React.createElement(
-                "a",
-                { href: "https://github.com/teamelf/teamelf", target: "_blank" },
-                "TeamELF"
-              )
-            );
+        /**
+         * getter & setter of _attributes
+         */
+
+
+        _createClass(AbstractModel, [{
+          key: 'fetch',
+          value: function fetch() {
+            throw new Error('AbstractModel@fetch must be implemented by subclass');
+          }
+        }, {
+          key: 'create',
+          value: function create() {
+            throw new Error('AbstractModel@create must be implemented by subclass');
+          }
+        }, {
+          key: 'update',
+          value: function update() {
+            throw new Error('AbstractModel@update must be implemented by subclass');
+          }
+        }, {
+          key: 'delete',
+          value: function _delete() {
+            throw new Error('AbstractModel@delete must be implemented by subclass');
+          }
+        }, {
+          key: 'attributes',
+          get: function get() {
+            return this._attributes;
+          },
+          set: function set(attributes) {
+            this._attributes = attributes;
+          }
+        }, {
+          key: 'url',
+          get: function get() {
+            return this._url;
+          },
+          set: function set(url) {
+            this._url = url;
           }
         }]);
 
-        return _class;
-      }(React.Component);
-
-      _export("default", _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/layout/Header', ['teamelf/layout/AuthBar'], function (_export, _context) {
-  "use strict";
-
-  var AuthBar, _createClass, _antd, Layout, Icon, Header, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfLayoutAuthBar) {
-      AuthBar = _teamelfLayoutAuthBar.default;
-    }],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
+        return AbstractModel;
       }();
 
-      _antd = antd;
-      Layout = _antd.Layout;
-      Icon = _antd.Icon;
-      Header = Layout.Header;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class() {
-          _classCallCheck(this, _class);
-
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-        }
-
-        _createClass(_class, [{
-          key: 'render',
-          value: function render() {
-            var style = {
-              position: 'relative',
-              background: '#fff',
-              boxShadow: '0 1px 4px rgba(0, 21, 41, 0.08)',
-              padding: '0 24px 0 0'
-            };
-            return React.createElement(
-              Header,
-              { style: style },
-              React.createElement(Icon, {
-                className: 'trigger',
-                type: this.props.collapsed ? 'menu-unfold' : 'menu-fold',
-                onClick: this.props.toggleCollapsed
-              }),
-              React.createElement(
-                'div',
-                { style: { float: 'right' } },
-                React.createElement(AuthBar, null)
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/layout/Logo', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, _ReactRouterDOM, Link, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _ReactRouterDOM = ReactRouterDOM;
-      Link = _ReactRouterDOM.Link;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class() {
-          _classCallCheck(this, _class);
-
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-        }
-
-        _createClass(_class, [{
-          key: 'render',
-          value: function render() {
-            var imgStyle = {
-              display: 'inline-block',
-              height: 64,
-              paddingTop: (64 - 45) / 2
-            };
-            var textStyle = {
-              display: 'inline-block',
-              marginLeft: 10,
-              color: '#fff',
-              fontSize: 16
-            };
-            return React.createElement(
-              Link,
-              { to: '/home', style: this.props.style },
-              React.createElement(
-                'div',
-                { style: imgStyle },
-                React.createElement('img', { height: '45px', src: window.config.logo })
-              ),
-              React.createElement(
-                'div',
-                { style: textStyle },
-                window.config.name
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/layout/Page', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, _ReactRouterDOM, Link, _antd, Layout, Breadcrumb, Icon, Menu, Content, Page;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _ReactRouterDOM = ReactRouterDOM;
-      Link = _ReactRouterDOM.Link;
-      _antd = antd;
-      Layout = _antd.Layout;
-      Breadcrumb = _antd.Breadcrumb;
-      Icon = _antd.Icon;
-      Menu = _antd.Menu;
-      Content = Layout.Content;
-
-      Page = function (_React$Component) {
-        _inherits(Page, _React$Component);
-
-        function Page(props) {
-          _classCallCheck(this, Page);
-
-          if (new.target === Page) {
-            throw new Error('ContentComponent cannot be instanced directly!');
-          }
-          return _possibleConstructorReturn(this, (Page.__proto__ || Object.getPrototypeOf(Page)).call(this, props));
-        }
-
-        _createClass(Page, [{
-          key: 'navigations',
-          value: function navigations() {
-            return []; // [{path, icon, title}]
-          }
-        }, {
-          key: 'title',
-          value: function title() {
-            return null;
-          }
-        }, {
-          key: 'description',
-          value: function description() {
-            return null;
-          }
-        }, {
-          key: 'header',
-          value: function header() {
-            var title = this.title();
-            var description = this.description();
-            var navigations = this.navigations();
-            if (!navigations.length && !title && !description) {
-              return null;
-            }
-            return React.createElement(
-              'div',
-              null,
-              navigations.length > 0 && React.createElement(
-                Breadcrumb,
-                { style: { marginBottom: 16 } },
-                navigations.map(function (o) {
-                  return React.createElement(
-                    Breadcrumb.Item,
-                    null,
-                    React.createElement(
-                      Link,
-                      { to: o.path },
-                      React.createElement(Icon, { type: o.icon }),
-                      o.title
-                    )
-                  );
-                })
-              ),
-              !!title && React.createElement(
-                'h2',
-                null,
-                title
-              ),
-              !!description && React.createElement(
-                'div',
-                null,
-                description
-              )
-            );
-          }
-        }, {
-          key: 'view',
-          value: function view() {
-            return React.createElement(
-              'div',
-              null,
-              'page works'
-            );
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            var Header = this.header();
-            var headerStyle = {
-              padding: '16px 32px',
-              background: '#fff',
-              boxShadow: '0 1px 4px rgba(0, 21, 41, 0.08)'
-            };
-            return React.createElement(
-              Layout,
-              { style: { margin: -24 } },
-              !!Header && React.createElement(
-                'div',
-                { style: headerStyle },
-                Header
-              ),
-              React.createElement(
-                Content,
-                { style: { margin: 24 } },
-                this.view()
-              )
-            );
-          }
-        }]);
-
-        return Page;
-      }(React.Component);
-
-      _export('default', Page);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_export, _context) {
-  "use strict";
-
-  var Logo, _createClass, _ReactRouterDOM, Link, withRouter, _antd, Layout, Menu, Icon, Sider, SideNav;
-
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
-
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfLayoutLogo) {
-      Logo = _teamelfLayoutLogo.default;
-    }],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _ReactRouterDOM = ReactRouterDOM;
-      Link = _ReactRouterDOM.Link;
-      withRouter = _ReactRouterDOM.withRouter;
-      _antd = antd;
-      Layout = _antd.Layout;
-      Menu = _antd.Menu;
-      Icon = _antd.Icon;
-      Sider = Layout.Sider;
-
-      _export('SideNav', SideNav = function (_React$Component) {
-        _inherits(SideNav, _React$Component);
-
-        function SideNav(props) {
-          _classCallCheck(this, SideNav);
-
-          var _this = _possibleConstructorReturn(this, (SideNav.__proto__ || Object.getPrototypeOf(SideNav)).call(this, props));
-
-          _this.navigations = [{ path: '/home', icon: 'home', title: '工作台' }, { path: '/member', icon: 'user', title: '成员管理' }, { path: '/permission', icon: 'key', title: '权限管理' }, { path: '/config', icon: 'tool', title: '团队信息' }, { path: '/extension', icon: 'appstore-o', title: '插件管理' }].concat(_toConsumableArray(_this.navigations || []));
-          _this.state = {
-            currentNavigation: _this.getNavigationFromRoute()
-          };
-          return _this;
-        }
-
-        _createClass(SideNav, [{
-          key: 'getNavigationFromRoute',
-          value: function getNavigationFromRoute() {
-            var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props.location.pathname;
-            var _iteratorNormalCompletion = true;
-            var _didIteratorError = false;
-            var _iteratorError = undefined;
-
-            try {
-              for (var _iterator = this.navigations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                var nav = _step.value;
-
-                if (path.match(nav.pattern || nav.path)) {
-                  return nav.path;
-                }
-              }
-            } catch (err) {
-              _didIteratorError = true;
-              _iteratorError = err;
-            } finally {
-              try {
-                if (!_iteratorNormalCompletion && _iterator.return) {
-                  _iterator.return();
-                }
-              } finally {
-                if (_didIteratorError) {
-                  throw _iteratorError;
-                }
-              }
-            }
-
-            return null;
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            var logoStyle = {
-              position: 'relative',
-              height: 64,
-              background: '#002140',
-              textAlign: 'center',
-              overflow: 'hidden'
-            };
-            return React.createElement(
-              Sider,
-              {
-                width: 256, breakpoint: 'md',
-                style: { boxShadow: '2px 0 6px rgba(0, 21, 41, 0.35)', zIndex: '999' },
-                collapsible: true, trigger: null,
-                collapsed: this.props.collapsed,
-                onCollapse: this.props.toggleCollapsed
-              },
-              React.createElement(
-                'div',
-                { style: logoStyle },
-                React.createElement(Logo, { style: { lineHeight: '64px' } })
-              ),
-              React.createElement(
-                Menu,
-                {
-                  theme: 'dark',
-                  mode: 'inline',
-                  style: { margin: '20px 0' },
-                  selectedKeys: [this.state.currentNavigation]
-                },
-                this.navigations.map(function (o) {
-                  return React.createElement(
-                    Menu.Item,
-                    { key: o.path },
-                    React.createElement(
-                      Link,
-                      { to: o.path },
-                      React.createElement(Icon, { type: o.icon }),
-                      React.createElement(
-                        'span',
-                        null,
-                        o.title
-                      )
-                    )
-                  );
-                })
-              )
-            );
-          }
-        }]);
-
-        return SideNav;
-      }(React.Component));
-
-      _export('SideNav', SideNav);
-
-      _export('default', withRouter(SideNav));
+      _export('default', AbstractModel);
     }
   };
 });
@@ -3706,114 +3814,6 @@ System.register("teamelf/profile/Security", [], function (_export, _context) {
       }(React.Component);
 
       _export("default", _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, AbstractModel;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      AbstractModel = function () {
-        function AbstractModel(props) {
-          _classCallCheck(this, AbstractModel);
-
-          if (new.target === AbstractModel) {
-            throw new Error('AbstractModel cannot be instanced directly!');
-          }
-
-          /**
-           * model's attributes
-           *
-           * @type {Object}
-           * @private
-           */
-          this._attributes = {};
-
-          /**
-           * the fetching api url
-           * @type {String}
-           * @private
-           */
-          this._url = '';
-        }
-
-        /**
-         * getter & setter of _attributes
-         */
-
-
-        _createClass(AbstractModel, [{
-          key: 'fetch',
-          value: function fetch() {
-            throw new Error('AbstractModel@fetch must be implemented by subclass');
-          }
-        }, {
-          key: 'create',
-          value: function create() {
-            throw new Error('AbstractModel@create must be implemented by subclass');
-          }
-        }, {
-          key: 'update',
-          value: function update() {
-            throw new Error('AbstractModel@update must be implemented by subclass');
-          }
-        }, {
-          key: 'delete',
-          value: function _delete() {
-            throw new Error('AbstractModel@delete must be implemented by subclass');
-          }
-        }, {
-          key: 'attributes',
-          get: function get() {
-            return this._attributes;
-          },
-          set: function set(attributes) {
-            this._attributes = attributes;
-          }
-        }, {
-          key: 'url',
-          get: function get() {
-            return this._url;
-          },
-          set: function set(url) {
-            this._url = url;
-          }
-        }]);
-
-        return AbstractModel;
-      }();
-
-      _export('default', AbstractModel);
     }
   };
 });
