@@ -9,10 +9,10 @@
 
 import Page from 'teamelf/layout/Page';
 const { withRouter } = ReactRouterDOM;
-const { Row, Col, Tag, Icon, Card } = antd;
+const { Row, Col, Tag, Icon } = antd;
 import Gender from 'teamelf/components/Gender';
-import InfoEditor from 'teamelf/components/InfoEditor';
 import MemberRoleUpdater from 'teamelf/member/MemberRoleUpdater';
+import MemberBasicProfileCard from 'teamelf/member/MemberBasicProfileCard';
 
 class MemberItem extends Page {
   constructor (props) {
@@ -22,26 +22,10 @@ class MemberItem extends Page {
   }
   profiles () {
     return [
-      <Card
-        title="基本信息"
-        style={{marginBottom: 20}}
-      >
-        <InfoEditor
-          label="登录名"
-          value={this.member.username}
-          disabled
-        />
-        <InfoEditor
-          label="邮　箱"
-          value={this.member.email}
-          onEdit={this.edit.bind(this, 'email')}
-        />
-        <InfoEditor
-          label="手　机"
-          value={this.member.phone}
-          onEdit={this.edit.bind(this, 'phone')}
-        />
-      </Card>
+      <MemberBasicProfileCard
+        onEdit={this.edit.bind(this)}
+        {...this.member}
+      />
     ];
   }
   operators () {

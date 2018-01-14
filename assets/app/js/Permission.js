@@ -8,15 +8,13 @@
  */
 
 import Page from 'teamelf/layout/Page';
-const { Row, Col, Table, Icon, Checkbox } = antd;
-import RoleEditorCardItem from 'teamelf/role/RoleEditorCardItem';
-import RoleCreateCardItem from 'teamelf/role/RoleCreateCardItem';
+const { Table, Icon, Checkbox } = antd;
+import RoleCardList from 'teamelf/role/RoleCardList';
 
 export default class extends Page {
   constructor (props) {
     super(props);
     this.state = {
-      roles: window.roles,
       permissions: [],
       dataSource: [],
       columns: [],
@@ -133,23 +131,7 @@ export default class extends Page {
     return '成员组权限设置';
   }
   description () {
-    return (
-      <Row type="flex" gutter={16}>
-        {this.state.roles.map(o => (
-          <Col xs={12} md={6} lg={3}>
-            <RoleEditorCardItem
-              {...o}
-              done={this.fetch.bind(this)}
-            />
-          </Col>
-        ))}
-        <Col xs={12} md={6} lg={3}>
-          <RoleCreateCardItem
-            done={this.fetch.bind(this)}
-          />
-        </Col>
-      </Row>
-    );
+    return <RoleCardList/>;
   }
   view () {
     return (

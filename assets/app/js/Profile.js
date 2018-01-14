@@ -15,8 +15,12 @@ import Logout from 'teamelf/profile/Logout';
 export default class extends Page {
   constructor (props) {
     super(props);
-    this.bulletins = [];
-    this.operations = [
+  }
+  bulletins () {
+    return [];
+  }
+  operations () {
+    return [
       <Security/>,
       <Logout/>
     ];
@@ -29,12 +33,12 @@ export default class extends Page {
   }
   view () {
     return (
-      <Row gutter={16} className="profile-page">
+      <Row gutter={16}>
         <Col xs={24} lg={16}>
-          {this.bulletins}
+          {this.bulletins()}
         </Col>
         <Col xs={24} lg={8}>
-          {this.operations}
+          {this.operations()}
         </Col>
       </Row>
     )

@@ -19,7 +19,8 @@ export default class extends React.Component {
         <Button
           className="full"
           type="danger"
-        >发送重置密码邮件</Button>
+          href="/password/reset"
+        >点此修改密码</Button>
       </Card>
     );
   }

@@ -8,50 +8,36 @@
  */
 
 import Page from 'teamelf/layout/Page';
-const { Button } = antd;
-import InfoEditor from 'teamelf/components/InfoEditor';
+const { Row, Col, Button } = antd;
+import RoleCardList from 'teamelf/role/RoleCardList';
+import ConfigBasicInfo from 'teamelf/config/ConfigBasicInfo';
+import ConfigLogo from 'teamelf/config/ConfigLogo';
 
 export default class extends Page {
-  constructor (props) {
-    super(props);
-    this.state = {
-      ...window.config
-    }
-  }
-  reload () {
-    window.location.reload();
-  }
-  edit (key, value) {
-    return axios.put('config/' + key, {value}).then(r => {
-      this.setState({[key]: value});
-    });
+  configs () {
+    return [
+      <ConfigBasicInfo/>,
+      <ConfigLogo/>
+    ];
   }
   title () {
-    return '团队基本设置';
+    return '团队信息设置';
   }
   description () {
     return [
+      <RoleCardList/>,
       <Button
         type="primary"
         icon="reload"
-        onClick={this.reload.bind(this)}
+        onClick={e => window.location.reload()}
       >修改站点配置须点此刷新方可生效</Button>
     ];
   }
   view () {
     return (
-      <div>
-        <InfoEditor
-          label="团队名称"
-          value={this.state.name}
-          onEdit={this.edit.bind(this, 'name')}
-        />
-        <InfoEditor
-          label="团队描述"
-          value={this.state.description}
-          onEdit={this.edit.bind(this, 'description')}
-        />
-      </div>
+      <Row gutter={16} type="flex">
+        {this.configs().map(o => <Col>{o}</Col>)}
+      </Row>
     );
   }
 }

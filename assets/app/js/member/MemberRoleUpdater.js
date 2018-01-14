@@ -30,7 +30,7 @@ export default class extends React.Component {
       <Card
         title="角色更改"
         extra={<Button type="primary" onClick={this.update.bind(this)}>确认</Button>}
-        style={{marginBottom: 20}}
+        style={{marginBottom: 16}}
       >
         <MemberRoleChooser
           role={this.state.role}

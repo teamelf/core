@@ -18,6 +18,7 @@ use TeamELF\Api\Controller\Auth\LogoutController;
 use TeamELF\Api\Controller\Auth\ResetPasswordController;
 use TeamELF\Api\Controller\Config\ConfigListController;
 use TeamELF\Api\Controller\Config\ConfigUpdateController;
+use TeamELF\Api\Controller\Config\LogoUpdateController;
 use TeamELF\Api\Controller\Extension\ExtensionActivateController;
 use TeamELF\Api\Controller\Extension\ExtensionListController;
 use TeamELF\Api\Controller\Extension\ExtensionUninstallController;
@@ -75,6 +76,7 @@ class ApiService extends AbstractService
             ->prefix('/api/config')
             ->get('config-list', '', ConfigListController::class)
             ->put('config-update', '/{key}', ConfigUpdateController::class)
+            ->post('config-logo', '/logo', LogoUpdateController::class)
 
             // --------------------
             // | Auth
