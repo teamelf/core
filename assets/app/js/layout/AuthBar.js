@@ -20,7 +20,7 @@ class AuthBar extends React.Component {
   }
   getStyle () {
     const style = {
-      padding: '0 20px',
+      padding: '0 16px',
       cursor: 'pointer',
       transition: 'background .3s',
     };
@@ -45,7 +45,7 @@ class AuthBar extends React.Component {
           onMouseLeave={this.handleHover.bind(this)}
         >
           <Avatar style={{marginTop: 16, float: 'left'}}/>
-          <div style={{display: 'inline-block', marginLeft: 20, paddingTop: (64-20-16)/2, height: 64}}>
+          <div style={{display: 'inline-block', marginLeft: 16, paddingTop: (64-16-16)/2, height: 64}}>
             <div style={{lineHeight: '20px'}}>{window.auth.name}</div>
             <div style={{lineHeight: '16px', fontSize: '.8em'}}>{window.auth.role.name}</div>
           </div>

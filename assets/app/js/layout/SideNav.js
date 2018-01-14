@@ -58,7 +58,7 @@ export class SideNav extends React.Component {
         <Menu
           theme="dark"
           mode="inline"
-          style={{margin: '20px 0'}}
+          style={{margin: '16px 0'}}
           selectedKeys={[this.state.currentNavigation]}
         >
           {this.navigations().map(o => (

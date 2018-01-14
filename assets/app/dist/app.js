@@ -1582,7 +1582,7 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
               { className: 'clearfix', style: { lineHeight: '40px' } },
               React.createElement(
                 'h3',
-                { style: { display: 'inline-block', marginRight: 20 } },
+                { style: { display: 'inline-block', marginRight: 16 } },
                 this.props.label
               ),
               !this.state.editor && React.createElement(
@@ -1598,11 +1598,27 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
                 Tooltip,
                 { title: '\u70B9\u6B64\u7F16\u8F91', placement: 'right' },
                 React.createElement(Icon, {
-                  style: { marginLeft: 20, cursor: 'pointer' },
+                  style: { marginLeft: 16, cursor: 'pointer' },
                   type: 'edit',
                   onClick: this.toggleEditor.bind(this) })
               ),
-              this.state.editor && this.renderEditor()
+              this.state.editor && [this.renderEditor(), React.createElement(
+                Tooltip,
+                { title: '\u786E\u8BA4\u4FEE\u6539', placement: 'top' },
+                React.createElement(Icon, {
+                  type: 'check',
+                  style: { color: 'green', cursor: 'pointer', marginLeft: 8 },
+                  onClick: this.submitChange.bind(this)
+                })
+              ), React.createElement(
+                Tooltip,
+                { title: '\u653E\u5F03\u4FEE\u6539', placement: 'top' },
+                React.createElement(Icon, {
+                  type: 'close',
+                  style: { color: 'red', cursor: 'pointer', marginLeft: 8 },
+                  onClick: this.toggleEditor.bind(this)
+                })
+              )]
             );
           }
         }]);
@@ -2142,7 +2158,7 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
           key: 'getStyle',
           value: function getStyle() {
             var style = {
-              padding: '0 20px',
+              padding: '0 16px',
               cursor: 'pointer',
               transition: 'background .3s'
             };
@@ -2175,7 +2191,7 @@ System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
                 React.createElement(Avatar, { style: { marginTop: 16, float: 'left' } }),
                 React.createElement(
                   'div',
-                  { style: { display: 'inline-block', marginLeft: 20, paddingTop: (64 - 20 - 16) / 2, height: 64 } },
+                  { style: { display: 'inline-block', marginLeft: 16, paddingTop: (64 - 16 - 16) / 2, height: 64 } },
                   React.createElement(
                     'div',
                     { style: { lineHeight: '20px' } },
@@ -2843,7 +2859,7 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
                 {
                   theme: 'dark',
                   mode: 'inline',
-                  style: { margin: '20px 0' },
+                  style: { margin: '16px 0' },
                   selectedKeys: [this.state.currentNavigation]
                 },
                 this.navigations().map(function (o) {

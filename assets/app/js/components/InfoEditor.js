@@ -86,7 +86,7 @@ export default class extends React.Component {
   render () {
     return (
       <div className="clearfix" style={{lineHeight: '40px'}}>
-        <h3 style={{display: 'inline-block', marginRight: 20}}>{this.props.label}</h3>
+        <h3 style={{display: 'inline-block', marginRight: 16}}>{this.props.label}</h3>
 
         {!this.state.editor && (
           <div style={{display: 'inline'}}>
@@ -97,13 +97,29 @@ export default class extends React.Component {
         {(!this.props.disabled && !this.state.editor) && (
           <Tooltip title="点此编辑" placement="right">
             <Icon
-              style={{marginLeft: 20, cursor: 'pointer'}}
+              style={{marginLeft: 16, cursor: 'pointer'}}
               type="edit"
               onClick={this.toggleEditor.bind(this)}/>
           </Tooltip>
         )}
 
-        {this.state.editor && this.renderEditor()}
+        {this.state.editor && [
+          this.renderEditor(),
+          <Tooltip title="确认修改" placement="top">
+            <Icon
+              type="check"
+              style={{color: 'green', cursor: 'pointer', marginLeft: 8}}
+              onClick={this.submitChange.bind(this)}
+            />
+          </Tooltip>,
+          <Tooltip title="放弃修改" placement="top">
+            <Icon
+              type="close"
+              style={{color: 'red', cursor: 'pointer', marginLeft: 8}}
+              onClick={this.toggleEditor.bind(this)}
+            />
+          </Tooltip>
+        ]}
       </div>
     );
   }
