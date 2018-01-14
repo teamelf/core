@@ -243,7 +243,7 @@ abstract class AbstractModel
      * @param array $criteria
      * @return int
      */
-    final public static function count(array $criteria)
+    final public static function count(array $criteria = [])
     {
         return static::getRepository()
             ->count($criteria);
