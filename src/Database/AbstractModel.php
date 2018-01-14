@@ -220,7 +220,7 @@ abstract class AbstractModel
      * @param int|null   $offset
      * @return static[]
      */
-    final public static function where(array $criteria, array $orderBy = null, int $limit = null, int $offset = null)
+    final public static function where(array $criteria, array $orderBy = ['createdAt' => 'DESC'], int $limit = null, int $offset = null)
     {
         return static::getRepository()
             ->findBy($criteria, $orderBy, $limit, $offset);
@@ -231,10 +231,10 @@ abstract class AbstractModel
      *
      * @return static[]
      */
-    final public static function all()
+    final public static function all($orderBy = ['createdAt' => 'DESC'])
     {
         return static::getRepository()
-            ->findAll();
+            ->findBy([], $orderBy);
     }
 
     /**
