@@ -33,7 +33,9 @@ class RoleCreateController extends AbstractController
             ],
             'slug' => [
                 new NotBlank()
-            ]
+            ],
+            'icon' => [],
+            'color' => []
         ]);
         $role = new Role($data);
         $role->save();
