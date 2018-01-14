@@ -238,6 +238,18 @@ abstract class AbstractModel
     }
 
     /**
+     * get count
+     *
+     * @param array $criteria
+     * @return int
+     */
+    final public static function count(array $criteria)
+    {
+        return static::getRepository()
+            ->count($criteria);
+    }
+
+    /**
      * get model's database repository
      *
      * @return EntityRepository
