@@ -53,9 +53,6 @@ export default class extends Page {
       name: '成员角色更改',
       permission: 'member.role.update',
     }, {
-      name: '成员密码重设',
-      permission: 'member.password.reset',
-    }, {
       name: '创新新角色',
       permission: 'role.create',
     }, {

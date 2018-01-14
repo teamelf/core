@@ -25,6 +25,7 @@ use TeamELF\Api\Controller\Helper\PinyinController;
 use TeamELF\Api\Controller\Member\MemberCreateController;
 use TeamELF\Api\Controller\Member\MemberItemController;
 use TeamELF\Api\Controller\Member\MemberListController;
+use TeamELF\Api\Controller\Member\MemberRoleUpdateController;
 use TeamELF\Api\Controller\Member\MemberUpdateController;
 use TeamELF\Api\Controller\Permission\PermissionListController;
 use TeamELF\Api\Controller\Permission\PermissionUpdateController;
@@ -93,6 +94,7 @@ class ApiService extends AbstractService
             ->post('member-create', '', MemberCreateController::class)
             ->get('member-item', '/{username}', MemberItemController::class)
             ->put('member-update', '/{username}', MemberUpdateController::class)
+            ->put('member-role-update', '/{username}/role', MemberRoleUpdateController::class)
 
             // --------------------
             // | Role

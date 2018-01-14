@@ -12,12 +12,45 @@ const { withRouter } = ReactRouterDOM;
 const { Row, Col, Tag, Icon, Card, Button } = antd;
 import Gender from 'teamelf/components/Gender';
 import InfoEditor from 'teamelf/components/InfoEditor';
+import MemberRoleUpdater from 'teamelf/member/MemberRoleUpdater';
 
 class MemberItem extends Page {
   constructor (props) {
     super(props);
     this.member = null;
     this.fetchMember();
+  }
+  getProfileComponents () {
+    return [
+      <Card
+        title="基本信息"
+        style={{marginBottom: 20}}
+      >
+        <InfoEditor
+          label="登录名"
+          value={this.member.username}
+          disabled
+        />
+        <InfoEditor
+          label="邮　箱"
+          value={this.member.email}
+          onEdit={this.edit.bind(this, 'email')}
+        />
+        <InfoEditor
+          label="手　机"
+          value={this.member.phone}
+          onEdit={this.edit.bind(this, 'phone')}
+        />
+      </Card>
+    ];
+  }
+  getOperatorComponents () {
+    return [
+      <MemberRoleUpdater
+        username={this.props.match.params.username}
+        role={this.member ? this.member.role.slug : null}
+      />
+    ];
   }
   fetchMember () {
     axios.get('member/' + this.props.match.params.username).then(r => {
@@ -65,43 +98,10 @@ class MemberItem extends Page {
       return (
         <Row gutter={16}>
           <Col xs={24} lg={12}>
-            <Card
-              title="基本信息"
-              style={{marginBottom: 20}}
-            >
-              <InfoEditor
-                label="登录名"
-                value={this.member.username}
-                disabled
-              />
-              <InfoEditor
-                label="邮　箱"
-                value={this.member.email}
-                onEdit={this.edit.bind(this, 'email')}
-              />
-              <InfoEditor
-                label="手　机"
-                value={this.member.phone}
-                onEdit={this.edit.bind(this, 'phone')}
-              />
-            </Card>
+            {this.getProfileComponents()}
           </Col>
           <Col xs={24} lg={12}>
-            <Card
-              title="角色更改"
-              extra={<Button type="primary">确认修改</Button>}
-              style={{marginBottom: 20}}
-            />
-            <Card
-              title="密码重置"
-              style={{marginBottom: 20}}
-              extra={<Button type="danger">重置密码</Button>}
-            />
-            <Card
-              title="状态修改"
-              style={{marginBottom: 20}}
-              extra={<Button type="danger">退出工作室</Button>}
-            />
+            {this.getOperatorComponents()}
           </Col>
         </Row>
       );

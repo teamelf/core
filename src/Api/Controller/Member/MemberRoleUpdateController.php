@@ -12,40 +12,38 @@
 namespace TeamELF\Api\Controller\Member;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\Email;
 use TeamELF\Core\Member;
+use TeamELF\Core\Role;
+use TeamELF\Exception\HttpForbiddenException;
 use TeamELF\Exception\HttpNotFoundException;
 use TeamELF\Http\AbstractController;
 
-class MemberItemController extends AbstractController
+class MemberRoleUpdateController extends AbstractController
 {
-    protected $needPermissions = ['member.item'];
+    protected $needPermissions = ['member.role.update'];
 
     /**
      * handle the request
      *
      * @return Response
+     * @throws HttpForbiddenException
      * @throws HttpNotFoundException
      */
     public function handler(): Response
     {
+        $data = $this->validate([
+            'role' => []
+        ]);
         $member = Member::search($this->getParameter('username'));
         if (!$member) {
             throw new HttpNotFoundException();
         }
-        $r = $member->getRole();
-        return response([
-            'id' => $member->getId(),
-            'username' => $member->getUsername(),
-            'email' => $member->getEmail(),
-            'phone' => $member->getPhone(),
-            'name' => $member->getName(),
-            'gender' => $member->getGender(),
-            'role' => [
-                'name' => $r->getName(),
-                'color' => $r->getColor(),
-                'icon' => $r->getIcon(),
-                'slug' => $r->getSlug()
-            ]
-        ]);
+        $data['role'] = Role::findBy(['slug' => $data['role']]);
+        if (!$data['role']) {
+            throw new HttpForbiddenException();
+        }
+        $member->update($data);
+        return response();
     }
 }

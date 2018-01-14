@@ -8,6 +8,7 @@
  */
 
 const { Modal, Button, Form, Input, Radio, Checkbox, Icon } = antd;
+import MemberRoleChooser from 'teamelf/member/MemberRoleChooser';
 
 class MemberCreateForm extends React.Component {
   constructor (props) {
@@ -18,7 +19,7 @@ class MemberCreateForm extends React.Component {
       email: '',
       name: '',
       gender: 0,
-      role: '',
+      role: null,
       activate: false
     };
   }
@@ -109,26 +110,10 @@ class MemberCreateForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
-          {getFieldDecorator('role', {
-            rules: [{
-              required: true, message: '请选择用户角色',
-            }],
-          })(
-            <Radio.Group
-              value={this.state.role}
-              onChange={e => this.setState({role: e.target.value})}
-            >
-              {window.roles.map(o => (
-                <Radio.Button
-                  style={{color: this.state.role === o.slug ? o.color : null}}
-                  value={o.slug}
-                >
-                  <Icon type={o.icon}/>
-                  <span> {o.name}</span>
-                </Radio.Button>
-              ))}
-            </Radio.Group>
-          )}
+          <MemberRoleChooser
+            role={this.state.role}
+            onChoose={e => this.setState({role: e.target.value})}
+          />
         </Form.Item>
         <Form.Item>
           <Checkbox
