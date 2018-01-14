@@ -23,19 +23,20 @@ import Extension from 'teamelf/Extension';
 export default class extends React.Component {
   constructor (props) {
     super(props);
-    this.routes = [
+    // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge
+    this.state = {
+      collapsed: localStorage.sideNavCollapsed === 'true'
+    };
+  }
+  routes () {
+    return [
       {path: '/home', exact: true, component: Home},
       {path: '/member', component: Member},
       {path: '/config', exact: true, component: Config},
       {path: '/profile', exact: true, component: Profile},
       {path: '/permission', exact: true, component: Permission},
-      {path: '/extension', exact: true, component: Extension},
-      ...(this.routes || [])
+      {path: '/extension', exact: true, component: Extension}
     ];
-    // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge
-    this.state = {
-      collapsed: localStorage.sideNavCollapsed === 'true'
-    };
   }
   toggleCollapsed () {
     const collapsed = !this.state.collapsed;
@@ -57,7 +58,7 @@ export default class extends React.Component {
           <Layout style={{margin: 24}}>
             <Switch>
               <Route exact path="/" render={() => <Redirect to="/home"/>}/>
-              {this.routes.map(o => <Route path={o.path} exact={o.exact} component={o.component}/>)}
+              {this.routes().map(o => <Route path={o.path} exact={o.exact} component={o.component}/>)}
               <Route component={RedirectAs404}/>
             </Switch>
             <Footer/>

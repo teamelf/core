@@ -5,18 +5,6 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
 
   var RedirectAs404, SideNav, Header, Footer, Home, Member, Config, Profile, Permission, Extension, _createClass, _ReactRouterDOM, Switch, Route, Redirect, _antd, Layout, _class;
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
-
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
-
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -103,7 +91,6 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
 
           var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
 
-          _this.routes = [{ path: '/home', exact: true, component: Home }, { path: '/member', component: Member }, { path: '/config', exact: true, component: Config }, { path: '/profile', exact: true, component: Profile }, { path: '/permission', exact: true, component: Permission }, { path: '/extension', exact: true, component: Extension }].concat(_toConsumableArray(_this.routes || []));
           // use localStorage.sideNavCollapsed to avoid page jump due to collapsed judge
           _this.state = {
             collapsed: localStorage.sideNavCollapsed === 'true'
@@ -112,6 +99,11 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
         }
 
         _createClass(_class, [{
+          key: 'routes',
+          value: function routes() {
+            return [{ path: '/home', exact: true, component: Home }, { path: '/member', component: Member }, { path: '/config', exact: true, component: Config }, { path: '/profile', exact: true, component: Profile }, { path: '/permission', exact: true, component: Permission }, { path: '/extension', exact: true, component: Extension }];
+          }
+        }, {
           key: 'toggleCollapsed',
           value: function toggleCollapsed() {
             var collapsed = !this.state.collapsed;
@@ -144,7 +136,7 @@ System.register('teamelf/App', ['teamelf/Error', 'teamelf/layout/SideNav', 'team
                     React.createElement(Route, { exact: true, path: '/', render: function render() {
                         return React.createElement(Redirect, { to: '/home' });
                       } }),
-                    this.routes.map(function (o) {
+                    this.routes().map(function (o) {
                       return React.createElement(Route, { path: o.path, exact: o.exact, component: o.component });
                     }),
                     React.createElement(Route, { component: RedirectAs404 })
@@ -286,7 +278,7 @@ System.register('teamelf/Config', ['teamelf/layout/Page', 'teamelf/components/In
         }, {
           key: 'title',
           value: function title() {
-            return '站点基本设置';
+            return '团队基本设置';
           }
         }, {
           key: 'description',
@@ -818,18 +810,6 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
     };
   }
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
-
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
-
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -923,51 +903,55 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
             columns: [],
             loading: false
           };
-          _this.permissions = [{
-            name: '更新站点信息',
-            permission: 'config.update'
-          }, {
-            name: '查看权限列表',
-            permission: 'permission.list'
-          }, {
-            name: '更新权限',
-            permission: 'permission.update'
-          }, {
-            name: '查看插件列表',
-            permission: 'extension.list'
-          }, {
-            name: '激活/停用插件',
-            permission: 'extension.activate'
-          }, {
-            name: '查看成员列表',
-            permission: 'member.list'
-          }, {
-            name: '查看成员详情',
-            permission: 'member.item'
-          }, {
-            name: '创建新成员',
-            permission: 'member.create'
-          }, {
-            name: '更新成员信息',
-            permission: 'member.update'
-          }, {
-            name: '成员角色更改',
-            permission: 'member.role.update'
-          }, {
-            name: '创新新角色',
-            permission: 'role.create'
-          }, {
-            name: '更新角色信息',
-            permission: 'role.update'
-          }, {
-            name: '删除角色',
-            permission: 'role.delete'
-          }].concat(_toConsumableArray(_this.permissions || []));
           _this.fetch();
           return _this;
         }
 
         _createClass(_class, [{
+          key: 'permissions',
+          value: function permissions() {
+            return [{
+              name: '更新站点信息',
+              permission: 'config.update'
+            }, {
+              name: '查看权限列表',
+              permission: 'permission.list'
+            }, {
+              name: '更新权限',
+              permission: 'permission.update'
+            }, {
+              name: '查看插件列表',
+              permission: 'extension.list'
+            }, {
+              name: '激活/停用插件',
+              permission: 'extension.activate'
+            }, {
+              name: '查看成员列表',
+              permission: 'member.list'
+            }, {
+              name: '查看成员详情',
+              permission: 'member.item'
+            }, {
+              name: '创建新成员',
+              permission: 'member.create'
+            }, {
+              name: '更新成员信息',
+              permission: 'member.update'
+            }, {
+              name: '成员角色更改',
+              permission: 'member.role.update'
+            }, {
+              name: '创新新角色',
+              permission: 'role.create'
+            }, {
+              name: '更新角色信息',
+              permission: 'role.update'
+            }, {
+              name: '删除角色',
+              permission: 'role.delete'
+            }];
+          }
+        }, {
           key: 'fetch',
           value: function () {
             var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -993,13 +977,15 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                         dataIndex: 'permission',
                         colSpan: 0
                       }];
-                      dataSource = _.cloneDeep(this.permissions);
+                      dataSource = this.permissions();
 
                       _loop = function _loop(permission) {
                         var d = dataSource.find(function (o) {
                           return o.permission === permission.permission;
                         });
-                        d['r_' + permission.role.id] = true;
+                        if (d) {
+                          d['r_' + permission.role.id] = true;
+                        }
                       };
 
                       _iteratorNormalCompletion = true;
@@ -1659,165 +1645,6 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
 });
 'use strict';
 
-System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, _antd, Card, Switch, Button, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Card = _antd.Card;
-      Switch = _antd.Switch;
-      Button = _antd.Button;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class(props) {
-          _classCallCheck(this, _class);
-
-          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-          _this.state = {
-            loading: false
-          };
-          return _this;
-        }
-
-        _createClass(_class, [{
-          key: 'activate',
-          value: function activate(activation) {
-            var _this2 = this;
-
-            this.setState({ loading: true });
-            axios.put('extension/' + this.props.vendor + '/' + this.props.package, { activation: activation }).then(function (r) {
-              window.location.reload();
-            }).catch(function (e) {
-              _this2.setState({ loading: false });
-            });
-          }
-        }, {
-          key: 'upgrade',
-          value: function upgrade() {
-            alert('not supported yet!');
-          }
-        }, {
-          key: 'uninstall',
-          value: function uninstall() {
-            var _this3 = this;
-
-            antd.Modal.confirm({
-              title: '不可恢复',
-              content: '确定要删除么？该操作将删除所有插件数据并且无法恢复。如不使用插件建议停用即可',
-              onOk: function onOk() {
-                _this3.setState({ loading: true });
-                axios.delete('extension/' + _this3.props.vendor + '/' + _this3.props.package).then(function (r) {
-                  window.location.reload();
-                }).catch(function (e) {
-                  _this3.setState({ loading: false });
-                });
-              }
-            });
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              Card,
-              {
-                style: { marginBottom: 16 },
-                title: this.props.package,
-                extra: this.props.version,
-                actions: [React.createElement(Switch, {
-                  checked: this.props.isActivated,
-                  checkedChildren: '\u542F\u7528',
-                  unCheckedChildren: '\u505C\u7528',
-                  onChange: this.activate.bind(this),
-                  loading: this.state.loading
-                }), React.createElement(
-                  Button,
-                  {
-                    type: 'primary', size: 'small',
-                    onClick: this.upgrade.bind(this)
-                  },
-                  '\u5347\u7EA7'
-                ), React.createElement(
-                  Button,
-                  {
-                    type: 'danger', size: 'small',
-                    onClick: this.uninstall.bind(this)
-                  },
-                  '\u5378\u8F7D'
-                )]
-              },
-              React.createElement(
-                'div',
-                null,
-                this.props.description
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
 System.register('teamelf/layout/AuthBar', [], function (_export, _context) {
   "use strict";
 
@@ -2368,8 +2195,8 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
         }
 
         _createClass(Page, [{
-          key: 'navigations',
-          value: function navigations() {
+          key: 'breadcrumbs',
+          value: function breadcrumbs() {
             return []; // [{path, icon, title}]
           }
         }, {
@@ -2387,17 +2214,17 @@ System.register('teamelf/layout/Page', [], function (_export, _context) {
           value: function header() {
             var title = this.title();
             var description = this.description();
-            var navigations = this.navigations();
-            if (!navigations.length && !title && !description) {
+            var breadcrumbs = this.breadcrumbs();
+            if (!breadcrumbs.length && !title && !description) {
               return null;
             }
             return React.createElement(
               'div',
               null,
-              navigations.length > 0 && React.createElement(
+              breadcrumbs.length > 0 && React.createElement(
                 Breadcrumb,
                 { style: { marginBottom: 16 } },
-                navigations.map(function (o) {
+                breadcrumbs.map(function (o) {
                   return React.createElement(
                     Breadcrumb.Item,
                     null,
@@ -2471,18 +2298,6 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
 
   var Logo, _createClass, _ReactRouterDOM, Link, withRouter, _antd, Layout, Menu, Icon, Sider, SideNav;
 
-  function _toConsumableArray(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
-        arr2[i] = arr[i];
-      }
-
-      return arr2;
-    } else {
-      return Array.from(arr);
-    }
-  }
-
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
       throw new TypeError("Cannot call a class as a function");
@@ -2553,7 +2368,6 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
 
           var _this = _possibleConstructorReturn(this, (SideNav.__proto__ || Object.getPrototypeOf(SideNav)).call(this, props));
 
-          _this.navigations = [{ path: '/home', icon: 'home', title: '工作台' }, { path: '/member', icon: 'user', title: '成员管理' }, { path: '/permission', icon: 'key', title: '权限管理' }, { path: '/config', icon: 'tool', title: '团队信息' }, { path: '/extension', icon: 'appstore-o', title: '插件管理' }].concat(_toConsumableArray(_this.navigations || []));
           _this.state = {
             currentNavigation: _this.getNavigationFromRoute()
           };
@@ -2561,6 +2375,11 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
         }
 
         _createClass(SideNav, [{
+          key: 'navigations',
+          value: function navigations() {
+            return [{ path: '/home', icon: 'home', title: '工作台' }, { path: '/member', icon: 'user', title: '成员管理' }, { path: '/permission', icon: 'key', title: '权限管理' }, { path: '/config', icon: 'tool', title: '团队信息' }, { path: '/extension', icon: 'appstore-o', title: '插件管理' }];
+          }
+        }, {
           key: 'getNavigationFromRoute',
           value: function getNavigationFromRoute() {
             var path = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props.location.pathname;
@@ -2569,7 +2388,7 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
             var _iteratorError = undefined;
 
             try {
-              for (var _iterator = this.navigations[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+              for (var _iterator = this.navigations()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 var nav = _step.value;
 
                 if (path.match(nav.pattern || nav.path)) {
@@ -2625,7 +2444,7 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
                   style: { margin: '20px 0' },
                   selectedKeys: [this.state.currentNavigation]
                 },
-                this.navigations.map(function (o) {
+                this.navigations().map(function (o) {
                   return React.createElement(
                     Menu.Item,
                     { key: o.path },
@@ -2652,6 +2471,165 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
       _export('SideNav', SideNav);
 
       _export('default', withRouter(SideNav));
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Card, Switch, Button, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Switch = _antd.Switch;
+      Button = _antd.Button;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.state = {
+            loading: false
+          };
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'activate',
+          value: function activate(activation) {
+            var _this2 = this;
+
+            this.setState({ loading: true });
+            axios.put('extension/' + this.props.vendor + '/' + this.props.package, { activation: activation }).then(function (r) {
+              window.location.reload();
+            }).catch(function (e) {
+              _this2.setState({ loading: false });
+            });
+          }
+        }, {
+          key: 'upgrade',
+          value: function upgrade() {
+            alert('not supported yet!');
+          }
+        }, {
+          key: 'uninstall',
+          value: function uninstall() {
+            var _this3 = this;
+
+            antd.Modal.confirm({
+              title: '不可恢复',
+              content: '确定要删除么？该操作将删除所有插件数据并且无法恢复。如不使用插件建议停用即可',
+              onOk: function onOk() {
+                _this3.setState({ loading: true });
+                axios.delete('extension/' + _this3.props.vendor + '/' + _this3.props.package).then(function (r) {
+                  window.location.reload();
+                }).catch(function (e) {
+                  _this3.setState({ loading: false });
+                });
+              }
+            });
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                style: { marginBottom: 16 },
+                title: this.props.package,
+                extra: this.props.version,
+                actions: [React.createElement(Switch, {
+                  checked: this.props.isActivated,
+                  checkedChildren: '\u542F\u7528',
+                  unCheckedChildren: '\u505C\u7528',
+                  onChange: this.activate.bind(this),
+                  loading: this.state.loading
+                }), React.createElement(
+                  Button,
+                  {
+                    type: 'primary', size: 'small',
+                    onClick: this.upgrade.bind(this)
+                  },
+                  '\u5347\u7EA7'
+                ), React.createElement(
+                  Button,
+                  {
+                    type: 'danger', size: 'small',
+                    onClick: this.uninstall.bind(this)
+                  },
+                  '\u5378\u8F7D'
+                )]
+              },
+              React.createElement(
+                'div',
+                null,
+                this.props.description
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
     }
   };
 });
@@ -3128,7 +3106,7 @@ System.register('teamelf/member/MemberCreatorModal', ['teamelf/member/MemberRole
 System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/components/Gender', 'teamelf/components/InfoEditor', 'teamelf/member/MemberRoleUpdater'], function (_export, _context) {
   "use strict";
 
-  var Page, Gender, InfoEditor, MemberRoleUpdater, _createClass, _ReactRouterDOM, withRouter, _antd, Row, Col, Tag, Icon, Card, Button, MemberItem;
+  var Page, Gender, InfoEditor, MemberRoleUpdater, _createClass, _ReactRouterDOM, withRouter, _antd, Row, Col, Tag, Icon, Card, MemberItem;
 
   function _defineProperty(obj, key, value) {
     if (key in obj) {
@@ -3212,7 +3190,6 @@ System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/co
       Tag = _antd.Tag;
       Icon = _antd.Icon;
       Card = _antd.Card;
-      Button = _antd.Button;
 
       MemberItem = function (_Page) {
         _inherits(MemberItem, _Page);
@@ -3228,8 +3205,8 @@ System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/co
         }
 
         _createClass(MemberItem, [{
-          key: 'getProfileComponents',
-          value: function getProfileComponents() {
+          key: 'profiles',
+          value: function profiles() {
             return [React.createElement(
               Card,
               {
@@ -3254,8 +3231,8 @@ System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/co
             )];
           }
         }, {
-          key: 'getOperatorComponents',
-          value: function getOperatorComponents() {
+          key: 'operators',
+          value: function operators() {
             return [React.createElement(MemberRoleUpdater, {
               username: this.props.match.params.username,
               role: this.member ? this.member.role.slug : null
@@ -3281,15 +3258,6 @@ System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/co
               _this3.forceUpdate();
               return r;
             });
-          }
-        }, {
-          key: 'navigations',
-          value: function navigations() {
-            if (this.member) {
-              return [{ path: '/member', icon: 'user', title: '成员管理' }, { path: '/member/' + this.member.username, icon: this.member.role.icon, title: this.member.name }];
-            } else {
-              return [];
-            }
           }
         }, {
           key: 'title',
@@ -3320,12 +3288,12 @@ System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/co
                 React.createElement(
                   Col,
                   { xs: 24, lg: 12 },
-                  this.getProfileComponents()
+                  this.profiles()
                 ),
                 React.createElement(
                   Col,
                   { xs: 24, lg: 12 },
-                  this.getOperatorComponents()
+                  this.operators()
                 )
               );
             }

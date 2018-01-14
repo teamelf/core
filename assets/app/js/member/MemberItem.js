@@ -9,7 +9,7 @@
 
 import Page from 'teamelf/layout/Page';
 const { withRouter } = ReactRouterDOM;
-const { Row, Col, Tag, Icon, Card, Button } = antd;
+const { Row, Col, Tag, Icon, Card } = antd;
 import Gender from 'teamelf/components/Gender';
 import InfoEditor from 'teamelf/components/InfoEditor';
 import MemberRoleUpdater from 'teamelf/member/MemberRoleUpdater';
@@ -20,7 +20,7 @@ class MemberItem extends Page {
     this.member = null;
     this.fetchMember();
   }
-  getProfileComponents () {
+  profiles () {
     return [
       <Card
         title="基本信息"
@@ -44,7 +44,7 @@ class MemberItem extends Page {
       </Card>
     ];
   }
-  getOperatorComponents () {
+  operators () {
     return [
       <MemberRoleUpdater
         username={this.props.match.params.username}
@@ -64,16 +64,6 @@ class MemberItem extends Page {
       this.forceUpdate();
       return r;
     });
-  }
-  navigations () {
-    if (this.member) {
-      return [
-        {path: '/member', icon: 'user', title: '成员管理'},
-        {path: '/member/' + this.member.username, icon: this.member.role.icon, title: this.member.name}
-      ]
-    } else {
-      return [];
-    }
   }
   title () {
     if (this.member) {
@@ -98,10 +88,10 @@ class MemberItem extends Page {
       return (
         <Row gutter={16}>
           <Col xs={24} lg={12}>
-            {this.getProfileComponents()}
+            {this.profiles()}
           </Col>
           <Col xs={24} lg={12}>
-            {this.getOperatorComponents()}
+            {this.operators()}
           </Col>
         </Row>
       );

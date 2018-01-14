@@ -18,7 +18,7 @@ export default class Page extends React.Component {
     }
     super(props);
   }
-  navigations () {
+  breadcrumbs () {
     return []; // [{path, icon, title}]
   }
   title () {
@@ -30,14 +30,14 @@ export default class Page extends React.Component {
   header () {
     const title = this.title();
     const description = this.description();
-    const navigations = this.navigations();
-    if (!navigations.length && !title && !description) {
+    const breadcrumbs = this.breadcrumbs();
+    if (!breadcrumbs.length && !title && !description) {
       return null;
     }
     return (
       <div>
-        {navigations.length > 0 && <Breadcrumb style={{marginBottom: 16}}>
-          {navigations.map(o => (
+        {breadcrumbs.length > 0 && <Breadcrumb style={{marginBottom: 16}}>
+          {breadcrumbs.map(o => (
             <Breadcrumb.Item>
               <Link to={o.path}>
                 <Icon type={o.icon}/>

@@ -15,20 +15,21 @@ import Logo from 'teamelf/layout/Logo'
 export class SideNav extends React.Component {
   constructor (props) {
     super(props);
-    this.navigations = [
-      {path: '/home', icon: 'home', title: '工作台'},
-      {path: '/member', icon: 'user', title: '成员管理'},
-      {path: '/permission', icon: 'key', title: '权限管理'},
-      {path: '/config', icon: 'tool', title: '团队信息'},
-      {path: '/extension', icon: 'appstore-o', title: '插件管理'},
-      ...(this.navigations || [])
-    ];
     this.state = {
       currentNavigation: this.getNavigationFromRoute()
     };
   }
+  navigations () {
+    return [
+      {path: '/home', icon: 'home', title: '工作台'},
+      {path: '/member', icon: 'user', title: '成员管理'},
+      {path: '/permission', icon: 'key', title: '权限管理'},
+      {path: '/config', icon: 'tool', title: '团队信息'},
+      {path: '/extension', icon: 'appstore-o', title: '插件管理'}
+    ];
+  }
   getNavigationFromRoute (path = this.props.location.pathname) {
-    for (let nav of this.navigations) {
+    for (let nav of this.navigations()) {
       if (path.match(nav.pattern || nav.path)) {
         return nav.path;
       }
@@ -60,7 +61,7 @@ export class SideNav extends React.Component {
           style={{margin: '20px 0'}}
           selectedKeys={[this.state.currentNavigation]}
         >
-          {this.navigations.map(o => (
+          {this.navigations().map(o => (
             <Menu.Item key={o.path}>
               <Link to={o.path}>
                 <Icon type={o.icon}/>

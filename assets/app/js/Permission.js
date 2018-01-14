@@ -22,7 +22,10 @@ export default class extends Page {
       columns: [],
       loading: false
     };
-    this.permissions = [{
+    this.fetch();
+  }
+  permissions () {
+    return [{
       name: '更新站点信息',
       permission: 'config.update',
     }, {
@@ -61,8 +64,7 @@ export default class extends Page {
     }, {
       name: '删除角色',
       permission: 'role.delete',
-    }, ...(this.permissions || [])];
-    this.fetch();
+    }];
   }
   async fetch () {
     const roles = window.roles;
@@ -75,10 +77,12 @@ export default class extends Page {
       dataIndex: 'permission',
       colSpan: 0
     }];
-    let dataSource = _.cloneDeep(this.permissions);
+    let dataSource = this.permissions();
     for (const permission of permissions) {
       const d = dataSource.find(o => o.permission === permission.permission);
-      d['r_' + permission.role.id] = true;
+      if (d) {
+        d['r_' + permission.role.id] = true;
+      }
     }
     for (const role of roles) {
       columns.push({

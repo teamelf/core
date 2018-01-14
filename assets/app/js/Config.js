@@ -27,7 +27,7 @@ export default class extends Page {
     });
   }
   title () {
-    return '站点基本设置';
+    return '团队基本设置';
   }
   description () {
     return [

@@ -23559,6 +23559,34 @@ System.register('teamelf/common/SimpleLayout', ['teamelf/common/Header'], functi
     }
   };
 });
+"use strict";
+
+System.register("teamelf/common/extend", [], function (_export, _context) {
+  "use strict";
+
+  return {
+    setters: [],
+    execute: function () {
+      _export("default", function (object, method, callback) {
+        var original = object[method];
+
+        object[method] = function () {
+          for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+          }
+
+          var value = original ? original.apply(undefined, args) : undefined;
+
+          callback.apply(undefined, [value].concat(args));
+
+          return value;
+        };
+
+        Object.assign(object[method], original);
+      });
+    }
+  };
+});
 'use strict';
 
 System.register('teamelf/common/main', [], function (_export, _context) {
