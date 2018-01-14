@@ -7,8 +7,7 @@
  * file that was distributed with this source code.
  */
 
-const { Card, Icon, Modal, Button } = antd;
-import InfoEditor from 'teamelf/components/InfoEditor';
+const { Card, Icon, Modal, Form, Input, Tag } = antd;
 
 export default class extends React.Component {
   constructor (props) {
@@ -17,8 +16,8 @@ export default class extends React.Component {
       visible: false,
       name: '',
       slug: '',
-      color: '',
-      icon: ''
+      color: '#aaa',
+      icon: 'user'
     };
   }
   renderCard () {
@@ -35,13 +34,6 @@ export default class extends React.Component {
         <div>添加</div>
       </Card>
     );
-  }
-  edit (key, value) {
-    return new Promise((resolve, reject) => {
-      this.setState({[key]: value}, () => {
-        resolve();
-      });
-    });
   }
   createRole () {
     const role = {
@@ -68,26 +60,43 @@ export default class extends React.Component {
         onCancel={this.closeModal.bind(this)}
         okText="确认创建"
       >
-        <InfoEditor
-          label="名称"
-          value={this.state.name}
-          onEdit={this.edit.bind(this, 'name')}
-        />
-        <InfoEditor
-          label="短名"
-          value={this.state.slug}
-          onEdit={this.edit.bind(this, 'slug')}
-        />
-        <InfoEditor
-          label="颜色"
-          value={this.state.color}
-          onEdit={this.edit.bind(this, 'color')}
-        />
-        <InfoEditor
-          label="图标"
-          value={this.state.icon}
-          onEdit={this.edit.bind(this, 'icon')}
-        />
+        <div style={{marginBottom: 16, textAlign: 'center'}}>
+          <Tag color={this.state.color}>
+            <Icon type={this.state.icon}/>
+            <span> {this.state.name}</span>
+            <span> - {this.state.slug}</span>
+          </Tag>
+        </div>
+        <Form>
+          <Form.Item>
+            <Input
+              size="large" placeholder="名称"
+              value={this.state.name}
+              onChange={e => this.setState({name: e.target.value})}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Input
+              size="large" placeholder="短名"
+              value={this.state.slug}
+              onChange={e => this.setState({slug: e.target.value})}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Input
+              size="large" placeholder="颜色"
+              value={this.state.color}
+              onChange={e => this.setState({color: e.target.value})}
+            />
+          </Form.Item>
+          <Form.Item>
+            <Input
+              size="large" placeholder="图标"
+              value={this.state.icon}
+              onChange={e => this.setState({icon: e.target.value})}
+            />
+          </Form.Item>
+        </Form>
       </Modal>
     );
   }

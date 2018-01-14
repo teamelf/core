@@ -4471,25 +4471,10 @@ System.register('teamelf/role/RoleCardList', ['teamelf/role/RoleEditorCardItem',
 });
 'use strict';
 
-System.register('teamelf/role/RoleCreateCardItem', ['teamelf/components/InfoEditor'], function (_export, _context) {
+System.register('teamelf/role/RoleCreateCardItem', [], function (_export, _context) {
   "use strict";
 
-  var InfoEditor, _createClass, _antd, Card, Icon, Modal, Button, _class;
-
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
+  var _createClass, _antd, Card, Icon, Modal, Form, Input, Tag, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -4522,9 +4507,7 @@ System.register('teamelf/role/RoleCreateCardItem', ['teamelf/components/InfoEdit
   }
 
   return {
-    setters: [function (_teamelfComponentsInfoEditor) {
-      InfoEditor = _teamelfComponentsInfoEditor.default;
-    }],
+    setters: [],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {
@@ -4548,7 +4531,9 @@ System.register('teamelf/role/RoleCreateCardItem', ['teamelf/components/InfoEdit
       Card = _antd.Card;
       Icon = _antd.Icon;
       Modal = _antd.Modal;
-      Button = _antd.Button;
+      Form = _antd.Form;
+      Input = _antd.Input;
+      Tag = _antd.Tag;
 
       _class = function (_React$Component) {
         _inherits(_class, _React$Component);
@@ -4562,8 +4547,8 @@ System.register('teamelf/role/RoleCreateCardItem', ['teamelf/components/InfoEdit
             visible: false,
             name: '',
             slug: '',
-            color: '',
-            icon: ''
+            color: '#aaa',
+            icon: 'user'
           };
           return _this;
         }
@@ -4594,20 +4579,9 @@ System.register('teamelf/role/RoleCreateCardItem', ['teamelf/components/InfoEdit
             );
           }
         }, {
-          key: 'edit',
-          value: function edit(key, value) {
-            var _this3 = this;
-
-            return new Promise(function (resolve, reject) {
-              _this3.setState(_defineProperty({}, key, value), function () {
-                resolve();
-              });
-            });
-          }
-        }, {
           key: 'createRole',
           value: function createRole() {
-            var _this4 = this;
+            var _this3 = this;
 
             var role = {
               name: this.state.name,
@@ -4616,8 +4590,8 @@ System.register('teamelf/role/RoleCreateCardItem', ['teamelf/components/InfoEdit
               icon: this.state.icon
             };
             return axios.post('role', role).then(function (r) {
-              _this4.props.done();
-              _this4.closeModal();
+              _this3.props.done();
+              _this3.closeModal();
               return r;
             });
           }
@@ -4629,6 +4603,8 @@ System.register('teamelf/role/RoleCreateCardItem', ['teamelf/components/InfoEdit
         }, {
           key: 'renderModal',
           value: function renderModal() {
+            var _this4 = this;
+
             return React.createElement(
               Modal,
               {
@@ -4638,26 +4614,75 @@ System.register('teamelf/role/RoleCreateCardItem', ['teamelf/components/InfoEdit
                 onCancel: this.closeModal.bind(this),
                 okText: '\u786E\u8BA4\u521B\u5EFA'
               },
-              React.createElement(InfoEditor, {
-                label: '\u540D\u79F0',
-                value: this.state.name,
-                onEdit: this.edit.bind(this, 'name')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u77ED\u540D',
-                value: this.state.slug,
-                onEdit: this.edit.bind(this, 'slug')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u989C\u8272',
-                value: this.state.color,
-                onEdit: this.edit.bind(this, 'color')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u56FE\u6807',
-                value: this.state.icon,
-                onEdit: this.edit.bind(this, 'icon')
-              })
+              React.createElement(
+                'div',
+                { style: { marginBottom: 16, textAlign: 'center' } },
+                React.createElement(
+                  Tag,
+                  { color: this.state.color },
+                  React.createElement(Icon, { type: this.state.icon }),
+                  React.createElement(
+                    'span',
+                    null,
+                    ' ',
+                    this.state.name
+                  ),
+                  React.createElement(
+                    'span',
+                    null,
+                    ' - ',
+                    this.state.slug
+                  )
+                )
+              ),
+              React.createElement(
+                Form,
+                null,
+                React.createElement(
+                  Form.Item,
+                  null,
+                  React.createElement(Input, {
+                    size: 'large', placeholder: '\u540D\u79F0',
+                    value: this.state.name,
+                    onChange: function onChange(e) {
+                      return _this4.setState({ name: e.target.value });
+                    }
+                  })
+                ),
+                React.createElement(
+                  Form.Item,
+                  null,
+                  React.createElement(Input, {
+                    size: 'large', placeholder: '\u77ED\u540D',
+                    value: this.state.slug,
+                    onChange: function onChange(e) {
+                      return _this4.setState({ slug: e.target.value });
+                    }
+                  })
+                ),
+                React.createElement(
+                  Form.Item,
+                  null,
+                  React.createElement(Input, {
+                    size: 'large', placeholder: '\u989C\u8272',
+                    value: this.state.color,
+                    onChange: function onChange(e) {
+                      return _this4.setState({ color: e.target.value });
+                    }
+                  })
+                ),
+                React.createElement(
+                  Form.Item,
+                  null,
+                  React.createElement(Input, {
+                    size: 'large', placeholder: '\u56FE\u6807',
+                    value: this.state.icon,
+                    onChange: function onChange(e) {
+                      return _this4.setState({ icon: e.target.value });
+                    }
+                  })
+                )
+              )
             );
           }
         }, {
