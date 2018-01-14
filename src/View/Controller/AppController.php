@@ -12,6 +12,8 @@
 namespace TeamELF\View\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use TeamELF\Core\Permission;
+use TeamELF\Core\Role;
 use TeamELF\Event\AppAssetsHaveBeAdded;
 use TeamELF\Event\AppAssetsWillBeAdded;
 use TeamELF\Http\ViewController;
@@ -29,6 +31,10 @@ class AppController extends ViewController
         if (!$member) {
             $this->redirect = '/login?from=' . urlencode($this->request->getUri());
         } else {
+            $permissions = [];
+            foreach (Permission::where(['role' => $member->getRole()]) as $permission) {
+                $permissions[] = $permission->getPermission();
+            }
             ViewService::getEngine()
                 ->addGlobal('auth', [
                     'id' => $member->getId(),
@@ -37,10 +43,22 @@ class AppController extends ViewController
                         'id' => $member->getRole()->getId(),
                         'name' => $member->getRole()->getName()
                     ],
-                    'name' => $member->getName()
+                    'name' => $member->getName(),
+                    'permissions' => $permissions
                 ]);
         }
-
+        $roles = [];
+        foreach (Role::all() as $role) {
+            $roles[] = [
+                'id' => $role->getId(),
+                'name' => $role->getName(),
+                'slug' => $role->getSlug(),
+                'color' => $role->getColor(),
+                'icon' => $role->getIcon()
+            ];
+        }
+        ViewService::getEngine()
+            ->addGlobal('roles', $roles);
     }
 
     protected function addAssets()

@@ -45,14 +45,16 @@ class MemberCreateController extends AbstractController
             ],
             'gender' => [
                 new NotBlank()
+            ],
+            'role' => [
+                new NotBlank()
             ]
         ]);
-        $role = Role::findBy(['slug' => $this->request->get('role', 'trainee')]);
-        if (!$role) {
+        $data['role'] = Role::findBy(['slug' => $data['role']]);
+        if (!$data['role']) {
             throw new HttpForbiddenException();
         }
         $member = new Member($data);
-        $member->role($role);
         $member->save();
         if ($this->request->get('activate', false) === true) {
             app()->dispatch(new WelcomeMessageNeedsToBeSent($member));

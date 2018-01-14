@@ -8,7 +8,7 @@
  */
 
 const { Link } = ReactRouterDOM;
-const { Card, Tag, Avatar } = antd;
+const { Card, Tag, Icon, Avatar } = antd;
 const { Meta } = Card;
 import Gender from 'teamelf/components/Gender';
 
@@ -20,7 +20,7 @@ export default class extends React.Component {
           style={{marginBottom: 16}}
           hoverable
           title={<div><Gender gender={this.props.gender}/> {this.props.name}</div>}
-          extra={<Tag color={this.props.role.color}>{this.props.role.name}</Tag>}
+          extra={<Tag color={this.props.role.color}><Icon type={this.props.role.icon}/> {this.props.role.name}</Tag>}
         >
           <Avatar
             style={{float: 'right'}}

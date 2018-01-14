@@ -16,7 +16,7 @@ export default class extends Page {
   constructor (props) {
     super(props);
     this.state = {
-      roles: [],
+      roles: window.roles,
       permissions: [],
       dataSource: [],
       columns: [],
@@ -68,7 +68,7 @@ export default class extends Page {
     this.fetch();
   }
   async fetch () {
-    const roles = (await this.fetchRoles()).data;
+    const roles = window.roles;
     const permissions = (await this.fetchPermissions()).data;
     let columns = [{
       title: '权限',
@@ -105,14 +105,6 @@ export default class extends Page {
       })
     }
     this.setState({columns, dataSource});
-  }
-  fetchRoles () {
-    this.setState({loading: true});
-    return axios.get('role').then(r => {
-      this.setState({loading: false});
-      this.setState({roles: r.data});
-      return r
-    })
   }
   fetchPermissions () {
     this.setState({loading: true});

@@ -10,18 +10,17 @@
 import Page from 'teamelf/layout/Page';
 import MemberCardItem from 'teamelf/member/MemberCardItem';
 import MemberCreatorModal from 'teamelf/member/MemberCreatorModal';
-const { Row, Col, Icon, Divider, Checkbox } = antd;
+const { Row, Col, Icon, Checkbox } = antd;
 
 export default class extends Page {
   constructor (props) {
     super(props);
     this.state = {
       members: [],
-      roles: [],
+      roles: window.roles,
       chosenRoles: []
     };
     this.fetchMemberList();
-    this.fetchRoleList();
   }
   fetchMemberList () {
     let params = {
@@ -30,11 +29,6 @@ export default class extends Page {
     return axios.get('member', { params }).then(r => {
       this.setState({members: r.data});
       return r;
-    });
-  }
-  fetchRoleList () {
-    return axios.get('role').then(r => {
-      this.setState({roles: r.data});
     });
   }
   handleRolesCheck (role, e) {
