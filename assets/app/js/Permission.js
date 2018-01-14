@@ -27,41 +27,50 @@ export default class extends Page {
       name: '更新站点信息',
       permission: 'config.update',
     }, {
-      name: '查看权限列表',
-      permission: 'permission.list',
+      name: '权限相关',
+      children: [{
+        name: '查看权限列表',
+        permission: 'permission.list',
+      }, {
+        name: '更新权限',
+        permission: 'permission.update',
+      }]
     }, {
-      name: '更新权限',
-      permission: 'permission.update',
+      name: '插件相关',
+      children: [{
+        name: '查看插件列表',
+        permission: 'extension.list',
+      }, {
+        name: '激活/停用插件',
+        permission: 'extension.activate',
+      }]
     }, {
-      name: '查看插件列表',
-      permission: 'extension.list',
-    }, {
-      name: '激活/停用插件',
-      permission: 'extension.activate',
-    }, {
-      name: '查看成员列表',
-      permission: 'member.list',
-    }, {
-      name: '查看成员详情',
-      permission: 'member.item',
-    }, {
-      name: '创建新成员',
-      permission: 'member.create',
-    }, {
-      name: '更新成员信息',
-      permission: 'member.update',
-    }, {
-      name: '成员角色更改',
-      permission: 'member.role.update',
-    }, {
-      name: '创新新角色',
-      permission: 'role.create',
-    }, {
-      name: '更新角色信息',
-      permission: 'role.update',
-    }, {
-      name: '删除角色',
-      permission: 'role.delete',
+      name: '成员管理',
+      children: [{
+        name: '查看成员列表',
+        permission: 'member.list',
+      }, {
+        name: '查看成员详情',
+        permission: 'member.item',
+      }, {
+        name: '创建新成员',
+        permission: 'member.create',
+      }, {
+        name: '更新成员信息',
+        permission: 'member.update',
+      }, {
+        name: '成员角色更改',
+        permission: 'member.role.update',
+      }, {
+        name: '创新新角色',
+        permission: 'role.create',
+      }, {
+        name: '更新角色信息',
+        permission: 'role.update',
+      }, {
+        name: '删除角色',
+        permission: 'role.delete',
+      }]
     }];
   }
   async fetch () {
@@ -76,8 +85,21 @@ export default class extends Page {
       colSpan: 0
     }];
     let dataSource = this.permissions();
+    const findPermission = (data, permission) => {
+      for (let d of data) {
+        if (d.permission === permission) {
+          return d;
+        } else if (d.children) {
+          const r = findPermission(d.children, permission);
+          if (r && r.permission === permission) {
+            return r;
+          }
+        }
+      }
+      return null;
+    };
     for (const permission of permissions) {
-      const d = dataSource.find(o => o.permission === permission.permission);
+      const d = findPermission(dataSource, permission.permission);
       if (d) {
         d['r_' + permission.role.id] = true;
       }
@@ -92,14 +114,16 @@ export default class extends Page {
         ),
         dataIndex: 'r_' + role.id,
         render: (text, record, index) => {
-          return (
-            <div style={{textAlign: 'center'}}>
-              <Checkbox
-                checked={text}
-                onClick={e => this.updatePermission(role.id, record.permission, e.target.checked)}
-              />
-            </div>
-          );
+          if (!record.children) {
+            return (
+              <div style={{textAlign: 'center'}}>
+                <Checkbox
+                  checked={text}
+                  onClick={e => this.updatePermission(role.id, record.permission, e.target.checked)}
+                />
+              </div>
+            );
+          }
         }
       })
     }

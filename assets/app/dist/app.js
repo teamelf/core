@@ -859,41 +859,50 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
               name: '更新站点信息',
               permission: 'config.update'
             }, {
-              name: '查看权限列表',
-              permission: 'permission.list'
+              name: '权限相关',
+              children: [{
+                name: '查看权限列表',
+                permission: 'permission.list'
+              }, {
+                name: '更新权限',
+                permission: 'permission.update'
+              }]
             }, {
-              name: '更新权限',
-              permission: 'permission.update'
+              name: '插件相关',
+              children: [{
+                name: '查看插件列表',
+                permission: 'extension.list'
+              }, {
+                name: '激活/停用插件',
+                permission: 'extension.activate'
+              }]
             }, {
-              name: '查看插件列表',
-              permission: 'extension.list'
-            }, {
-              name: '激活/停用插件',
-              permission: 'extension.activate'
-            }, {
-              name: '查看成员列表',
-              permission: 'member.list'
-            }, {
-              name: '查看成员详情',
-              permission: 'member.item'
-            }, {
-              name: '创建新成员',
-              permission: 'member.create'
-            }, {
-              name: '更新成员信息',
-              permission: 'member.update'
-            }, {
-              name: '成员角色更改',
-              permission: 'member.role.update'
-            }, {
-              name: '创新新角色',
-              permission: 'role.create'
-            }, {
-              name: '更新角色信息',
-              permission: 'role.update'
-            }, {
-              name: '删除角色',
-              permission: 'role.delete'
+              name: '成员管理',
+              children: [{
+                name: '查看成员列表',
+                permission: 'member.list'
+              }, {
+                name: '查看成员详情',
+                permission: 'member.item'
+              }, {
+                name: '创建新成员',
+                permission: 'member.create'
+              }, {
+                name: '更新成员信息',
+                permission: 'member.update'
+              }, {
+                name: '成员角色更改',
+                permission: 'member.role.update'
+              }, {
+                name: '创新新角色',
+                permission: 'role.create'
+              }, {
+                name: '更新角色信息',
+                permission: 'role.update'
+              }, {
+                name: '删除角色',
+                permission: 'role.delete'
+              }]
             }];
           }
         }, {
@@ -902,7 +911,7 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
             var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
               var _this2 = this;
 
-              var roles, permissions, columns, dataSource, _loop, _iteratorNormalCompletion, _didIteratorError, _iteratorError, _iterator, _step, permission, _loop2, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, role;
+              var roles, permissions, columns, dataSource, findPermission, _iteratorNormalCompletion2, _didIteratorError2, _iteratorError2, _iterator2, _step2, permission, d, _loop, _iteratorNormalCompletion3, _didIteratorError3, _iteratorError3, _iterator3, _step3, role;
 
               return regeneratorRuntime.wrap(function _callee$(_context2) {
                 while (1) {
@@ -924,24 +933,54 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                       }];
                       dataSource = this.permissions();
 
-                      _loop = function _loop(permission) {
-                        var d = dataSource.find(function (o) {
-                          return o.permission === permission.permission;
-                        });
+                      findPermission = function findPermission(data, permission) {
+                        var _iteratorNormalCompletion = true;
+                        var _didIteratorError = false;
+                        var _iteratorError = undefined;
+
+                        try {
+                          for (var _iterator = data[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                            var d = _step.value;
+
+                            if (d.permission === permission) {
+                              return d;
+                            } else if (d.children) {
+                              var r = findPermission(d.children, permission);
+                              if (r && r.permission === permission) {
+                                return r;
+                              }
+                            }
+                          }
+                        } catch (err) {
+                          _didIteratorError = true;
+                          _iteratorError = err;
+                        } finally {
+                          try {
+                            if (!_iteratorNormalCompletion && _iterator.return) {
+                              _iterator.return();
+                            }
+                          } finally {
+                            if (_didIteratorError) {
+                              throw _iteratorError;
+                            }
+                          }
+                        }
+
+                        return null;
+                      };
+
+                      _iteratorNormalCompletion2 = true;
+                      _didIteratorError2 = false;
+                      _iteratorError2 = undefined;
+                      _context2.prev = 10;
+
+                      for (_iterator2 = permissions[Symbol.iterator](); !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                        permission = _step2.value;
+                        d = findPermission(dataSource, permission.permission);
+
                         if (d) {
                           d['r_' + permission.role.id] = true;
                         }
-                      };
-
-                      _iteratorNormalCompletion = true;
-                      _didIteratorError = false;
-                      _iteratorError = undefined;
-                      _context2.prev = 10;
-
-                      for (_iterator = permissions[Symbol.iterator](); !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                        permission = _step.value;
-
-                        _loop(permission);
                       }
                       _context2.next = 18;
                       break;
@@ -949,26 +988,26 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                     case 14:
                       _context2.prev = 14;
                       _context2.t0 = _context2['catch'](10);
-                      _didIteratorError = true;
-                      _iteratorError = _context2.t0;
+                      _didIteratorError2 = true;
+                      _iteratorError2 = _context2.t0;
 
                     case 18:
                       _context2.prev = 18;
                       _context2.prev = 19;
 
-                      if (!_iteratorNormalCompletion && _iterator.return) {
-                        _iterator.return();
+                      if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
                       }
 
                     case 21:
                       _context2.prev = 21;
 
-                      if (!_didIteratorError) {
+                      if (!_didIteratorError2) {
                         _context2.next = 24;
                         break;
                       }
 
-                      throw _iteratorError;
+                      throw _iteratorError2;
 
                     case 24:
                       return _context2.finish(21);
@@ -977,7 +1016,7 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                       return _context2.finish(18);
 
                     case 26:
-                      _loop2 = function _loop2(role) {
+                      _loop = function _loop(role) {
                         columns.push({
                           title: React.createElement(
                             'div',
@@ -991,28 +1030,30 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                           ),
                           dataIndex: 'r_' + role.id,
                           render: function render(text, record, index) {
-                            return React.createElement(
-                              'div',
-                              { style: { textAlign: 'center' } },
-                              React.createElement(Checkbox, {
-                                checked: text,
-                                onClick: function onClick(e) {
-                                  return _this2.updatePermission(role.id, record.permission, e.target.checked);
-                                }
-                              })
-                            );
+                            if (!record.children) {
+                              return React.createElement(
+                                'div',
+                                { style: { textAlign: 'center' } },
+                                React.createElement(Checkbox, {
+                                  checked: text,
+                                  onClick: function onClick(e) {
+                                    return _this2.updatePermission(role.id, record.permission, e.target.checked);
+                                  }
+                                })
+                              );
+                            }
                           }
                         });
                       };
 
-                      _iteratorNormalCompletion2 = true;
-                      _didIteratorError2 = false;
-                      _iteratorError2 = undefined;
+                      _iteratorNormalCompletion3 = true;
+                      _didIteratorError3 = false;
+                      _iteratorError3 = undefined;
                       _context2.prev = 30;
-                      for (_iterator2 = roles[Symbol.iterator](); !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
-                        role = _step2.value;
+                      for (_iterator3 = roles[Symbol.iterator](); !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                        role = _step3.value;
 
-                        _loop2(role);
+                        _loop(role);
                       }
                       _context2.next = 38;
                       break;
@@ -1020,26 +1061,26 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                     case 34:
                       _context2.prev = 34;
                       _context2.t1 = _context2['catch'](30);
-                      _didIteratorError2 = true;
-                      _iteratorError2 = _context2.t1;
+                      _didIteratorError3 = true;
+                      _iteratorError3 = _context2.t1;
 
                     case 38:
                       _context2.prev = 38;
                       _context2.prev = 39;
 
-                      if (!_iteratorNormalCompletion2 && _iterator2.return) {
-                        _iterator2.return();
+                      if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
                       }
 
                     case 41:
                       _context2.prev = 41;
 
-                      if (!_didIteratorError2) {
+                      if (!_didIteratorError3) {
                         _context2.next = 44;
                         break;
                       }
 
-                      throw _iteratorError2;
+                      throw _iteratorError3;
 
                     case 44:
                       return _context2.finish(41);
@@ -2835,114 +2876,6 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
     }
   };
 });
-'use strict';
-
-System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, AbstractModel;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      AbstractModel = function () {
-        function AbstractModel(props) {
-          _classCallCheck(this, AbstractModel);
-
-          if (new.target === AbstractModel) {
-            throw new Error('AbstractModel cannot be instanced directly!');
-          }
-
-          /**
-           * model's attributes
-           *
-           * @type {Object}
-           * @private
-           */
-          this._attributes = {};
-
-          /**
-           * the fetching api url
-           * @type {String}
-           * @private
-           */
-          this._url = '';
-        }
-
-        /**
-         * getter & setter of _attributes
-         */
-
-
-        _createClass(AbstractModel, [{
-          key: 'fetch',
-          value: function fetch() {
-            throw new Error('AbstractModel@fetch must be implemented by subclass');
-          }
-        }, {
-          key: 'create',
-          value: function create() {
-            throw new Error('AbstractModel@create must be implemented by subclass');
-          }
-        }, {
-          key: 'update',
-          value: function update() {
-            throw new Error('AbstractModel@update must be implemented by subclass');
-          }
-        }, {
-          key: 'delete',
-          value: function _delete() {
-            throw new Error('AbstractModel@delete must be implemented by subclass');
-          }
-        }, {
-          key: 'attributes',
-          get: function get() {
-            return this._attributes;
-          },
-          set: function set(attributes) {
-            this._attributes = attributes;
-          }
-        }, {
-          key: 'url',
-          get: function get() {
-            return this._url;
-          },
-          set: function set(url) {
-            this._url = url;
-          }
-        }]);
-
-        return AbstractModel;
-      }();
-
-      _export('default', AbstractModel);
-    }
-  };
-});
 "use strict";
 
 System.register("teamelf/member/MemberBasicProfileCard", ["teamelf/components/InfoEditor"], function (_export, _context) {
@@ -4133,6 +4066,114 @@ System.register("teamelf/member/MemberRoleUpdater", ["teamelf/member/MemberRoleC
       }(React.Component);
 
       _export("default", _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, AbstractModel;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      AbstractModel = function () {
+        function AbstractModel(props) {
+          _classCallCheck(this, AbstractModel);
+
+          if (new.target === AbstractModel) {
+            throw new Error('AbstractModel cannot be instanced directly!');
+          }
+
+          /**
+           * model's attributes
+           *
+           * @type {Object}
+           * @private
+           */
+          this._attributes = {};
+
+          /**
+           * the fetching api url
+           * @type {String}
+           * @private
+           */
+          this._url = '';
+        }
+
+        /**
+         * getter & setter of _attributes
+         */
+
+
+        _createClass(AbstractModel, [{
+          key: 'fetch',
+          value: function fetch() {
+            throw new Error('AbstractModel@fetch must be implemented by subclass');
+          }
+        }, {
+          key: 'create',
+          value: function create() {
+            throw new Error('AbstractModel@create must be implemented by subclass');
+          }
+        }, {
+          key: 'update',
+          value: function update() {
+            throw new Error('AbstractModel@update must be implemented by subclass');
+          }
+        }, {
+          key: 'delete',
+          value: function _delete() {
+            throw new Error('AbstractModel@delete must be implemented by subclass');
+          }
+        }, {
+          key: 'attributes',
+          get: function get() {
+            return this._attributes;
+          },
+          set: function set(attributes) {
+            this._attributes = attributes;
+          }
+        }, {
+          key: 'url',
+          get: function get() {
+            return this._url;
+          },
+          set: function set(url) {
+            this._url = url;
+          }
+        }]);
+
+        return AbstractModel;
+      }();
+
+      _export('default', AbstractModel);
     }
   };
 });
