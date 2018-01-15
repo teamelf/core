@@ -46,9 +46,11 @@ export default class extends Page {
     return (
       <Row type="flex">
         <Col xs={24} md={{span: 6, order: 2}} align="right">
-          <MemberCreatorModal
-            done={() => this.fetchMemberList()}
-          />
+          {can('member.create') && (
+            <MemberCreatorModal
+              done={() => this.fetchMemberList()}
+            />
+          )}
         </Col>
         <Col xs={24} md={{span: 18, order: 1}} style={{lineHeight: '32px'}}>
           {this.state.roles.map(o => (

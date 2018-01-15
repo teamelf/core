@@ -43,6 +43,9 @@ export default class extends Page {
       }, {
         name: '激活/停用插件',
         permission: 'extension.activate',
+      }, {
+        name: '卸载插件',
+        permission: 'extension.uninstall',
       }]
     }, {
       name: '成员管理',
@@ -120,6 +123,7 @@ export default class extends Page {
                 <Checkbox
                   checked={text}
                   onClick={e => this.updatePermission(role.id, record.permission, e.target.checked)}
+                  disabled={!can('permission.update')}
                 />
               </div>
             );

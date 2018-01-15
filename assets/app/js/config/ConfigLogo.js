@@ -36,7 +36,7 @@ export default class extends React.Component {
     );
     return (
       <Card
-        title={Uploader}
+        title={can('config.update') ? Uploader : '站点LOGO'}
         style={{marginBottom: 16}}
       >
         <div align="center">

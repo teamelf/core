@@ -54,6 +54,7 @@ export default class extends React.Component {
             unCheckedChildren="停用"
             onChange={this.activate.bind(this)}
             loading={this.state.loading}
+            disabled={!can('extension.activate')}
           />,
           <Button
             type="primary" size="small"
@@ -62,6 +63,7 @@ export default class extends React.Component {
           <Button
             type="danger" size="small"
             onClick={this.uninstall.bind(this)}
+            disabled={!can('extension.uninstall')}
           >卸载</Button>
         ]}
       >

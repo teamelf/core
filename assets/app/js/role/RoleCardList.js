@@ -23,11 +23,13 @@ export default class extends React.Component {
             />
           </Col>
         ))}
-        <Col xs={12} md={6} lg={3}>
-          <RoleCreateCardItem
-            done={e => window.location.reload()}
-          />
-        </Col>
+        {can('role.create') && (
+          <Col xs={12} md={6} lg={3}>
+            <RoleCreateCardItem
+              done={e => window.location.reload()}
+            />
+          </Col>
+        )}
       </Row>
     );
   }

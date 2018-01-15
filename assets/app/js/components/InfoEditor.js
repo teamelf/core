@@ -14,7 +14,7 @@ const { Input, Radio, Icon, Tooltip } = antd;
  *   label
  *   value
  *   onEdit
- *   disabled  true|false
+ *   readonly  true|false
  *   type      null|text|password|radio
  *   options   cooperate with type===radio
  */
@@ -94,7 +94,7 @@ export default class extends React.Component {
           </div>
         )}
 
-        {(!this.props.disabled && !this.state.editor) && (
+        {(!this.props.readonly && !this.state.editor) && (
           <Tooltip title="点此编辑" placement="right">
             <Icon
               style={{marginLeft: 16, cursor: 'pointer'}}

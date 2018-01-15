@@ -18,7 +18,7 @@ use TeamELF\Http\AbstractController;
 
 class ExtensionUninstallController extends AbstractController
 {
-    protected $needPermissions = ['extension.activate'];
+    protected $needPermissions = ['extension.uninstall'];
 
     /**
      * handle the request

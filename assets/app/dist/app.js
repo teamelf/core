@@ -875,6 +875,9 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
               }, {
                 name: '激活/停用插件',
                 permission: 'extension.activate'
+              }, {
+                name: '卸载插件',
+                permission: 'extension.uninstall'
               }]
             }, {
               name: '成员管理',
@@ -1038,7 +1041,8 @@ System.register('teamelf/Permission', ['teamelf/layout/Page', 'teamelf/role/Role
                                   checked: text,
                                   onClick: function onClick(e) {
                                     return _this2.updatePermission(role.id, record.permission, e.target.checked);
-                                  }
+                                  },
+                                  disabled: !can('permission.update')
                                 })
                               );
                             }
@@ -1307,6 +1311,14 @@ System.register('teamelf/main', ['teamelf/App'], function (_export, _context) {
       _ReactRouterDOM = ReactRouterDOM;
       BrowserRouter = _ReactRouterDOM.BrowserRouter;
       Route = _ReactRouterDOM.Route;
+
+
+      window.can = function (permission) {
+        return !!window.auth.permissions.find(function (o) {
+          return o.match('^' + permission + '$');
+        });
+      };
+
       app = React.createElement(
         BrowserRouter,
         { forceRefresh: true },
@@ -1594,7 +1606,7 @@ System.register('teamelf/components/InfoEditor', [], function (_export, _context
                   '<\u65E0>'
                 )
               ),
-              !this.props.disabled && !this.state.editor && React.createElement(
+              !this.props.readonly && !this.state.editor && React.createElement(
                 Tooltip,
                 { title: '\u70B9\u6B64\u7F16\u8F91', placement: 'right' },
                 React.createElement(Icon, {
@@ -1755,12 +1767,14 @@ System.register('teamelf/config/ConfigBasicInfo', ['teamelf/components/InfoEdito
               React.createElement(InfoEditor, {
                 label: '\u56E2\u961F\u540D\u79F0',
                 value: this.state.name,
-                onEdit: this.edit.bind(this, 'name')
+                onEdit: this.edit.bind(this, 'name'),
+                readonly: !can('config.update')
               }),
               React.createElement(InfoEditor, {
                 label: '\u56E2\u961F\u63CF\u8FF0',
                 value: this.state.description,
-                onEdit: this.edit.bind(this, 'description')
+                onEdit: this.edit.bind(this, 'description'),
+                readonly: !can('config.update')
               })
             );
           }
@@ -1883,7 +1897,7 @@ System.register('teamelf/config/ConfigLogo', [], function (_export, _context) {
             return React.createElement(
               Card,
               {
-                title: Uploader,
+                title: can('config.update') ? Uploader : '站点LOGO',
                 style: { marginBottom: 16 }
               },
               React.createElement(
@@ -2028,7 +2042,8 @@ System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _c
                   checkedChildren: '\u542F\u7528',
                   unCheckedChildren: '\u505C\u7528',
                   onChange: this.activate.bind(this),
-                  loading: this.state.loading
+                  loading: this.state.loading,
+                  disabled: !can('extension.activate')
                 }), React.createElement(
                   Button,
                   {
@@ -2040,7 +2055,8 @@ System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _c
                   Button,
                   {
                     type: 'danger', size: 'small',
-                    onClick: this.uninstall.bind(this)
+                    onClick: this.uninstall.bind(this),
+                    disabled: !can('extension.uninstall')
                   },
                   '\u5378\u8F7D'
                 )]
@@ -2795,7 +2811,20 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
         _createClass(SideNav, [{
           key: 'navigations',
           value: function navigations() {
-            return [{ path: '/home', icon: 'home', title: '工作台' }, { path: '/member', icon: 'user', title: '成员管理' }, { path: '/permission', icon: 'key', title: '权限管理' }, { path: '/config', icon: 'tool', title: '团队信息' }, { path: '/extension', icon: 'appstore-o', title: '插件管理' }];
+            var navs = [{ path: '/home', icon: 'home', title: '工作台' }];
+            if (can('member.*')) {
+              navs.push({ path: '/member', icon: 'user', title: '成员管理' });
+            }
+            if (can('permission.*')) {
+              navs.push({ path: '/permission', icon: 'key', title: '权限管理' });
+            }
+            if (can('config.*') || can('role.*')) {
+              navs.push({ path: '/config', icon: 'tool', title: '团队信息' });
+            }
+            if (can('extension.*')) {
+              navs.push({ path: '/extension', icon: 'appstore-o', title: '插件管理' });
+            }
+            return navs;
           }
         }, {
           key: 'getNavigationFromRoute',
@@ -2976,17 +3005,19 @@ System.register("teamelf/member/MemberBasicProfileCard", ["teamelf/components/In
               React.createElement(InfoEditor, {
                 label: "\u767B\u5F55\u540D",
                 value: this.props.username,
-                disabled: true
+                readonly: true
               }),
               React.createElement(InfoEditor, {
                 label: "\u90AE\u3000\u7BB1",
                 value: this.props.email,
-                onEdit: this.props.onEdit.bind(this, 'email')
+                onEdit: this.props.onEdit.bind(this, 'email'),
+                readonly: !can('member.update')
               }),
               React.createElement(InfoEditor, {
                 label: "\u624B\u3000\u673A",
                 value: this.props.phone,
-                onEdit: this.props.onEdit.bind(this, 'phone')
+                onEdit: this.props.onEdit.bind(this, 'phone'),
+                readonly: !can('member.update')
               })
             );
           }
@@ -3004,7 +3035,7 @@ System.register("teamelf/member/MemberBasicProfileCard", ["teamelf/components/In
 System.register('teamelf/member/MemberCardItem', ['teamelf/components/Gender'], function (_export, _context) {
   "use strict";
 
-  var Gender, _createClass, _ReactRouterDOM, Link, _antd, Card, Tag, Icon, Avatar, Meta, _class;
+  var Gender, _createClass, _antd, Card, Tag, Icon, Avatar, Meta, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -3059,8 +3090,6 @@ System.register('teamelf/member/MemberCardItem', ['teamelf/components/Gender'], 
         };
       }();
 
-      _ReactRouterDOM = ReactRouterDOM;
-      Link = _ReactRouterDOM.Link;
       _antd = antd;
       Card = _antd.Card;
       Tag = _antd.Tag;
@@ -3080,55 +3109,56 @@ System.register('teamelf/member/MemberCardItem', ['teamelf/components/Gender'], 
         _createClass(_class, [{
           key: 'render',
           value: function render() {
+            var _this2 = this;
+
             return React.createElement(
-              Link,
-              { to: '/member/' + this.props.username },
-              React.createElement(
-                Card,
-                {
-                  style: { marginBottom: 16 },
-                  hoverable: true,
-                  title: React.createElement(
-                    'div',
-                    null,
-                    React.createElement(Gender, { gender: this.props.gender }),
-                    ' ',
-                    this.props.name
-                  ),
-                  extra: React.createElement(
-                    Tag,
-                    { color: this.props.role.color },
-                    React.createElement(Icon, { type: this.props.role.icon }),
-                    ' ',
-                    this.props.role.name
-                  )
-                },
-                React.createElement(
-                  Avatar,
-                  {
-                    style: { float: 'right' },
-                    size: 'large'
-                  },
-                  this.props.name.substr(0, 1)
+              Card,
+              {
+                style: { marginBottom: 16 },
+                hoverable: true,
+                title: React.createElement(
+                  'div',
+                  null,
+                  React.createElement(Gender, { gender: this.props.gender }),
+                  ' ',
+                  this.props.name
                 ),
-                React.createElement(Meta, {
-                  style: { marginRight: 50, overflow: 'hidden' },
-                  description: React.createElement(
+                extra: React.createElement(
+                  Tag,
+                  { color: this.props.role.color },
+                  React.createElement(Icon, { type: this.props.role.icon }),
+                  ' ',
+                  this.props.role.name
+                ),
+                onClick: function onClick(e) {
+                  return can('member.item') && (window.location.href = '/member/' + _this2.props.username);
+                }
+              },
+              React.createElement(
+                Avatar,
+                {
+                  style: { float: 'right' },
+                  size: 'large'
+                },
+                this.props.name.substr(0, 1)
+              ),
+              React.createElement(Meta, {
+                style: { marginRight: 50, overflow: 'hidden' },
+                description: React.createElement(
+                  'div',
+                  null,
+                  React.createElement(
                     'div',
                     null,
-                    React.createElement(
-                      'div',
-                      null,
-                      this.props.email
-                    ),
-                    React.createElement(
-                      'div',
-                      null,
-                      this.props.phone
-                    )
+                    this.props.email
+                  ),
+                  React.createElement(
+                    'div',
+                    null,
+                    this.props.phone
                   )
-                })
-              )
+                )
+              })
             );
           }
         }]);
@@ -3593,10 +3623,14 @@ System.register('teamelf/member/MemberItem', ['teamelf/layout/Page', 'teamelf/co
         }, {
           key: 'operators',
           value: function operators() {
-            return [React.createElement(MemberRoleUpdater, {
-              username: this.props.match.params.username,
-              role: this.member ? this.member.role.slug : null
-            })];
+            var ops = [];
+            if (can('member.role.update')) {
+              ops.push(React.createElement(MemberRoleUpdater, {
+                username: this.props.match.params.username,
+                role: this.member ? this.member.role.slug : null
+              }));
+            }
+            return ops;
           }
         }, {
           key: 'fetchMember',
@@ -3805,7 +3839,7 @@ System.register('teamelf/member/MemberList', ['teamelf/layout/Page', 'teamelf/me
               React.createElement(
                 Col,
                 { xs: 24, md: { span: 6, order: 2 }, align: 'right' },
-                React.createElement(MemberCreatorModal, {
+                can('member.create') && React.createElement(MemberCreatorModal, {
                   done: function done() {
                     return _this3.fetchMemberList();
                   }
@@ -4506,7 +4540,7 @@ System.register('teamelf/role/RoleCardList', ['teamelf/role/RoleEditorCardItem',
                   }))
                 );
               }),
-              React.createElement(
+              can('role.create') && React.createElement(
                 Col,
                 { xs: 12, md: 6, lg: 3 },
                 React.createElement(RoleCreateCardItem, {
@@ -4931,7 +4965,8 @@ System.register('teamelf/role/RoleEditorCardItem', ['teamelf/components/InfoEdit
                   Button,
                   {
                     type: 'danger',
-                    onClick: this.deleteRole.bind(this)
+                    onClick: this.deleteRole.bind(this),
+                    disabled: !can('role.delete')
                   },
                   '\u5220\u9664'
                 )],
@@ -4940,22 +4975,26 @@ System.register('teamelf/role/RoleEditorCardItem', ['teamelf/components/InfoEdit
               React.createElement(InfoEditor, {
                 label: '\u540D\u79F0',
                 value: this.props.name,
-                onEdit: this.edit.bind(this, 'name')
+                onEdit: this.edit.bind(this, 'name'),
+                readonly: !can('role.update')
               }),
               React.createElement(InfoEditor, {
                 label: '\u77ED\u540D',
                 value: this.props.slug,
-                onEdit: this.edit.bind(this, 'slug')
+                onEdit: this.edit.bind(this, 'slug'),
+                readonly: !can('role.update')
               }),
               React.createElement(InfoEditor, {
                 label: '\u989C\u8272',
                 value: this.props.color,
-                onEdit: this.edit.bind(this, 'color')
+                onEdit: this.edit.bind(this, 'color'),
+                readonly: !can('role.update')
               }),
               React.createElement(InfoEditor, {
                 label: '\u56FE\u6807',
                 value: this.props.icon,
-                onEdit: this.edit.bind(this, 'icon')
+                onEdit: this.edit.bind(this, 'icon'),
+                readonly: !can('role.update')
               })
             );
           }

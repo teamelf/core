@@ -66,6 +66,7 @@ export default class extends React.Component {
           <Button
             type="danger"
             onClick={this.deleteRole.bind(this)}
+            disabled={!can('role.delete')}
           >删除</Button>
         ]}
         onCancel={this.closeModal.bind(this)}
@@ -74,21 +75,25 @@ export default class extends React.Component {
           label="名称"
           value={this.props.name}
           onEdit={this.edit.bind(this, 'name')}
+          readonly={!can('role.update')}
         />
         <InfoEditor
           label="短名"
           value={this.props.slug}
           onEdit={this.edit.bind(this, 'slug')}
+          readonly={!can('role.update')}
         />
         <InfoEditor
           label="颜色"
           value={this.props.color}
           onEdit={this.edit.bind(this, 'color')}
+          readonly={!can('role.update')}
         />
         <InfoEditor
           label="图标"
           value={this.props.icon}
           onEdit={this.edit.bind(this, 'icon')}
+          readonly={!can('role.update')}
         />
       </Modal>
     );

@@ -29,12 +29,16 @@ class MemberItem extends Page {
     ];
   }
   operators () {
-    return [
-      <MemberRoleUpdater
-        username={this.props.match.params.username}
-        role={this.member ? this.member.role.slug : null}
-      />
-    ];
+    const ops = [];
+    if (can('member.role.update')) {
+      ops.push(
+        <MemberRoleUpdater
+          username={this.props.match.params.username}
+          role={this.member ? this.member.role.slug : null}
+        />
+      );
+    }
+    return ops;
   }
   fetchMember () {
     axios.get('member/' + this.props.match.params.username).then(r => {

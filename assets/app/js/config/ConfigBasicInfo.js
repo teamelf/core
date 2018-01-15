@@ -32,11 +32,13 @@ export default class extends React.Component {
           label="团队名称"
           value={this.state.name}
           onEdit={this.edit.bind(this, 'name')}
+          readonly={!can('config.update')}
         />
         <InfoEditor
           label="团队描述"
           value={this.state.description}
           onEdit={this.edit.bind(this, 'description')}
+          readonly={!can('config.update')}
         />
       </Card>
     );

@@ -20,17 +20,19 @@ export default class extends React.Component {
         <InfoEditor
           label="登录名"
           value={this.props.username}
-          disabled
+          readonly
         />
         <InfoEditor
           label="邮　箱"
           value={this.props.email}
           onEdit={this.props.onEdit.bind(this, 'email')}
+          readonly={!can('member.update')}
         />
         <InfoEditor
           label="手　机"
           value={this.props.phone}
           onEdit={this.props.onEdit.bind(this, 'phone')}
+          readonly={!can('member.update')}
         />
       </Card>
     );

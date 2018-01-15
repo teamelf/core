@@ -20,13 +20,20 @@ export class SideNav extends React.Component {
     };
   }
   navigations () {
-    return [
-      {path: '/home', icon: 'home', title: '工作台'},
-      {path: '/member', icon: 'user', title: '成员管理'},
-      {path: '/permission', icon: 'key', title: '权限管理'},
-      {path: '/config', icon: 'tool', title: '团队信息'},
-      {path: '/extension', icon: 'appstore-o', title: '插件管理'}
-    ];
+    const navs = [{path: '/home', icon: 'home', title: '工作台'}];
+    if (can('member.*')) {
+      navs.push({path: '/member', icon: 'user', title: '成员管理'});
+    }
+    if (can('permission.*')) {
+      navs.push({path: '/permission', icon: 'key', title: '权限管理'});
+    }
+    if (can('config.*') || can('role.*')) {
+      navs.push({path: '/config', icon: 'tool', title: '团队信息'});
+    }
+    if (can('extension.*')) {
+      navs.push({path: '/extension', icon: 'appstore-o', title: '插件管理'});
+    }
+    return navs;
   }
   getNavigationFromRoute (path = this.props.location.pathname) {
     for (let nav of this.navigations()) {

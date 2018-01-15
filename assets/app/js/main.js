@@ -10,6 +10,8 @@
 const { BrowserRouter, Route } = ReactRouterDOM;
 import App from 'teamelf/App';
 
+window.can = permission => !!window.auth.permissions.find(o => o.match(`^${permission}$`));
+
 const app = (
   <BrowserRouter forceRefresh>
     <Route component={App}/>
