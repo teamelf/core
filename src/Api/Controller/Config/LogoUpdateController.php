@@ -36,6 +36,7 @@ class LogoUpdateController extends AbstractController
         $config = Config::findBy(['key' => 'logo']);
         $config->value('/storage/' . $filename);
         $config->save();
+        $this->log('info', 'Upload config.logo to [' . $config->getValue() . ']');
         return response();
     }
 }

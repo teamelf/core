@@ -12,7 +12,6 @@
 namespace TeamELF\Api\Controller\Member;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Validator\Constraints\Email;
 use TeamELF\Core\Member;
 use TeamELF\Core\Role;
 use TeamELF\Exception\HttpForbiddenException;
@@ -44,6 +43,7 @@ class MemberRoleUpdateController extends AbstractController
             throw new HttpForbiddenException();
         }
         $member->update($data);
+        $this->log('info', 'Update member [' . $member->getUsername() . ']\'s role to [' . $data['role']->getSlug() . ']');
         return response();
     }
 }

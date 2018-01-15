@@ -29,7 +29,7 @@ abstract class AbstractModel
     /**
      * @var DateTime
      *
-     * @Column(type="datetime", name="created_at", nullable=TRUE)
+     * @Column(type="datetime", name="created_at", nullable=TRUE, options={"default": "CURRENT_TIMESTAMP"})
      */
     protected $createdAt;
 

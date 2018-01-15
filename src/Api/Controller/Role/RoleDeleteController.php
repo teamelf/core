@@ -32,6 +32,7 @@ class RoleDeleteController extends AbstractController
         if (!$role) {
             throw new HttpForbiddenException();
         }
+        $this->log('info', 'Delete role [' . $role->getSlug() . ']');
         $role->delete(true);
         return response();
     }

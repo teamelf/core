@@ -24,6 +24,8 @@ class PasswordResetToken extends AbstractModel
     // | ORM DEFINITIONS
 
     /**
+     * @var Member
+     *
      * @ManyToOne(targetEntity="Member")
      * @JoinColumn(name="member_id", referencedColumnName="id")
      */

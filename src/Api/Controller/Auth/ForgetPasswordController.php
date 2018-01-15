@@ -18,7 +18,6 @@ use TeamELF\Core\Member;
 use TeamELF\Core\PasswordResetToken;
 use TeamELF\Event\VerifyTokenNeedsToBeSent;
 use TeamELF\Http\AbstractController;
-use TeamELF\Mailer\Mailer;
 
 class ForgetPasswordController extends AbstractController
 {
@@ -37,17 +36,15 @@ class ForgetPasswordController extends AbstractController
                 new Email()
             ]
         ]);
-        if (count($data) > 0) {
-            $member = Member::findBy($data);
-            if ($member) {
-                $token = (new PasswordResetToken())
-                    ->member($member)
-                    ->save();
-                app()->dispatch(new VerifyTokenNeedsToBeSent($member, $token->getId()));
-            } else {
-                sleep(mt_rand(1, 3)); // avoid judging status through time used
-            }
+        $member = Member::findBy($data);
+        if ($member) {
+            $this->log('info', '[' . $data['email'] . '] get password reset token');
+            $token = (new PasswordResetToken())
+                ->member($member)
+                ->save();
+            app()->dispatch(new VerifyTokenNeedsToBeSent($member, $token->getId()));
         } else {
+            $this->log('info', '[' . $data['email'] . '] failed to get password reset token');
             sleep(mt_rand(1, 3)); // avoid judging status through time used
         }
         return response();

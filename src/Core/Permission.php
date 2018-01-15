@@ -30,6 +30,8 @@ class Permission extends AbstractModel
     protected $permission;
 
     /**
+     * @var Role
+     *
      * @ManyToOne(targetEntity="Role")
      * @JoinColumn(name="role_id", referencedColumnName="id")
      */

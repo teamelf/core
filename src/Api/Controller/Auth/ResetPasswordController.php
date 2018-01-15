@@ -57,6 +57,7 @@ class ResetPasswordController extends AbstractController
         $member->password($data['password'])
             ->save();
         $this->auth(null);
+        $this->log('info', '[' . $memberData['email'] . '] reset password');
         return response();
     }
 }

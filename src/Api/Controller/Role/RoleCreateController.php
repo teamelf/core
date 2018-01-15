@@ -39,6 +39,7 @@ class RoleCreateController extends AbstractController
         ]);
         $role = new Role($data);
         $role->save();
+        $this->log('info', 'Create a role [' . $role->getSlug() . ']');
         return response([
             'id' => $role->getId()
         ]);

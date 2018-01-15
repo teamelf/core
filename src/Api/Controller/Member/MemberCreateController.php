@@ -59,6 +59,7 @@ class MemberCreateController extends AbstractController
         if ($this->request->get('activate', false) === true) {
             app()->dispatch(new WelcomeMessageNeedsToBeSent($member));
         }
+        $this->log('info', 'Create a member [' . $member->getUsername() . ']');
         return response();
     }
 }

@@ -40,6 +40,7 @@ class ConfigUpdateController extends AbstractController
         }
         $config->value($data['value']);
         $config->save();
+        $this->log('info', 'Update config [' . $config->getKey() . '] to [' . $config->getValue() . ']');
         return response();
     }
 }

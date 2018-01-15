@@ -43,11 +43,11 @@ class LoginController extends AbstractController
             throw new HttpUnauthorizedException();
         }
         if (password_verify($data['password'], $member->getPassword())) {
-            app('log')->info($member->getUsername() . ' Login successfully');
             $this->auth($member);
+            $this->log('info', 'Login successfully');
             return response();
         } else {
-            app('log')->info($member->getUsername() . ' Login failed');
+            $this->log('info', 'Login failed');
             throw new HttpUnauthorizedException();
         }
     }

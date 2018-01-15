@@ -36,6 +36,7 @@ class ExtensionUninstallController extends AbstractController
             throw new HttpForbiddenException();
         }
         $extension->uninstall();
+        $this->log('info', 'Uninstall extension [' . $extension->getPackage() . ']');
         return response();
     }
 }

@@ -156,6 +156,17 @@ abstract class AbstractController
         return Member::find($this->session->get('auth_member_id'));
     }
 
+    final protected function log($type, $message, array $context = [])
+    {
+        if ($this->getAuth()) {
+            $context['username'] = $this->getAuth()->getUsername();
+        }
+        $logger = app('log');
+        if (method_exists($logger, $type)) {
+            $logger->$type($message, $context);
+        }
+    }
+
     /**
      * check permission
      *

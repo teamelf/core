@@ -37,8 +37,10 @@ class ExtensionActivateController extends AbstractController
         }
         if ($this->request->get('activation') === true) {
             $extension->activate();
+            $this->log('info', 'Activate extension [' . $extension->getPackage() . ']');
         } else {
             $extension->deactivate();
+            $this->log('info', 'Deactivate extension [' . $extension->getPackage() . ']');
         }
         return response();
     }

@@ -40,6 +40,7 @@ class MemberUpdateController extends AbstractController
             throw new HttpNotFoundException();
         }
         $member->update($data);
+        $this->log('info', 'Update member [' . $member->getUsername() . ']');
         return response();
     }
 }

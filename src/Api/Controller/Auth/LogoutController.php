@@ -29,7 +29,7 @@ class LogoutController extends AbstractController
     {
         $member = $this->getAuth();
         if ($member) {
-            app('log')->info($member->getUsername() . ' Logout');
+            $this->log('info', 'Logout');
         }
         $this->auth(null);
         return response();

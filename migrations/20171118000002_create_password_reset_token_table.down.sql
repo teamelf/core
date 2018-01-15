@@ -1,1 +1,3 @@
+ALTER TABLE password_reset_token DROP FOREIGN KEY FK_6B7BA4B67597D3FE;
+
 DROP TABLE IF EXISTS password_reset_token;

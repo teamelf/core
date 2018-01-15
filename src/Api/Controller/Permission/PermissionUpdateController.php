@@ -49,12 +49,14 @@ class PermissionUpdateController extends AbstractController
         ];
         if ($data['value'] === true) {
             (new Permission($attr))->save();
+            $this->log('info', 'Add permission [' . $data['permission'] . '] of role [' . $role->getSlug() . ']');
         } else {
             $permission = Permission::findBy($attr);
             if (!$permission) {
                 throw new HttpForbiddenException();
             }
             $permission->delete(true);
+            $this->log('info', 'Delete permission [' . $data['permission'] . '] of role [' . $role->getSlug() . ']');
         }
         return response();
     }
