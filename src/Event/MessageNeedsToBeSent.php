@@ -11,10 +11,12 @@
 
 namespace TeamELF\Event;
 
+use TeamELF\Core\Member;
+
 class MessageNeedsToBeSent extends AbstractEvent
 {
     /**
-     * @var array|string
+     * @var Member[]
      */
     protected $receivers = [];
 
@@ -28,16 +30,27 @@ class MessageNeedsToBeSent extends AbstractEvent
      */
     protected $body = null;
 
+    /**
+     * MessageNeedsToBeSent constructor.
+     *
+     * @param mixed $receivers
+     * @param string $subject
+     * @param string $body
+     */
     function __construct($receivers, $subject, $body)
     {
         parent::__construct();
         $this->subject = $subject;
-        $this->receivers = $receivers;
+        if (is_array($receivers)) {
+            $this->receivers = $receivers;
+        } else {
+            $this->receivers = [$receivers];
+        }
         $this->body = $body;
     }
 
     /**
-     * @return array|string
+     * @return Member[]
      */
     public function getReceivers()
     {
