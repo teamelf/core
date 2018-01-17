@@ -27,6 +27,18 @@ export default class extends React.Component {
     this.setState({member: ''});
   }
   render () {
+    const searchFilter = (input, option) => {
+      let exclude = this.props.exclude || [];
+      if (!_.isArray(exclude)) {
+        exclude = [exclude];
+      }
+      if (exclude.find(o => o === option.key)) {
+        return false;
+      } else {
+        return option.props.member.username.match(input)
+          || option.props.member.name.match(input);
+      }
+    };
     return (
       <Select
         style={{width: 200}}
@@ -34,9 +46,10 @@ export default class extends React.Component {
         placeholder="搜索成员"
         onSelect={this.handleSelect.bind(this)}
         allowClear
+        filterOption={searchFilter}
       >
         {this.state.members.map(o => (
-          <Select.Option key={o.username}>
+          <Select.Option key={o.username} member={o}>
             <Avatar style={{float: 'left', marginTop: 5}}/>
             <div style={{marginLeft: 50}}>
               <div>{o.name}</div>
