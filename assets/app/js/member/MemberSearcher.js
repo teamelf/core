@@ -15,6 +15,11 @@ export default class extends React.Component {
     this.state = {
       members: []
     };
+    // props: exclude, array of username
+    this.exclude = this.props.exclude || [];
+    if (!_.isArray(this.exclude)) {
+      this.exclude = [this.exclude];
+    }
     this.fetchMembers();
   }
   fetchMembers (keyword = null) {
@@ -28,16 +33,8 @@ export default class extends React.Component {
   }
   render () {
     const searchFilter = (input, option) => {
-      let exclude = this.props.exclude || [];
-      if (!_.isArray(exclude)) {
-        exclude = [exclude];
-      }
-      if (exclude.find(o => o === option.key)) {
-        return false;
-      } else {
-        return option.props.member.username.match(input)
-          || option.props.member.name.match(input);
-      }
+      return option.props.member.username.match(input)
+        || option.props.member.name.match(input);
     };
     return (
       <Select
@@ -48,7 +45,7 @@ export default class extends React.Component {
         allowClear
         filterOption={searchFilter}
       >
-        {this.state.members.map(o => (
+        {this.state.members.filter(o => !this.props.exclude.find(e => e === o.username)).map(o => (
           <Select.Option key={o.username} member={o}>
             <Avatar style={{float: 'left', marginTop: 5}}/>
             <div style={{marginLeft: 50}}>

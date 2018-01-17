@@ -2764,6 +2764,11 @@ System.register('teamelf/member/MemberSearcher', [], function (_export, _context
           _this.state = {
             members: []
           };
+          // props: exclude, array of username
+          _this.exclude = _this.props.exclude || [];
+          if (!_.isArray(_this.exclude)) {
+            _this.exclude = [_this.exclude];
+          }
           _this.fetchMembers();
           return _this;
         }
@@ -2791,17 +2796,7 @@ System.register('teamelf/member/MemberSearcher', [], function (_export, _context
             var _this3 = this;
 
             var searchFilter = function searchFilter(input, option) {
-              var exclude = _this3.props.exclude || [];
-              if (!_.isArray(exclude)) {
-                exclude = [exclude];
-              }
-              if (exclude.find(function (o) {
-                return o === option.key;
-              })) {
-                return false;
-              } else {
-                return option.props.member.username.match(input) || option.props.member.name.match(input);
-              }
+              return option.props.member.username.match(input) || option.props.member.name.match(input);
             };
             return React.createElement(
               Select,
@@ -2813,7 +2808,11 @@ System.register('teamelf/member/MemberSearcher', [], function (_export, _context
                 allowClear: true,
                 filterOption: searchFilter
               },
-              this.state.members.map(function (o) {
+              this.state.members.filter(function (o) {
+                return !_this3.props.exclude.find(function (e) {
+                  return e === o.username;
+                });
+              }).map(function (o) {
                 return React.createElement(
                   Select.Option,
                   { key: o.username, member: o },
