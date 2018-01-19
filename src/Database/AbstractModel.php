@@ -15,6 +15,7 @@ use DateTime;
 use DateTimeZone;
 use Doctrine\ORM\EntityRepository;
 use PascalDeVink\ShortUuid\ShortUuid;
+use TeamELF\Exception\HttpForbiddenException;
 
 abstract class AbstractModel
 {
@@ -117,8 +118,8 @@ abstract class AbstractModel
 
     /**
      * save model to database
-     *
      * @return $this
+     * @throws HttpForbiddenException
      */
     final public function save()
     {
@@ -127,8 +128,12 @@ abstract class AbstractModel
         } else {
             $this->updatedAt = new DateTime();
         }
-        app('em')->persist($this);
-        app('em')->flush();
+        try {
+            app('em')->persist($this);
+            app('em')->flush();
+        } catch (\Exception $exception) {
+            throw new HttpForbiddenException('ERROR INSERTING TO DB');
+        }
         return $this;
     }
 
@@ -176,9 +181,10 @@ abstract class AbstractModel
      * get specific model
      *
      * @param string $id
+     * @param bool $withTrash
      * @return null|object|static
      */
-    final public static function find($id)
+    final public static function find($id, $withTrash = false)
     {
         if ($id === null) {
             return null;
@@ -187,6 +193,9 @@ abstract class AbstractModel
             ->find($id);
         // use this to avoid lint error in idea
         if ($instance instanceof static) {
+            if ($instance->getDeletedAt() && !$withTrash) {
+                return null;
+            }
             return $instance;
         } else {
             return null;
@@ -194,13 +203,35 @@ abstract class AbstractModel
     }
 
     /**
+     * deal with criteria with $withTrash due to soft deletes
+     * @param array $criteria
+     * @param bool  $withTrash
+     * @return array
+     */
+    private static function criteriaWithSoftDelete(array $criteria, bool $withTrash = false)
+    {
+        $c = [];
+        foreach ($criteria as $key => $value) {
+            if ($key !== 'deletedAt') {
+                $c[$key] = $value;
+            }
+        }
+        if (!$withTrash) {
+            $c['deletedAt'] = null;
+        }
+        return $c;
+    }
+
+    /**
      * get specific model by $criteria
      *
      * @param array $criteria
+     * @param bool  $withTrash
      * @return null|object|static
      */
-    final public static function findBy(array $criteria)
+    final public static function findBy(array $criteria, bool $withTrash = false)
     {
+        $criteria = self::criteriaWithSoftDelete($criteria, $withTrash);
         $instance = static::getRepository()
             ->findOneBy($criteria);
         // use this to avoid lint error in idea
@@ -214,14 +245,16 @@ abstract class AbstractModel
     /**
      * get models by some conditions
      *
-     * @param array      $criteria
+     * @param array $criteria
      * @param array|null $orderBy
-     * @param int|null   $limit
-     * @param int|null   $offset
+     * @param int|null $limit
+     * @param int|null $offset
+     * @param bool     $withTrash
      * @return static[]
      */
-    final public static function where(array $criteria, array $orderBy = ['createdAt' => 'DESC'], int $limit = null, int $offset = null)
+    final public static function where(array $criteria, array $orderBy = ['createdAt' => 'DESC'], int $limit = null, int $offset = null, bool $withTrash = false)
     {
+        $criteria = self::criteriaWithSoftDelete($criteria, $withTrash);
         return static::getRepository()
             ->findBy($criteria, $orderBy, $limit, $offset);
     }
@@ -229,22 +262,27 @@ abstract class AbstractModel
     /**
      * get all models
      *
+     * @param array $orderBy
+     * @param bool  $withTrash
      * @return static[]
      */
-    final public static function all($orderBy = ['createdAt' => 'DESC'])
+    final public static function all($orderBy = ['createdAt' => 'DESC'], bool $withTrash = false)
     {
+        $criteria = self::criteriaWithSoftDelete([], $withTrash);
         return static::getRepository()
-            ->findBy([], $orderBy);
+            ->findBy($criteria, $orderBy);
     }
 
     /**
      * get count
      *
      * @param array $criteria
+     * @param bool  $withTrash
      * @return int
      */
-    final public static function count(array $criteria = [])
+    final public static function count(array $criteria = [], bool $withTrash = false)
     {
+        $criteria = self::criteriaWithSoftDelete($criteria, $withTrash);
         return static::getRepository()
             ->count($criteria);
     }
