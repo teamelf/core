@@ -7,7 +7,7 @@
  * file that was distributed with this source code.
  */
 
-const { Input, Radio, Icon, Tooltip } = antd;
+const { Input, Radio, Icon, Tooltip, Modal, Button } = antd;
 
 /**
  * props:
@@ -51,13 +51,21 @@ export default class extends React.Component {
   }
   renderTextArea () {
     return (
-      <Input.TextArea
-        autosize={{minRows: 2,maxRows: 6}}
-        style={{width: 'auto', resize: 'horizontal'}}
-        value={this.state.value}
-        onChange={e => this.setState({value: e.target.value})}
-        onPressEnter={this.submitChange.bind(this)}
-      />
+      <Modal
+        title="编辑"
+        visible={this.state.editor}
+        footer={[
+          <Button onClick={e => this.setState({editor: false})}>取消</Button>,
+          <Button type="primary" onClick={this.submitChange.bind(this)}>保存</Button>
+        ]}
+        onCancel={e => this.setState({editor: false})}
+      >
+        <Input.TextArea
+          autosize={{minRows: 2,maxRows: 6}}
+          value={this.state.value}
+          onChange={e => this.setState({value: e.target.value})}
+        />
+      </Modal>
     );
   }
   renderInput () {
