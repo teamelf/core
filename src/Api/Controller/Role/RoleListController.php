@@ -25,7 +25,7 @@ class RoleListController extends AbstractController
     public function handler(): Response
     {
         $response = [];
-        foreach (Role::all() as $role) {
+        foreach (Role::all(['createdAt' => 'ASC']) as $role) {
             $response[] = [
                 'id' => $role->getId(),
                 'name' => $role->getName(),

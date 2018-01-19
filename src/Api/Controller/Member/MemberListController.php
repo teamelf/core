@@ -31,12 +31,12 @@ class MemberListController extends AbstractController
         $roles = [];
         $role_slugs = $this->request->get('roles', '');
         if (!$role_slugs) {
-            $members = Member::all();
+            $members = Member::all(['createdAt' => 'ASC']);
         } else {
             foreach (explode(',', $role_slugs) as $role_slug) {
                 $roles[] = Role::findBy(['slug' => $role_slug]);
             }
-            $members = Member::where(['role' => $roles]);
+            $members = Member::where(['role' => $roles], ['createdAt' => 'ASC']);
         }
         foreach ($members as $member) {
             $r = $member->getRole();
