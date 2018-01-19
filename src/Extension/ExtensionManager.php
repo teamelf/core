@@ -79,11 +79,12 @@ class ExtensionManager
             if (!$extension) {
                 $extension = (new Extension())
                     ->vendor($v)
-                    ->package($p)
-                    ->version($package['version'] ?? '')
-                    ->description($package['description'] ?? '')
-                    ->save();
+                    ->package($p);
             }
+            $extension
+                ->version($package['version'] ?? '')
+                ->description($package['description'] ?? '')
+                ->save();
             $this->extensions[] = $extension;
         }
         return $this;
