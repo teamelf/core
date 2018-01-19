@@ -48,7 +48,7 @@ class AppController extends ViewController
                 ]);
         }
         $roles = [];
-        foreach (Role::all() as $role) {
+        foreach (Role::all(['createdAt' => 'ASC']) as $role) {
             $roles[] = [
                 'id' => $role->getId(),
                 'name' => $role->getName(),
