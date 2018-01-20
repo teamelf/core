@@ -8,8 +8,21 @@
  */
 
 moment.locale('zh-cn');
-axios.defaults.baseURL = '/api/';
 
+const renderer = new marked.Renderer();
+renderer.link = (href, title, text) => {
+  let html = marked.Renderer.prototype.link.call(renderer, href, title, text);
+  return html.replace(/^<a /, '<a target="_blank" ');
+};
+marked.setOptions({
+  breaks: true,
+  highlight: function (code) {
+    return '暂不支持好看的代码哦';
+  },
+  renderer: renderer
+});
+
+axios.defaults.baseURL = '/api/';
 axios.interceptors.response.use(r => r, e => {
   switch (e.response.status) {
     case 401:
@@ -33,16 +46,3 @@ axios.interceptors.response.use(r => r, e => {
   }
   return Promise.reject(e);
 });
-
-function handleFormError(e, form, v) {
-  if (e.response.status !== 422) return;
-  for (let key in e.response.data) {
-    let message = e.response.data[key][0];
-    form.setFields({
-      [key]: {
-        value: v[key],
-        errors: [new Error(message)],
-      },
-    });
-  }
-}
