@@ -43,10 +43,20 @@ class ResetPasswordController extends AbstractController
             ],
             'passwordConfirmation' => [
                 new NotBlank()
+            ],
+            'passwordOrigin' => [
+                new NotBlank()
             ]
         ]);
-        if ($data['password'] !== $data['passwordConfirmation']) {
-            throw new HttpForbiddenException();
+        if (!preg_match('/[a-zA-Z]/', $data['passwordOrigin'])
+            || !preg_match('/[0-9]/', $data['passwordOrigin'])
+            || !preg_match('/[^a-zA-Z0-9]/', $data['passwordOrigin'])
+            || strlen($data['passwordOrigin']) < 8) {
+            throw new HttpForbiddenException('密码太弱，需至少8位并且包含字母数字以及字符');
+        }
+        if (sha1($data['passwordOrigin']) !== $data['password']
+            || $data['password'] !== $data['passwordConfirmation']) {
+            throw new HttpForbiddenException('两次输入的密码不一样');
         }
         $token = PasswordResetToken::find($this->getParameter('token'));
         $member = Member::findBy($memberData);

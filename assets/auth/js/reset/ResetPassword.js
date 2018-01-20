@@ -84,6 +84,7 @@ export default class extends SimpleLayout {
       email: this.state.email || '',
       password: this.state.password ? CryptoJS.SHA1(this.state.password).toString() : '',
       passwordConfirmation: this.state.passwordConfirmation ? CryptoJS.SHA1(this.state.passwordConfirmation).toString() : '',
+      passwordOrigin: this.state.password
     };
     this.setState({loading: true});
     axios.post('/auth/reset/' + this.state.token, user).then(r => {
