@@ -1608,10 +1608,10 @@ System.register('teamelf/config/ConfigLogo', [], function (_export, _context) {
 });
 'use strict';
 
-System.register('teamelf/components/Editor', [], function (_export, _context) {
+System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _context) {
   "use strict";
 
-  var _extends, _typeof, _createClass, _antd, Input, _class;
+  var _createClass, _antd, Card, Switch, Button, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1646,20 +1646,167 @@ System.register('teamelf/components/Editor', [], function (_export, _context) {
   return {
     setters: [],
     execute: function () {
-      _extends = Object.assign || function (target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
           }
         }
 
-        return target;
-      };
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
 
+      _antd = antd;
+      Card = _antd.Card;
+      Switch = _antd.Switch;
+      Button = _antd.Button;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.state = {
+            loading: false
+          };
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'activate',
+          value: function activate(activation) {
+            var _this2 = this;
+
+            this.setState({ loading: true });
+            axios.put('extension/' + this.props.vendor + '/' + this.props.package, { activation: activation }).then(function (r) {
+              window.location.reload();
+            }).catch(function (e) {
+              _this2.setState({ loading: false });
+            });
+          }
+        }, {
+          key: 'upgrade',
+          value: function upgrade() {
+            alert('not supported yet!');
+          }
+        }, {
+          key: 'uninstall',
+          value: function uninstall() {
+            var _this3 = this;
+
+            antd.Modal.confirm({
+              title: '不可恢复',
+              content: '确定要删除么？该操作将删除所有插件数据并且无法恢复。如不使用插件建议停用即可',
+              onOk: function onOk() {
+                _this3.setState({ loading: true });
+                axios.delete('extension/' + _this3.props.vendor + '/' + _this3.props.package).then(function (r) {
+                  window.location.reload();
+                }).catch(function (e) {
+                  _this3.setState({ loading: false });
+                });
+              }
+            });
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                style: { marginBottom: 16 },
+                title: this.props.package,
+                extra: this.props.version,
+                actions: [React.createElement(Switch, {
+                  checked: this.props.isActivated,
+                  checkedChildren: '\u542F\u7528',
+                  unCheckedChildren: '\u505C\u7528',
+                  onChange: this.activate.bind(this),
+                  loading: this.state.loading,
+                  disabled: !can('extension.activate')
+                }), React.createElement(
+                  Button,
+                  {
+                    type: 'primary', size: 'small',
+                    onClick: this.upgrade.bind(this)
+                  },
+                  '\u5347\u7EA7'
+                ), React.createElement(
+                  Button,
+                  {
+                    type: 'danger', size: 'small',
+                    onClick: this.uninstall.bind(this),
+                    disabled: !can('extension.uninstall')
+                  },
+                  '\u5378\u8F7D'
+                )]
+              },
+              React.createElement(
+                'div',
+                null,
+                this.props.description
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/components/Editor', [], function (_export, _context) {
+  "use strict";
+
+  var _typeof, _createClass, _antd, Input, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
       _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
         return typeof obj;
       } : function (obj) {
@@ -1809,7 +1956,7 @@ System.register('teamelf/components/Editor', [], function (_export, _context) {
           value: function render() {
             return React.createElement(
               'div',
-              { style: _extends({ marginBottom: 16 }, this.props.style) },
+              { style: this.props.style },
               this.props.readonly ? this.preview() : this.editor()
             );
           }
@@ -2150,167 +2297,6 @@ System.register("teamelf/components/InfoEditor", [], function (_export, _context
       }(React.Component);
 
       _export("default", _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, _antd, Card, Switch, Button, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Card = _antd.Card;
-      Switch = _antd.Switch;
-      Button = _antd.Button;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class(props) {
-          _classCallCheck(this, _class);
-
-          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-          _this.state = {
-            loading: false
-          };
-          return _this;
-        }
-
-        _createClass(_class, [{
-          key: 'activate',
-          value: function activate(activation) {
-            var _this2 = this;
-
-            this.setState({ loading: true });
-            axios.put('extension/' + this.props.vendor + '/' + this.props.package, { activation: activation }).then(function (r) {
-              window.location.reload();
-            }).catch(function (e) {
-              _this2.setState({ loading: false });
-            });
-          }
-        }, {
-          key: 'upgrade',
-          value: function upgrade() {
-            alert('not supported yet!');
-          }
-        }, {
-          key: 'uninstall',
-          value: function uninstall() {
-            var _this3 = this;
-
-            antd.Modal.confirm({
-              title: '不可恢复',
-              content: '确定要删除么？该操作将删除所有插件数据并且无法恢复。如不使用插件建议停用即可',
-              onOk: function onOk() {
-                _this3.setState({ loading: true });
-                axios.delete('extension/' + _this3.props.vendor + '/' + _this3.props.package).then(function (r) {
-                  window.location.reload();
-                }).catch(function (e) {
-                  _this3.setState({ loading: false });
-                });
-              }
-            });
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              Card,
-              {
-                style: { marginBottom: 16 },
-                title: this.props.package,
-                extra: this.props.version,
-                actions: [React.createElement(Switch, {
-                  checked: this.props.isActivated,
-                  checkedChildren: '\u542F\u7528',
-                  unCheckedChildren: '\u505C\u7528',
-                  onChange: this.activate.bind(this),
-                  loading: this.state.loading,
-                  disabled: !can('extension.activate')
-                }), React.createElement(
-                  Button,
-                  {
-                    type: 'primary', size: 'small',
-                    onClick: this.upgrade.bind(this)
-                  },
-                  '\u5347\u7EA7'
-                ), React.createElement(
-                  Button,
-                  {
-                    type: 'danger', size: 'small',
-                    onClick: this.uninstall.bind(this),
-                    disabled: !can('extension.uninstall')
-                  },
-                  '\u5378\u8F7D'
-                )]
-              },
-              React.createElement(
-                'div',
-                null,
-                this.props.description
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
     }
   };
 });

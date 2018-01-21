@@ -77,7 +77,7 @@ export default class extends React.Component {
   }
   render () {
     return (
-      <div style={{marginBottom: 16, ...this.props.style}}>
+      <div style={this.props.style}>
         {this.props.readonly ? this.preview() : this.editor()}
       </div>
     );
