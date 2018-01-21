@@ -1332,6 +1332,466 @@ System.register('teamelf/main', ['teamelf/App'], function (_export, _context) {
     }
   };
 });
+'use strict';
+
+System.register('teamelf/config/ConfigBasicInfo', ['teamelf/components/InfoEditor'], function (_export, _context) {
+  "use strict";
+
+  var InfoEditor, _extends, _createClass, _antd, Card, _class;
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
+      });
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [function (_teamelfComponentsInfoEditor) {
+      InfoEditor = _teamelfComponentsInfoEditor.default;
+    }],
+    execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.state = _extends({}, window.config);
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'edit',
+          value: function edit(key, value) {
+            var _this2 = this;
+
+            return axios.put('config/' + key, { value: value }).then(function (r) {
+              _this2.setState(_defineProperty({}, key, value));
+            });
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                title: '\u57FA\u672C\u4FE1\u606F',
+                style: { marginBottom: 16 }
+              },
+              React.createElement(InfoEditor, {
+                label: '\u56E2\u961F\u540D\u79F0',
+                value: this.state.name,
+                onEdit: this.edit.bind(this, 'name'),
+                readonly: !can('config.update')
+              }),
+              React.createElement(InfoEditor, {
+                label: '\u56E2\u961F\u63CF\u8FF0',
+                value: this.state.description,
+                onEdit: this.edit.bind(this, 'description'),
+                readonly: !can('config.update')
+              })
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/config/ConfigLogo', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Card, Upload, Button, Icon, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Upload = _antd.Upload;
+      Button = _antd.Button;
+      Icon = _antd.Icon;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'handleChange',
+          value: function handleChange(info) {
+            if (info.file.status !== 'uploading') {
+              console.log(info.file, info.fileList);
+            }
+            if (info.file.status === 'done') {
+              window.location.reload();
+            } else if (info.file.status === 'error') {
+              antd.message.error(info.file.name + ' file upload failed.');
+            }
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            var Uploader = React.createElement(
+              Upload,
+              {
+                name: 'logo',
+                action: '/api/config/logo',
+                onChange: this.handleChange.bind(this),
+                showUploadList: false
+              },
+              React.createElement(
+                Button,
+                null,
+                React.createElement(Icon, { type: 'upload' }),
+                React.createElement(
+                  'span',
+                  null,
+                  ' \u4E0A\u4F20\u65B0LOGO'
+                )
+              )
+            );
+            return React.createElement(
+              Card,
+              {
+                title: can('config.update') ? Uploader : '站点LOGO',
+                style: { marginBottom: 16 }
+              },
+              React.createElement(
+                'div',
+                { align: 'center' },
+                React.createElement('img', { src: window.config.logo, style: { width: 150 } })
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/components/Editor', [], function (_export, _context) {
+  "use strict";
+
+  var _typeof, _createClass, _antd, Input, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
+        return typeof obj;
+      } : function (obj) {
+        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+      };
+
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Input = _antd.Input;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'handleTextAreaPaste',
+          value: function handleTextAreaPaste(e) {
+            var _this2 = this;
+
+            e.preventDefault();
+            var selectionStart = e.target.selectionStart;
+            var selectionEnd = e.target.selectionEnd;
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+              for (var _iterator = e.clipboardData.items[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                var item = _step.value;
+
+                switch (item.kind) {
+                  case 'string':
+                    item.getAsString(function (str) {
+                      var text = _this2.props.value;
+                      text = text.substring(0, selectionStart) + str + text.substring(selectionEnd);
+                      _this2.props.onChange(text);
+                    });
+                    break;
+                  case 'file':
+                    console.log(item.type);
+                    if (item.type.match(/^image\//)) {
+                      var _ret = function () {
+                        var img = item.getAsFile();
+                        if (!img) return {
+                            v: void 0
+                          };
+
+                        var text = _this2.props.value;
+                        var uid = CryptoJS.SHA1(+new Date() + ',' + parseInt(Math.random() * 100000000)).toString();
+                        var placeholder = '![img \u4E0A\u4F20\u4E2D...](' + uid + ')';
+                        text = text.substring(0, selectionStart) + placeholder + text.substring(selectionEnd);
+                        _this2.props.onChange(text);
+
+                        var formData = new FormData();
+                        formData.append('attachment', img);
+                        axios.post('attachment', formData).then(function (r) {
+                          var text = _this2.props.value;
+                          var mark = '![img](' + r.data.url + ')';
+                          text = text.replace(placeholder, mark);
+                          _this2.props.onChange(text);
+                        }).catch(function (e) {
+                          var text = _this2.props.value;
+                          text = text.replace(placeholder, '');
+                          _this2.props.onChange(text);
+                        });
+                      }();
+
+                      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+                    }
+                    break;
+                }
+              }
+            } catch (err) {
+              _didIteratorError = true;
+              _iteratorError = err;
+            } finally {
+              try {
+                if (!_iteratorNormalCompletion && _iterator.return) {
+                  _iterator.return();
+                }
+              } finally {
+                if (_didIteratorError) {
+                  throw _iteratorError;
+                }
+              }
+            }
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            var _this3 = this;
+
+            return React.createElement(
+              'div',
+              { style: { marginBottom: 16 } },
+              React.createElement(
+                'div',
+                { align: 'right' },
+                React.createElement(
+                  'small',
+                  null,
+                  '\u53EF\u7C98\u8D34\u4E0A\u4F20\u56FE\u7247\uFF0C\u6682\u4E0D\u652F\u6301\u5176\u4ED6\u9644\u4EF6\u4E0A\u4F20'
+                )
+              ),
+              React.createElement(Input.TextArea, {
+                size: 'large',
+                autosize: { minRows: 10, maxRows: 999999 },
+                value: this.props.value,
+                onChange: function onChange(e) {
+                  return _this3.props.onChange(e.target.value);
+                },
+                onPaste: this.handleTextAreaPaste.bind(this)
+              })
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
+    }
+  };
+});
 "use strict";
 
 System.register("teamelf/components/Gender", [], function (_export, _context) {
@@ -1663,157 +2123,12 @@ System.register("teamelf/components/InfoEditor", [], function (_export, _context
     }
   };
 });
-'use strict';
+"use strict";
 
-System.register('teamelf/config/ConfigBasicInfo', ['teamelf/components/InfoEditor'], function (_export, _context) {
+System.register("teamelf/components/Markdown", [], function (_export, _context) {
   "use strict";
 
-  var InfoEditor, _extends, _createClass, _antd, Card, _class;
-
-  function _defineProperty(obj, key, value) {
-    if (key in obj) {
-      Object.defineProperty(obj, key, {
-        value: value,
-        enumerable: true,
-        configurable: true,
-        writable: true
-      });
-    } else {
-      obj[key] = value;
-    }
-
-    return obj;
-  }
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [function (_teamelfComponentsInfoEditor) {
-      InfoEditor = _teamelfComponentsInfoEditor.default;
-    }],
-    execute: function () {
-      _extends = Object.assign || function (target) {
-        for (var i = 1; i < arguments.length; i++) {
-          var source = arguments[i];
-
-          for (var key in source) {
-            if (Object.prototype.hasOwnProperty.call(source, key)) {
-              target[key] = source[key];
-            }
-          }
-        }
-
-        return target;
-      };
-
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Card = _antd.Card;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class(props) {
-          _classCallCheck(this, _class);
-
-          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-          _this.state = _extends({}, window.config);
-          return _this;
-        }
-
-        _createClass(_class, [{
-          key: 'edit',
-          value: function edit(key, value) {
-            var _this2 = this;
-
-            return axios.put('config/' + key, { value: value }).then(function (r) {
-              _this2.setState(_defineProperty({}, key, value));
-            });
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              Card,
-              {
-                title: '\u57FA\u672C\u4FE1\u606F',
-                style: { marginBottom: 16 }
-              },
-              React.createElement(InfoEditor, {
-                label: '\u56E2\u961F\u540D\u79F0',
-                value: this.state.name,
-                onEdit: this.edit.bind(this, 'name'),
-                readonly: !can('config.update')
-              }),
-              React.createElement(InfoEditor, {
-                label: '\u56E2\u961F\u63CF\u8FF0',
-                value: this.state.description,
-                onEdit: this.edit.bind(this, 'description'),
-                readonly: !can('config.update')
-              })
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/config/ConfigLogo', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, _antd, Card, Upload, Button, Icon, _class;
+  var _extends, _createClass, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1848,6 +2163,20 @@ System.register('teamelf/config/ConfigLogo', [], function (_export, _context) {
   return {
     setters: [],
     execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
       _createClass = function () {
         function defineProperties(target, props) {
           for (var i = 0; i < props.length; i++) {
@@ -1866,12 +2195,6 @@ System.register('teamelf/config/ConfigLogo', [], function (_export, _context) {
         };
       }();
 
-      _antd = antd;
-      Card = _antd.Card;
-      Upload = _antd.Upload;
-      Button = _antd.Button;
-      Icon = _antd.Icon;
-
       _class = function (_React$Component) {
         _inherits(_class, _React$Component);
 
@@ -1882,58 +2205,20 @@ System.register('teamelf/config/ConfigLogo', [], function (_export, _context) {
         }
 
         _createClass(_class, [{
-          key: 'handleChange',
-          value: function handleChange(info) {
-            if (info.file.status !== 'uploading') {
-              console.log(info.file, info.fileList);
-            }
-            if (info.file.status === 'done') {
-              window.location.reload();
-            } else if (info.file.status === 'error') {
-              antd.message.error(info.file.name + ' file upload failed.');
-            }
-          }
-        }, {
-          key: 'render',
+          key: "render",
           value: function render() {
-            var Uploader = React.createElement(
-              Upload,
-              {
-                name: 'logo',
-                action: '/api/config/logo',
-                onChange: this.handleChange.bind(this),
-                showUploadList: false
-              },
-              React.createElement(
-                Button,
-                null,
-                React.createElement(Icon, { type: 'upload' }),
-                React.createElement(
-                  'span',
-                  null,
-                  ' \u4E0A\u4F20\u65B0LOGO'
-                )
-              )
-            );
-            return React.createElement(
-              Card,
-              {
-                title: can('config.update') ? Uploader : '站点LOGO',
-                style: { marginBottom: 16 }
-              },
-              React.createElement(
-                'div',
-                { align: 'center' },
-                React.createElement('img', { src: window.config.logo, style: { width: 150 } })
-              )
-            );
+            return React.createElement("div", {
+              style: _extends({ marginBottom: 16 }, this.props.style),
+              className: "markdown",
+              dangerouslySetInnerHTML: { __html: marked(this.props.content || '') }
+            });
           }
         }]);
 
         return _class;
       }(React.Component);
 
-      _export('default', _class);
+      _export("default", _class);
     }
   };
 });
@@ -2939,6 +3224,114 @@ System.register('teamelf/layout/SideNav', ['teamelf/layout/Logo'], function (_ex
       _export('SideNav', SideNav);
 
       _export('default', withRouter(SideNav));
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, AbstractModel;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      AbstractModel = function () {
+        function AbstractModel(props) {
+          _classCallCheck(this, AbstractModel);
+
+          if (new.target === AbstractModel) {
+            throw new Error('AbstractModel cannot be instanced directly!');
+          }
+
+          /**
+           * model's attributes
+           *
+           * @type {Object}
+           * @private
+           */
+          this._attributes = {};
+
+          /**
+           * the fetching api url
+           * @type {String}
+           * @private
+           */
+          this._url = '';
+        }
+
+        /**
+         * getter & setter of _attributes
+         */
+
+
+        _createClass(AbstractModel, [{
+          key: 'fetch',
+          value: function fetch() {
+            throw new Error('AbstractModel@fetch must be implemented by subclass');
+          }
+        }, {
+          key: 'create',
+          value: function create() {
+            throw new Error('AbstractModel@create must be implemented by subclass');
+          }
+        }, {
+          key: 'update',
+          value: function update() {
+            throw new Error('AbstractModel@update must be implemented by subclass');
+          }
+        }, {
+          key: 'delete',
+          value: function _delete() {
+            throw new Error('AbstractModel@delete must be implemented by subclass');
+          }
+        }, {
+          key: 'attributes',
+          get: function get() {
+            return this._attributes;
+          },
+          set: function set(attributes) {
+            this._attributes = attributes;
+          }
+        }, {
+          key: 'url',
+          get: function get() {
+            return this._url;
+          },
+          set: function set(url) {
+            this._url = url;
+          }
+        }]);
+
+        return AbstractModel;
+      }();
+
+      _export('default', AbstractModel);
     }
   };
 });
@@ -4290,114 +4683,6 @@ System.register('teamelf/member/MemberSearcher', [], function (_export, _context
       }(React.Component);
 
       _export('default', _class);
-    }
-  };
-});
-'use strict';
-
-System.register('teamelf/model/AbstractModel', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, AbstractModel;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      AbstractModel = function () {
-        function AbstractModel(props) {
-          _classCallCheck(this, AbstractModel);
-
-          if (new.target === AbstractModel) {
-            throw new Error('AbstractModel cannot be instanced directly!');
-          }
-
-          /**
-           * model's attributes
-           *
-           * @type {Object}
-           * @private
-           */
-          this._attributes = {};
-
-          /**
-           * the fetching api url
-           * @type {String}
-           * @private
-           */
-          this._url = '';
-        }
-
-        /**
-         * getter & setter of _attributes
-         */
-
-
-        _createClass(AbstractModel, [{
-          key: 'fetch',
-          value: function fetch() {
-            throw new Error('AbstractModel@fetch must be implemented by subclass');
-          }
-        }, {
-          key: 'create',
-          value: function create() {
-            throw new Error('AbstractModel@create must be implemented by subclass');
-          }
-        }, {
-          key: 'update',
-          value: function update() {
-            throw new Error('AbstractModel@update must be implemented by subclass');
-          }
-        }, {
-          key: 'delete',
-          value: function _delete() {
-            throw new Error('AbstractModel@delete must be implemented by subclass');
-          }
-        }, {
-          key: 'attributes',
-          get: function get() {
-            return this._attributes;
-          },
-          set: function set(attributes) {
-            this._attributes = attributes;
-          }
-        }, {
-          key: 'url',
-          get: function get() {
-            return this._url;
-          },
-          set: function set(url) {
-            this._url = url;
-          }
-        }]);
-
-        return AbstractModel;
-      }();
-
-      _export('default', AbstractModel);
     }
   };
 });

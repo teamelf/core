@@ -11,6 +11,7 @@
 
 namespace TeamELF\Api;
 
+use TeamELF\Api\Controller\Attachment\UploadController;
 use TeamELF\Api\Controller\Auth\AuthCheckController;
 use TeamELF\Api\Controller\Auth\ForgetPasswordController;
 use TeamELF\Api\Controller\Auth\LoginController;
@@ -56,6 +57,12 @@ class ApiService extends AbstractService
     public function handleRoutes($event)
     {
         $event->getRouter()
+
+            // --------------------
+            // | Attachment
+            // --------------------
+            ->prefix('/api/attachment')
+            ->post('attachment-upload', '', UploadController::class)
 
             // --------------------
             // | Helpers
