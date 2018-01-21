@@ -25,7 +25,7 @@ gulp({
     './bower_components/crypto-js/crypto-js.js'
   ],
   modules: {
-    'teamelf/common': 'js/**/*.js'
+    'teamelf/common': './js/**/*.js'
   },
   output: './dist/common.js'
 }, {

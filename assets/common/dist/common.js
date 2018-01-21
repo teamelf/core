@@ -23621,9 +23621,6 @@ System.register('teamelf/common/main', [], function (_export, _context) {
       };
       marked.setOptions({
         breaks: true,
-        highlight: function highlight(code) {
-          return '暂不支持好看的代码哦';
-        },
         renderer: renderer
       });
 

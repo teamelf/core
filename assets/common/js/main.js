@@ -16,9 +16,6 @@ renderer.link = (href, title, text) => {
 };
 marked.setOptions({
   breaks: true,
-  highlight: function (code) {
-    return '暂不支持好看的代码哦';
-  },
   renderer: renderer
 });
 
