@@ -53,18 +53,28 @@ export default class extends React.Component {
     }
   }
   render () {
-    return (
-      <div style={{marginBottom: 16, ...this.props.style}}>
-        <div align="right">
-          <small>可粘贴上传图片，暂不支持其他附件上传</small>
-        </div>
-        <Input.TextArea
-          autosize={this.props.autosize || {minRows: 10, maxRows: 999999}}
-          value={this.props.value}
-          onChange={e => this.props.onChange(e.target.value)}
-          onPaste={this.handleTextAreaPaste.bind(this)}
+    if (this.props.readonly) {
+      return (
+        <div
+          style={{marginBottom: 16, ...this.props.style}}
+          className="markdown"
+          dangerouslySetInnerHTML={{__html: marked(this.props.value || '')}}
         />
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div style={{marginBottom: 16, ...this.props.style}}>
+          <div align="right">
+            <small>可粘贴上传图片，暂不支持其他附件上传</small>
+          </div>
+          <Input.TextArea
+            autosize={this.props.autosize || {minRows: 10, maxRows: 999999}}
+            value={this.props.value}
+            onChange={e => this.props.onChange(e.target.value)}
+            onPaste={this.handleTextAreaPaste.bind(this)}
+          />
+        </div>
+      );
+    }
   }
 }
