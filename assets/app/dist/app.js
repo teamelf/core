@@ -1770,39 +1770,48 @@ System.register('teamelf/components/Editor', [], function (_export, _context) {
             }
           }
         }, {
-          key: 'render',
-          value: function render() {
+          key: 'preview',
+          value: function preview() {
+            return React.createElement('div', {
+              className: 'markdown',
+              dangerouslySetInnerHTML: { __html: marked(this.props.value || '') }
+            });
+          }
+        }, {
+          key: 'editor',
+          value: function editor() {
             var _this3 = this;
 
-            if (this.props.readonly) {
-              return React.createElement('div', {
-                style: _extends({ marginBottom: 16 }, this.props.style),
-                className: 'markdown',
-                dangerouslySetInnerHTML: { __html: marked(this.props.value || '') }
-              });
-            } else {
-              return React.createElement(
+            return React.createElement(
+              'div',
+              null,
+              React.createElement(
                 'div',
-                { style: _extends({ marginBottom: 16 }, this.props.style) },
+                { align: 'right' },
                 React.createElement(
-                  'div',
-                  { align: 'right' },
-                  React.createElement(
-                    'small',
-                    null,
-                    '\u53EF\u7C98\u8D34\u4E0A\u4F20\u56FE\u7247\uFF0C\u6682\u4E0D\u652F\u6301\u5176\u4ED6\u9644\u4EF6\u4E0A\u4F20'
-                  )
-                ),
-                React.createElement(Input.TextArea, {
-                  autosize: this.props.autosize || { minRows: 10, maxRows: 999999 },
-                  value: this.props.value,
-                  onChange: function onChange(e) {
-                    return _this3.props.onChange(e.target.value);
-                  },
-                  onPaste: this.handleTextAreaPaste.bind(this)
-                })
-              );
-            }
+                  'small',
+                  null,
+                  '\u53EF\u7C98\u8D34\u4E0A\u4F20\u56FE\u7247\uFF0C\u6682\u4E0D\u652F\u6301\u5176\u4ED6\u9644\u4EF6\u4E0A\u4F20'
+                )
+              ),
+              React.createElement(Input.TextArea, {
+                autosize: this.props.autosize || { minRows: 10, maxRows: 999999 },
+                value: this.props.value,
+                onChange: function onChange(e) {
+                  return _this3.props.onChange(e.target.value);
+                },
+                onPaste: this.handleTextAreaPaste.bind(this)
+              })
+            );
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              'div',
+              { style: _extends({ marginBottom: 16 }, this.props.style) },
+              this.props.readonly ? this.preview() : this.editor()
+            );
           }
         }]);
 
