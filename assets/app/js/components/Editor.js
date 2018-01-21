@@ -15,7 +15,7 @@ const { Input } = antd;
  *   onChange
  *   autosize
  *   rows
- *   readonly
+ *   preview
  */
 export default class extends React.Component {
   handleTextAreaPaste (e) {
@@ -94,7 +94,7 @@ export default class extends React.Component {
   render () {
     return (
       <div style={this.props.style}>
-        {this.props.readonly ? this.preview() : this.editor()}
+        {this.props.preview ? this.preview() : this.editor()}
       </div>
     );
   }
