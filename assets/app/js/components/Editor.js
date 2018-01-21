@@ -9,6 +9,14 @@
 
 const { Input } = antd;
 
+/**
+ * props:
+ *   value
+ *   onChange
+ *   autosize
+ *   rows
+ *   readonly
+ */
 export default class extends React.Component {
   handleTextAreaPaste (e) {
     e.preventDefault();
@@ -61,13 +69,21 @@ export default class extends React.Component {
     );
   }
   editor () {
+    let autosize;
+    if (this.props.autosize) {
+      autosize = this.props.autosize;
+    } else if (this.props.rows) {
+      autosize = {minRows: this.props.rows, maxRows: this.props.rows};
+    } else {
+      autosize = {minRows: 10, maxRows: 999999};
+    }
     return (
       <div>
         <div align="right">
           <small>可粘贴上传图片，暂不支持其他附件上传</small>
         </div>
         <Input.TextArea
-          autosize={this.props.autosize || {minRows: 10, maxRows: 999999}}
+          autosize={autosize}
           value={this.props.value}
           onChange={e => this.props.onChange(e.target.value)}
           onPaste={this.handleTextAreaPaste.bind(this)}

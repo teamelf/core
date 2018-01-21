@@ -8,6 +8,7 @@
  */
 
 const { Input, Radio, Icon, Tooltip, Modal, Button } = antd;
+import Editor from 'teamelf/components/Editor';
 
 /**
  * props:
@@ -60,10 +61,10 @@ export default class extends React.Component {
         ]}
         onCancel={e => this.setState({editor: false})}
       >
-        <Input.TextArea
+        <Editor
           autosize={{minRows: 2,maxRows: 6}}
           value={this.state.value}
-          onChange={e => this.setState({value: e.target.value})}
+          onChange={e => this.setState({value: e})}
         />
       </Modal>
     );

@@ -1334,167 +1334,6 @@ System.register('teamelf/main', ['teamelf/App'], function (_export, _context) {
 });
 'use strict';
 
-System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, _antd, Card, Switch, Button, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Card = _antd.Card;
-      Switch = _antd.Switch;
-      Button = _antd.Button;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class(props) {
-          _classCallCheck(this, _class);
-
-          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
-
-          _this.state = {
-            loading: false
-          };
-          return _this;
-        }
-
-        _createClass(_class, [{
-          key: 'activate',
-          value: function activate(activation) {
-            var _this2 = this;
-
-            this.setState({ loading: true });
-            axios.put('extension/' + this.props.vendor + '/' + this.props.package, { activation: activation }).then(function (r) {
-              window.location.reload();
-            }).catch(function (e) {
-              _this2.setState({ loading: false });
-            });
-          }
-        }, {
-          key: 'upgrade',
-          value: function upgrade() {
-            alert('not supported yet!');
-          }
-        }, {
-          key: 'uninstall',
-          value: function uninstall() {
-            var _this3 = this;
-
-            antd.Modal.confirm({
-              title: '不可恢复',
-              content: '确定要删除么？该操作将删除所有插件数据并且无法恢复。如不使用插件建议停用即可',
-              onOk: function onOk() {
-                _this3.setState({ loading: true });
-                axios.delete('extension/' + _this3.props.vendor + '/' + _this3.props.package).then(function (r) {
-                  window.location.reload();
-                }).catch(function (e) {
-                  _this3.setState({ loading: false });
-                });
-              }
-            });
-          }
-        }, {
-          key: 'render',
-          value: function render() {
-            return React.createElement(
-              Card,
-              {
-                style: { marginBottom: 16 },
-                title: this.props.package,
-                extra: this.props.version,
-                actions: [React.createElement(Switch, {
-                  checked: this.props.isActivated,
-                  checkedChildren: '\u542F\u7528',
-                  unCheckedChildren: '\u505C\u7528',
-                  onChange: this.activate.bind(this),
-                  loading: this.state.loading,
-                  disabled: !can('extension.activate')
-                }), React.createElement(
-                  Button,
-                  {
-                    type: 'primary', size: 'small',
-                    onClick: this.upgrade.bind(this)
-                  },
-                  '\u5347\u7EA7'
-                ), React.createElement(
-                  Button,
-                  {
-                    type: 'danger', size: 'small',
-                    onClick: this.uninstall.bind(this),
-                    disabled: !can('extension.uninstall')
-                  },
-                  '\u5378\u8F7D'
-                )]
-              },
-              React.createElement(
-                'div',
-                null,
-                this.props.description
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export('default', _class);
-    }
-  };
-});
-'use strict';
-
 System.register('teamelf/components/Editor', [], function (_export, _context) {
   "use strict";
 
@@ -1655,6 +1494,14 @@ System.register('teamelf/components/Editor', [], function (_export, _context) {
           value: function editor() {
             var _this3 = this;
 
+            var autosize = void 0;
+            if (this.props.autosize) {
+              autosize = this.props.autosize;
+            } else if (this.props.rows) {
+              autosize = { minRows: this.props.rows, maxRows: this.props.rows };
+            } else {
+              autosize = { minRows: 10, maxRows: 999999 };
+            }
             return React.createElement(
               'div',
               null,
@@ -1668,7 +1515,7 @@ System.register('teamelf/components/Editor', [], function (_export, _context) {
                 )
               ),
               React.createElement(Input.TextArea, {
-                autosize: this.props.autosize || { minRows: 10, maxRows: 999999 },
+                autosize: autosize,
                 value: this.props.value,
                 onChange: function onChange(e) {
                   return _this3.props.onChange(e.target.value);
@@ -1785,10 +1632,10 @@ System.register("teamelf/components/Gender", [], function (_export, _context) {
 });
 "use strict";
 
-System.register("teamelf/components/InfoEditor", [], function (_export, _context) {
+System.register("teamelf/components/InfoEditor", ["teamelf/components/Editor"], function (_export, _context) {
   "use strict";
 
-  var _createClass, _antd, Input, Radio, Icon, Tooltip, Modal, Button, _class;
+  var Editor, _createClass, _antd, Input, Radio, Icon, Tooltip, Modal, Button, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1821,7 +1668,9 @@ System.register("teamelf/components/InfoEditor", [], function (_export, _context
   }
 
   return {
-    setters: [],
+    setters: [function (_teamelfComponentsEditor) {
+      Editor = _teamelfComponentsEditor.default;
+    }],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {
@@ -1932,11 +1781,11 @@ System.register("teamelf/components/InfoEditor", [], function (_export, _context
                   return _this4.setState({ editor: false });
                 }
               },
-              React.createElement(Input.TextArea, {
+              React.createElement(Editor, {
                 autosize: { minRows: 2, maxRows: 6 },
                 value: this.state.value,
                 onChange: function onChange(e) {
-                  return _this4.setState({ value: e.target.value });
+                  return _this4.setState({ value: e });
                 }
               })
             );
@@ -2023,6 +1872,167 @@ System.register("teamelf/components/InfoEditor", [], function (_export, _context
       }(React.Component);
 
       _export("default", _class);
+    }
+  };
+});
+'use strict';
+
+System.register('teamelf/extension/ExtensionCardItem', [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Card, Switch, Button, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Switch = _antd.Switch;
+      Button = _antd.Button;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class(props) {
+          _classCallCheck(this, _class);
+
+          var _this = _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).call(this, props));
+
+          _this.state = {
+            loading: false
+          };
+          return _this;
+        }
+
+        _createClass(_class, [{
+          key: 'activate',
+          value: function activate(activation) {
+            var _this2 = this;
+
+            this.setState({ loading: true });
+            axios.put('extension/' + this.props.vendor + '/' + this.props.package, { activation: activation }).then(function (r) {
+              window.location.reload();
+            }).catch(function (e) {
+              _this2.setState({ loading: false });
+            });
+          }
+        }, {
+          key: 'upgrade',
+          value: function upgrade() {
+            alert('not supported yet!');
+          }
+        }, {
+          key: 'uninstall',
+          value: function uninstall() {
+            var _this3 = this;
+
+            antd.Modal.confirm({
+              title: '不可恢复',
+              content: '确定要删除么？该操作将删除所有插件数据并且无法恢复。如不使用插件建议停用即可',
+              onOk: function onOk() {
+                _this3.setState({ loading: true });
+                axios.delete('extension/' + _this3.props.vendor + '/' + _this3.props.package).then(function (r) {
+                  window.location.reload();
+                }).catch(function (e) {
+                  _this3.setState({ loading: false });
+                });
+              }
+            });
+          }
+        }, {
+          key: 'render',
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                style: { marginBottom: 16 },
+                title: this.props.package,
+                extra: this.props.version,
+                actions: [React.createElement(Switch, {
+                  checked: this.props.isActivated,
+                  checkedChildren: '\u542F\u7528',
+                  unCheckedChildren: '\u505C\u7528',
+                  onChange: this.activate.bind(this),
+                  loading: this.state.loading,
+                  disabled: !can('extension.activate')
+                }), React.createElement(
+                  Button,
+                  {
+                    type: 'primary', size: 'small',
+                    onClick: this.upgrade.bind(this)
+                  },
+                  '\u5347\u7EA7'
+                ), React.createElement(
+                  Button,
+                  {
+                    type: 'danger', size: 'small',
+                    onClick: this.uninstall.bind(this),
+                    disabled: !can('extension.uninstall')
+                  },
+                  '\u5378\u8F7D'
+                )]
+              },
+              React.createElement(
+                'div',
+                null,
+                this.props.description
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export('default', _class);
     }
   };
 });
@@ -4603,6 +4613,213 @@ System.register('teamelf/model/AbstractModel', [], function (_export, _context) 
     }
   };
 });
+"use strict";
+
+System.register("teamelf/profile/Logout", [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Card, Button, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Button = _antd.Button;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: "logout",
+          value: function logout() {
+            axios.post('auth/logout').then(function (r) {
+              window.location.reload();
+            });
+          }
+        }, {
+          key: "render",
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                style: { marginBottom: 16 },
+                title: "\u9000\u51FA\u7CFB\u7EDF"
+              },
+              React.createElement(
+                Button,
+                {
+                  className: "full",
+                  type: "primary",
+                  onClick: this.logout.bind(this)
+                },
+                "\u70B9\u6B64\u5B89\u5168\u767B\u51FA"
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export("default", _class);
+    }
+  };
+});
+"use strict";
+
+System.register("teamelf/profile/Security", [], function (_export, _context) {
+  "use strict";
+
+  var _createClass, _antd, Card, Button, _class;
+
+  function _classCallCheck(instance, Constructor) {
+    if (!(instance instanceof Constructor)) {
+      throw new TypeError("Cannot call a class as a function");
+    }
+  }
+
+  function _possibleConstructorReturn(self, call) {
+    if (!self) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return call && (typeof call === "object" || typeof call === "function") ? call : self;
+  }
+
+  function _inherits(subClass, superClass) {
+    if (typeof superClass !== "function" && superClass !== null) {
+      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+    }
+
+    subClass.prototype = Object.create(superClass && superClass.prototype, {
+      constructor: {
+        value: subClass,
+        enumerable: false,
+        writable: true,
+        configurable: true
+      }
+    });
+    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+  }
+
+  return {
+    setters: [],
+    execute: function () {
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
+
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _antd = antd;
+      Card = _antd.Card;
+      Button = _antd.Button;
+
+      _class = function (_React$Component) {
+        _inherits(_class, _React$Component);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: "render",
+          value: function render() {
+            return React.createElement(
+              Card,
+              {
+                style: { marginBottom: 16 },
+                title: "\u4FEE\u6539\u5BC6\u7801"
+              },
+              React.createElement(
+                Button,
+                {
+                  className: "full",
+                  type: "danger",
+                  href: "/password/reset"
+                },
+                "\u70B9\u6B64\u4FEE\u6539\u5BC6\u7801"
+              )
+            );
+          }
+        }]);
+
+        return _class;
+      }(React.Component);
+
+      _export("default", _class);
+    }
+  };
+});
 'use strict';
 
 System.register('teamelf/role/RoleCardList', ['teamelf/role/RoleEditorCardItem', 'teamelf/role/RoleCreateCardItem'], function (_export, _context) {
@@ -5183,213 +5400,6 @@ System.register('teamelf/role/RoleEditorCardItem', ['teamelf/components/InfoEdit
       }(React.Component);
 
       _export('default', _class);
-    }
-  };
-});
-"use strict";
-
-System.register("teamelf/profile/Logout", [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, _antd, Card, Button, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Card = _antd.Card;
-      Button = _antd.Button;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class() {
-          _classCallCheck(this, _class);
-
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-        }
-
-        _createClass(_class, [{
-          key: "logout",
-          value: function logout() {
-            axios.post('auth/logout').then(function (r) {
-              window.location.reload();
-            });
-          }
-        }, {
-          key: "render",
-          value: function render() {
-            return React.createElement(
-              Card,
-              {
-                style: { marginBottom: 16 },
-                title: "\u9000\u51FA\u7CFB\u7EDF"
-              },
-              React.createElement(
-                Button,
-                {
-                  className: "full",
-                  type: "primary",
-                  onClick: this.logout.bind(this)
-                },
-                "\u70B9\u6B64\u5B89\u5168\u767B\u51FA"
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export("default", _class);
-    }
-  };
-});
-"use strict";
-
-System.register("teamelf/profile/Security", [], function (_export, _context) {
-  "use strict";
-
-  var _createClass, _antd, Card, Button, _class;
-
-  function _classCallCheck(instance, Constructor) {
-    if (!(instance instanceof Constructor)) {
-      throw new TypeError("Cannot call a class as a function");
-    }
-  }
-
-  function _possibleConstructorReturn(self, call) {
-    if (!self) {
-      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-    }
-
-    return call && (typeof call === "object" || typeof call === "function") ? call : self;
-  }
-
-  function _inherits(subClass, superClass) {
-    if (typeof superClass !== "function" && superClass !== null) {
-      throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-    }
-
-    subClass.prototype = Object.create(superClass && superClass.prototype, {
-      constructor: {
-        value: subClass,
-        enumerable: false,
-        writable: true,
-        configurable: true
-      }
-    });
-    if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-  }
-
-  return {
-    setters: [],
-    execute: function () {
-      _createClass = function () {
-        function defineProperties(target, props) {
-          for (var i = 0; i < props.length; i++) {
-            var descriptor = props[i];
-            descriptor.enumerable = descriptor.enumerable || false;
-            descriptor.configurable = true;
-            if ("value" in descriptor) descriptor.writable = true;
-            Object.defineProperty(target, descriptor.key, descriptor);
-          }
-        }
-
-        return function (Constructor, protoProps, staticProps) {
-          if (protoProps) defineProperties(Constructor.prototype, protoProps);
-          if (staticProps) defineProperties(Constructor, staticProps);
-          return Constructor;
-        };
-      }();
-
-      _antd = antd;
-      Card = _antd.Card;
-      Button = _antd.Button;
-
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
-
-        function _class() {
-          _classCallCheck(this, _class);
-
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
-        }
-
-        _createClass(_class, [{
-          key: "render",
-          value: function render() {
-            return React.createElement(
-              Card,
-              {
-                style: { marginBottom: 16 },
-                title: "\u4FEE\u6539\u5BC6\u7801"
-              },
-              React.createElement(
-                Button,
-                {
-                  className: "full",
-                  type: "danger",
-                  href: "/password/reset"
-                },
-                "\u70B9\u6B64\u4FEE\u6539\u5BC6\u7801"
-              )
-            );
-          }
-        }]);
-
-        return _class;
-      }(React.Component);
-
-      _export("default", _class);
     }
   };
 });
