@@ -1611,7 +1611,7 @@ System.register('teamelf/config/ConfigLogo', [], function (_export, _context) {
 System.register('teamelf/components/Editor', [], function (_export, _context) {
   "use strict";
 
-  var _typeof, _createClass, _antd, Input, _class;
+  var _extends, _typeof, _createClass, _antd, Input, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -1646,6 +1646,20 @@ System.register('teamelf/components/Editor', [], function (_export, _context) {
   return {
     setters: [],
     execute: function () {
+      _extends = Object.assign || function (target) {
+        for (var i = 1; i < arguments.length; i++) {
+          var source = arguments[i];
+
+          for (var key in source) {
+            if (Object.prototype.hasOwnProperty.call(source, key)) {
+              target[key] = source[key];
+            }
+          }
+        }
+
+        return target;
+      };
+
       _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
         return typeof obj;
       } : function (obj) {
@@ -1762,7 +1776,7 @@ System.register('teamelf/components/Editor', [], function (_export, _context) {
 
             return React.createElement(
               'div',
-              { style: { marginBottom: 16 } },
+              { style: _extends({ marginBottom: 16 }, this.props.style) },
               React.createElement(
                 'div',
                 { align: 'right' },
@@ -1773,8 +1787,7 @@ System.register('teamelf/components/Editor', [], function (_export, _context) {
                 )
               ),
               React.createElement(Input.TextArea, {
-                size: 'large',
-                autosize: { minRows: 10, maxRows: 999999 },
+                autosize: this.props.autosize || { minRows: 10, maxRows: 999999 },
                 value: this.props.value,
                 onChange: function onChange(e) {
                   return _this3.props.onChange(e.target.value);
