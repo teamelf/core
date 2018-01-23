@@ -1422,7 +1422,7 @@ System.register("teamelf/components/Gender", [], function (_export, _context) {
 });
 "use strict";
 
-System.register("teamelf/components/InfoEditor", ["teamelf/components/Editor"], function (_export, _context) {
+System.register("teamelf/components/InfoEditor", ["teamelf/common/Editor"], function (_export, _context) {
   "use strict";
 
   var Editor, _createClass, _antd, Input, Radio, Icon, Tooltip, Modal, Button, _class;
@@ -1458,8 +1458,8 @@ System.register("teamelf/components/InfoEditor", ["teamelf/components/Editor"], 
   }
 
   return {
-    setters: [function (_teamelfComponentsEditor) {
-      Editor = _teamelfComponentsEditor.default;
+    setters: [function (_teamelfCommonEditor) {
+      Editor = _teamelfCommonEditor.default;
     }],
     execute: function () {
       _createClass = function () {

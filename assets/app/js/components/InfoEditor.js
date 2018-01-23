@@ -8,7 +8,7 @@
  */
 
 const { Input, Radio, Icon, Tooltip, Modal, Button } = antd;
-import Editor from 'teamelf/components/Editor';
+import Editor from 'teamelf/common/Editor';
 
 /**
  * props:
