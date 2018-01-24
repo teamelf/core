@@ -23623,7 +23623,7 @@ System.register("teamelf/common/Header", [], function (_export, _context) {
               React.createElement(
                 "a",
                 { href: "/" },
-                React.createElement("img", { height: "100px", width: "100px", src: "/static/logo.png" }),
+                React.createElement("img", { height: "100px", width: "100px", src: window.config.logo }),
                 React.createElement(
                   "h2",
                   { style: { padding: '20px 0' } },
