@@ -102,11 +102,13 @@ const Preview = ({value}) => (
  *   preview
  */
 export default class extends React.Component {
-  editor (value, onChange) {
+  editor (value, onChange, autosize, rows) {
     return (
       <SimpleMarkdownEditor
         value={value}
         onChange={onChange}
+        autosize={autosize}
+        rows={rows}
       />
     );
   }
@@ -118,7 +120,7 @@ export default class extends React.Component {
       <div style={this.props.style}>
         {this.props.preview
           ? this.preview(this.props.value)
-          : this.editor(this.props.value, this.props.onChange)
+          : this.editor(this.props.value, this.props.onChange, this.props.autosize, this.props.rows)
         }
       </div>
     );

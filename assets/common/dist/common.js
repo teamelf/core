@@ -23554,10 +23554,12 @@ System.register('teamelf/common/Editor', [], function (_export, _context) {
 
         _createClass(_class, [{
           key: 'editor',
-          value: function editor(value, onChange) {
+          value: function editor(value, onChange, autosize, rows) {
             return React.createElement(SimpleMarkdownEditor, {
               value: value,
-              onChange: onChange
+              onChange: onChange,
+              autosize: autosize,
+              rows: rows
             });
           }
         }, {
@@ -23571,7 +23573,7 @@ System.register('teamelf/common/Editor', [], function (_export, _context) {
             return React.createElement(
               'div',
               { style: this.props.style },
-              this.props.preview ? this.preview(this.props.value) : this.editor(this.props.value, this.props.onChange)
+              this.props.preview ? this.preview(this.props.value) : this.editor(this.props.value, this.props.onChange, this.props.autosize, this.props.rows)
             );
           }
         }]);
