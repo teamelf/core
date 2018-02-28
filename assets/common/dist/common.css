@@ -54,6 +54,9 @@ rewrite ant-design due to some strange bugs
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+.markdown {
+  word-wrap: break-word;
+}
 .markdown code {
   background: #f9f2f4;
   color: #c7254e;
