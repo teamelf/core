@@ -22,13 +22,17 @@ export default class extends React.Component {
     e.preventDefault();
     const selectionStart = e.target.selectionStart;
     const selectionEnd = e.target.selectionEnd;
+    const target = e.target;
     for (let item of e.clipboardData.items) {
       if (item.kind === 'string') {
         if (item.type === 'text/plain') {
+          window.T = target;
           item.getAsString(str => {
             let text = this.props.value;
             text = text.substring(0, selectionStart) + str + text.substring(selectionEnd);
             this.props.onChange(text);
+            const pos = selectionStart + str.length;
+            target.setSelectionRange(pos, pos);
           });
         }
       } else if (item.kind === 'file') {
@@ -42,6 +46,8 @@ export default class extends React.Component {
           const placeholder = `![img 上传中...](${uid})`;
           text = text.substring(0, selectionStart) + placeholder + text.substring(selectionEnd);
           this.props.onChange(text);
+          const pos = selectionStart + placeholder.length;
+          target.setSelectionRange(pos, pos);
 
           const formData = new FormData();
           formData.append('attachment', img);
@@ -50,10 +56,14 @@ export default class extends React.Component {
             const mark = `![img](${r.data.url})`;
             text = text.replace(placeholder, mark);
             this.props.onChange(text);
+            const pos = selectionStart + mark.length;
+            target.setSelectionRange(pos, pos);
           }).catch(e => {
             let text = this.props.value;
             text = text.replace(placeholder, '');
             this.props.onChange(text);
+            const pos = selectionStart;
+            target.setSelectionRange(pos, pos);
           })
         }
       }

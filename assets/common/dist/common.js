@@ -23421,6 +23421,7 @@ System.register('teamelf/common/Editor', [], function (_export, _context) {
             e.preventDefault();
             var selectionStart = e.target.selectionStart;
             var selectionEnd = e.target.selectionEnd;
+            var target = e.target;
             var _iteratorNormalCompletion = true;
             var _didIteratorError = false;
             var _iteratorError = undefined;
@@ -23431,10 +23432,13 @@ System.register('teamelf/common/Editor', [], function (_export, _context) {
 
                 if (item.kind === 'string') {
                   if (item.type === 'text/plain') {
+                    window.T = target;
                     item.getAsString(function (str) {
                       var text = _this2.props.value;
                       text = text.substring(0, selectionStart) + str + text.substring(selectionEnd);
                       _this2.props.onChange(text);
+                      var pos = selectionStart + str.length;
+                      target.setSelectionRange(pos, pos);
                     });
                   }
                 } else if (item.kind === 'file') {
@@ -23451,6 +23455,8 @@ System.register('teamelf/common/Editor', [], function (_export, _context) {
                       var placeholder = '![img \u4E0A\u4F20\u4E2D...](' + uid + ')';
                       text = text.substring(0, selectionStart) + placeholder + text.substring(selectionEnd);
                       _this2.props.onChange(text);
+                      var pos = selectionStart + placeholder.length;
+                      target.setSelectionRange(pos, pos);
 
                       var formData = new FormData();
                       formData.append('attachment', img);
@@ -23459,10 +23465,14 @@ System.register('teamelf/common/Editor', [], function (_export, _context) {
                         var mark = '![img](' + r.data.url + ')';
                         text = text.replace(placeholder, mark);
                         _this2.props.onChange(text);
+                        var pos = selectionStart + mark.length;
+                        target.setSelectionRange(pos, pos);
                       }).catch(function (e) {
                         var text = _this2.props.value;
                         text = text.replace(placeholder, '');
                         _this2.props.onChange(text);
+                        var pos = selectionStart;
+                        target.setSelectionRange(pos, pos);
                       });
                     }();
 
