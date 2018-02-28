@@ -23429,46 +23429,45 @@ System.register('teamelf/common/Editor', [], function (_export, _context) {
               for (var _iterator = e.clipboardData.items[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 var item = _step.value;
 
-                switch (item.kind) {
-                  case 'string':
+                if (item.kind === 'string') {
+                  if (item.type === 'text/plain') {
                     item.getAsString(function (str) {
                       var text = _this2.props.value;
                       text = text.substring(0, selectionStart) + str + text.substring(selectionEnd);
                       _this2.props.onChange(text);
                     });
-                    break;
-                  case 'file':
-                    console.log(item.type);
-                    if (item.type.match(/^image\//)) {
-                      var _ret = function () {
-                        var img = item.getAsFile();
-                        if (!img) return {
-                            v: void 0
-                          };
+                  }
+                } else if (item.kind === 'file') {
+                  console.log(item.type);
+                  if (item.type.match(/^image\//)) {
+                    var _ret = function () {
+                      var img = item.getAsFile();
+                      if (!img) return {
+                          v: void 0
+                        };
 
+                      var text = _this2.props.value;
+                      var uid = CryptoJS.SHA1(+new Date() + ',' + parseInt(Math.random() * 100000000)).toString();
+                      var placeholder = '![img \u4E0A\u4F20\u4E2D...](' + uid + ')';
+                      text = text.substring(0, selectionStart) + placeholder + text.substring(selectionEnd);
+                      _this2.props.onChange(text);
+
+                      var formData = new FormData();
+                      formData.append('attachment', img);
+                      axios.post('attachment', formData).then(function (r) {
                         var text = _this2.props.value;
-                        var uid = CryptoJS.SHA1(+new Date() + ',' + parseInt(Math.random() * 100000000)).toString();
-                        var placeholder = '![img \u4E0A\u4F20\u4E2D...](' + uid + ')';
-                        text = text.substring(0, selectionStart) + placeholder + text.substring(selectionEnd);
+                        var mark = '![img](' + r.data.url + ')';
+                        text = text.replace(placeholder, mark);
                         _this2.props.onChange(text);
+                      }).catch(function (e) {
+                        var text = _this2.props.value;
+                        text = text.replace(placeholder, '');
+                        _this2.props.onChange(text);
+                      });
+                    }();
 
-                        var formData = new FormData();
-                        formData.append('attachment', img);
-                        axios.post('attachment', formData).then(function (r) {
-                          var text = _this2.props.value;
-                          var mark = '![img](' + r.data.url + ')';
-                          text = text.replace(placeholder, mark);
-                          _this2.props.onChange(text);
-                        }).catch(function (e) {
-                          var text = _this2.props.value;
-                          text = text.replace(placeholder, '');
-                          _this2.props.onChange(text);
-                        });
-                      }();
-
-                      if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
-                    }
-                    break;
+                    if ((typeof _ret === 'undefined' ? 'undefined' : _typeof(_ret)) === "object") return _ret.v;
+                  }
                 }
               }
             } catch (err) {

@@ -23,40 +23,39 @@ export default class extends React.Component {
     const selectionStart = e.target.selectionStart;
     const selectionEnd = e.target.selectionEnd;
     for (let item of e.clipboardData.items) {
-      switch (item.kind) {
-        case 'string':
+      if (item.kind === 'string') {
+        if (item.type === 'text/plain') {
           item.getAsString(str => {
             let text = this.props.value;
             text = text.substring(0, selectionStart) + str + text.substring(selectionEnd);
             this.props.onChange(text);
           });
-          break;
-        case 'file':
-          console.log(item.type);
-          if (item.type.match(/^image\//)) {
-            const img = item.getAsFile();
-            if (!img) return;
+        }
+      } else if (item.kind === 'file') {
+        console.log(item.type);
+        if (item.type.match(/^image\//)) {
+          const img = item.getAsFile();
+          if (!img) return;
 
+          let text = this.props.value;
+          const uid = CryptoJS.SHA1(+new Date() + ',' + parseInt(Math.random() * 100000000)).toString();
+          const placeholder = `![img 上传中...](${uid})`;
+          text = text.substring(0, selectionStart) + placeholder + text.substring(selectionEnd);
+          this.props.onChange(text);
+
+          const formData = new FormData();
+          formData.append('attachment', img);
+          axios.post(`attachment`, formData).then(r => {
             let text = this.props.value;
-            const uid = CryptoJS.SHA1(+new Date() + ',' + parseInt(Math.random()*100000000)).toString();
-            const placeholder = `![img 上传中...](${uid})`;
-            text = text.substring(0, selectionStart) + placeholder + text.substring(selectionEnd);
+            const mark = `![img](${r.data.url})`;
+            text = text.replace(placeholder, mark);
             this.props.onChange(text);
-
-            const formData = new FormData();
-            formData.append('attachment', img);
-            axios.post(`attachment`, formData).then(r => {
-              let text = this.props.value;
-              const mark = `![img](${r.data.url})`;
-              text = text.replace(placeholder, mark);
-              this.props.onChange(text);
-            }).catch(e => {
-              let text = this.props.value;
-              text = text.replace(placeholder, '');
-              this.props.onChange(text);
-            })
-          }
-          break;
+          }).catch(e => {
+            let text = this.props.value;
+            text = text.replace(placeholder, '');
+            this.props.onChange(text);
+          })
+        }
       }
     }
   }
