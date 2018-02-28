@@ -9,15 +9,7 @@
 
 const { Input } = antd;
 
-/**
- * props:
- *   value
- *   onChange
- *   autosize
- *   rows
- *   preview
- */
-export default class extends React.Component {
+class SimpleMarkdownEditor extends React.Component {
   handleTextAreaPaste (e) {
     e.preventDefault();
     const selectionStart = e.target.selectionStart;
@@ -64,20 +56,12 @@ export default class extends React.Component {
             this.props.onChange(text);
             const pos = selectionStart;
             target.setSelectionRange(pos, pos);
-          })
+          });
         }
       }
     }
   }
-  preview () {
-    return (
-      <div
-        className="markdown"
-        dangerouslySetInnerHTML={{__html: marked(this.props.value || '')}}
-      />
-    );
-  }
-  editor () {
+  render () {
     let autosize;
     if (this.props.autosize) {
       autosize = this.props.autosize;
@@ -100,10 +84,42 @@ export default class extends React.Component {
       </div>
     );
   }
+}
+
+const Preview = ({value}) => (
+  <div
+    className="markdown"
+    dangerouslySetInnerHTML={{__html: marked(value || '')}}
+  />
+);
+
+/**
+ * props:
+ *   value
+ *   onChange
+ *   autosize
+ *   rows
+ *   preview
+ */
+export default class extends React.Component {
+  editor (value, onChange) {
+    return (
+      <SimpleMarkdownEditor
+        value={value}
+        onChange={onChange}
+      />
+    );
+  }
+  preview (value) {
+    return <Preview value={value}/>;
+  }
   render () {
     return (
       <div style={this.props.style}>
-        {this.props.preview ? this.preview() : this.editor()}
+        {this.props.preview
+          ? this.preview(this.props.value)
+          : this.editor(this.props.value, this.props.onChange)
+        }
       </div>
     );
   }

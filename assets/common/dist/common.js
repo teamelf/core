@@ -23342,7 +23342,7 @@ var o=Object.getOwnPropertySymbols,i=Object.prototype.hasOwnProperty,a=Object.pr
 System.register('teamelf/common/Editor', [], function (_export, _context) {
   "use strict";
 
-  var _typeof, _createClass, _antd, Input, _class;
+  var _typeof, _createClass, _antd, Input, SimpleMarkdownEditor, Preview, _class;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -23404,16 +23404,16 @@ System.register('teamelf/common/Editor', [], function (_export, _context) {
       _antd = antd;
       Input = _antd.Input;
 
-      _class = function (_React$Component) {
-        _inherits(_class, _React$Component);
+      SimpleMarkdownEditor = function (_React$Component) {
+        _inherits(SimpleMarkdownEditor, _React$Component);
 
-        function _class() {
-          _classCallCheck(this, _class);
+        function SimpleMarkdownEditor() {
+          _classCallCheck(this, SimpleMarkdownEditor);
 
-          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+          return _possibleConstructorReturn(this, (SimpleMarkdownEditor.__proto__ || Object.getPrototypeOf(SimpleMarkdownEditor)).apply(this, arguments));
         }
 
-        _createClass(_class, [{
+        _createClass(SimpleMarkdownEditor, [{
           key: 'handleTextAreaPaste',
           value: function handleTextAreaPaste(e) {
             var _this2 = this;
@@ -23496,16 +23496,8 @@ System.register('teamelf/common/Editor', [], function (_export, _context) {
             }
           }
         }, {
-          key: 'preview',
-          value: function preview() {
-            return React.createElement('div', {
-              className: 'markdown',
-              dangerouslySetInnerHTML: { __html: marked(this.props.value || '') }
-            });
-          }
-        }, {
-          key: 'editor',
-          value: function editor() {
+          key: 'render',
+          value: function render() {
             var _this3 = this;
 
             var autosize = void 0;
@@ -23538,13 +23530,48 @@ System.register('teamelf/common/Editor', [], function (_export, _context) {
               })
             );
           }
+        }]);
+
+        return SimpleMarkdownEditor;
+      }(React.Component);
+
+      Preview = function Preview(_ref) {
+        var value = _ref.value;
+        return React.createElement('div', {
+          className: 'markdown',
+          dangerouslySetInnerHTML: { __html: marked(value || '') }
+        });
+      };
+
+      _class = function (_React$Component2) {
+        _inherits(_class, _React$Component2);
+
+        function _class() {
+          _classCallCheck(this, _class);
+
+          return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+        }
+
+        _createClass(_class, [{
+          key: 'editor',
+          value: function editor(value, onChange) {
+            return React.createElement(SimpleMarkdownEditor, {
+              value: value,
+              onChange: onChange
+            });
+          }
+        }, {
+          key: 'preview',
+          value: function preview(value) {
+            return React.createElement(Preview, { value: value });
+          }
         }, {
           key: 'render',
           value: function render() {
             return React.createElement(
               'div',
               { style: this.props.style },
-              this.props.preview ? this.preview() : this.editor()
+              this.props.preview ? this.preview(this.props.value) : this.editor(this.props.value, this.props.onChange)
             );
           }
         }]);
